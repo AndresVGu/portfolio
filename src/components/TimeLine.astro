@@ -1,0 +1,33 @@
+---
+import ExperienceItem from '../components/TimeLineItem.astro';
+
+const EXPERIENCE = [
+    {
+        startDate: 'August 2022',
+        endDate: 'To Present',
+        title: 'Computer Programming and Analysis Program',
+        company:'Niagara College',
+        description: 'focuses on the development of software applications for mobile devices, big data analytics and interactive multimedia.',
+       // link: '#'
+    },
+    {
+        startDate: 'June 2019',
+        endDate:'To December 2021',
+        title: 'Junior Developer',
+        company: 'V12 Comunicaciones',
+        description: 'Coding Frontend and backend of websites, design mock-ups for web projects, implemented a functional testing of web information systems, Integrated testing feedback to build and maintain user-centered software applications. ',
+        //link: '#'
+    }
+]
+---
+<ol class="relative mt-16">
+    {
+        EXPERIENCE.map((experience) =>(
+            <li class="">
+                <ExperienceItem {...experience}/>
+            </li>
+        ))
+    }
+</ol>
+
+

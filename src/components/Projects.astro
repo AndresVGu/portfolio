@@ -1,0 +1,191 @@
+---
+const imgAlt = "Andres villarreal project visualisation";
+
+import NextJS from "../Icons/NextJS.astro";
+import Tailwind from "../Icons/Tailwind.astro";
+import Link from "../Icons/Link.astro";
+import GitHub from "../Icons/Github.astro";
+import Microsoft from "../Icons/Microsoft.astro";
+import LinkButton from '../components/LinkButton.astro';
+import Azure from '../Icons/Azure.astro';
+import BootStrap from '../Icons/Bootstrap.astro';
+import Wordpress from '../Icons/WordpressIcon.astro';
+import SqlIcon from '../Icons/SqlIcon.astro';
+import SqliteIcon from '../Icons/SqliteIcon.astro';
+import MysqlIcon from '../Icons/MysqlIcon.astro';
+import Html5 from '../Icons/HtmlIcon.astro';
+import Css3 from '../Icons/CssIcon.astro';
+import javascript from '../Icons/JavascriptIcon.astro';
+
+const TAGS ={
+    NEXT: {
+    name: "Next.js",
+    class: "bg-black text-white",
+    icon: NextJS,
+  },
+  TAILWIND: {
+    name: "Tailwind CSS",
+    class: "bg-[#003159] text-white",
+    icon: Tailwind,
+  },
+  MICROSOFT: {
+    name: "ASP.NET",
+    class: "bg-[#003159] text-white",
+    icon: Microsoft,
+  },
+  AZURE: {
+    name: "Azure",
+    class: "bg-[#003159] text-white",
+    icon: Azure,
+  },
+  BOOTSTRAP: {
+    name: "BootStrap",
+    class: "bg-[#003159] text-white",
+    icon: BootStrap,
+  },
+  WORDPRESS: {
+    name: "Wordpress",
+    class: "bg-[#003159] text-white",
+    icon: Wordpress,
+  },
+  SQL: {
+    name: "SQL",
+    class: "bg-[#003159] text-white",
+    icon: SqlIcon,
+  },
+  SQLITE: {
+    name: "SQLite",
+    class: "bg-[#003159] text-white",
+    icon: SqliteIcon,
+  },
+  MYSQL: {
+    name: "MySQL",
+    class: "bg-[#003159] text-white",
+    icon: MysqlIcon,
+  },
+  HTML: {
+    name: "HTML5",
+    class: "bg-[#003159] text-white",
+    icon: Html5,
+  },
+  CSS: {
+    name: "CSS3",
+    class: "bg-[#003159] text-white",
+    icon: Css3,
+  },
+  JAVASCRIPT: {
+    name: "JavaScript",
+    class: "bg-[#003159] text-white",
+    icon: javascript,
+  },
+}
+
+const PROJECTS = [
+{
+    title: "NBD Landscaping - Business app with ASP.NET MVC and C#",
+    description:
+      "Web application for a landscaping business, where depending of the user authentication each employee are able to perform the ability to create, update and delete clients an then assign projects for each client. Also, the user is able to add a Bid record which shows the neccesary materials and labourd to calculate the cost of the entire project.",
+    link: "https://nbd2024202401.azurewebsites.net/",
+    github: "https://github.com/AndresVGu/Athletes-API",
+    image: "/projects/NBD_Project.png",
+    tags: [TAGS.MICROSOFT, TAGS.AZURE, TAGS.SQL, TAGS.BOOTSTRAP],
+  },
+
+  {
+    title: "Athlete API - ASP.NET Core Web API",
+    description:
+      "Web API that displays athletes and the respective sport. The user also is able to perform CRUD operations for each entity.",
+    link: "#",
+    github: "https://github.com/AndresVGu/Athletes-API",
+    image: "/projects/AthleteApi.png",
+    tags: [TAGS.MICROSOFT, TAGS.AZURE, TAGS.SQLITE],
+  },
+  //{
+   // title: "Catering Management - Business app with ASP.NET MVC and C#",
+    //description:
+     // "Hotel web application to manage all the events, and assign the neccessary rooms an equipment required per each event.",
+    //link: "#",
+    //github: "https://github.com/AndresVGu/Athletes-API",
+    //image: "/projects/CateringManagement.png",
+    //tags: [TAGS.MICROSOFT, TAGS.AZURE, TAGS.SQLITE, TAGS.BOOTSTRAP],
+  //},
+  {
+    title: "Medical Office - Business app with ASP.NET MVC and C#",
+    description:
+      "Web application focus in the management of patients records, where it is possible assign appoinments and doctors.",
+    link: "#",
+    github: "https://github.com/AndresVGu/Athletes-API",
+    image: "/projects/CateringManagement.png",
+    tags: [TAGS.MICROSOFT, TAGS.AZURE, TAGS.SQLITE, TAGS.BOOTSTRAP],
+  },
+  {
+    title: "Emma's Small Engines - Business app with vanilla HTML5, CSS3 & JavaScript",
+    description:
+      "Web application focus in the Inventory, equipment, repairs an orders of different types of engines.",
+    
+    github: "https://github.com/AndresVGu/Athletes-API",
+    image: "/projects/EmmaEngine.png",
+    tags: [TAGS.HTML, TAGS.CSS, TAGS.JAVASCRIPT],
+  },
+  
+  {
+    title: "VitGreen - Ecomerce Website",
+    description:
+      "Ecommerce website focus in protein products.",
+    link: "https://www.vitgreennatural.com.co",
+    image: "/projects/Vitgreen.png",
+    tags: [TAGS.WORDPRESS, TAGS.MYSQL],
+  },
+]
+---
+
+<div class="flex flex-col gap-y-16">
+    {
+      PROJECTS.map(({ image, title, description, tags, link, github }) => (
+      <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+    <div class="w-full md:w-1/2">
+      <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+        <img alt={imgAlt} class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105" loading="lazy" src={image} />
+      </div>
+    </div>
+  
+    <div class="w-full md:w-1/2 md:max-w-lg">
+      <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+        {title}
+      </h3>
+      <div class="flex flex-wrap mt-2">
+        <ul class="flex flex-row mb-2 gap-x-2">
+            {tags.map((tag) => (
+              <li>
+                <span
+                  class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2 `}
+                >
+                  <tag.icon class="size-4" />
+                  {tag.name}
+                </span>
+              </li>
+            ))}
+          </ul>
+  
+        <div class="mt-2 text-gray-700 dark:text-gray-400">{description}</div>
+        <footer class="flex items-end justify-start mt-4 gap-x-4">
+            {github && (
+              <LinkButton href={github}>
+                <GitHub class="size-6" />
+                Code
+                
+              </LinkButton>
+            )}
+            {link && (
+              <LinkButton href={link}>
+                <Link class="size-4" />
+                Preview
+              </LinkButton>
+            )}
+          </footer>
+      </div>
+    </div>
+  </article>
+      ))
+    }
+  </div>

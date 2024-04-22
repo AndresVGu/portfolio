@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Briefcase from '../Icons/Briefcase.astro';
+import CodeIcon from '../Icons/Code.astro';
+import Experience from '../components/TimeLine.astro';
+import SectionContainer from '../components/SectionContainer.astro';
+import Profile from '../components/Profile.astro';
+import Projects from '../components/Projects.astro';
+import About from '../components/About.astro';
+import ProfileIcon from '../Icons/ProfileIcon.astro';
+
+
+---
+
+<Layout 
+title="Andres Villarreal - Software and Website Developer with 3 years of experience"
+description="Junior Developer with strong expertice in Fullstack developing with knwoledge in C#, ASP.NET MVC, Web APIs and more">
+	<main>
+
+		<SectionContainer class="py-16 md:py-36" id="home">
+			<Profile>
+				<slot />
+			</Profile>
+		</SectionContainer>
+		
+		<div class="space-y-24">
+			<SectionContainer id="experience">
+				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
+					<Briefcase class="size-7" />
+					Experience
+				</h2>
+				<Experience />
+			</SectionContainer>
+
+			<SectionContainer id="projects">
+				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
+					<CodeIcon class="size-7" />
+					Projects
+					
+				</h2>
+				<Projects />
+			</SectionContainer>
+
+			<SectionContainer id="about">
+				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white">
+					<ProfileIcon class="size-7" />
+					About Me
+					
+				</h2>
+				<About />
+			</SectionContainer>
+
+		</div>
+		
+	</main>
+</Layout>

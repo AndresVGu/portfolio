@@ -1,0 +1,57 @@
+---
+const PIMAGEALT = "Andres Villarreal"
+
+import Badge from '../components/Badge.astro';
+import Linkedin from '../Icons/Linkedin.astro';
+import Github from '../Icons/Github.astro';
+import Mail from '../Icons/Mail.astro';
+import Social from '../components/Social.astro';
+---
+<div class="max-w-xl">
+    <div class="flex gap-4 mb-4">
+        <img
+        class="rounded-full shadow-lg size-20" 
+        src="https://media.licdn.com/dms/image/C4D03AQGoX6ZAAJ0Hgw/profile-displayphoto-shrink_800_800/0/1647785011694?e=2147483647&v=beta&t=F3p6XDfrJNwHaUrfx1vPId9gy3HhRRXj4jCs0TSJ4oA" 
+        alt={PIMAGEALT}
+        />
+        <a
+        class="flex items-center btn btn--download" 
+        href="/public/docs/cv2024.pdf"
+        target="_blank"
+        download="/public/docs/cv2024.pdf">
+            <Badge>
+                Download Resume
+            </Badge>
+        </a>
+    </div>
+    <!--text-white text-5xl font-bold flex flex-row gap-x-4 pb-4-->
+    <h1 class="text-4xl font-bold tracking-tight text-gray-800
+        sm:text-5xl dark:text-white">
+        Hey, I'm Andres&#x1F44B; 
+    </h1>
+
+    <p
+    class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200
+    [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300">
+    <strong>+3 Years Experience. Fullstack Developer</strong>
+    based in St. Catharines &#x1F1E8;&#x1F1E6;.
+    I specialize in ASP.NET Web Applications, UWP UI, 
+    responsive web sites and mobile apps developement.
+    </p>
+   
+    <nav class="flex gap-x-6 mt-8">
+
+        <Social  href="https://www.linkedin.com/in/avillarrealg/">
+            <Linkedin class=" size-6"/>
+            LinkedIn
+        </Social>
+        <Social  href="https://github.com/AndresVGu">
+            <Github class=" size-6"/>
+            GitHub
+        </Social>
+        <Social href="mailto:andresvillarrealguti@gmail.com">
+            <Mail class=" size-6"/>
+            andresvillarrealguti@gmail.com
+        </Social>
+    </nav>
+</div>
