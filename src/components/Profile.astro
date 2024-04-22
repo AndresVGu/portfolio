@@ -14,18 +14,30 @@ import Social from '../components/Social.astro';
         src="https://media.licdn.com/dms/image/C4D03AQGoX6ZAAJ0Hgw/profile-displayphoto-shrink_800_800/0/1647785011694?e=2147483647&v=beta&t=F3p6XDfrJNwHaUrfx1vPId9gy3HhRRXj4jCs0TSJ4oA" 
         alt={PIMAGEALT}
         />
-        <a
-        class="flex items-center btn btn--download" 
-        href="/public/docs/cv2024.pdf"
-        
-        download="cv2024.pdf"
-        >
-            <Badge>
-                Download Resume
-            </Badge>
-        </a>
 
-        <a href="/public/projects/cv2024.pdf">PDFa</a>
+        <div class="flex justify-center items-center">
+
+            <Social href="mailto:andresvillarrealguti@gmail.com">
+                <Mail class=" size-7"/>
+                Contact Me
+            </Social>
+            
+        </div>
+        <!--
+
+            <a
+            class="flex items-center btn btn--download" 
+            href="/public/docs/cv2024.pdf"
+            
+            download="cv2024.pdf"
+            >
+                <Badge>
+                    Download Resume
+                </Badge>
+            </a>
+         -->
+
+       
     </div>
     <!--text-white text-5xl font-bold flex flex-row gap-x-4 pb-4-->
     <h1 class="text-4xl font-bold tracking-tight text-gray-800
@@ -44,11 +56,6 @@ import Social from '../components/Social.astro';
    
     <nav class="flex gap-x-6 mt-8">
 
-        <Social href="mailto:andresvillarrealguti@gmail.com">
-            <Mail class=" size-6"/>
-            Contact Me
-        </Social>
-        
 
         <Social  href="https://www.linkedin.com/in/avillarrealg/">
             <Linkedin class=" size-6"/>
