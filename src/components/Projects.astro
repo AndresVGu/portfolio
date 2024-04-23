@@ -16,6 +16,10 @@ import MysqlIcon from '../Icons/MysqlIcon.astro';
 import Html5 from '../Icons/HtmlIcon.astro';
 import Css3 from '../Icons/CssIcon.astro';
 import javascript from '../Icons/JavascriptIcon.astro';
+import React from '../Icons/ReactIcon.astro';
+import AstroIcon from '../Icons/AstroIcon.astro';
+import TypeScript from'../Icons/TypeScriptIcon.astro';
+import Svelte from '../Icons/SvelteIcon.astro';
 
 const TAGS ={
     NEXT: {
@@ -24,7 +28,7 @@ const TAGS ={
     icon: NextJS,
   },
   TAILWIND: {
-    name: "Tailwind CSS",
+    name: "Tailwind",
     class: "bg-[#003159] text-white",
     icon: Tailwind,
   },
@@ -78,6 +82,26 @@ const TAGS ={
     class: "bg-[#003159] text-white",
     icon: javascript,
   },
+  REACT: {
+    name: "React",
+    class: "bg-[#003159] text-white",
+    icon: React,
+  },
+  TYPESCRIPT: {
+    name: "TypeScript",
+    class: "bg-[#003159] text-white",
+    icon: TypeScript,
+  },
+  ASTRO: {
+    name: "Astro",
+    class: "bg-[#003159] text-white",
+    icon: AstroIcon,
+  },
+  SVELTE: {
+    name: "Svelte",
+    class: "bg-[#003159] text-white",
+    icon: Svelte,
+  },
 }
 
 const PROJECTS = [
@@ -88,16 +112,26 @@ const PROJECTS = [
     link: "https://nbdlandscaping.azurewebsites.net",
     github: "https://github.com/AndresVGu/NBD2024Project",
     image: "/projects/NBD_Project.png",
-    tags: [TAGS.MICROSOFT, TAGS.AZURE, TAGS.SQL, TAGS.BOOTSTRAP],
+    tags: [TAGS.MICROSOFT, TAGS.AZURE, TAGS.TAILWIND, TAGS.JAVASCRIPT, ],
   },
+
+  {
+    title: "Spotify Clone - ASTRO",
+    description: "Spotify Clone web app. In this application the user are able to play the songs and navigate in different types of Albumes",
+    
+    github: "https://github.com/AndresVGu/Spotify_Clone-/tree/main",
+    image: "/projects/Spotify-Album.png",
+    tags: [TAGS.ASTRO, TAGS.TYPESCRIPT, TAGS.REACT, TAGS.SVELTE],
+  },
+  
 
   {
     title: "Cities API - ASP.NET Core Web API",
     description:
       "Web API that displays Cities for the respective Province. The user also is able to perform CRUD operations for each entity.",
-    link: "https://project2api20240412225720.azurewebsites.net",
+    link: "https://project2api20240412225720.azurewebsites.net/swagger",
     github: "https://github.com/AndresVGu/Athletes-API",
-    image: "/projects/AthleteApi.png",
+    image: "/projects/CitiesApi.png",
     tags: [TAGS.MICROSOFT, TAGS.AZURE, TAGS.SQLITE],
   },
   //{

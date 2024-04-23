@@ -1,0 +1,26 @@
+---
+import EducationItem from '../components/EducationTimeLine.astro';
+
+const EDUCATION = [
+    {
+        startDate: 'August 2022',
+        endDate: 'To Present',
+        title: 'Computer Programming and Analysis Program',
+        company:'Niagara College',
+        description: 'This program focuses on the development of software applications for mobile devices, big data analytics and interactive multimedia.',
+       // link: '#'
+    }
+    
+]
+---
+<ol class="relative mt-16">
+    {
+        EDUCATION.map((education) =>(
+            <li class="">
+                <EducationItem {...education}/>
+            </li>
+        ))
+    }
+</ol>
+
+
