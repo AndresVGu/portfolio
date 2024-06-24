@@ -3,9 +3,12 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 import Language from '../components/Language.astro';
 
 const navItems = [
-{
-   
-    
+    {    
+   title:"Home",
+   label:"home",
+   url:"/#home"
+    },
+    {
         title:"Education",
         label:"education",
         url:"/#education"
@@ -32,11 +35,13 @@ const navItems = [
     }
 ]
 ---
-<header class="flex 
-justify-center items-center py-5 w-full xl:w-[1120px] mx-auto">
+<header  class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2">
 
-    <nav class="flex flex-row  opacity-80 
-    justify-center items-center">
+    <nav 
+    class="flex px-3 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
+    
+    
+    >
         {
             navItems.map((link)=>(
                 <a
