@@ -1,0 +1,91 @@
+---
+import BentoItem from './BentoItem.astro'
+---
+<section
+    class={`
+        w-full max-w-[1400px]
+        grid grid-cols-5 auto-rows-[30rem] gap-4
+        mx-auto 
+    `}
+>
+      <!--group 1-->
+        <!--Landscaping App -->
+        <BentoItem class="col-span-5 md:col-span-3" title="NBD Landscaping" subtitle="Business app with ASP.NET MVC and C#">
+            <div
+            slot="image"
+            class="background transition-scale absolute bottom-0 left-0 top-0
+              -z-10 h-full w-full 
+              bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+            style="background-image: url('/projects/bg.webp');">        
+          </div>
+      
+           <img slot="gallery" src="/projects/bg.jpg" alt="">
+            <!--
+          
+            <p slot="content" class="max-w-xl">
+                Web application for a landscaping business, 
+                where depending of the user authentication each employee are able to perform the ability to create, 
+                update and delete clients an then assign projects for each client. Also, the user is able to add a 
+                Bid record which shows the neccesary materials and labourd to calculate the cost of the entire project.
+            </p>
+            -->
+        </BentoItem>
+        
+        <!--Project Appi -->
+        <BentoItem class="col-span-5 md:col-span-2" title="Cities API" subtitle="ASP.NET Core Web API">
+          <div
+            slot="image"
+            class="background transition-scale absolute bottom-0 left-0 top-0
+              -z-10 h-full w-full 
+              bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+            style="background-image: url('/projects/api2.webp');">
+          </div>
+        </BentoItem>
+
+      <!--group 2-->
+        <!--Spotify Clone-->
+        <BentoItem class="col-span-5 md:col-span-2" title="Spotify Clone">
+          <div
+            slot="image"
+            class="background transition-scale absolute bottom-0 left-0 top-0
+              -z-10 h-full w-full 
+              bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+            style="background-image: url('/projects/spo.webp');">
+          </div>
+        </BentoItem>
+        
+        <!--Emma's small engine app -->
+        <BentoItem class="col-span-5 md:col-span-3" title="Emma's Small Engines" subtitle="Business app with vanilla HTML5, CSS3 & JavaScript">
+          <div
+          slot="image"
+          class="background transition-scale absolute bottom-0 left-0 top-0
+            -z-10 h-full w-full 
+            bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+          style="background-image: url('/projects/emma.webp');">
+        </div>
+        </BentoItem>
+
+      <!--group 3-->
+        <!--Vit Green -->      
+        <BentoItem class="col-span-5 md:col-span-3" title="VitGreen" subtitle="Ecomerce Website">
+          <div
+            slot="image"
+            class="background transition-scale absolute bottom-0 left-0 top-0
+              -z-10 h-full w-full 
+              bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+            style="background-image: url('/projects/vit.webp');">
+          </div>
+        </BentoItem>
+        
+        <!--V12 MAGAZINE -->
+        <BentoItem class="col-span-5 md:col-span-2" title="V12Revista - Car Magazine" subtitle="Car Magazine">
+          <div
+          slot="image"
+          class="background transition-scale absolute bottom-0 left-0 top-0
+            -z-10 h-full w-full 
+            bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+          style="background-image: url('/projects/TEST2.webp');">
+        </div>
+        </BentoItem>
+
+      </section>

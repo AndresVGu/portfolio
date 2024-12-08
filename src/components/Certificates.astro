@@ -1,0 +1,53 @@
+---
+import "photoswipe/style.css"
+import Cert from "./Cert.astro"
+
+---
+
+<Cert/>
+<div class="grid grid-cols-1 sm:grid-cols-2 max-w-6xl gap-8 mx-auto py-20" id="gallery">
+    {
+        Array.from({length:4}).map((_, i) =>(
+            <a
+            class="group rounded-xl hover:scale-105 
+            transition-all relative"
+            href={`/projects/Certificates/image-${i+1}.webp`}
+            data-pswp-width="2000"
+            data-pswp-height="1345"    
+            target="_blank"
+            >
+                <img
+                class="blur-lg absolute inset-0
+                transition group-hover:contrast-150
+                -z-10"
+                loading="lazy"
+                src={`/projects/Certificates/image-${i+1}.webp`}
+                alt=""
+                />
+                <img
+                class="rounded-xl"
+                loading="lazy"
+                src={`/projects/Certificates/image-${i+1}.webp`}
+                alt=""
+                />
+
+            </a>
+        )) 
+    }
+        
+
+
+
+    
+  </div>
+<script>
+    import PhotoSwipeLightbox from 'photoswipe/lightbox';
+    
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: "#gallery",
+        children: "a",
+        pswpModule: () => import("photoswipe"),
+    })
+    lightbox.init()
+
+</script>

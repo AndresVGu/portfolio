@@ -11,10 +11,11 @@ interface Props {
 }
 
 const { description,title } = Astro.props;
+const { currentLocale } = Astro
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLocale}> 
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
@@ -45,8 +46,8 @@ const { description,title } = Astro.props;
       
     }
     body{
-      color: rgba(17, 17, 17, 0.9);
-          display: flex;
+     color: rgba(17, 17, 17, 0.9);
+          display:flex;
           flex-direction: column;
           min-height: 100vh;
           overscroll-behavior: none;
@@ -112,6 +113,9 @@ const { description,title } = Astro.props;
         }
     
   </style>
+
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 	</body>
+  
 </html>
 

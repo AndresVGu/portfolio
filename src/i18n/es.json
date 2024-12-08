@@ -1,0 +1,12 @@
+{
+    "SEO_TITLE":"Andres Villarreal Desarrollador con 3 años de experiencia.",
+    "SEO_DESCRIPTION":"Desarrollador Junior con amplia expeiencia Fullstack con conocimiento en C#, ASP.NET MVC, Web APIs y más.",
+    
+    "TITLES":{
+        "stu":"Educacion",
+        "exp":"experiencia",
+        "pro":"Proyectos",
+        "about":"Sobre Mi",
+        "cer": "Certificaciones & Licencias"
+    }
+}

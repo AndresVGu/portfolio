@@ -1,0 +1,46 @@
+---
+import CertItem from '../components/CertTimeLine.astro';
+
+const CERT = [
+    {
+        startDate: 'August 2024',
+        endDate: '',
+        title: 'Offensive Python',
+        company:'Hack4you Academy',
+        description: 'Python for offensive security, from penetration testing and web scraping to creating custom tools like network scanners, ARP poisoners, sniffers, interceptors, keyloggers, malware, and more.',
+        link: 'https://hack4u.io/check-certificate/',
+        credential:'ID: 2235-3358-5582-1336'
+    },
+    {
+        startDate: 'July 2024',
+        endDate: '',
+        title: 'UX Design',
+        company:'Google Career Certificates',
+        description: 'Gain the skills to create user-friendly digital and physical products by designing wireframes, building prototypes, and conducting research to refine UX designs.',
+        link: 'https://www.coursera.org/account/accomplishments/verify/CS69Z96732HK',
+        credential:'ID: CS69Z96732HK'
+    },
+    
+    {
+        startDate: 'July 2024',
+        endDate: '',
+        title: 'Linux',
+        company:'Hack4you Academy',
+        description: 'Master the Linux operating system by learning to navigate the terminal, execute commands seamlessly, and customize the work environment to meet specific requirements.',
+        link: 'https://hack4u.io/check-certificate/',
+        credential:'ID: 4587-3822-3505-2078'
+    }
+    
+]
+---
+<ol class="relative mt-16">
+    {
+        CERT.map((certificate) =>(
+            <li class="">
+                <CertItem {...certificate}/>
+            </li>
+        ))
+    }
+</ol>
+
+

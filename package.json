@@ -10,11 +10,16 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.6",
-    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/tailwind": "^5.1.2",
     "@fontsource-variable/onest": "^5.0.2",
-    "astro": "^4.4.6",
+    "astro": "^4.16.16",
+    "flowbite": "^2.5.2",
+    "photoswipe": "^5.4.4",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "tailwindcss-animated": "^1.1.2"
   }
 }

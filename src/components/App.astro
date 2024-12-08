@@ -11,14 +11,16 @@ import Projects from '../components/Projects.astro';
 import About from '../components/About.astro';
 import Bento from '../components/Bento.astro';
 import ProfileIcon from '../Icons/ProfileIcon.astro';
-import Certificates from '@/components/Certificates.astro';
 
+import { getI18N } from '@/i18n';
 
+const {currentLocale = 'es'} = Astro
+const i18n = getI18N({currentLocale})
 ---
 
 <Layout 
-title="Andres Villarreal - Software and Website Developer with 3 years of experience"
-description="Junior Developer with strong expertice in Fullstack developing with knwoledge in C#, ASP.NET MVC, Web APIs and more">
+    title=`${i18n.SEO_TITLE}&nbsp;${new Date().getFullYear()}`
+	description={i18n.SEO_DESCRIPTION}>
 	<main class="px-5">
 
 		<SectionContainer class="py-16 md:py-36 animate-fade-right animate-duration-1500" id="home">
@@ -31,51 +33,44 @@ description="Junior Developer with strong expertice in Fullstack developing with
 			<SectionContainer id="education">
 				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
 					<EduIcon class="size-7" />
-					Education
+					{i18n.TITLES.stu}
 				</h2>
 				<Education />
-				<br>
-				<h3 class="flex items-center mb-6 text-2xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
-					Certificates
-				</h3>
-				<Certificates/>
 			</SectionContainer>
-
 
 			<SectionContainer id="experience">
 				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
 					<Briefcase class="size-7" />
-					Experience
+					{i18n.TITLES.exp}
 				</h2>
 				<Experience />
 			</SectionContainer>
 
-
 			<SectionContainer id="projects">
 				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
 					<CodeIcon class="size-7" />
-					Projects
+					{i18n.TITLES.pro}
 					
 				</h2>
-				<Bento />
-				<!--
-				
 				<Projects />
-				-->
 			</SectionContainer>
 
+			<SectionContainer id="bento" >
+				<h2 class="flex  mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
+					<CodeIcon class="size-7" />
+					{i18n.TITLES.pro}
+				</h2>
+				<Bento />
+			</SectionContainer>
 
 			<SectionContainer id="about">
 				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
 					<ProfileIcon class="size-7" />
-					About Me
+					{i18n.TITLES.about}
 					
 				</h2>
 				<About />
-		
 			</SectionContainer>
-
-			
 
 		</div>
 		
