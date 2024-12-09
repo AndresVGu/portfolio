@@ -66,10 +66,14 @@ const { currentLocale } = Astro
           }
         }
   
+        #header-menu{
+          border-radius: 25px;
+        }
         #header-nav {
           animation: blur linear both 0.5s;
           animation-timeline: scroll();
-          animation-range: 0 500px;
+          border: none;
+          
         }
   
         @keyframes blur {
