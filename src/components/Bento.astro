@@ -10,27 +10,31 @@ import BentoItem from './BentoItem.astro'
 >
       <!--group 1-->
         <!--Landscaping App -->
-        <BentoItem class="col-span-5 md:col-span-3" title="NBD Landscaping" subtitle="Business app with ASP.NET MVC and C#">
-            <div
-            slot="image"
-            class="background transition-scale absolute bottom-0 left-0 top-0
-              -z-10 h-full w-full 
-              bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
-            style="background-image: url('/projects/bg.webp');">        
-          </div>
-      
-           <img slot="gallery" src="/projects/bg.jpg" alt="">
-            <!--
-          
-            <p slot="content" class="max-w-xl">
-                Web application for a landscaping business, 
-                where depending of the user authentication each employee are able to perform the ability to create, 
-                update and delete clients an then assign projects for each client. Also, the user is able to add a 
-                Bid record which shows the neccesary materials and labourd to calculate the cost of the entire project.
-            </p>
-            -->
-        </BentoItem>
         
+           
+
+          <BentoItem class="col-span-5 md:col-span-3" title="NBD Landscaping" subtitle="Business app with ASP.NET MVC and C#">
+              <div
+              slot="image"
+              class="background transition-scale absolute bottom-0 left-0 top-0
+                -z-10 h-full w-full 
+                bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+              style="background-image: url('/projects/bg.webp');">        
+            </div>
+              <h3 slot="title">NBD Landscaping</h3>
+              
+            
+              <p slot="content" class="max-w-xl">
+                  Web application for a landscaping business, 
+                  where depending of the user authentication each employee are able to perform the ability to create, 
+                  update and delete clients an then assign projects for each client. Also, the user is able to add a 
+                  Bid record which shows the neccesary materials and labourd to calculate the cost of the entire project.
+              </p>
+              
+          </BentoItem>
+ 
+        
+
         <!--Project Appi -->
         <BentoItem class="col-span-5 md:col-span-2" title="Cities API" subtitle="ASP.NET Core Web API">
           <div
@@ -40,6 +44,7 @@ import BentoItem from './BentoItem.astro'
               bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
             style="background-image: url('/projects/api2.webp');">
           </div>
+          <h3 slot="title">Na</h3>
         </BentoItem>
 
       <!--group 2-->

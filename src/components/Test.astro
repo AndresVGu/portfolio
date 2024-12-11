@@ -1,0 +1,990 @@
+---
+import "photoswipe/style.css"
+const imgAlt = "Andres villarreal project visualisation";
+import NextJS from "../Icons/NextJS.astro";
+import Tailwind from "../Icons/Tailwind.astro";
+import Link from "../Icons/Link.astro";
+import GitHub from "../Icons/Github.astro";
+import Microsoft from "../Icons/Microsoft.astro";
+import LinkButton from '../components/LinkButton.astro';
+import Azure from '../Icons/Azure.astro';
+import BootStrap from '../Icons/Bootstrap.astro';
+import Wordpress from '../Icons/WordpressIcon.astro';
+import SqlIcon from '../Icons/SqlIcon.astro';
+import SqliteIcon from '../Icons/SqliteIcon.astro';
+import MysqlIcon from '../Icons/MysqlIcon.astro';
+import Html5 from '../Icons/HtmlIcon.astro';
+import Css3 from '../Icons/CssIcon.astro';
+import JavascriptIcon from '../Icons/JavascriptIcon.astro';
+import React from '../Icons/ReactIcon.astro';
+import AstroIcon from '../Icons/AstroIcon.astro';
+import TypeScript from'../Icons/TypeScriptIcon.astro';
+import Svelte from '../Icons/SvelteIcon.astro';
+
+
+
+---
+
+<section
+    class={`
+        w-full max-w-[1400px]
+        grid grid-cols-5 auto-rows-[30rem] gap-6
+        mx-auto 
+    `}>
+
+    <!--ITEM #1 -->
+    <article class={`
+        ${Astro.props.class}
+        col-span-5
+        md:col-span-3
+        relative rounded-xl
+        backdrop-blur-md
+        border border-black/10
+        shadow-inner shadow-white/10
+        group
+        `}
+        data-modal-target="first-modal" data-modal-toggle="first-modal"
+        >
+            <div class="absolute z-10 bottom-0 top-0 w-full h-full 
+            bg-gradient-to-b from-transparent from-50% via-black-black/20 to-black/70 duration-700 ease-in-out group-hover:scale-105">
+            <div
+              class="background transition-scale absolute bottom-0 left-0 top-0
+                -z-10 h-full w-full 
+                bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+              style="background-image: url('/projects/bg.webp');">        
+            </div>    
+            </div>
+                   
+            <slot name="image"></slot>
+        
+            <div class="relative select-none flex flex-col gap-1 p-6 text-lg z-20 justify-end h-full">
+            <h2 class="text-3xl font-semibold text-balance text-white mb-4">NBD Landscaping</h2>
+            <h3 class="text-3xl font-semibold text-sky-200/80 -mt-4 mb-4">Business app with ASP.NET MVC and C#</h3>
+            
+        </div>
+    </article>
+
+     <!-- Main modal -->
+  <div id="first-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  md:inset-0 h-[calc(100%-1rem)] h-full bg-black bg-opacity-50">
+    
+    <div class=" p-4 w-full max-w-2xl max-h-full fixed  ">
+
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    NBD Landscaping
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="first-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+             
+            <div class="p-4 md:p-5 space-y-4">
+                <section
+                class={`grid grid-cols-4 gap-2`}>
+
+                <div class="col-span-2  md:col-span-1">
+                    <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                        <Microsoft class="size-5"/>
+                        <span>ASP.NET</span>
+                    </div>
+                </div>
+                <div class="col-span-2 md:col-span-1">
+                    <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                        <Azure class="size-5"/>
+                        <span>Azure</span>    
+                    </div>
+                </div>
+                <div class="col-span-2 md:col-span-1">
+                    <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                        <SqlIcon class="size-5"/>
+                        <span>SQLite</span>    
+                    </div>
+                </div>
+                <div class="col-span-2 md:col-span-1">
+                    <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                        <JavascriptIcon class="size-5"/>
+                        <span>JavaScript</span>
+
+                    </div>
+                </div>
+
+                </section>
+               
+                <p class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-500
+                    [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300">
+                    A web application designed for a landscaping business, 
+                    enabling employees to <strong> clients and projects based on their user authentication level.</strong> 
+                    Each employee can <strong>create, update, and delete client records,</strong> as well as assign projects to specific clients. 
+                    Additionally, users can add bid records, detailing the required materials and labor needed to calculate the total project cost.
+                </p>
+
+                <div class="pswp-gallery pswp-gallery--single-column" id="gallery">
+ 
+    <a href="/projects/NBD/image-1.webp" target="_blank" role="link" 
+    class="inline-flex items-center 
+    text-lg font-medium text-blue-600 dark:text-yellow-300 
+    dark:hover:text-yellow-300 hover:text-yellow-700"
+    data-pswp-width="2000"
+    data-pswp-height="1345"    
+    target="_blank"
+    >
+        Gallery{" "}
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 icon icon-tabler icon-tabler-chevron-right"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+         stroke-linejoin="round"
+        >
+        <>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M9 6l6 6l-6 6" />
+        </>  
+        </svg>
+        
+    
+    </a>
+    <!--Other Images -->              
+    {
+        Array.from({length:8}).map((_, i) =>(
+            <a
+            class="group rounded-xl hover:scale-105 
+            transition-all relative"
+            href={`/projects/NBD/image-${i+2}.webp`}
+            data-pswp-width="2000"
+            data-pswp-height="1345"    
+            target="_blank"
+            >
+                
+            </a>
+        )) 
+    }
+                </div>
+               
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 gap-2">
+                <LinkButton href="https://github.com/AndresVGu/NBD2024Project">
+                    <GitHub class="size-6" />
+                    Code
+                  </LinkButton>
+
+                  <LinkButton href="https://nbdlandscaping.azurewebsites.net">
+                    <Link class="size-4" />
+                    Link
+                  </LinkButton>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--ITEM #2 -->
+<article class={`
+    ${Astro.props.class}
+    col-span-5
+    md:col-span-2
+    relative rounded-xl
+    backdrop-blur-md
+    border border-black/10
+    shadow-inner shadow-white/10
+    group
+    `}
+    data-modal-target="second-modal" data-modal-toggle="second-modal"
+    >
+        <div class="absolute z-10 bottom-0 top-0 w-full h-full 
+        bg-gradient-to-b from-transparent from-50% via-black-black/20 to-black/70 duration-700 ease-in-out group-hover:scale-105">
+        <div
+          class="background transition-scale absolute bottom-0 left-0 top-0
+            -z-10 h-full w-full 
+            bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+          style="background-image: url('/projects/api2.webp');">        
+        </div>    
+        </div>
+               
+        <slot name="image"></slot>
+    
+        <div class="relative select-none flex flex-col gap-1 p-6 text-lg z-20 justify-end h-full">
+        <h2 class="text-3xl font-semibold text-balance text-white mb-4">Cities API</h2>
+        <h3 class="text-3xl font-semibold text-sky-200/80 -mt-4 mb-4">ASP.NET Core Web API</h3>
+        
+    </div>
+</article>
+
+ <!-- Main modal -->
+<div id="second-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  md:inset-0 h-[calc(100%-1rem)] h-full bg-black bg-opacity-50">
+
+<div class=" p-4 w-full max-w-2xl max-h-full fixed  ">
+
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                Cities API
+            </h3>
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="second-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+        <!-- Modal body -->
+         
+        <div class="p-4 md:p-5 space-y-4">
+            <section
+            class={`grid grid-cols-4 gap-2`}>
+
+            <div class="col-span-2  md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <Microsoft class="size-5"/>
+                    <span>ASP.NET</span>
+                </div>
+            </div>
+            
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <SqlIcon class="size-5"/>
+                    <span>SQLite</span>    
+                </div>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <JavascriptIcon class="size-5"/>
+                    <span>JavaScript</span>
+
+                </div>
+            </div>
+
+            </section>
+           
+            <p class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-500
+                [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300">
+                A Web API that displays cities corresponding to their respective provinces.
+                 Users can also perform <strong>CRUD operations </strong> on each entity.
+            </p>
+
+            <div class="pswp-gallery pswp-gallery--single-column" id="gallery">
+
+<a href="/projects/api/image-1.webp" target="_blank" role="link" 
+class="inline-flex items-center 
+text-lg font-medium text-blue-600 dark:text-yellow-300 
+dark:hover:text-yellow-300 hover:text-yellow-700"
+data-pswp-width="2000"
+data-pswp-height="1345"    
+target="_blank"
+>
+    Gallery{" "}
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="w-5 icon icon-tabler icon-tabler-chevron-right"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    stroke-width="2"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+     stroke-linejoin="round"
+    >
+    <>
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M9 6l6 6l-6 6" />
+    </>  
+    </svg>
+    
+
+</a>
+<!--Other Images -->              
+{
+    Array.from({length:2}).map((_, i) =>(
+        <a
+        class="group rounded-xl hover:scale-105 
+        transition-all relative"
+        href={`/projects/api/image-${i+2}.webp`}
+        data-pswp-width="2000"
+        data-pswp-height="1345"    
+        target="_blank"
+        >
+            
+        </a>
+    )) 
+}
+            </div>
+           
+        </div>
+        <!-- Modal footer -->
+        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 gap-2">
+            <LinkButton href="https://github.com/AndresVGu/Cities_Api/tree/main">
+                <GitHub class="size-6" />
+                Code
+              </LinkButton>
+
+              <LinkButton href="https://project2api20240412225720.azurewebsites.net/swagger">
+                <Link class="size-4" />
+                Link
+              </LinkButton>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!--ITEM #3 -->
+<article class={`
+    ${Astro.props.class}
+    col-span-5
+    md:col-span-2
+    relative rounded-xl
+    backdrop-blur-md
+    border border-black/10
+    shadow-inner shadow-white/10
+    group
+    `}
+    data-modal-target="tres-modal" data-modal-toggle="tres-modal"
+    >
+        <div class="absolute z-10 bottom-0 top-0 w-full h-full 
+        bg-gradient-to-b from-transparent from-50% via-black-black/20 to-black/70 duration-700 ease-in-out group-hover:scale-105">
+        <div
+          class="background transition-scale absolute bottom-0 left-0 top-0
+            -z-10 h-full w-full 
+            bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+          style="background-image: url('/projects/spo.webp');">        
+        </div>    
+        </div>
+               
+        <slot name="image"></slot>
+    
+        <div class="relative select-none flex flex-col gap-1 p-6 text-lg z-20 justify-end h-full">
+        <h2 class="text-3xl font-semibold text-balance text-white mb-4">Spotify Clone</h2>
+        
+        
+    </div>
+</article>
+
+ <!-- Main modal -->
+<div id="tres-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  md:inset-0 h-[calc(100%-1rem)] h-full bg-black bg-opacity-50">
+
+<div class=" p-4 w-full max-w-2xl max-h-full fixed  ">
+
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                Spotify Clone
+            </h3>
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="tres-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+        <!-- Modal body -->
+         
+        <div class="p-4 md:p-5 space-y-4">
+            <section
+            class={`grid grid-cols-4 gap-2`}>
+
+            <div class="col-span-2  md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <AstroIcon class="size-5"/>
+                    <span>ASTRO</span>
+                </div>
+            </div>
+            
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <TypeScript class="size-5"/>
+                    <span>TypeScript</span>    
+                </div>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <React class="size-5"/>
+                    <span>React</span>
+
+                </div>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <Svelte class="size-5"/>
+                    <span>Svelte</span>
+
+                </div>
+            </div>
+
+            </section>
+           
+            <p class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-500
+                [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300">
+                A Spotify clone web app where users can play songs and navigate through different types of albums.
+            </p>
+
+            <div class="pswp-gallery pswp-gallery--single-column" id="gallery">
+
+<a href="/projects/Spotify/image-1.jpg" target="_blank" role="link" 
+class="inline-flex items-center 
+text-lg font-medium text-blue-600 dark:text-yellow-300 
+dark:hover:text-yellow-300 hover:text-yellow-700"
+data-pswp-width="2000"
+data-pswp-height="1345"    
+target="_blank"
+>
+    Gallery{" "}
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="w-5 icon icon-tabler icon-tabler-chevron-right"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    stroke-width="2"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+     stroke-linejoin="round"
+    >
+    <>
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M9 6l6 6l-6 6" />
+    </>  
+    </svg>
+    
+
+</a>
+<!--Other Images -->              
+{
+    Array.from({length:1}).map((_, i) =>(
+        <a
+        class="group rounded-xl hover:scale-105 
+        transition-all relative"
+        href={`/projects/Spotify/image-${i+2}.jpg`}
+        data-pswp-width="2000"
+        data-pswp-height="1345"    
+        target="_blank"
+        >
+            
+        </a>
+    )) 
+}
+            </div>
+           
+        </div>
+        <!-- Modal footer -->
+        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 gap-2">
+            <LinkButton href="https://github.com/AndresVGu/Spotify_Clone-/tree/main">
+                <GitHub class="size-6" />
+                Code
+              </LinkButton>
+
+              
+
+        </div>
+    </div>
+</div>
+</div>
+
+<!--ITEM #4 -->
+<article class={`
+    ${Astro.props.class}
+    col-span-5
+    md:col-span-3
+    relative rounded-xl
+    backdrop-blur-md
+    border border-black/10
+    shadow-inner shadow-white/10
+    group
+    `}
+    data-modal-target="for-modal" data-modal-toggle="for-modal"
+    >
+        <div class="absolute z-10 bottom-0 top-0 w-full h-full 
+        bg-gradient-to-b from-transparent from-50% via-black-black/20 to-black/70 duration-700 ease-in-out group-hover:scale-105">
+        <div
+          class="background transition-scale absolute bottom-0 left-0 top-0
+            -z-10 h-full w-full 
+            bg-cover bg-center bg-no-repeat  opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+          style="background-image: url('/projects/emma.webp');">        
+        </div>
+
+        </div>
+        
+            <div class="relative select-none flex flex-col gap-1 p-6 text-lg z-20 justify-end h-full">
+            <h2 class="text-3xl font-semibold text-balance text-white mb-4">Emma's Small Engines</h2>
+            <h3 class="text-3xl font-semibold text-sky-200/80 -mt-4 mb-4">Business app with vanilla HTML5, CSS3 & JavaScript</h3>
+            
+               
+        <slot name="image"></slot>
+    </div>
+</article>
+
+ <!-- Main modal -->
+<div id="for-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  md:inset-0 h-[calc(100%-1rem)] h-full bg-black bg-opacity-50">
+
+<div class=" p-4 w-full max-w-2xl max-h-full fixed  ">
+
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                Emma's Small Engines
+            </h3>
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="for-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+        <!-- Modal body -->
+         
+        <div class="p-4 md:p-5 space-y-4">
+            <section
+            class={`grid grid-cols-4 gap-2`}>
+
+            <div class="col-span-2  md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <Html5 class="size-5"/>
+                    <span>HTML</span>
+                </div>
+            </div>
+            
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <Css3 class="size-5"/>
+                    <span>CSS</span>    
+                </div>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <JavascriptIcon class="size-5"/>
+                    <span>JavaScript</span>
+
+                </div>
+            </div>
+
+            </section>
+           
+            <p class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-500
+                [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300">
+                A web application focused on managing inventory, equipment, repairs, and orders for different types of engines.
+            </p>
+
+            <div class="pswp-gallery pswp-gallery--single-column" id="gallery">
+
+<a href="/projects/emmas/image-1.webp" target="_blank" role="link" 
+class="inline-flex items-center 
+text-lg font-medium text-blue-600 dark:text-yellow-300 
+dark:hover:text-yellow-300 hover:text-yellow-700"
+data-pswp-width="2000"
+data-pswp-height="1345"    
+target="_blank"
+>
+    Gallery{" "}
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="w-5 icon icon-tabler icon-tabler-chevron-right"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    stroke-width="2"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+     stroke-linejoin="round"
+    >
+    <>
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M9 6l6 6l-6 6" />
+    </>  
+    </svg>
+    
+
+</a>
+<!--Other Images -->              
+{
+    Array.from({length:2}).map((_, i) =>(
+        <a
+        class="group rounded-xl hover:scale-105 
+        transition-all relative"
+        href={`/projects/emmas/image-${i+2}.webp`}
+        data-pswp-width="2000"
+        data-pswp-height="1345"    
+        target="_blank"
+        >
+            
+        </a>
+    )) 
+}
+            </div>
+           
+        </div>
+        <!-- Modal footer -->
+        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 gap-2">
+            <LinkButton href="https://github.com/AndresVGu/Emma-s_Small_Engines">
+                <GitHub class="size-6" />
+                Code
+              </LinkButton>
+
+             
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!--ITEM #5 -->
+<article class={`
+    ${Astro.props.class}
+    col-span-5
+    md:col-span-3
+    relative rounded-xl
+    backdrop-blur-md
+    border border-black/10
+    shadow-inner shadow-white/10
+    group
+    `}
+    data-modal-target="cin-modal" data-modal-toggle="cin-modal"
+    >
+        <div class="absolute z-10 bottom-0 top-0 w-full h-full 
+        bg-gradient-to-b from-transparent from-50% via-black-black/20 to-black/70 duration-700 ease-in-out group-hover:scale-105">
+        <div
+          class="background transition-scale absolute bottom-0 left-0 top-0
+            -z-10 h-full w-full 
+            bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+          style="background-image: url('/projects/vit.webp');">        
+        </div>    
+        </div>
+               
+        <slot name="image"></slot>
+    
+        <div class="relative select-none flex flex-col gap-1 p-6 text-lg z-20 justify-end h-full">
+        <h2 class="text-3xl font-semibold text-balance text-white mb-4">VitGreen</h2>
+        <h3 class="text-3xl font-semibold text-sky-200/80 -mt-4 mb-4">Ecomerce Website</h3>
+        
+    </div>
+</article>
+
+ <!-- Main modal -->
+<div id="cin-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  md:inset-0 h-[calc(100%-1rem)] h-full bg-black bg-opacity-50">
+
+<div class=" p-4 w-full max-w-2xl max-h-full fixed  ">
+
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                VitGreen
+            </h3>
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="cin-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+        <!-- Modal body -->
+         
+        <div class="p-4 md:p-5 space-y-4">
+            <section
+            class={`grid grid-cols-4 gap-2`}>
+
+            <div class="col-span-2  md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <Html5 class="size-5"/>
+                    <span>HTML</span>
+                </div>
+            </div>
+            
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <Css3 class="size-5"/>
+                    <span>CSS</span>    
+                </div>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <JavascriptIcon class="size-5"/>
+                    <span>JavaScript</span>
+
+                </div>
+            </div>
+
+            </section>
+           
+            <p class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-500
+                [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300">
+                A modern eCommerce website specializing in protein products, offering a seamless shopping experience with secure payment options, detailed product descriptions, customer reviews, and fast shipping.
+            </p>
+
+            <div class="pswp-gallery pswp-gallery--single-column" id="gallery">
+
+<a href="/projects/Vit/image-1.jpeg" target="_blank" role="link" 
+class="inline-flex items-center 
+text-lg font-medium text-blue-600 dark:text-yellow-300 
+dark:hover:text-yellow-300 hover:text-yellow-700"
+data-pswp-width="2000"
+data-pswp-height="1345"    
+target="_blank"
+>
+    Gallery{" "}
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="w-5 icon icon-tabler icon-tabler-chevron-right"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    stroke-width="2"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+     stroke-linejoin="round"
+    >
+    <>
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M9 6l6 6l-6 6" />
+    </>  
+    </svg>
+    
+
+</a>
+<!--Other Images -->              
+{
+    Array.from({length:6}).map((_, i) =>(
+        <a
+        class="group rounded-xl hover:scale-105 
+        transition-all relative"
+        href={`/projects/Vit/image-${i+2}.jpeg`}
+        data-pswp-width="2000"
+        data-pswp-height="1345"    
+        target="_blank"
+        >
+            
+        </a>
+    )) 
+}
+            </div>
+           
+        </div>
+        <!-- Modal footer -->
+        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 gap-2">
+            
+
+              <LinkButton href="https://www.vitgreennatural.com.co">
+                <Link class="size-4" />
+                Link
+              </LinkButton>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<!--ITEM #6 -->
+<article class={`
+    ${Astro.props.class}
+    col-span-5
+    md:col-span-2
+    relative rounded-xl
+    backdrop-blur-md
+    border border-black/10
+    shadow-inner shadow-white/10
+    group
+    `}
+    data-modal-target="seis-modal" data-modal-toggle="seis-modal"
+    >
+        <div class="absolute z-10 bottom-0 top-0 w-full h-full 
+        bg-gradient-to-b from-transparent from-50% via-black-black/20 to-black/70 duration-700 ease-in-out group-hover:scale-105">
+        <div
+          class="background transition-scale absolute bottom-0 left-0 top-0
+            -z-10 h-full w-full 
+            bg-cover bg-center bg-no-repeat opacity-90 bg-blend-luminosity duration-700 ease-in-out group-hover:scale-105 "
+          style="background-image: url('/projects/TEST2.webp');">        
+        </div>    
+        </div>
+               
+        <slot name="image"></slot>
+    
+        <div class="relative select-none flex flex-col gap-1 p-6 text-lg z-20 justify-end h-full">
+        <h2 class="text-3xl font-semibold text-balance text-white mb-4">V12Revista </h2>
+        <h3 class="text-3xl font-semibold text-sky-200/80 -mt-4 mb-4">Car Magazine</h3>
+        
+    </div>
+</article>
+
+ <!-- Main modal -->
+<div id="seis-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full  md:inset-0 h-[calc(100%-1rem)] h-full bg-black bg-opacity-50">
+
+<div class=" p-4 w-full max-w-2xl max-h-full fixed  ">
+
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                V12Revista - Car Magazine
+            </h3>
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="seis-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+        <!-- Modal body -->
+         
+        <div class="p-4 md:p-5 space-y-4">
+            <section
+            class={`grid grid-cols-4 gap-2`}>
+
+            <div class="col-span-2  md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <Html5 class="size-5"/>
+                    <span>HTML</span>
+                </div>
+            </div>
+            
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <Css3 class="size-5"/>
+                    <span>CSS</span>    
+                </div>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <div class={`flex font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white gap-2 transition-all duration-300 hover:scale-110`}>
+                    <JavascriptIcon class="size-5"/>
+                    <span>JavaScript</span>
+
+                </div>
+            </div>
+
+            </section>
+           
+            <p class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-500
+                [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300">
+                Magazine website that shows notices and events about the automotive field in Colombia.
+            </p>
+
+            <div class="pswp-gallery pswp-gallery--single-column" id="gallery">
+
+<a href="/projects/v12/image-1.jpeg" target="_blank" role="link" 
+class="inline-flex items-center 
+text-lg font-medium text-blue-600 dark:text-yellow-300 
+dark:hover:text-yellow-300 hover:text-yellow-700"
+data-pswp-width="2000"
+data-pswp-height="1345"    
+target="_blank"
+>
+    Gallery{" "}
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="w-5 icon icon-tabler icon-tabler-chevron-right"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    stroke-width="2"
+    stroke="currentColor"
+    fill="none"
+    stroke-linecap="round"
+     stroke-linejoin="round"
+    >
+    <>
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M9 6l6 6l-6 6" />
+    </>  
+    </svg>
+    
+
+</a>
+<!--Other Images -->              
+{
+    Array.from({length:2}).map((_, i) =>(
+        <a
+        class="group rounded-xl hover:scale-105 
+        transition-all relative"
+        href={`/projects/v12/image-${i+2}.jpeg`}
+        data-pswp-width="2000"
+        data-pswp-height="1345"    
+        target="_blank"
+        >
+            
+        </a>
+    )) 
+}
+            </div>
+           
+        </div>
+        <!-- Modal footer -->
+        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 gap-2">
+          
+              <LinkButton href="https://v12magazine.com/">
+                <Link class="size-4" />
+                Link
+              </LinkButton>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+
+<script>
+    import PhotoSwipeLightbox from 'photoswipe/lightbox';
+    
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: "#gallery",
+        children: "a",
+        pswpModule: () => import("photoswipe"),
+    })
+    
+    lightbox.init()
+    
+
+</script>
