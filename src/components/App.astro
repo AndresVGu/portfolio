@@ -30,14 +30,7 @@ const i18n = getI18N({currentLocale})
 		</SectionContainer>
 		
 		<div class="space-y-24">
-			<SectionContainer id="education">
-				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
-					<EduIcon class="size-7" />
-					{i18n.TITLES.stu}
-				</h2>
-				<Education />
-			</SectionContainer>
-
+			
 			<SectionContainer id="experience">
 				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
 					<Briefcase class="size-7" />
@@ -45,7 +38,7 @@ const i18n = getI18N({currentLocale})
 				</h2>
 				<Experience />
 			</SectionContainer>
-
+			
 			<SectionContainer id="projects">
 				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
 					<CodeIcon class="size-7" />
@@ -54,7 +47,7 @@ const i18n = getI18N({currentLocale})
 				</h2>
 				<Projects />
 			</SectionContainer>
-
+			
 			<SectionContainer id="bento" >
 				<h2 class="flex  mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
 					<CodeIcon class="size-7" />
@@ -62,7 +55,15 @@ const i18n = getI18N({currentLocale})
 				</h2>
 				<Bento />
 			</SectionContainer>
-
+			
+			<SectionContainer id="education">
+				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
+					<EduIcon class="size-7" />
+					{i18n.TITLES.stu}
+				</h2>
+				<Education />
+			</SectionContainer>
+			
 			<SectionContainer id="about">
 				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
 					<ProfileIcon class="size-7" />
