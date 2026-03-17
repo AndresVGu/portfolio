@@ -4,22 +4,85 @@
  const personalImageAlt = "Andres Villarreal"
 ---
 
-<article class="flex flex-col items-center justify-center gap-8 text-gray-700 dark:text-gray-300 md:flex-row">
-  <div
-    class="[&>p]:mb-4 [&>p>strong]:text-yellow-500 dark:[&>p>strong]:text-yellow-100 [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty order-2 md:order-1"
-  >
-    <p>
-      Software developer specializing in .NET and backend systems, with experience building scalable APIs, cloud solutions, and modern web applications.
-    </p>
-    <p>
-      Currently working as a Electronic Technician, combining software knowledge with <strong>hands-on hardware expertise—deploying Linux systems</strong> and optimizing rugged devices for real-world performance.
-    </p>
-    <p>
-      I bring a balanced skill set across frontend and backend, working with SQL, modern frameworks, and clean architectures. I’m also experienced in data workflows, applying ETL processes with Python and Pandas to turn data into insights.
-    </p>
+<article class="grid items-center gap-10 text-gray-700 dark:text-gray-300 md:grid-cols-2">
+
+  <!-- TEXT -->
+  <div class="space-y-6">
     
+    <!-- Tagline -->
+    <p class="text-lg font-semibold text-yellow-500 dark:text-yellow-100">
+      🚀 I build scalable systems that solve real-world problems.
+    </p>
+
+    <!-- Description -->
+    <div class="[&>p]:mb-4 [&>p>strong]:text-yellow-500 dark:[&>p>strong]:text-yellow-100 [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty">
+      <p>
+        Software developer specializing in <strong>.NET</strong> and backend systems, with experience building scalable APIs, cloud solutions, and modern web applications.
+      </p>
+      <p>
+        Currently working as an Electronic Technician, combining software knowledge with <strong>hands-on hardware expertise—deploying Linux systems</strong> and optimizing rugged devices for real-world performance.
+      </p>
+      <p>
+        I bring a balanced skill set across frontend and backend, working with SQL, modern frameworks, and clean architectures. I also build data workflows, applying ETL processes with <strong>Python</strong> and <strong>Pandas</strong>.
+      </p>
+    </div>
+
+    <!-- Tech Stack -->
+    <div>
+      <p class="mb-2 text-sm font-semibold text-gray-400">⚙️ Tech Stack</p>
+      <div class="flex flex-wrap gap-2 text-xs">
+        <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10">.NET Core</span>
+        <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10">AWS</span>
+        <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10">Docker</span>
+        <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10">Kubernetes</span>
+        <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10">SQL</span>
+        <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10">PostgreSQL</span>
+        <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10">JavaScript</span>
+        <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10">Angular</span>
+        <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10">Astro</span>
+      </div>
+    </div>
+
+    <!-- Strengths -->
+    <div class="grid grid-cols-2 gap-3 text-sm">
+      <div>🚀 Backend & APIs</div>
+      <div>☁️ Cloud & DevOps</div>
+      <div>📊 Data & ETL</div>
+      <div>🛠 Hardware & Linux</div>
+    </div>
+
+    <!-- Current Focus -->
+    <p class="text-sm text-gray-400">
+      🎯 Currently focused on backend scalability, cloud architecture, and performance optimization.
+    </p>
+
   </div>
 
-  <img width="200" height="200" src="/me3.jpg" alt={personalImageAlt} class="order-1 object-cover w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-64 aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20 animate-flip-up " style="object-position: 50% 50%">
+  <!-- IMAGE -->
+  <div class="flex justify-center md:justify-end">
+    <div class="relative w-64 group">
+      <img 
+        src="/me3.jpg" 
+        alt={personalImageAlt} 
+        class="object-cover w-64 aspect-square p-1 rotate-3 lg:p-2 rounded-2xl 
+               bg-black/20 dark:bg-yellow-500/5 
+               ring-1 ring-black/70 dark:ring-white/20 
+               animate-flip-up
+               transition-all duration-500
+               group-hover:scale-105 group-hover:-translate-y-1 group-hover:rotate-0" 
+        style="object-position: 50% 50%"
+      />
+
+      <!-- Badge -->
+      <div class="absolute bottom-3 left-3 px-3 py-1 text-xs rounded-full 
+                  bg-black/60 backdrop-blur-md border border-white/10
+                  text-white
+                  opacity-100 md:opacity-0 translate-y-0 md:translate-y-2
+                  transition-all duration-500
+                  md:group-hover:opacity-100 md:group-hover:translate-y-0">
+        🚀 Open to Opportunities
+      </div>
+    </div>
+  </div>
 
 </article>
