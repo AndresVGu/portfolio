@@ -1,70 +1,105 @@
 ---
-const PIMAGEALT = "Andres Villarreal"
+const PIMAGEALT = "Andres Villarreal";
+const graduationYear = 2024;
+const currentYear = new Date().getFullYear();
+const currentExperience = currentYear - graduationYear;
 
 import Badge from '../components/Badge.astro';
 import Linkedin from '../Icons/Linkedin.astro';
 import Github from '../Icons/Github.astro';
 import Mail from '../Icons/Mail.astro';
 import Social from '../components/Social.astro';
-
 ---
-<div class="max-w-xl">
-    <div class="flex gap-4 mb-4">
-        <img
+
+<div class="max-w-3xl mx-auto px-4 sm:px-6">
+  
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row items-center gap-6 mb-6">
+    
+    <!-- Imagen -->
+    <a href="#about" class="group">
+      <img
         src="https://media.licdn.com/dms/image/v2/C4D03AQGoX6ZAAJ0Hgw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1647785011694?e=1775088000&v=beta&t=7TOvAJMcLcXbAI1FR0LHwJTU5QcMxDzaQ-OqQaFKgus"
         alt={PIMAGEALT}
-        class="rounded-full shadow-lg size-20 " 
-        />
+        class="rounded-full shadow-xl w-24 h-24 sm:w-28 sm:h-28 transition-transform duration-300 group-hover:scale-105"
+      />
+    </a>
 
-        <div class="flex justify-center items-center">
+    <!-- Actions -->
+    <div class="flex flex-wrap justify-center sm:justify-start items-center gap-3">
+      
+      <Social 
+        href="mailto:andresvillarrealguti@gmail.com"
+        class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors font-medium"
+      >
+        <Mail class="size-5"/>
+        Contact
+      </Social>
 
-            <Social href="mailto:andresvillarrealguti@gmail.com">
-                <Mail class=" size-7"/>
-                Contact Me
-            </Social>
-            
-        </div>
-        <!--
+      <a
+        href="/public/docs/cv2024.pdf"
+        download="cv2024.pdf"
+        class="flex items-center"
+      >
+        <Badge>
+          Download CV
+        </Badge>
+      </a>
 
-            <a
-            class="flex items-center btn btn--download" 
-            href="/public/docs/cv2024.pdf"
-            
-            download="cv2024.pdf"
-            >
-                <Badge>
-                    Download Resume
-                </Badge>
-            </a>
-         -->
-
-       
     </div>
-    <!--text-white text-5xl font-bold flex flex-row gap-x-4 pb-4-->
-    <h1 class="text-4xl font-bold tracking-tight text-gray-800
-        sm:text-5xl dark:text-white">
-        Hey, I'm Andres&#x1F44B; 
-    </h1>
+  </div>
 
-    <p
-    class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200
-    [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300">
-    <strong>Full-Stack Developer | +5 Years Experience</strong> | Trilingual (EN/FR/ES) Colombian &#x1F1E8;&#x1F1F4;.
-    I specialize in ASP.NET & React Web Applications, UWP UI, 
-    responsive web sites and mobile apps development.
-    </p>
-   
-    <nav class="flex gap-x-6 mt-8">
+  <!-- Title -->
+  <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+    Hey, I'm Andres <span class="animate-wave">👋</span>
+  </h1>
 
+  <!-- Description (UN SOLO PÁRRAFO) -->
+  <p class="mt-6 text-lg sm:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+    <strong class="text-yellow-500 dark:text-yellow-200">
+      Full-Stack Developer
+     · 
+      {currentExperience}+ years of experience
+     · 
+      Trilingual (EN / FR / ES) Colombian 🇨🇴
+    </strong>. 
+    I build <strong class="text-gray-900 dark:text-white">robust</strong> and 
+    <strong class="text-gray-900 dark:text-white">scalable</strong> web and mobile applications. 
+     Focusing on 
+    <strong>responsive</strong>, <strong>user-friendly</strong> experiences and solving real-world problems through code.
+  </p>
 
-        <Social  href="https://www.linkedin.com/in/avillarrealg/">
-            <Linkedin class=" size-6"/>
-            LinkedIn
-        </Social>
-        <Social  href="https://github.com/AndresVGu">
-            <Github class=" size-6"/>
-            GitHub
-        </Social>
-        
-    </nav>
+  <!-- Social -->
+  <nav class="flex justify-center sm:justify-start gap-6 mt-8">
+    <Social 
+      href="https://www.linkedin.com/in/avillarrealg/"
+      class="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+    >
+      <Linkedin class="size-6"/>
+      LinkedIn
+    </Social>
+
+    <Social 
+      href="https://github.com/AndresVGu"
+      class="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+    >
+      <Github class="size-6"/>
+      GitHub
+    </Social>
+  </nav>
+
 </div>
+
+<style>
+  .animate-wave {
+    display: inline-block;
+    transform-origin: 70% 70%;
+    animation: wave 1.5s infinite;
+  }
+
+  @keyframes wave {
+    0%, 60%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(15deg); }
+    40% { transform: rotate(-10deg); }
+  }
+</style>
