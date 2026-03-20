@@ -1,58 +1,129 @@
 ---
 import LinkInLine from '../components/LinkInLine.astro';
-interface Props{
-    startDate: string
-    endDate: string
-    title: string
-    company: string
-    description: string
-    list: string
-    link?: string
-}
 
-const {startDate, endDate, title, company, description, list, link} = Astro.props
+const { startDate, endDate, title, company, description, list, link } = Astro.props;
 ---
-<div
-class="relative mx-12 pb-12 grid before:absolute before:left-[-35px] before:block before:h-full before:border-l-2 before:border-black/20 dark:before:border-white/15 before:content-[''] md:grid-cols-5 md:gap-10 md:space-x-4]">
 
-    <div class="relative pb-12 md:col-span-2 ">
-        <div class="sticky top-0">
-            <span class="text-yellow-400 -left-[42px]
-            absolute rounded-full text-5xl">
-            &bull;</span>
-            <h3 class="text-xl font-bold dark:text-sky-200/80">{title}</h3>
-            <h4 class="font-semibold text-xl text-gray-600 dark:text-white">{company}</h4>
-            <time class="p-0 m-0 text-sm text-gray-600/80 dark:text-white/80">{startDate}</time>
-            <time class="p-0 m-0 text-sm text-gray-600/80 dark:text-white/80">{endDate}</time>
-        </div>
+<div class="timeline-item step relative mx-6 md:mx-12 pb-20 grid md:grid-cols-5 md:gap-10">
+
+  <!-- PROGRESS LINE -->
+  <div class="timeline-line absolute left-0 md:left-[-20px] top-0 w-[3px] h-full bg-black/10 dark:bg-white/10 overflow-hidden">
+    <div class="progress bg-gradient-to-b from-yellow-400 via-cyan-400 to-transparent w-full h-0 transition-all duration-500"></div>
+  </div>
+
+  <!-- DOT -->
+  <span class="dot absolute left-[-8px] md:left-[-28px] top-2 w-5 h-5 rounded-full bg-black/30 dark:bg-white/30 transition-all duration-300"></span>
+
+  <!-- LEFT -->
+  <div class="md:col-span-2">
+    <div class="content-left opacity-0 translate-y-10 transition-all duration-500">
+      <h3 class="text-2xl font-bold text-black dark:text-white">{title}</h3>
+      <h4 class="text-lg text-gray-700 dark:text-gray-300">{company}</h4>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        {startDate} — {endDate}
+      </p>
     </div>
+  </div>
 
-    <div class="relativee flex flex-col gap-2 pb-4 text-gray-600 dark:text-gray-300 md:col-span-3 animate-fade-left animate-delay-[5ms]">
-      {description}
-      {list}
+  <!-- RIGHT -->
+  <div class="md:col-span-3">
+    <div class="card content-right opacity-0 translate-y-10 relative p-6 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-xl overflow-hidden transition-all duration-500">
+
+      <!-- GLOW -->
+      <div class="glow pointer-events-none absolute inset-0 opacity-0 transition duration-300"></div>
+
+      <p class="text-gray-800 dark:text-gray-200">{description}</p>
+
+      <div class="mt-3 text-sm text-gray-600 dark:text-gray-400">{list}</div>
+
       {
-        link &&(
-            <LinkInLine href={link} >
-                saber mas{" "}
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-5 icon icon-tabler icon-tabler-chevron-right"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                 stroke-linejoin="round"
-                >
-                <>
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M9 6l6 6l-6 6" />
-                </>  
-                </svg>
+        link && (
+          <div class="mt-4">
+            <LinkInLine href={link}>
+              saber más →
             </LinkInLine>
+          </div>
         )
-      }  
+      }
+
     </div>
+  </div>
 </div>
+
+<script>
+  const steps = document.querySelectorAll(".step");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const step = entry.target;
+
+      const left = step.querySelector(".content-left");
+      const right = step.querySelector(".content-right");
+      const dot = step.querySelector(".dot");
+      const progress = step.querySelector(".progress");
+
+      if (entry.isIntersecting) {
+        // ✅ ACTIVA STEP
+        left.classList.remove("opacity-0", "translate-y-10");
+        right.classList.remove("opacity-0", "translate-y-10");
+
+        // DOT ACTIVO + POP
+        dot.classList.remove("bg-black/30", "dark:bg-white/30");
+        dot.classList.add("bg-yellow-400", "shadow-lg", "shadow-yellow-400/60", "dot-pop");
+
+        progress.style.height = "100%";
+
+      } else {
+        // 🔁 DESACTIVA
+        left.classList.add("opacity-0", "translate-y-10");
+        right.classList.add("opacity-0", "translate-y-10");
+
+        dot.classList.add("bg-black/30", "dark:bg-white/30");
+        dot.classList.remove("bg-yellow-400", "shadow-lg", "dot-pop");
+
+        progress.style.height = "0%";
+      }
+    });
+  }, {
+    threshold: 0.5
+  });
+
+  steps.forEach(step => observer.observe(step));
+
+  // ✨ GLOW
+  document.querySelectorAll(".card").forEach(card => {
+    const glow = card.querySelector(".glow");
+
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,215,0,0.25), transparent 40%)`;
+      glow.style.opacity = "1";
+    });
+
+    card.addEventListener("mouseleave", () => {
+      glow.style.opacity = "0";
+    });
+  });
+</script>
+
+<style>
+  /* DOT POP ANIMATION 🔥 */
+  .dot-pop {
+    animation: pop 0.35s ease;
+  }
+
+  @keyframes pop {
+    0% {
+      transform: scale(0.6);
+    }
+    50% {
+      transform: scale(1.4);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>
