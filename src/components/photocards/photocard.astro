@@ -1,0 +1,37 @@
+---
+// Props del componente
+const { src, alt, badgeText } = Astro.props;
+---
+
+<div class="relative rounded-2xl overflow-hidden
+            bg-black/5 dark:bg-white/5
+            border border-black/10 dark:border-white/10
+            p-2 perspective-1500 group">
+
+  <!-- Imagen principal -->
+  <img 
+    src={src} 
+    alt={alt} 
+    class="w-full h-full object-cover aspect-square rounded-xl
+           transition-transform duration-200 transform will-change-transform"
+  />
+
+  <!-- overlay dinámico (glow lenticular) -->
+  <div class="absolute inset-0 pointer-events-none transition-all rounded-xl"
+       style="background: radial-gradient(circle at 50% 50%, rgba(255,215,0,0), transparent 40%);
+              opacity: 0;">
+  </div>
+
+  <!-- badge -->
+  {badgeText && (
+    <div class="absolute bottom-3 left-3 text-xs px-3 py-1 rounded-full
+                bg-white/70 dark:bg-black/60
+                backdrop-blur-md border border-black/10 dark:border-white/10">
+      {badgeText}
+    </div>
+  )}
+</div>
+
+<script>
+    import '../../scripts/about'
+</script>
