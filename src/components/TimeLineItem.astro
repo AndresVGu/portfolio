@@ -15,7 +15,7 @@ const { startDate, endDate, title, company, description, list, link } = Astro.pr
   <span class="dot absolute left-[-8px] md:left-[-28px] top-2 w-5 h-5 rounded-full bg-black/30 dark:bg-white/30 transition-all duration-300"></span>
 
   <!-- LEFT -->
-  <div class="md:col-span-2">
+  <div class="md:col-span-2 ml-6">
     <div class="content-left opacity-0 translate-y-10 transition-all duration-500">
       <h3 class="text-2xl font-bold text-black dark:text-white">{title}</h3>
       <h4 class="text-lg text-gray-700 dark:text-gray-300">{company}</h4>
@@ -26,7 +26,7 @@ const { startDate, endDate, title, company, description, list, link } = Astro.pr
   </div>
 
   <!-- RIGHT -->
-  <div class="md:col-span-3">
+  <div class="md:col-span-3 ml-4 mt-4 md:mt-0 ">
     <div class="card content-right opacity-0 translate-y-10 relative p-6 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-xl overflow-hidden transition-all duration-500">
 
       <!-- GLOW -->
@@ -40,7 +40,7 @@ const { startDate, endDate, title, company, description, list, link } = Astro.pr
         link && (
           <div class="mt-4">
             <LinkInLine href={link}>
-              saber más →
+              See more →
             </LinkInLine>
           </div>
         )
@@ -51,62 +51,7 @@ const { startDate, endDate, title, company, description, list, link } = Astro.pr
 </div>
 
 <script>
-  const steps = document.querySelectorAll(".step");
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const step = entry.target;
-
-      const left = step.querySelector(".content-left");
-      const right = step.querySelector(".content-right");
-      const dot = step.querySelector(".dot");
-      const progress = step.querySelector(".progress");
-
-      if (entry.isIntersecting) {
-        // ✅ ACTIVA STEP
-        left.classList.remove("opacity-0", "translate-y-10");
-        right.classList.remove("opacity-0", "translate-y-10");
-
-        // DOT ACTIVO + POP
-        dot.classList.remove("bg-black/30", "dark:bg-white/30");
-        dot.classList.add("bg-yellow-400", "shadow-lg", "shadow-yellow-400/60", "dot-pop");
-
-        progress.style.height = "100%";
-
-      } else {
-        // 🔁 DESACTIVA
-        left.classList.add("opacity-0", "translate-y-10");
-        right.classList.add("opacity-0", "translate-y-10");
-
-        dot.classList.add("bg-black/30", "dark:bg-white/30");
-        dot.classList.remove("bg-yellow-400", "shadow-lg", "dot-pop");
-
-        progress.style.height = "0%";
-      }
-    });
-  }, {
-    threshold: 0.5
-  });
-
-  steps.forEach(step => observer.observe(step));
-
-  // ✨ GLOW
-  document.querySelectorAll(".card").forEach(card => {
-    const glow = card.querySelector(".glow");
-
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,215,0,0.25), transparent 40%)`;
-      glow.style.opacity = "1";
-    });
-
-    card.addEventListener("mouseleave", () => {
-      glow.style.opacity = "0";
-    });
-  });
+  import '../scripts/timeLineItem'
 </script>
 
 <style>
