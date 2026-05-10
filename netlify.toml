@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Force PDF download instead of opening in browser
+[[headers]]
+  for = "/docs/*.pdf"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+    Content-Disposition = "attachment"
+    X-Content-Type-Options = "nosniff"

@@ -1,16 +1,167 @@
 {
-    "SEO_TITLE":"Andres Villarreal  Software and Website Developer with 3 years of experience",
-    "SEO_DESCRIPTION":"Junior Developer with strong expertice in Fullstack developing with knwoledge in C#, ASP.NET MVC, Web APIs and more",
-    
-    "TITLES":{
-        "stu":"Education",
-        "exp":"experience",
-        "pro":"Projects",
-        "about":"Abaout Me",
-        "cer": "Certificaciones & Licencias"
+  "SEO_TITLE": "Andres Villarreal - Full-Stack Developer with 3+ years of experience",
+  "SEO_DESCRIPTION": "Full-Stack Developer with expertise in .NET, ASP.NET MVC, Web APIs, React, and cloud solutions.",
+
+  "NAV": {
+    "home": "Home",
+    "experience": "Experience",
+    "projects": "Projects",
+    "education": "Education",
+    "about": "About",
+    "contact": "Contact"
+  },
+
+  "PROFILE": {
+    "greeting": "Hey, I'm Andrés",
+    "badge": "Open to Opportunities",
+    "contact": "Contact",
+    "resume": "Resume",
+    "description": "Full-Stack Developer · {years}+ years of experience · Trilingual (EN / FR / ES) Colombian 🇨🇴 — I build robust and scalable web and mobile applications. Focusing on responsive, user-friendly experiences and solving real-world problems through code."
+  },
+
+  "TITLES": {
+    "experience": "Experience",
+    "projects": "Projects",
+    "education": "Education",
+    "certificates": "Certificates",
+    "about": "About Me"
+  },
+
+  "EXPERIENCE": [
+    {
+      "startDate": "October 2024",
+      "endDate": "Present",
+      "title": "Electronics Specialist",
+      "company": "Rugged Books",
+      "description": "Deployed and configured Linux operating systems, and performed hardware repairs for brands such as:",
+      "list": "Panasonic, Dell and Getac"
+    },
+    {
+      "startDate": "January 2021",
+      "endDate": "August 2023",
+      "title": "Full-Stack Developer",
+      "company": "Floridabama Autosales",
+      "description": "Developed and delivered a business application for an automotive dealership.",
+      "list": "Building scalable modules using ASP.NET & React"
+    },
+    {
+      "startDate": "June 2018",
+      "endDate": "December 2021",
+      "title": "Junior Web Developer",
+      "company": "V12 Comunicaciones",
+      "description": "Full-Stack web development for startups to enterprises based in Colombia, focusing on:",
+      "list": "Custom apps, eCommerce, APIs & Cloud solutions"
     }
+  ],
+
+  "EDUCATION": [
+    {
+      "endDate": "October 2024",
+      "title": "Computer Programming & Analysis",
+      "company": "Niagara College Canada",
+      "description": "Developed expertise in creating mobile applications, analyzing big data, and designing interactive multimedia solutions."
+    }
+  ],
+
+  "ABOUT": {
+    "tagline": "🔥 I build software, break it, fix it, and make it better.",
+    "p1": "Most of the time I'm working with <strong>.NET</strong>, building <strong>APIs and backend systems</strong> that are meant to <strong>handle real usage — not just demos.</strong>",
+    "p2": "I also work <strong>hands-on as an electronic technician</strong>, which means I spend a lot of time dealing with <strong>Linux</strong>, hardware, and figuring out why something that <em>should work…</em> doesn't.",
+    "p3": "I've done <strong>full-stack work</strong>, played around with modern frameworks, SQL, and Python — but at the end of the day, I just like <strong>building things that work well and make sense.</strong>",
+    "techStack": "⚙️ Tech Stack",
+    "strengths": {
+      "backend": "🚀 Backend & APIs",
+      "cloud": "☁️ Cloud & DevOps",
+      "data": "📊 Data Workflows",
+      "linux": "🛠 Linux & Hardware"
+    },
+    "focus": "🎯 Focused on backend scalability, cloud architecture, and performance.",
+    "cards": {
+      "focused": "🎯 Focused",
+      "focusedItems": ["Linux", "Refurbishment", "Java"],
+      "location": "🌍 Location",
+      "locationValue": "📍 Toronto, 🇨🇦",
+      "interests": "Personal Interests",
+      "interestItems": [
+        "🚴 Cycling around the city",
+        "📚 Reading whenever I get the time",
+        "🧙‍♂️ Medieval movies (LOTR fan)"
+      ]
+    }
+  },
+
+  "PROJECTS": [
+    {
+      "title": "NBD Landscaping",
+      "subtitle": "Business app with ASP.NET MVC and C#",
+      "description": "A web application designed for a landscaping business, enabling employees to manage clients and projects based on their authentication level. Each employee can create, update, and delete client records, as well as assign projects to specific clients. Users can also add bid records detailing the required materials and labor to calculate the total project cost.",
+      "gallery": "Gallery",
+      "code": "Code",
+      "link": "Link"
+    },
+    {
+      "title": "Cities API",
+      "subtitle": "ASP.NET Core Web API",
+      "description": "A Web API that displays cities corresponding to their respective provinces. Users can also perform CRUD operations on each entity.",
+      "gallery": "Gallery",
+      "code": "Code",
+      "link": "Link"
+    },
+    {
+      "title": "Spotify Clone",
+      "subtitle": "Built with Astro",
+      "description": "A Spotify clone web app where users can play songs and navigate through different types of albums.",
+      "gallery": "Gallery",
+      "code": "Code"
+    },
+    {
+      "title": "Emma's Small Engines",
+      "subtitle": "Business app with vanilla HTML5, CSS3 & JavaScript",
+      "description": "A web application focused on managing inventory, equipment, repairs, and orders for different types of engines.",
+      "gallery": "Gallery",
+      "code": "Code"
+    },
+    {
+      "title": "VitGreen",
+      "subtitle": "eCommerce Website",
+      "description": "A modern eCommerce website specializing in protein products, offering a seamless shopping experience with secure payment options, detailed product descriptions, customer reviews, and fast shipping.",
+      "gallery": "Gallery",
+      "link": "Link"
+    },
+    {
+      "title": "V12 Magazine",
+      "subtitle": "Car Magazine",
+      "description": "A magazine website showcasing news and events from the automotive world in Colombia.",
+      "gallery": "Gallery",
+      "link": "Link"
+    }
+  ],
+
+  "FOOTER": {
+    "education": "Education",
+    "experience": "Experience",
+    "projects": "Projects",
+    "about": "About Me",
+    "contact": "Contact"
+  },
+
+  "CONTACT": {
+    "title": "Contact Me",
+    "subtitle": "Have a project in mind or just want to say hi? Fill out the form and I'll get back to you as soon as possible.",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "your@email.com",
+    "subject": "Subject",
+    "subjectPlaceholder": "What's this about?",
+    "message": "Message",
+    "messagePlaceholder": "Tell me about your project or idea...",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "successTitle": "Message sent!",
+    "successText": "Thanks for reaching out. I'll reply as soon as I can.",
+    "errorTitle": "Something went wrong.",
+    "errorText": "Please try again or email me directly at andresvillarrealguti@gmail.com",
+    "orEmail": "Or reach me directly at"
+  }
 }
-
-
-
-

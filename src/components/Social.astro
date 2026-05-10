@@ -1,21 +1,26 @@
-<a 
-    class={`
-        rounded-full 
-        border
-        flex 
-        justify-center 
-        items-center 
-        gap-x-2 
-        py-2 
-        px-4
-        bg-white/5 hover:scale-110  hover:bg-white/40 transition
-    `}
-    
-    {...Astro.props}
-	target="_blank"
-    rel="noopener noreferrer"
-    >
+---
+const { href, target, rel, class: className, ...rest } = Astro.props;
 
-    <slot/>
-						
+// Don't open mailto links in a new tab
+const isMailto = href?.startsWith('mailto:');
+const resolvedTarget = target ?? (isMailto ? '_self' : '_blank');
+const resolvedRel = rel ?? (isMailto ? undefined : 'noopener noreferrer');
+---
+
+<a
+  href={href}
+  target={resolvedTarget}
+  rel={resolvedRel}
+  class={`
+    rounded-full border flex justify-center items-center gap-x-2 py-2 px-4
+    text-gray-700 dark:text-gray-200
+    border-gray-300 dark:border-gray-600
+    bg-white/60 dark:bg-white/5
+    hover:bg-gray-100 dark:hover:bg-white/15
+    hover:scale-105 transition font-medium
+    ${className ?? ''}
+  `}
+  {...rest}
+>
+  <slot />
 </a>

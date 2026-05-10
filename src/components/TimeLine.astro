@@ -1,47 +1,26 @@
 ---
 import ExperienceItem from '../components/TimeLineItem.astro';
+import { getI18N } from '@/i18n';
 
-const EXPERIENCE = [
-{
-    
-    startDate: 'October 2024',
-    endDate:'To Present',
-    title: 'Electronics Specialist',
-    company: 'Rugged Books',
-    description: 'Deployed and configured Linux operating systems, and performed hardware repairs for brands such as:',
-    list: 'Panasonic, Dell and Getac', 
-    link: '#'
-},
-{
-    
-        startDate: 'January 2021',
-        endDate:'To August 2023',
-        title: 'Full-Stack Developer',
-        company: 'Floridabama Autosales',
-        description: 'Developed and delivered a business application for an automotive dealership.',
-        list: 'Building scaleble modules using ASP.NET & React',
-        link: '#'
-    },
-        {
-        startDate: 'June 2018',
-        endDate:'To December 2021',
-        title: 'Junior Web Developer',
-        company: 'V12 Comunicaciones',
-        description: 'Full-Stack web development for startups to enterprises based in Colombia, focusing on :',
-        list: 'Custom apps, eCommerce, APIs & Cloud solutions',
-        link: '#'
-    },
- 
-]
+interface Props {
+  currentLocale?: string;
+}
+
+const { currentLocale = 'en' } = Astro.props;
+const i18n = getI18N({ currentLocale });
 ---
+
 <ol class="relative mt-16">
-    {
-        EXPERIENCE.map((experience) =>(
-            <li class="">
-                <ExperienceItem {...experience}/>
-            </li>
-        ))
-    }
+  {i18n.EXPERIENCE.map((exp) => (
+    <li>
+      <ExperienceItem
+        startDate={exp.startDate}
+        endDate={exp.endDate}
+        title={exp.title}
+        company={exp.company}
+        description={exp.description}
+        list={exp.list}
+      />
+    </li>
+  ))}
 </ol>
-
-

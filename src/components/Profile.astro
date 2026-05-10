@@ -1,95 +1,101 @@
 ---
-const PIMAGEALT = "Andres Villarreal";
-const graduationYear = 2024;
-const currentYear = new Date().getFullYear();
-const currentExperience = currentYear - graduationYear;
-
 import Badge from '../components/Badge.astro';
 import Linkedin from '../Icons/Linkedin.astro';
 import Github from '../Icons/Github.astro';
 import Mail from '../Icons/Mail.astro';
 import Social from '../components/Social.astro';
+import { getI18N } from '@/i18n';
+
+interface Props {
+  currentLocale?: string;
+}
+
+const { currentLocale = 'en' } = Astro.props;
+const i18n = getI18N({ currentLocale });
+
+const graduationYear = 2024;
+const currentYear = new Date().getFullYear();
+const years = currentYear - graduationYear;
+
+const description = i18n.PROFILE.description.replace('{years}', String(years));
 ---
 
-<div class="max-w-3xl mx-auto px-4 sm:px-6">
-  
-  <!-- Header -->
-  <div class="flex flex-col sm:flex-row items-center gap-6 mb-6">
-    
-    <!-- Imagen -->
-    <a href="#about" class="group">
+<div class="w-full max-w-3xl mx-auto px-2 sm:px-4">
+
+  <!-- Top row: avatar + action buttons -->
+  <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-6">
+
+    <a href="#about" class="group shrink-0">
       <img
-        src="https://media.licdn.com/dms/image/v2/C4D03AQGoX6ZAAJ0Hgw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1647785011694?e=1775088000&v=beta&t=7TOvAJMcLcXbAI1FR0LHwJTU5QcMxDzaQ-OqQaFKgus"
-        alt={PIMAGEALT}
-        class="rounded-full shadow-xl w-24 h-24 sm:w-28 sm:h-28 transition-transform duration-300 group-hover:scale-105"
+        src="/me3.jpg"
+        alt="Andres Villarreal"
+        class="rounded-full shadow-xl w-20 h-20 sm:w-28 sm:h-28
+               transition-transform duration-300 group-hover:scale-105"
       />
     </a>
 
-    <!-- Actions -->
     <div class="flex flex-wrap justify-center sm:justify-start items-center gap-3">
-      
-      <Social 
+      <Social
         href="mailto:andresvillarrealguti@gmail.com"
-        class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors font-medium"
+        class="flex items-center gap-2 px-4 py-2 rounded-lg
+               text-gray-800 dark:text-gray-100
+               bg-gray-100 dark:bg-gray-800
+               border border-gray-300 dark:border-gray-600
+               hover:bg-gray-200 dark:hover:bg-gray-700
+               transition font-medium text-sm sm:text-base"
       >
-        <Mail class="size-5"/>
-        Contact
+        <Mail class="size-4 sm:size-5" />
+        {i18n.PROFILE.contact}
       </Social>
 
-      <a
-        href="/public/docs/cv2024.pdf"
-        download="cv2024.pdf"
-        class="flex items-center"
-      >
-        <Badge>
-          Resume
-        </Badge>
+      <a href="/docs/cv2024.pdf" download="cv2024.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center">
+        <Badge>{i18n.PROFILE.resume}</Badge>
       </a>
-
     </div>
   </div>
 
-  <!-- Title -->
-  <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-    Hey, I'm Andr&eacute;s<span class="animate-wave">👋</span>
+  <!-- Heading -->
+  <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight
+             text-gray-900 dark:text-white text-center sm:text-left">
+    {i18n.PROFILE.greeting}<span class="animate-wave">👋</span>
   </h1>
 
-  <!-- Description (UN SOLO PÁRRAFO) -->
-  <p class="mt-6 text-lg sm:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-    <strong class="text-yellow-500 dark:text-yellow-200">
-      Full-Stack Developer
-     · 
-      {currentExperience}+ years of experience
-     ·
-    </strong>
-     <strong class="text-blue-500 dark:text-blue-300"> 
-      Trilingual (EN / FR / ES) Colombian 🇨🇴
-     ·</strong> 
-    I build <strong class="text-gray-900 dark:text-white">robust</strong> and 
-    <strong class="text-gray-900 dark:text-white">scalable</strong> web and mobile applications. 
-     Focusing on 
-    <strong>responsive</strong>, <strong>user-friendly</strong> experiences and solving real-world problems through code.
+  <!-- Description -->
+  <p class="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl
+            text-gray-700 dark:text-gray-300 leading-relaxed
+            text-center sm:text-left"
+     id="profile-description"
+     data-graduation-year="2024"
+     data-template={i18n.PROFILE.description}>
+    {description}
   </p>
 
-  <!-- Social -->
-  <nav class="flex justify-center sm:justify-start gap-6 mt-8">
-    <Social 
+  <!-- Social links -->
+  <nav class="flex justify-center sm:justify-start gap-3 sm:gap-4 mt-6 sm:mt-8 flex-wrap">
+    <Social
       href="https://www.linkedin.com/in/avillarrealg/"
-      class="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+      class="flex items-center gap-2 text-sm sm:text-base
+             text-gray-700 dark:text-gray-200
+             border-gray-300 dark:border-gray-600
+             hover:text-blue-600 dark:hover:text-blue-400
+             hover:border-blue-400 dark:hover:border-blue-500 transition"
     >
-      <Linkedin class="size-6"/>
+      <Linkedin class="size-4 sm:size-5" />
       LinkedIn
     </Social>
 
-    <Social 
+    <Social
       href="https://github.com/AndresVGu"
-      class="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+      class="flex items-center gap-2 text-sm sm:text-base
+             text-gray-700 dark:text-gray-200
+             border-gray-300 dark:border-gray-600
+             hover:text-gray-900 dark:hover:text-white
+             hover:border-gray-500 dark:hover:border-gray-400 transition"
     >
-      <Github class="size-6"/>
+      <Github class="size-4 sm:size-5" />
       GitHub
     </Social>
   </nav>
-
 </div>
 
 <style>
@@ -98,10 +104,20 @@ import Social from '../components/Social.astro';
     transform-origin: 70% 70%;
     animation: wave 1.5s infinite;
   }
-
   @keyframes wave {
     0%, 60%, 100% { transform: rotate(0deg); }
-    20% { transform: rotate(15deg); }
-    40% { transform: rotate(-10deg); }
+    20%  { transform: rotate(15deg); }
+    40%  { transform: rotate(-10deg); }
   }
 </style>
+
+<script is:inline>
+  (function () {
+    const el = document.getElementById('profile-description');
+    if (!el) return;
+    const graduationYear = parseInt(el.dataset.graduationYear, 10);
+    const years = new Date().getFullYear() - graduationYear;
+    const template = el.dataset.template;
+    if (template) el.textContent = template.replace('{years}', years);
+  })();
+</script>

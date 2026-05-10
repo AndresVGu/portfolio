@@ -3,77 +3,87 @@ import Layout from '../layouts/Layout.astro';
 import Briefcase from '../Icons/Briefcase.astro';
 import EduIcon from '../Icons/PapersIcon.astro';
 import CodeIcon from '../Icons/Code.astro';
+import ProfileIcon from '../Icons/ProfileIcon.astro';
 import Experience from '../components/TimeLine.astro';
 import Education from '../components/Education.astro';
 import SectionContainer from '../components/SectionContainer.astro';
 import Profile from '../components/Profile.astro';
-import Projects from '../components/Projects.astro';
 import About from '../components/About.astro';
-import Bento from '../components/Bento.astro';
-import ProfileIcon from '../Icons/ProfileIcon.astro';
-
+import Certificates from '@/components/Certificates.astro';
+import Test from '@/components/Test.astro';
+import ContactForm from '@/components/ContactForm.astro';
+import SendModal from '@/components/SendModal.astro';
 import { getI18N } from '@/i18n';
 
-const {currentLocale = 'es'} = Astro
-const i18n = getI18N({currentLocale})
+const { currentLocale = 'en' } = Astro;
+const i18n = getI18N({ currentLocale });
 ---
 
-<Layout 
-    title=`${i18n.SEO_TITLE}&nbsp;${new Date().getFullYear()}`
-	description={i18n.SEO_DESCRIPTION}>
-	<main class="px-5">
+<Layout
+  title={i18n.SEO_TITLE}
+  description={i18n.SEO_DESCRIPTION}
+>
+  <main class="px-4 sm:px-6">
 
-		<SectionContainer class="py-16 md:py-36 animate-fade-right animate-duration-1500" id="home">
-			<Profile>
-				<slot />
-			</Profile>
-		</SectionContainer>
-		
-		<div class="space-y-24">
-			
-			<SectionContainer id="experience">
-				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
-					<Briefcase class="size-7" />
-					{i18n.TITLES.exp}
-				</h2>
-				<Experience />
-			</SectionContainer>
-			
-			<SectionContainer id="projects">
-				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
-					<CodeIcon class="size-7" />
-					{i18n.TITLES.pro}
-					
-				</h2>
-				<Projects />
-			</SectionContainer>
-			
-			<SectionContainer id="bento" >
-				<h2 class="flex  mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
-					<CodeIcon class="size-7" />
-					{i18n.TITLES.pro}
-				</h2>
-				<Bento />
-			</SectionContainer>
-			
-			<SectionContainer id="education">
-				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
-					<EduIcon class="size-7" />
-					{i18n.TITLES.stu}
-				</h2>
-				<Education />
-			</SectionContainer>
-			
-			<SectionContainer id="about">
-				<h2 class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
-					<ProfileIcon class="size-7" />
-					{i18n.TITLES.about}
-					
-				</h2>
-				<About />
-			</SectionContainer>
+    <SectionContainer class="py-16 md:py-36 animate-fade-right animate-duration-1500" id="home">
+      <Profile currentLocale={currentLocale} />
+    </SectionContainer>
 
-		</div>
-		
-	</main>
+    <div class="space-y-16 sm:space-y-24">
+
+      <SectionContainer id="experience">
+        <h2 class="flex items-center mb-6 text-2xl sm:text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
+          <Briefcase class="size-6 sm:size-7" />
+          {i18n.TITLES.experience}
+        </h2>
+        <Experience currentLocale={currentLocale} />
+      </SectionContainer>
+
+      <SectionContainer id="projects">
+        <h2 class="flex items-center mb-6 text-2xl sm:text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
+          <CodeIcon class="size-6 sm:size-7" />
+          {i18n.TITLES.projects}
+        </h2>
+        <Test currentLocale={currentLocale} />
+      </SectionContainer>
+
+      <SectionContainer id="education">
+        <h2 class="flex items-center mb-6 text-2xl sm:text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
+          <EduIcon class="size-6 sm:size-7" />
+          {i18n.TITLES.education}
+        </h2>
+        <Education currentLocale={currentLocale} />
+        <br />
+        <h3 class="flex items-center mb-6 text-xl sm:text-2xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
+          {i18n.TITLES.certificates}
+        </h3>
+        <Certificates />
+      </SectionContainer>
+
+      <SectionContainer id="about">
+        <h2 class="flex items-center mb-6 text-2xl sm:text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
+          <ProfileIcon class="size-6 sm:size-7" />
+          {i18n.TITLES.about}
+        </h2>
+        <About currentLocale={currentLocale} />
+      </SectionContainer>
+
+      <SectionContainer id="contact">
+        <h2 class="flex items-center mb-6 text-2xl sm:text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
+          <!-- Mail icon inline SVG -->
+          <svg class="size-6 sm:size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          {i18n.CONTACT.title}
+        </h2>
+        <ContactForm currentLocale={currentLocale} />
+      </SectionContainer>
+
+    </div>
+
+  </main>
 </Layout>
+
+<!-- Send modal lives outside main so it can overlay everything -->
+<SendModal />

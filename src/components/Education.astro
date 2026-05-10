@@ -1,26 +1,25 @@
 ---
 import EducationItem from '../components/EducationTimeLine.astro';
+import { getI18N } from '@/i18n';
 
-const EDUCATION = [
-    {
-        startDate: '',
-        endDate: 'October 2024',
-        title: 'Computer Programming & Analisys',
-        company:'Niagara College Canada',
-        description: 'Develop expertise in creating mobile applications, analyzing big data, and designing interactive multimedia solutions.',
-       // link: '#'
-    }
-    
-]
+interface Props {
+  currentLocale?: string;
+}
+
+const { currentLocale = 'en' } = Astro.props;
+const i18n = getI18N({ currentLocale });
 ---
+
 <ol class="relative mt-16">
-    {
-        EDUCATION.map((education) =>(
-            <li class="">
-                <EducationItem {...education}/>
-            </li>
-        ))
-    }
+  {i18n.EDUCATION.map((edu) => (
+    <li>
+      <EducationItem
+        startDate={''}
+        endDate={edu.endDate}
+        title={edu.title}
+        company={edu.company}
+        description={edu.description}
+      />
+    </li>
+  ))}
 </ol>
-
-

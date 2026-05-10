@@ -5,7 +5,7 @@ import Cert from "./Cert.astro"
 ---
 
 <Cert/>
-<div class="grid grid-cols-1 sm:grid-cols-2 max-w-6xl gap-8 mx-auto py-20" id="gallery">
+<div class="grid grid-cols-1 sm:grid-cols-2 max-w-6xl gap-8 mx-auto py-20" id="gallery-certs">
     {
         Array.from({length:4}).map((_, i) =>(
             <a
@@ -42,12 +42,11 @@ import Cert from "./Cert.astro"
   </div>
 <script>
     import PhotoSwipeLightbox from 'photoswipe/lightbox';
-    
-    const lightbox = new PhotoSwipeLightbox({
-        gallery: "#gallery",
-        children: "a",
-        pswpModule: () => import("photoswipe"),
-    })
-    lightbox.init()
 
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: '#gallery-certs',
+        children: 'a',
+        pswpModule: () => import('photoswipe'),
+    });
+    lightbox.init();
 </script>

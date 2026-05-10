@@ -24,6 +24,56 @@ const { currentLocale } = Astro
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
     <ViewTransitions />
+
+    <!-- Auto-detect language on first visit and redirect -->
+    <script is:inline>
+      (function () {
+        // Only redirect if the user hasn't manually chosen a language yet
+        if (typeof localStorage === 'undefined') return;
+        if (localStorage.getItem('lang-redirected')) return;
+
+        const path = window.location.pathname;
+        // Already on a localised route — don't redirect
+        if (path.startsWith('/es') || path.startsWith('/fr')) return;
+
+        const lang = (navigator.language || navigator.userLanguage || 'en')
+          .toLowerCase()
+          .slice(0, 2);
+
+        localStorage.setItem('lang-redirected', '1');
+
+        if (lang === 'es') {
+          window.location.replace('/es/');
+        } else if (lang === 'fr') {
+          window.location.replace('/fr/');
+        }
+        // Default: stay on English
+      })();
+    </script>
+
+    <!-- Apply dark/light theme before paint to avoid flash -->
+    <script is:inline>
+      (function applyStoredTheme() {
+        const stored = typeof localStorage !== 'undefined'
+          ? localStorage.getItem('theme')
+          : null;
+        const preference = stored ?? 'system';
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = preference === 'dark' || (preference === 'system' && prefersDark);
+        document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+      })();
+
+      // Re-apply after every ViewTransitions navigation so the class is never lost
+      document.addEventListener('astro:after-swap', function () {
+        const stored = typeof localStorage !== 'undefined'
+          ? localStorage.getItem('theme')
+          : null;
+        const preference = stored ?? 'system';
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = preference === 'dark' || (preference === 'system' && prefersDark);
+        document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+      });
+    </script>
 	</head>
 	<body class="relative text-black dark:text-white ">
 		<div
@@ -32,9 +82,9 @@ const { currentLocale } = Astro
 		dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
 	  >
 	  </div>
-		<Header />
+		<Header currentLocale={currentLocale} />
 		<slot />
-		<Footer />
+		<Footer currentLocale={currentLocale} />
   <style is:global>
     :root {
       
@@ -60,10 +110,9 @@ const { currentLocale } = Astro
           }
         }
   
-        @media (prefers-color-scheme: dark) {
-          body {
-            color: rgba(255, 255, 255, 0.9);
-          }
+        /* Use .dark class (controlled by ThemeToggle) instead of media query */
+        .dark body {
+          color: rgba(255, 255, 255, 0.9);
         }
   
         #header-menu{
@@ -90,8 +139,13 @@ const { currentLocale } = Astro
           }
         }
   
-        @media (prefers-color-scheme: dark) {
-          @keyframes blur {
+        /* Dark mode nav blur — driven by .dark class, not media query */
+        html.dark #header-nav {
+          animation: blur-dark linear both 0.5s;
+          animation-timeline: scroll();
+        }
+
+        @keyframes blur-dark {
             from {
               border: 0px;
             }
@@ -113,7 +167,6 @@ const { currentLocale } = Astro
               background-color: rgba(0, 0, 0, 0.3);
               border-radius: 9999px;
             }
-          }
         }
     
   </style>

@@ -1,0 +1,334 @@
+---
+import { getI18N } from '@/i18n';
+import Mail from '../Icons/Mail.astro';
+
+interface Props {
+  currentLocale?: string;
+}
+
+const { currentLocale = 'en' } = Astro.props;
+const i18n = getI18N({ currentLocale });
+const t = i18n.CONTACT;
+---
+
+<div class="w-full max-w-2xl mx-auto">
+
+  <!-- Subtitle -->
+  <p class="text-gray-600 dark:text-gray-400 mb-8 text-base sm:text-lg leading-relaxed">
+    {t.subtitle}
+  </p>
+
+  <!-- Form card -->
+  <div class="relative rounded-2xl border border-black/10 dark:border-white/10
+              bg-black/5 dark:bg-white/5 backdrop-blur-sm p-6 sm:p-8">
+
+    <!-- ✅ Success state -->
+    <div id="contact-success"
+         class="hidden flex-col items-center justify-center text-center py-10 gap-4">
+      <div class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/40
+                  flex items-center justify-center">
+        <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white">{t.successTitle}</h3>
+      <p class="text-gray-600 dark:text-gray-400">{t.successText}</p>
+    </div>
+
+    <!-- ❌ Error banner -->
+    <div id="contact-error"
+         class="hidden mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-900/20
+                border border-red-200 dark:border-red-800">
+      <p class="font-semibold text-red-700 dark:text-red-400 text-sm">{t.errorTitle}</p>
+      <p class="text-red-600 dark:text-red-400 text-sm mt-1">{t.errorText}</p>
+    </div>
+
+    <!-- 📬 Form -->
+    <form id="contact-form" novalidate class="space-y-5">
+
+      <!--
+        ─────────────────────────────────────────────────────────────────────
+        HOW TO ACTIVATE:
+        1. Go to https://web3forms.com
+        2. Enter your email → click "Create Access Key"
+        3. Check your inbox and confirm
+        4. Copy the access key and paste it below replacing YOUR_ACCESS_KEY
+        ─────────────────────────────────────────────────────────────────────
+      -->
+      <input type="hidden" name="access_key" value="e1aa1a2d-4e9b-402b-a211-3e7a76d03a67" />
+
+      <!-- Honeypot anti-spam (must stay hidden) -->
+      <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+
+      <!-- Subject prefix so you recognise it in your inbox -->
+      <input type="hidden" name="subject" id="hidden-subject"
+             value="New message from portfolio" />
+
+      <!-- Name + Email row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+        <!-- Name -->
+        <div class="flex flex-col gap-1.5">
+          <label for="contact-name"
+                 class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            {t.name} <span class="text-red-500">*</span>
+          </label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            required
+            autocomplete="name"
+            placeholder={t.namePlaceholder}
+            class="w-full px-4 py-2.5 rounded-xl text-sm
+                   text-gray-900 dark:text-gray-100
+                   bg-white dark:bg-gray-800
+                   border border-gray-300 dark:border-gray-600
+                   placeholder-gray-400 dark:placeholder-gray-500
+                   focus:outline-none focus:ring-2 focus:ring-yellow-400/60
+                   focus:border-yellow-400 dark:focus:border-yellow-500
+                   transition"
+          />
+          <span class="field-error hidden text-xs text-red-500"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="flex flex-col gap-1.5">
+          <label for="contact-email"
+                 class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            {t.email} <span class="text-red-500">*</span>
+          </label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            placeholder={t.emailPlaceholder}
+            class="w-full px-4 py-2.5 rounded-xl text-sm
+                   text-gray-900 dark:text-gray-100
+                   bg-white dark:bg-gray-800
+                   border border-gray-300 dark:border-gray-600
+                   placeholder-gray-400 dark:placeholder-gray-500
+                   focus:outline-none focus:ring-2 focus:ring-yellow-400/60
+                   focus:border-yellow-400 dark:focus:border-yellow-500
+                   transition"
+          />
+          <span class="field-error hidden text-xs text-red-500"></span>
+        </div>
+      </div>
+
+      <!-- Subject (visible) -->
+      <div class="flex flex-col gap-1.5">
+        <label for="contact-subject-visible"
+               class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          {t.subject}
+        </label>
+        <input
+          id="contact-subject-visible"
+          type="text"
+          placeholder={t.subjectPlaceholder}
+          class="w-full px-4 py-2.5 rounded-xl text-sm
+                 text-gray-900 dark:text-gray-100
+                 bg-white dark:bg-gray-800
+                 border border-gray-300 dark:border-gray-600
+                 placeholder-gray-400 dark:placeholder-gray-500
+                 focus:outline-none focus:ring-2 focus:ring-yellow-400/60
+                 focus:border-yellow-400 dark:focus:border-yellow-500
+                 transition"
+        />
+      </div>
+
+      <!-- Message -->
+      <div class="flex flex-col gap-1.5">
+        <label for="contact-message"
+               class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          {t.message} <span class="text-red-500">*</span>
+        </label>
+        <textarea
+          id="contact-message"
+          name="message"
+          required
+          rows="5"
+          placeholder={t.messagePlaceholder}
+          class="w-full px-4 py-2.5 rounded-xl text-sm resize-y min-h-[120px]
+                 text-gray-900 dark:text-gray-100
+                 bg-white dark:bg-gray-800
+                 border border-gray-300 dark:border-gray-600
+                 placeholder-gray-400 dark:placeholder-gray-500
+                 focus:outline-none focus:ring-2 focus:ring-yellow-400/60
+                 focus:border-yellow-400 dark:focus:border-yellow-500
+                 transition"
+        ></textarea>
+        <span class="field-error hidden text-xs text-red-500"></span>
+      </div>
+
+      <!-- Submit row -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center
+                  justify-between gap-4 pt-2">
+
+        <button
+          id="contact-submit"
+          type="submit"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm
+                 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600
+                 text-gray-900
+                 dark:bg-yellow-500 dark:hover:bg-yellow-400
+                 border border-yellow-500 dark:border-yellow-400
+                 focus:outline-none focus:ring-2 focus:ring-yellow-400/60
+                 transition disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          <Mail class="size-4" />
+          <span id="submit-label">{t.send}</span>
+          <svg id="submit-spinner" class="hidden animate-spin size-4"
+               fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10"
+                    stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+        </button>
+
+        <p class="text-xs text-gray-500 dark:text-gray-400">
+          {t.orEmail}{" "}
+          <a href="mailto:andresvillarrealguti@gmail.com"
+             class="text-yellow-600 dark:text-yellow-400 hover:underline font-medium">
+            andresvillarrealguti@gmail.com
+          </a>
+        </p>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  // Sending label translations stored as data attributes on the button
+  const SENDING_LABELS: Record<string, string> = {
+    en: "Sending...",
+    es: "Enviando...",
+    fr: "Envoi en cours...",
+  };
+
+  declare global {
+    interface Window {
+      showSendModal:   (state: 'sending' | 'success' | 'error') => void;
+      closeSendModal:  () => void;
+      updateSendModal: (state: 'sending' | 'success' | 'error') => void;
+    }
+  }
+
+  function initContactForm() {
+    const form        = document.getElementById("contact-form")       as HTMLFormElement | null;
+    const successBox  = document.getElementById("contact-success");
+    const errorBox    = document.getElementById("contact-error");
+    const submitBtn   = document.getElementById("contact-submit")     as HTMLButtonElement | null;
+    const submitLabel = document.getElementById("submit-label");
+    const spinner     = document.getElementById("submit-spinner");
+    const hiddenSubj  = document.getElementById("hidden-subject")     as HTMLInputElement | null;
+    const visibleSubj = document.getElementById("contact-subject-visible") as HTMLInputElement | null;
+
+    if (!form || !submitBtn) return;
+
+    // Detect locale from <html lang="...">
+    const locale = document.documentElement.lang?.slice(0, 2) || "en";
+    const sendingLabel = SENDING_LABELS[locale] ?? "Sending...";
+    const originalLabel = submitLabel?.textContent ?? "Send Message";
+
+    // Sync visible subject → hidden subject field
+    visibleSubj?.addEventListener("input", () => {
+      if (hiddenSubj) {
+        hiddenSubj.value = visibleSubj.value.trim()
+          ? `Portfolio contact: ${visibleSubj.value.trim()}`
+          : "New message from portfolio";
+      }
+    });
+
+    // ── Field validation helpers ──────────────────────────────────────────
+    function markError(field: HTMLElement, msg: string) {
+      field.classList.add("border-red-400", "dark:border-red-500");
+      field.classList.remove("border-gray-300", "dark:border-gray-600");
+      const err = field.parentElement?.querySelector<HTMLElement>(".field-error");
+      if (err) { err.textContent = msg; err.classList.remove("hidden"); }
+    }
+
+    function clearError(field: HTMLElement) {
+      field.classList.remove("border-red-400", "dark:border-red-500");
+      field.classList.add("border-gray-300", "dark:border-gray-600");
+      const err = field.parentElement?.querySelector<HTMLElement>(".field-error");
+      if (err) { err.textContent = ""; err.classList.add("hidden"); }
+    }
+
+    form.querySelectorAll<HTMLElement>("input, textarea").forEach((el) => {
+      el.addEventListener("input", () => clearError(el));
+    });
+
+    // ── Submit ────────────────────────────────────────────────────────────
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nameEl    = document.getElementById("contact-name")    as HTMLInputElement;
+      const emailEl   = document.getElementById("contact-email")   as HTMLInputElement;
+      const messageEl = document.getElementById("contact-message") as HTMLTextAreaElement;
+
+      // Client-side validation
+      let valid = true;
+      if (!nameEl?.value.trim()) {
+        markError(nameEl, nameEl.labels?.[0]?.textContent?.replace("*","").trim() + " is required" || "Required");
+        valid = false;
+      }
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailEl?.value.trim() || !emailRe.test(emailEl.value)) {
+        markError(emailEl, "A valid email is required");
+        valid = false;
+      }
+      if (!messageEl?.value.trim()) {
+        markError(messageEl, "Message is required");
+        valid = false;
+      }
+      if (!valid) return;
+
+      // Loading state — open modal in "sending" state
+      submitBtn.disabled = true;
+      if (submitLabel) submitLabel.textContent = sendingLabel;
+      spinner?.classList.remove("hidden");
+      errorBox?.classList.add("hidden");
+
+      // Open the cool modal
+      window.showSendModal?.('sending');
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "application/json" },
+        });
+
+        const json = await res.json();
+
+        if (res.ok && json.success) {
+          // Transition modal to success after a short delay so the rocket animation plays
+          setTimeout(() => window.updateSendModal?.('success'), 1400);
+
+          // Hide the form itself (success is shown in modal)
+          form.classList.add("hidden");
+          successBox?.classList.remove("hidden");
+          successBox?.classList.add("flex");
+        } else {
+          throw new Error(json.message || "Submission failed");
+        }
+      } catch (err) {
+        console.error("Contact form error:", err);
+        // Transition modal to error state
+        window.updateSendModal?.('error');
+        submitBtn.disabled = false;
+        if (submitLabel) submitLabel.textContent = originalLabel;
+        spinner?.classList.add("hidden");
+      }
+    });
+  }
+
+  document.addEventListener("astro:page-load", initContactForm);
+</script>

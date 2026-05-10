@@ -1,9 +1,10 @@
-
-  // Selecciona la imagen
+function initAbout() {
   const imageContainer = document.querySelector(".col-span-2.group");
+  if (!imageContainer) return;
   const img = imageContainer.querySelector("img");
+  if (!img) return;
 
-  // Mouse movement
+  // Mouse movement — 3D tilt effect
   imageContainer.addEventListener("mousemove", e => {
     const rect = imageContainer.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -11,7 +12,7 @@
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = ((y - centerY) / centerY) * 10;  // -10° a 10°
+    const rotateX = ((y - centerY) / centerY) * 10;
     const rotateY = ((x - centerX) / centerX) * -10;
 
     img.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
@@ -21,7 +22,7 @@
     img.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
   });
 
-  // Touch / móvil
+  // Touch / mobile
   imageContainer.addEventListener("touchmove", e => {
     const touch = e.touches[0];
     const rect = imageContainer.getBoundingClientRect();
@@ -39,3 +40,7 @@
   imageContainer.addEventListener("touchend", () => {
     img.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
   });
+}
+
+// Run on first load AND on every ViewTransitions navigation
+document.addEventListener("astro:page-load", initAbout);

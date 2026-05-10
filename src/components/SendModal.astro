@@ -1,0 +1,366 @@
+---
+// SendModal.astro
+// Triggered programmatically via window.showSendModal(state)
+// state: 'sending' | 'success' | 'error'
+---
+
+<!-- Backdrop -->
+<div
+  id="send-modal-backdrop"
+  class="fixed inset-0 z-[999] flex items-center justify-center
+         bg-black/60 backdrop-blur-sm
+         opacity-0 pointer-events-none
+         transition-opacity duration-300"
+  aria-modal="true"
+  role="dialog"
+  aria-label="Message status"
+>
+
+  <!-- Card -->
+  <div
+    id="send-modal-card"
+    class="relative w-[320px] sm:w-[400px] rounded-3xl overflow-hidden
+           bg-gray-950 border border-white/10
+           shadow-[0_0_80px_rgba(250,204,21,0.15)]
+           scale-90 opacity-0
+           transition-all duration-500 ease-out"
+  >
+
+    <!-- Star field canvas -->
+    <canvas id="send-modal-stars" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+
+    <!-- Content -->
+    <div class="relative z-10 flex flex-col items-center justify-center
+                px-8 py-12 text-center gap-6 min-h-[320px]">
+
+      <!-- ── SENDING state ── -->
+      <div id="modal-state-sending" class="flex flex-col items-center gap-5">
+        <!-- Rocket -->
+        <div id="rocket-wrap" class="relative">
+          <div id="rocket" class="text-6xl select-none" style="transform: translateY(0)">🚀</div>
+          <!-- Flame trail -->
+          <div id="flame-trail" class="absolute left-1/2 -translate-x-1/2 top-full
+                                       flex flex-col items-center gap-0.5 mt-1">
+            <span class="text-2xl opacity-90 animate-pulse">🔥</span>
+            <span class="text-lg opacity-60 animate-pulse" style="animation-delay:.1s">🔥</span>
+            <span class="text-sm opacity-30 animate-pulse" style="animation-delay:.2s">🔥</span>
+          </div>
+        </div>
+        <div>
+          <p class="text-white font-bold text-xl tracking-wide" id="sending-label">Sending…</p>
+          <p class="text-gray-400 text-sm mt-1">Your message is on its way 🌌</p>
+        </div>
+        <!-- Orbit ring -->
+        <div class="w-32 h-32 absolute rounded-full border border-yellow-400/20
+                    animate-spin" style="animation-duration:4s;top:30px"></div>
+        <div class="w-48 h-48 absolute rounded-full border border-cyan-400/10
+                    animate-spin" style="animation-duration:7s;animation-direction:reverse;top:10px"></div>
+      </div>
+
+      <!-- ── SUCCESS state ── -->
+      <div id="modal-state-success" class="hidden flex-col items-center gap-5">
+        <!-- Checkmark circle with draw animation -->
+        <div class="relative w-24 h-24">
+          <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
+            <!-- Background circle -->
+            <circle cx="50" cy="50" r="44" fill="none"
+                    stroke="rgba(250,204,21,0.15)" stroke-width="6"/>
+            <!-- Animated circle -->
+            <circle id="success-ring" cx="50" cy="50" r="44" fill="none"
+                    stroke="#facc15" stroke-width="6"
+                    stroke-linecap="round"
+                    stroke-dasharray="276.46"
+                    stroke-dashoffset="276.46"
+                    style="transition: stroke-dashoffset 0.8s cubic-bezier(.4,0,.2,1)"/>
+          </svg>
+          <!-- Check icon -->
+          <div id="success-check"
+               class="absolute inset-0 flex items-center justify-center
+                      opacity-0 scale-50 transition-all duration-500 delay-500">
+            <svg class="w-10 h-10 text-yellow-400" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor" stroke-width="3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-white font-bold text-xl tracking-wide">Message sent! 🎉</p>
+          <p class="text-gray-400 text-sm mt-1">I'll get back to you soon.</p>
+        </div>
+
+        <!-- Confetti burst (injected by JS) -->
+        <div id="confetti-container" class="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl"></div>
+
+        <button
+          id="modal-close-btn"
+          class="mt-2 px-6 py-2.5 rounded-xl font-semibold text-sm
+                 bg-yellow-400 hover:bg-yellow-300 active:bg-yellow-500
+                 text-gray-900 transition focus:outline-none
+                 focus:ring-2 focus:ring-yellow-400/60"
+        >
+          Close
+        </button>
+      </div>
+
+      <!-- ── ERROR state ── -->
+      <div id="modal-state-error" class="hidden flex-col items-center gap-5">
+        <div class="text-6xl animate-bounce">💥</div>
+        <div>
+          <p class="text-white font-bold text-xl">Something went wrong</p>
+          <p class="text-gray-400 text-sm mt-1">Please try again or email me directly.</p>
+        </div>
+        <button
+          id="modal-error-close-btn"
+          class="px-6 py-2.5 rounded-xl font-semibold text-sm
+                 bg-red-500 hover:bg-red-400 text-white transition
+                 focus:outline-none focus:ring-2 focus:ring-red-400/60"
+        >
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Types ────────────────────────────────────────────────────────────────────
+type ModalState = 'sending' | 'success' | 'error';
+
+// ─── Star field ───────────────────────────────────────────────────────────────
+function initStars(canvas: HTMLCanvasElement) {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const resize = () => {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  };
+  resize();
+
+  const stars = Array.from({ length: 80 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.3,
+    a: Math.random(),
+    speed: Math.random() * 0.008 + 0.003,
+    phase: Math.random() * Math.PI * 2,
+  }));
+
+  let raf: number;
+  const draw = (t: number) => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      const alpha = 0.3 + 0.7 * Math.abs(Math.sin(t * s.speed + s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.fill();
+    });
+    raf = requestAnimationFrame(draw);
+  };
+  raf = requestAnimationFrame(draw);
+  return () => cancelAnimationFrame(raf);
+}
+
+// ─── Rocket launch animation ──────────────────────────────────────────────────
+function launchRocket() {
+  const rocket = document.getElementById('rocket');
+  const flame  = document.getElementById('flame-trail');
+  if (!rocket) return;
+
+  let y = 0;
+  let frame: number;
+  const animate = () => {
+    y -= 1.8;
+    rocket.style.transform = `translateY(${y}px)`;
+    if (flame) flame.style.opacity = String(Math.max(0, 1 + y / 120));
+    if (y > -140) frame = requestAnimationFrame(animate);
+  };
+  frame = requestAnimationFrame(animate);
+  return () => cancelAnimationFrame(frame);
+}
+
+// ─── Confetti burst ───────────────────────────────────────────────────────────
+function burstConfetti(container: HTMLElement) {
+  const colors = ['#facc15','#34d399','#60a5fa','#f472b6','#a78bfa','#fb923c'];
+  const shapes = ['●','■','▲','★','♦'];
+
+  for (let i = 0; i < 48; i++) {
+    const el = document.createElement('span');
+    el.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const x = 30 + Math.random() * 40; // % from left (center-ish)
+    const tx = (Math.random() - 0.5) * 300;
+    const ty = -(80 + Math.random() * 200);
+    const rot = (Math.random() - 0.5) * 720;
+    const size = 10 + Math.random() * 14;
+    const delay = Math.random() * 0.3;
+
+    el.style.cssText = `
+      position:absolute;
+      left:${x}%;
+      bottom:20%;
+      font-size:${size}px;
+      color:${color};
+      opacity:1;
+      pointer-events:none;
+      animation: confetti-fly 1.2s ${delay}s cubic-bezier(.2,.8,.4,1) forwards;
+      --tx:${tx}px;
+      --ty:${ty}px;
+      --rot:${rot}deg;
+    `;
+    container.appendChild(el);
+  }
+
+  // Inject keyframes once
+  if (!document.getElementById('confetti-kf')) {
+    const style = document.createElement('style');
+    style.id = 'confetti-kf';
+    style.textContent = `
+      @keyframes confetti-fly {
+        0%   { transform: translate(0,0) rotate(0deg); opacity:1; }
+        100% { transform: translate(var(--tx),var(--ty)) rotate(var(--rot)); opacity:0; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // Clean up after animation
+  setTimeout(() => container.innerHTML = '', 2000);
+}
+
+// ─── Modal controller ─────────────────────────────────────────────────────────
+let stopStars: (() => void) | undefined;
+let stopRocket: (() => void) | undefined;
+
+function showState(state: ModalState) {
+  const sending = document.getElementById('modal-state-sending');
+  const success = document.getElementById('modal-state-success');
+  const error   = document.getElementById('modal-state-error');
+
+  [sending, success, error].forEach(el => {
+    if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+  });
+
+  if (state === 'sending' && sending) {
+    sending.classList.remove('hidden');
+    sending.classList.add('flex');
+    stopRocket = launchRocket();
+  }
+
+  if (state === 'success' && success) {
+    success.classList.remove('hidden');
+    success.classList.add('flex');
+
+    // Draw the ring
+    setTimeout(() => {
+      const ring = document.getElementById('success-ring') as SVGCircleElement | null;
+      if (ring) ring.style.strokeDashoffset = '0';
+    }, 100);
+
+    // Pop the check
+    setTimeout(() => {
+      const check = document.getElementById('success-check');
+      if (check) {
+        check.classList.remove('opacity-0', 'scale-50');
+        check.classList.add('opacity-100', 'scale-100');
+      }
+    }, 600);
+
+    // Confetti
+    setTimeout(() => {
+      const container = document.getElementById('confetti-container');
+      if (container) burstConfetti(container);
+    }, 700);
+  }
+
+  if (state === 'error' && error) {
+    error.classList.remove('hidden');
+    error.classList.add('flex');
+  }
+}
+
+function openModal(state: ModalState) {
+  const backdrop = document.getElementById('send-modal-backdrop');
+  const card     = document.getElementById('send-modal-card');
+  const canvas   = document.getElementById('send-modal-stars') as HTMLCanvasElement | null;
+
+  if (!backdrop || !card) return;
+
+  // Reset success ring & check
+  const ring  = document.getElementById('success-ring') as SVGCircleElement | null;
+  const check = document.getElementById('success-check');
+  if (ring)  ring.style.strokeDashoffset = '276.46';
+  if (check) { check.classList.add('opacity-0','scale-50'); check.classList.remove('opacity-100','scale-100'); }
+
+  // Reset rocket
+  const rocket = document.getElementById('rocket');
+  const flame  = document.getElementById('flame-trail');
+  if (rocket) rocket.style.transform = 'translateY(0)';
+  if (flame)  flame.style.opacity = '1';
+
+  backdrop.classList.remove('opacity-0', 'pointer-events-none');
+  backdrop.classList.add('opacity-100');
+
+  requestAnimationFrame(() => {
+    card.classList.remove('scale-90', 'opacity-0');
+    card.classList.add('scale-100', 'opacity-100');
+  });
+
+  if (canvas) stopStars = initStars(canvas);
+
+  showState(state);
+}
+
+function closeModal() {
+  const backdrop = document.getElementById('send-modal-backdrop');
+  const card     = document.getElementById('send-modal-card');
+
+  if (!backdrop || !card) return;
+
+  card.classList.add('scale-90', 'opacity-0');
+  card.classList.remove('scale-100', 'opacity-100');
+
+  setTimeout(() => {
+    backdrop.classList.add('opacity-0', 'pointer-events-none');
+    backdrop.classList.remove('opacity-100');
+    stopStars?.();
+    stopRocket?.();
+  }, 300);
+}
+
+// ─── Expose to window so ContactForm can call it ──────────────────────────────
+declare global {
+  interface Window {
+    showSendModal: (state: ModalState) => void;
+    closeSendModal: () => void;
+    updateSendModal: (state: ModalState) => void;
+  }
+}
+
+function initModal() {
+  window.showSendModal   = openModal;
+  window.closeSendModal  = closeModal;
+  window.updateSendModal = showState;
+
+  document.getElementById('modal-close-btn')
+    ?.addEventListener('click', closeModal);
+  document.getElementById('modal-error-close-btn')
+    ?.addEventListener('click', closeModal);
+
+  // Close on backdrop click
+  document.getElementById('send-modal-backdrop')
+    ?.addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+}
+
+document.addEventListener('astro:page-load', initModal);
+</script>
