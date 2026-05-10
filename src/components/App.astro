@@ -13,6 +13,7 @@ import Certificates from '@/components/Certificates.astro';
 import Test from '@/components/Test.astro';
 import ContactForm from '@/components/ContactForm.astro';
 import SendModal from '@/components/SendModal.astro';
+import PhotoCardModal from '@/components/PhotoCardModal.astro';
 import { getI18N } from '@/i18n';
 
 const { currentLocale = 'en' } = Astro;
@@ -85,5 +86,6 @@ const i18n = getI18N({ currentLocale });
   </main>
 </Layout>
 
-<!-- Send modal lives outside main so it can overlay everything -->
+<!-- Modals live outside main so they can overlay everything -->
 <SendModal />
+<PhotoCardModal />

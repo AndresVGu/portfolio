@@ -1,0 +1,228 @@
+---
+// PhotoCardModal.astro
+---
+
+<!--
+  Same structure as Flowbite modals used in Test.astro — proven to work full-screen.
+  JS toggles between hidden and flex to show/hide.
+-->
+<div
+  id="photocard-backdrop"
+  tabindex="-1"
+  aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden
+         fixed top-0 right-0 left-0 z-[9999]
+         justify-center items-center
+         w-full h-full
+         bg-black/80 backdrop-blur-md"
+>
+
+  <!-- Close button -->
+  <button
+    id="photocard-close"
+    aria-label="Close"
+    class="fixed top-5 right-5 z-[10000] p-2 rounded-full
+           text-white/70 hover:text-white
+           bg-white/10 hover:bg-white/20 transition"
+  >
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24"
+         stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <!-- Card -->
+  <div
+    id="glare-card"
+    class="relative select-none cursor-pointer"
+    style="width: min(320px, 85vw); perspective: 600px;"
+  >
+    <div
+      id="glare-inner"
+      class="relative overflow-hidden"
+      style="border-radius: 36px; transform-style: preserve-3d;
+             transition: transform 300ms ease; will-change: transform;"
+    >
+      <!-- Base image -->
+      <img
+        src="/me3.jpg"
+        alt="Andres Villarreal"
+        class="w-full block"
+        style="aspect-ratio: 17/21; object-fit: cover; object-position: top;"
+        draggable="false"
+      />
+
+      <!-- Glare -->
+      <div id="glare-layer"
+           class="absolute inset-0 pointer-events-none"
+           style="border-radius:36px; mix-blend-mode:soft-light; opacity:0;
+                  transition:opacity 300ms ease;
+                  background: radial-gradient(farthest-corner circle at 50% 50%,
+                    rgba(255,255,255,0.45) 10%,
+                    rgba(255,255,255,0.3) 20%,
+                    rgba(255,255,255,0) 90%);"></div>
+
+      <!-- Foil -->
+      <div id="foil-layer"
+           class="absolute inset-0 pointer-events-none"
+           style="border-radius:36px; mix-blend-mode:color-dodge; opacity:0;
+                  transition:opacity 300ms ease;"></div>
+
+      <!-- Shine -->
+      <div id="shine-layer"
+           class="absolute inset-0 pointer-events-none"
+           style="border-radius:36px; mix-blend-mode:soft-light; opacity:0;
+                  transition:opacity 300ms ease;
+                  background: radial-gradient(farthest-corner circle at 50% 50%,
+                    rgba(255,255,255,0.25) 12%,
+                    rgba(255,255,255,0.15) 20%,
+                    rgba(255,255,255,0.1) 120%);"></div>
+
+      <!-- Badge -->
+      <div class="absolute bottom-0 left-0 right-0 px-5 py-4"
+           style="background: linear-gradient(to top, rgba(0,0,0,0.82), rgba(0,0,0,0.3), transparent);
+                  border-radius: 0 0 36px 36px;">
+        <p style="color:#fff; font-weight:700; font-size:1.1rem; margin:0;">Andrés Villarreal</p>
+        <p style="color:rgba(255,255,255,0.65); font-size:0.85rem; margin:3px 0 0;">Full-Stack Developer</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  /* Foil rainbow */
+  #foil-layer {
+    --step: 5%;
+    --foil-svg: url("data:image/svg+xml,%3Csvg width='26' height='26' viewBox='0 0 26 26' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.99994 3.419C2.99994 3.419 21.6142 7.43646 22.7921 12.153C23.97 16.8695 3.41838 23.0306 3.41838 23.0306' stroke='white' stroke-width='5' stroke-miterlimit='3.86874' stroke-linecap='round' style='mix-blend-mode:darken'/%3E%3C/svg%3E");
+    background:
+      var(--foil-svg) center / 100% no-repeat,
+      repeating-linear-gradient(0deg,
+        rgb(255,119,115) calc(var(--step)*1),
+        rgba(255,237,95,1) calc(var(--step)*2),
+        rgba(168,255,95,1) calc(var(--step)*3),
+        rgba(131,255,247,1) calc(var(--step)*4),
+        rgba(120,148,255,1) calc(var(--step)*5),
+        rgb(216,117,255) calc(var(--step)*6),
+        rgb(255,119,115) calc(var(--step)*7)
+      ) 0% 50% / 200% 700% no-repeat,
+      repeating-linear-gradient(128deg,
+        #0e152e 0%, hsl(180,10%,60%) 3.8%, hsl(180,10%,60%) 4.5%,
+        hsl(180,10%,60%) 5.2%, #0e152e 10%, #0e152e 12%
+      ) 50% 50% / 300% no-repeat,
+      radial-gradient(farthest-corner circle at 50% 50%,
+        rgba(255,255,255,0.1) 12%, rgba(255,255,255,0.15) 20%,
+        rgba(255,255,255,0.25) 120%
+      ) 50% 50% / 300% no-repeat;
+    background-blend-mode: hue, hue, hue, overlay;
+  }
+
+  @keyframes card-pop {
+    from { transform: scale(0.82); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+  }
+  #glare-card.pop {
+    animation: card-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+</style>
+
+<script>
+  function initPhotoCardModal() {
+    const backdrop = document.getElementById('photocard-backdrop');
+    const card     = document.getElementById('glare-card');
+    const inner    = document.getElementById('glare-inner') as HTMLElement | null;
+    const glare    = document.getElementById('glare-layer') as HTMLElement | null;
+    const foil     = document.getElementById('foil-layer')  as HTMLElement | null;
+    const shine    = document.getElementById('shine-layer') as HTMLElement | null;
+    const closeBtn = document.getElementById('photocard-close');
+    const trigger  = document.getElementById('profile-pic-trigger');
+
+    if (!backdrop || !card || !inner || !glare || !foil || !shine) return;
+
+    // Portal: move to <body> so fixed positioning is relative to viewport, not any ancestor
+    document.body.appendChild(backdrop);
+
+    // Re-query closeBtn after portal (it moved with backdrop)
+    const closeBtnPortal = document.getElementById('photocard-close');
+
+    if (!backdrop || !card || !inner || !glare || !foil || !shine) return;
+
+    function openModal() {
+      // Same pattern as Flowbite: remove hidden, add flex
+      backdrop!.classList.remove('hidden');
+      backdrop!.classList.add('flex');
+      card!.classList.remove('pop');
+      void (card as HTMLElement).offsetWidth;
+      card!.classList.add('pop');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      backdrop!.classList.add('hidden');
+      backdrop!.classList.remove('flex');
+      document.body.style.overflow = '';
+      inner!.style.transform = '';
+      glare!.style.opacity   = '0';
+      foil!.style.opacity    = '0';
+      shine!.style.opacity   = '0';
+    }
+
+    trigger?.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+    closeBtnPortal?.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // ── Glare / tilt ─────────────────────────────────────────────────
+    let isInside = false;
+    let rafId = 0;
+
+    card.addEventListener('pointerenter', () => {
+      isInside = true;
+      setTimeout(() => {
+        if (!isInside) return;
+        inner!.style.transition = 'transform 0s';
+      }, 300);
+      glare!.style.opacity = '1';
+      foil!.style.opacity  = '0.35';
+      shine!.style.opacity = '0.45';
+    });
+
+    card.addEventListener('pointerleave', () => {
+      isInside = false;
+      inner!.style.transition = 'transform 300ms ease';
+      inner!.style.transform  = 'rotateX(0deg) rotateY(0deg)';
+      glare!.style.opacity    = '0';
+      foil!.style.opacity     = '0';
+      shine!.style.opacity    = '0';
+      cancelAnimationFrame(rafId);
+    });
+
+    card.addEventListener('pointermove', (e: PointerEvent) => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const rect = card!.getBoundingClientRect();
+        const pctX = ((e.clientX - rect.left) / rect.width)  * 100;
+        const pctY = ((e.clientY - rect.top)  / rect.height) * 100;
+        const dX   = pctX - 50;
+        const dY   = pctY - 50;
+
+        inner!.style.transform =
+          `rotateY(${-(dX / 3.5) * 0.4}deg) rotateX(${(dY / 2) * 0.4}deg)`;
+
+        glare!.style.background =
+          `radial-gradient(farthest-corner circle at ${pctX}% ${pctY}%,
+           rgba(255,255,255,0.45) 10%, rgba(255,255,255,0.3) 20%, rgba(255,255,255,0) 90%)`;
+
+        const bgX = 50 + pctX / 4 - 12.5;
+        const bgY = 50 + pctY / 3 - 16.67;
+        foil!.style.backgroundPosition =
+          `center, 0% ${bgY}%, ${-bgX}% ${-bgY}%, ${bgX}% ${bgY}%`;
+
+        shine!.style.background =
+          `radial-gradient(farthest-corner circle at ${pctX}% ${pctY}%,
+           rgba(255,255,255,0.25) 12%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.1) 120%)`;
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initPhotoCardModal);
+</script>
