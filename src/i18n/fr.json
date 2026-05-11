@@ -16,7 +16,10 @@
     "badge": "Ouvert aux opportunités",
     "contact": "Contact",
     "resume": "CV",
-    "description": "Développeur Full-Stack · {years}+ ans d'expérience · Trilingue (EN / FR / ES) Colombien 🇨🇴 — Je construis des applications web et mobiles robustes et évolutives. Je me concentre sur des expériences responsives et conviviales, en résolvant des problèmes concrets grâce au code."
+    "role1": "Développeur Full-Stack",
+    "role2": "Spécialiste en Électronique",
+    "role3": "Trilingue · EN / FR / ES",
+    "description": "Je construis des <strong>backends robustes</strong> et des <strong>APIs évolutives</strong> avec <strong>.NET</strong>, <strong>Java Spring Boot</strong> et <strong>React</strong> — du code qui tient la charge en production, pas seulement en démo. Je travaille aussi comme <strong>technicien électronique</strong>, aussi à l'aise dans un terminal que fer à souder en main. Je communique couramment en <strong>anglais</strong>, <strong>français</strong> et <strong>espagnol</strong>. {years}+ ans à livrer des choses qui fonctionnent vraiment."
   },
 
   "TITLES": {
