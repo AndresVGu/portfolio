@@ -19,7 +19,7 @@
     "role1": "Développeur Full-Stack",
     "role2": "Spécialiste en Électronique",
     "role3": "Trilingue · EN / FR / ES",
-    "description": "Je construis des <strong>backends robustes</strong> et des <strong>APIs évolutives</strong> avec <strong>.NET</strong>, <strong>Java Spring Boot</strong> et <strong>React</strong> — du code qui tient la charge en production, pas seulement en démo. Je travaille aussi comme <strong>technicien électronique</strong>, aussi à l'aise dans un terminal que fer à souder en main. Je communique couramment en <strong>anglais</strong>, <strong>français</strong> et <strong>espagnol</strong>. {years}+ ans à livrer des choses qui fonctionnent vraiment."
+    "description": "<strong>+{years} ans</strong> à construire des <strong>backends robustes</strong> et des <strong>APIs évolutives</strong> avec <strong>.NET</strong>, <strong>Java Spring Boot</strong> et <strong>React</strong> — du code qui tient la charge en production, pas seulement en démo. Je travaille aussi comme <strong>technicien électronique</strong>, aussi à l'aise dans un terminal que fer à souder en main. Je communique couramment en <strong>anglais</strong>, <strong>français</strong> et <strong>espagnol</strong>."
   },
 
   "TITLES": {
@@ -68,8 +68,8 @@
 
   "ABOUT": {
     "tagline": "🔥 Je construis des logiciels, je les casse, je les répare et je les améliore.",
-    "p1": "La plupart du temps, je travaille avec <strong>.NET</strong>, en construisant des <strong>APIs et des systèmes backend</strong> conçus pour <strong>gérer une utilisation réelle — pas seulement des démos.</strong>",
-    "p2": "Je travaille aussi <strong>en tant que technicien électronique</strong>, ce qui signifie que je passe beaucoup de temps avec <strong>Linux</strong>, le matériel, et à comprendre pourquoi quelque chose qui <em>devrait fonctionner…</em> ne fonctionne pas.",
+    "p1": "Avec <strong>plus de {years} ans d'expérience</strong> dans le développement logiciel, j'ai appris que ce qui compte le plus c'est de <strong>livrer des choses qui fonctionnent vraiment en production — pas seulement en démo.</strong>",
+    "p2": "La majeure partie de ce temps a été avec <strong>.NET</strong>, en construisant des <strong>APIs et des systèmes backend</strong>, tout en travaillant <strong>en tant que technicien électronique</strong> — avec <strong>Linux</strong>, le matériel, et le débogage de l'inexplicable.",
     "p3": "J'ai fait du <strong>travail full-stack</strong>, expérimenté avec des frameworks modernes, SQL et Python — mais au final, j'aime simplement <strong>construire des choses qui fonctionnent bien et qui ont du sens.</strong>",
     "techStack": "⚙️ Stack Technique",
     "strengths": {

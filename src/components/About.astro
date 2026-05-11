@@ -10,6 +10,13 @@ const { currentLocale = 'en' } = Astro.props;
 const i18n = getI18N({ currentLocale });
 const t = i18n.ABOUT;
 
+const graduationYear = 2024;
+const years = new Date().getFullYear() - graduationYear;
+
+const p1 = t.p1.replace('{years}', String(years));
+const p2 = t.p2.replace('{years}', String(years));
+const p3 = t.p3.replace('{years}', String(years));
+
 const techs = [
   'Java', 'Spring Boot', 'Linux', 'Python', '.NET Core', 'AWS',
   'Docker', 'Kubernetes', 'SQL', 'PostgreSQL', 'JavaScript', 'Angular', 'Astro',
@@ -31,9 +38,9 @@ const techs = [
                 [&>p>strong]:font-mono
                 [&>p>strong]:text-gray-900
                 dark:[&>p>strong]:text-yellow-100">
-      <p set:html={t.p1} />
-      <p set:html={t.p2} />
-      <p set:html={t.p3} />
+      <p set:html={p1} />
+      <p set:html={p2} />
+      <p set:html={p3} />
     </div>
 
     <!-- Tech Stack -->

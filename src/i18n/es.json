@@ -19,7 +19,7 @@
     "role1": "Desarrollador Full-Stack",
     "role2": "Especialista en Electrónica",
     "role3": "Trilingüe · EN / FR / ES",
-    "description": "Construyo <strong>backends robustos</strong> y <strong>APIs escalables</strong> con <strong>.NET</strong>, <strong>Java Spring Boot</strong> y <strong>React</strong> — código que aguanta tráfico real, no solo demos. También trabajo como <strong>técnico electrónico</strong>, igual de cómodo en una terminal que con un soldador. Me comunico con fluidez en <strong>inglés</strong>, <strong>francés</strong> y <strong>español</strong>. {years}+ años entregando cosas que realmente funcionan."
+    "description": "<strong>+{years} años</strong> construyendo <strong>backends robustos</strong> y <strong>APIs escalables</strong> con <strong>.NET</strong>, <strong>Java Spring Boot</strong> y <strong>React</strong> — código que aguanta tráfico real, no solo demos. También trabajo como <strong>técnico electrónico</strong>, igual de cómodo en una terminal que con un soldador. Me comunico con fluidez en <strong>inglés</strong>, <strong>francés</strong> y <strong>español</strong>."
   },
 
   "TITLES": {
@@ -68,8 +68,8 @@
 
   "ABOUT": {
     "tagline": "🔥 Construyo software, lo rompo, lo arreglo y lo mejoro.",
-    "p1": "La mayor parte del tiempo trabajo con <strong>.NET</strong>, construyendo <strong>APIs y sistemas backend</strong> diseñados para <strong>soportar uso real — no solo demos.</strong>",
-    "p2": "También trabajo <strong>como técnico electrónico</strong>, lo que significa que paso mucho tiempo con <strong>Linux</strong>, hardware, y descubriendo por qué algo que <em>debería funcionar…</em> no funciona.",
+    "p1": "Con <strong>más de {years} años de experiencia</strong> construyendo software, he aprendido que lo que más importa es <strong>entregar cosas que realmente funcionen en producción — no solo en demos.</strong>",
+    "p2": "La mayor parte de ese tiempo ha sido con <strong>.NET</strong>, construyendo <strong>APIs y sistemas backend</strong>, mientras también trabajo <strong>como técnico electrónico</strong> — lidiando con <strong>Linux</strong>, hardware, y depurando lo inexplicable.",
     "p3": "He hecho <strong>trabajo full-stack</strong>, experimentado con frameworks modernos, SQL y Python — pero al final del día, simplemente me gusta <strong>construir cosas que funcionen bien y tengan sentido.</strong>",
     "techStack": "⚙️ Stack Tecnológico",
     "strengths": {

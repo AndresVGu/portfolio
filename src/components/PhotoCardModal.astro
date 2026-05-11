@@ -2,10 +2,6 @@
 // PhotoCardModal.astro
 ---
 
-<!--
-  Same structure as Flowbite modals used in Test.astro — proven to work full-screen.
-  JS toggles between hidden and flex to show/hide.
--->
 <div
   id="photocard-backdrop"
   tabindex="-1"
@@ -31,90 +27,179 @@
     </svg>
   </button>
 
-  <!-- Card -->
+  <!-- Flip container -->
   <div
     id="glare-card"
     class="relative select-none cursor-pointer"
-    style="width: min(320px, 85vw); perspective: 600px;"
+    style="width: min(320px, 85vw); perspective: 900px;"
   >
+    <!-- This wrapper handles BOTH tilt (via JS) and flip (via .flipped class) -->
     <div
       id="glare-inner"
-      class="relative overflow-hidden"
-      style="border-radius: 36px; transform-style: preserve-3d;
-             transition: transform 300ms ease; will-change: transform;"
+      class="relative"
+      style="transform-style: preserve-3d; transition: transform 300ms ease; will-change: transform;"
     >
-      <!-- Base image -->
-      <img
-        src="/me3.jpg"
-        alt="Andres Villarreal"
-        class="w-full block"
-        style="aspect-ratio: 17/21; object-fit: cover; object-position: top;"
-        draggable="false"
-      />
 
-      <!-- Glare -->
-      <div id="glare-layer"
-           class="absolute inset-0 pointer-events-none"
-           style="border-radius:36px; mix-blend-mode:soft-light; opacity:0;
-                  transition:opacity 300ms ease;
-                  background: radial-gradient(farthest-corner circle at 50% 50%,
-                    rgba(255,255,255,0.45) 10%,
-                    rgba(255,255,255,0.3) 20%,
-                    rgba(255,255,255,0) 90%);"></div>
+      <!-- ── FRONT FACE ─────────────────────────────────────── -->
+      <div class="card-face card-front"
+           style="border-radius:36px; overflow:hidden; backface-visibility:hidden;">
 
-      <!-- Foil -->
-      <div id="foil-layer"
-           class="absolute inset-0 pointer-events-none"
-           style="border-radius:36px; mix-blend-mode:color-dodge; opacity:0;
-                  transition:opacity 300ms ease;"></div>
+        <img
+          src="/me3.jpg"
+          alt="Andres Villarreal"
+          class="w-full block"
+          style="aspect-ratio:17/21; object-fit:cover; object-position:top;"
+          draggable="false"
+        />
 
-      <!-- Shine -->
-      <div id="shine-layer"
-           class="absolute inset-0 pointer-events-none"
-           style="border-radius:36px; mix-blend-mode:soft-light; opacity:0;
-                  transition:opacity 300ms ease;
-                  background: radial-gradient(farthest-corner circle at 50% 50%,
-                    rgba(255,255,255,0.25) 12%,
-                    rgba(255,255,255,0.15) 20%,
-                    rgba(255,255,255,0.1) 120%);"></div>
+        <!-- Glare -->
+        <div id="glare-layer"
+             class="absolute inset-0 pointer-events-none"
+             style="border-radius:36px; mix-blend-mode:soft-light; opacity:0;
+                    transition:opacity 300ms ease;"></div>
 
-      <!-- Badge -->
-      <div class="absolute bottom-0 left-0 right-0 px-5 py-4"
-           style="background: linear-gradient(to top, rgba(0,0,0,0.82), rgba(0,0,0,0.3), transparent);
-                  border-radius: 0 0 36px 36px;">
-        <p style="color:#fff; font-weight:700; font-size:1.1rem; margin:0;">Andrés Villarreal</p>
-        <p style="color:rgba(255,255,255,0.65); font-size:0.85rem; margin:3px 0 0;">Full-Stack Developer</p>
+        <!-- Foil -->
+        <div id="foil-layer"
+             class="absolute inset-0 pointer-events-none"
+             style="border-radius:36px; mix-blend-mode:color-dodge; opacity:0;
+                    transition:opacity 300ms ease;"></div>
+
+        <!-- Shine -->
+        <div id="shine-layer"
+             class="absolute inset-0 pointer-events-none"
+             style="border-radius:36px; mix-blend-mode:screen; opacity:0;
+                    transition:opacity 300ms ease;"></div>
+
+        <!-- Badge -->
+        <div class="absolute bottom-0 left-0 right-0 px-5 py-4"
+             style="background:linear-gradient(to top,rgba(0,0,0,0.82),rgba(0,0,0,0.3),transparent);
+                    border-radius:0 0 36px 36px;">
+          <p style="color:#fff;font-weight:700;font-size:1.1rem;margin:0;">Andrés Villarreal</p>
+          <p style="color:rgba(255,255,255,0.65);font-size:0.85rem;margin:3px 0 0;">Full-Stack Developer</p>
+        </div>
+
+        <!-- Flip hint -->
+        <div class="flip-hint absolute top-3 right-3 text-white/40 text-xs flex items-center gap-1">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+          click to flip
+        </div>
       </div>
+
+      <!-- ── BACK FACE ──────────────────────────────────────── -->
+      <div class="card-face card-back"
+           style="border-radius:36px; overflow:hidden; backface-visibility:hidden;
+                  transform:rotateY(180deg);">
+
+        <!-- Back design -->
+        <div class="card-back-design w-full"
+             style="aspect-ratio:17/21; display:flex; flex-direction:column;
+                    align-items:center; justify-content:center; gap:1.2rem;
+                    padding:2rem;
+                    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);">
+
+          <!-- Decorative holo border -->
+          <div style="position:absolute;inset:0;border-radius:36px;
+                      background:linear-gradient(125deg,
+                        hsl(0,100%,65%),hsl(60,100%,65%),hsl(120,100%,65%),
+                        hsl(180,100%,65%),hsl(240,100%,65%),hsl(300,100%,65%));
+                      opacity:0.15; pointer-events:none;"></div>
+
+          <!-- Initials badge -->
+          <div style="width:80px;height:80px;border-radius:50%;
+                      background:linear-gradient(135deg,#a78bfa,#60a5fa);
+                      display:flex;align-items:center;justify-content:center;
+                      font-size:1.8rem;font-weight:900;color:#fff;
+                      box-shadow:0 0 30px rgba(167,139,250,0.5);">
+            AV
+          </div>
+
+          <div style="text-align:center;">
+            <p style="color:#fff;font-weight:800;font-size:1.2rem;margin:0;">Andrés Villarreal</p>
+            <p style="color:rgba(255,255,255,0.55);font-size:0.8rem;margin:6px 0 0;letter-spacing:0.1em;text-transform:uppercase;">
+              Full-Stack Developer
+            </p>
+          </div>
+
+          <!-- Stats -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;width:100%;">
+            <div style="background:rgba(255,255,255,0.07);border-radius:12px;padding:0.6rem;text-align:center;border:1px solid rgba(255,255,255,0.1);">
+              <p style="color:#a78bfa;font-weight:700;font-size:1.1rem;margin:0;" id="card-back-years">2+</p>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.7rem;margin:2px 0 0;">Years Exp.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.07);border-radius:12px;padding:0.6rem;text-align:center;border:1px solid rgba(255,255,255,0.1);">
+              <p style="color:#34d399;font-weight:700;font-size:1.1rem;margin:0;">3</p>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.7rem;margin:2px 0 0;">EN / ES / FR</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.07);border-radius:12px;padding:0.6rem;text-align:center;border:1px solid rgba(255,255,255,0.1);">
+              <p style="color:#60a5fa;font-weight:700;font-size:1.1rem;margin:0;">🚴</p>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.7rem;margin:2px 0 0;">Cycling</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.07);border-radius:12px;padding:0.6rem;text-align:center;border:1px solid rgba(255,255,255,0.1);">
+              <p style="color:#f59e0b;font-weight:700;font-size:1.1rem;margin:0;">🇨🇦</p>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.7rem;margin:2px 0 0;">Toronto</p>
+            </div>
+          </div>
+
+          <!-- Stack pills -->
+          <div style="display:flex;flex-wrap:wrap;gap:0.4rem;justify-content:center;">
+            {['.NET','Java','React','Linux','AWS'].map(t => (
+              <span style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
+                           border-radius:999px;padding:2px 10px;font-size:0.7rem;color:rgba(255,255,255,0.7);">
+                {t}
+              </span>
+            ))}
+          </div>
+
+          <!-- Flip back hint -->
+          <div class="flip-hint" style="color:rgba(255,255,255,0.3);font-size:0.7rem;
+                                        display:flex;align-items:center;gap:4px;">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            click to flip back
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
 </div>
 
 <style>
+  .card-face {
+    position: relative;
+    width: 100%;
+  }
+  .card-back {
+    position: absolute;
+    inset: 0;
+  }
+
   /* Foil rainbow */
   #foil-layer {
-    --step: 5%;
-    --foil-svg: url("data:image/svg+xml,%3Csvg width='26' height='26' viewBox='0 0 26 26' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.99994 3.419C2.99994 3.419 21.6142 7.43646 22.7921 12.153C23.97 16.8695 3.41838 23.0306 3.41838 23.0306' stroke='white' stroke-width='5' stroke-miterlimit='3.86874' stroke-linecap='round' style='mix-blend-mode:darken'/%3E%3C/svg%3E");
     background:
-      var(--foil-svg) center / 100% no-repeat,
-      repeating-linear-gradient(0deg,
-        rgb(255,119,115) calc(var(--step)*1),
-        rgba(255,237,95,1) calc(var(--step)*2),
-        rgba(168,255,95,1) calc(var(--step)*3),
-        rgba(131,255,247,1) calc(var(--step)*4),
-        rgba(120,148,255,1) calc(var(--step)*5),
-        rgb(216,117,255) calc(var(--step)*6),
-        rgb(255,119,115) calc(var(--step)*7)
-      ) 0% 50% / 200% 700% no-repeat,
-      repeating-linear-gradient(128deg,
+      repeating-linear-gradient(
+        125deg,
+        hsl(  0, 100%, 65%) 0%,
+        hsl( 30, 100%, 65%) 8%,
+        hsl( 60, 100%, 65%) 16%,
+        hsl(120, 100%, 65%) 24%,
+        hsl(180, 100%, 65%) 32%,
+        hsl(240, 100%, 65%) 40%,
+        hsl(300, 100%, 65%) 48%,
+        hsl(360, 100%, 65%) 56%
+      ) 0% 0% / 200% 200%,
+      repeating-linear-gradient(
+        125deg,
         #0e152e 0%, hsl(180,10%,60%) 3.8%, hsl(180,10%,60%) 4.5%,
         hsl(180,10%,60%) 5.2%, #0e152e 10%, #0e152e 12%
-      ) 50% 50% / 300% no-repeat,
-      radial-gradient(farthest-corner circle at 50% 50%,
-        rgba(255,255,255,0.1) 12%, rgba(255,255,255,0.15) 20%,
-        rgba(255,255,255,0.25) 120%
       ) 50% 50% / 300% no-repeat;
-    background-blend-mode: hue, hue, hue, overlay;
+    background-blend-mode: color, hue;
   }
 
   @keyframes card-pop {
@@ -124,31 +209,78 @@
   #glare-card.pop {
     animation: card-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
+
+  .flip-hint {
+    transition: opacity 0.3s;
+  }
+  #glare-card:hover .flip-hint {
+    opacity: 1 !important;
+  }
 </style>
 
 <script>
   function initPhotoCardModal() {
     const backdrop = document.getElementById('photocard-backdrop');
     const card     = document.getElementById('glare-card');
-    const inner    = document.getElementById('glare-inner') as HTMLElement | null;
-    const glare    = document.getElementById('glare-layer') as HTMLElement | null;
-    const foil     = document.getElementById('foil-layer')  as HTMLElement | null;
-    const shine    = document.getElementById('shine-layer') as HTMLElement | null;
-    const closeBtn = document.getElementById('photocard-close');
+    const inner    = document.getElementById('glare-inner')  as HTMLElement | null;
+    const glare    = document.getElementById('glare-layer')  as HTMLElement | null;
+    const foil     = document.getElementById('foil-layer')   as HTMLElement | null;
+    const shine    = document.getElementById('shine-layer')  as HTMLElement | null;
     const trigger  = document.getElementById('profile-pic-trigger');
 
     if (!backdrop || !card || !inner || !glare || !foil || !shine) return;
 
-    // Portal: move to <body> so fixed positioning is relative to viewport, not any ancestor
     document.body.appendChild(backdrop);
 
-    // Re-query closeBtn after portal (it moved with backdrop)
     const closeBtnPortal = document.getElementById('photocard-close');
 
-    if (!backdrop || !card || !inner || !glare || !foil || !shine) return;
+    // ── Flip state ────────────────────────────────────────────────────
+    let isFlipped  = false;
+    let isFlipping = false;
 
+    // Update years on back face dynamically
+    const backYears = document.getElementById('card-back-years');
+    if (backYears) {
+      const y = new Date().getFullYear() - 2024;
+      backYears.textContent = `${y}+`;
+    }
+
+    function flipCard() {
+      if (isFlipping) return;
+      isFlipping = true;
+
+      // Hide glare effects during flip
+      hideLayers();
+      isActive = false;
+
+      isFlipped = !isFlipped;
+
+      // During flip: smooth 600ms, then restore instant tracking
+      inner!.style.transition = 'transform 600ms cubic-bezier(0.4, 0, 0.2, 1)';
+
+      if (isFlipped) {
+        inner!.style.transform = 'rotateY(180deg)';
+      } else {
+        inner!.style.transform = 'rotateY(0deg)';
+      }
+
+      setTimeout(() => {
+        isFlipping = false;
+        inner!.style.transition = 'transform 0s';
+      }, 620);
+    }
+
+    card.addEventListener('click', (e: MouseEvent) => {
+      // Don't flip if clicking close button
+      if ((e.target as HTMLElement).closest('#photocard-close')) return;
+      flipCard();
+    });
+
+    // ── Modal open/close ──────────────────────────────────────────────
     function openModal() {
-      // Same pattern as Flowbite: remove hidden, add flex
+      isFlipped  = false;
+      isFlipping = false;
+      inner!.style.transform = '';
       backdrop!.classList.remove('hidden');
       backdrop!.classList.add('flex');
       card!.classList.remove('pop');
@@ -162,116 +294,123 @@
       backdrop!.classList.remove('flex');
       document.body.style.overflow = '';
       inner!.style.transform = '';
-      glare!.style.opacity   = '0';
-      foil!.style.opacity    = '0';
-      shine!.style.opacity   = '0';
+      hideLayers();
+      isFlipped = false;
     }
 
     trigger?.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
     closeBtnPortal?.addEventListener('click', closeModal);
-    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-    // ── Glare / tilt ─────────────────────────────────────────────────
+    // ── Glare / tilt ──────────────────────────────────────────────────
     let isActive = false;
-    let rafId = 0;
+    let rafId    = 0;
 
     function applyGlare(pctX: number, pctY: number) {
+      if (isFlipped || isFlipping) return;
+
       const dX = pctX - 50;
       const dY = pctY - 50;
 
       inner!.style.transform =
-        `rotateY(${-(dX / 3.5) * 0.4}deg) rotateX(${(dY / 2) * 0.4}deg)`;
+        `rotateY(${(dX / 50) * 12}deg) rotateX(${-(dY / 50) * 12}deg)`;
 
       glare!.style.background =
         `radial-gradient(farthest-corner circle at ${pctX}% ${pctY}%,
-         rgba(255,255,255,0.45) 10%, rgba(255,255,255,0.3) 20%, rgba(255,255,255,0) 90%)`;
+         rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0) 70%)`;
 
-      const bgX = 50 + pctX / 4 - 12.5;
-      const bgY = 50 + pctY / 3 - 16.67;
-      foil!.style.backgroundPosition =
-        `center, 0% ${bgY}%, ${-bgX}% ${-bgY}%, ${bgX}% ${bgY}%`;
+      const bgX = (pctX / 100) * 100;
+      const bgY = (pctY / 100) * 100;
+      foil!.style.backgroundPosition = `${bgX}% ${bgY}%, 50% 50%`;
 
-      shine!.style.background =
-        `radial-gradient(farthest-corner circle at ${pctX}% ${pctY}%,
-         rgba(255,255,255,0.25) 12%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.1) 120%)`;
+      const beamPos = (pctX * 0.6 + pctY * 0.4);
+      const b = beamPos.toFixed(1);
+      shine!.style.background = `linear-gradient(
+        125deg,
+        transparent                       0%,
+        transparent                       ${Math.max(0,  parseFloat(b) - 18).toFixed(1)}%,
+        rgba(255,255,255,0.0)             ${Math.max(0,  parseFloat(b) - 10).toFixed(1)}%,
+        rgba(255,255,255,0.65)            ${b}%,
+        rgba(255,255,255,0.0)             ${Math.min(100,parseFloat(b) + 10).toFixed(1)}%,
+        transparent                       ${Math.min(100,parseFloat(b) + 18).toFixed(1)}%,
+        transparent                       100%
+      )`;
+      shine!.style.backgroundSize = '100% 100%';
     }
 
     function showLayers() {
-      glare!.style.opacity = '1';
-      foil!.style.opacity  = '0.35';
-      shine!.style.opacity = '0.45';
+      if (isFlipped || isFlipping) return;
+      glare!.style.opacity = '0.8';
+      foil!.style.opacity  = '0.5';
+      shine!.style.opacity = '1';
     }
 
     function hideLayers() {
-      inner!.style.transition = 'transform 300ms ease';
-      inner!.style.transform  = 'rotateX(0deg) rotateY(0deg)';
-      glare!.style.opacity    = '0';
-      foil!.style.opacity     = '0';
-      shine!.style.opacity    = '0';
+      inner!.style.transition = isFlipping ? inner!.style.transition : 'transform 300ms ease';
+      if (!isFlipped && !isFlipping) inner!.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      glare!.style.opacity = '0';
+      foil!.style.opacity  = '0';
+      shine!.style.opacity = '0';
     }
 
-    // ── Desktop: pointer events ───────────────────────────────────────
+    // Desktop
     card.addEventListener('pointerenter', (e: PointerEvent) => {
-      if (e.pointerType === 'touch') return; // handled by touch events below
+      if (e.pointerType === 'touch' || isFlipped) return;
       isActive = true;
-      setTimeout(() => {
-        if (!isActive) return;
-        inner!.style.transition = 'transform 0s';
-      }, 300);
+      setTimeout(() => { if (isActive && !isFlipped) inner!.style.transition = 'transform 0s'; }, 300);
       showLayers();
     });
 
     card.addEventListener('pointerleave', (e: PointerEvent) => {
       if (e.pointerType === 'touch') return;
       isActive = false;
-      hideLayers();
+      if (!isFlipped && !isFlipping) hideLayers();
       cancelAnimationFrame(rafId);
     });
 
     card.addEventListener('pointermove', (e: PointerEvent) => {
-      if (e.pointerType === 'touch') return;
+      if (e.pointerType === 'touch' || isFlipped || isFlipping) return;
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         const rect = card!.getBoundingClientRect();
-        const pctX = ((e.clientX - rect.left) / rect.width)  * 100;
-        const pctY = ((e.clientY - rect.top)  / rect.height) * 100;
-        applyGlare(pctX, pctY);
+        applyGlare(
+          ((e.clientX - rect.left) / rect.width)  * 100,
+          ((e.clientY - rect.top)  / rect.height) * 100
+        );
       });
     });
 
-    // ── Mobile: touch events ──────────────────────────────────────────
+    // Mobile touch
     card.addEventListener('touchstart', (e: TouchEvent) => {
+      if (isFlipped) return;
       e.preventDefault();
       inner!.style.transition = 'transform 0s';
       showLayers();
     }, { passive: false });
 
     card.addEventListener('touchend', () => {
-      hideLayers();
+      if (!isFlipped && !isFlipping) hideLayers();
       cancelAnimationFrame(rafId);
     });
 
     card.addEventListener('touchmove', (e: TouchEvent) => {
+      if (isFlipped || isFlipping) return;
       e.preventDefault();
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         const touch = e.touches[0];
         const rect  = card!.getBoundingClientRect();
-        // Clamp so it works even if finger goes slightly outside card
-        const pctX = Math.min(100, Math.max(0,
-          ((touch.clientX - rect.left) / rect.width) * 100));
-        const pctY = Math.min(100, Math.max(0,
-          ((touch.clientY - rect.top)  / rect.height) * 100));
-        applyGlare(pctX, pctY);
+        applyGlare(
+          Math.min(100, Math.max(0, ((touch.clientX - rect.left) / rect.width)  * 100)),
+          Math.min(100, Math.max(0, ((touch.clientY - rect.top)  / rect.height) * 100))
+        );
       });
     }, { passive: false });
 
-    // ── Mobile: gyroscope (bonus — tilts card when phone tilts) ──────
-    // Only activate if DeviceOrientation is available and we're on mobile
+    // Gyroscope
     const isMobile = window.matchMedia('(pointer: coarse)').matches;
-
     if (isMobile && typeof DeviceOrientationEvent !== 'undefined') {
-      // Request permission on iOS 13+
       const requestGyro = async () => {
         if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
           try {
@@ -281,29 +420,19 @@
         }
         startGyro();
       };
-
       function startGyro() {
         window.addEventListener('deviceorientation', (e: DeviceOrientationEvent) => {
-          // Only apply when modal is open
-          if (!backdrop!.classList.contains('flex')) return;
-
+          if (!backdrop!.classList.contains('flex') || isFlipped || isFlipping) return;
           cancelAnimationFrame(rafId);
           rafId = requestAnimationFrame(() => {
-            // gamma = left/right tilt (-90 to 90), beta = front/back tilt (-180 to 180)
-            const gamma = Math.min(30, Math.max(-30, e.gamma ?? 0)); // clamp to ±30°
-            const beta  = Math.min(30, Math.max(-30, (e.beta ?? 0) - 45)); // offset 45° for natural hold
-
-            const pctX = 50 + (gamma / 30) * 50; // map -30..30 → 0..100
-            const pctY = 50 + (beta  / 30) * 50;
-
+            const gamma = Math.min(30, Math.max(-30, e.gamma ?? 0));
+            const beta  = Math.min(30, Math.max(-30, (e.beta ?? 0) - 45));
             showLayers();
             inner!.style.transition = 'transform 100ms ease';
-            applyGlare(pctX, pctY);
+            applyGlare(50 + (gamma / 30) * 50, 50 + (beta / 30) * 50);
           });
         });
       }
-
-      // Trigger gyro permission on first touch of the card
       card.addEventListener('touchstart', requestGyro, { once: true });
     }
   }

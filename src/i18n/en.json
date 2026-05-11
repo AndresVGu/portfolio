@@ -19,7 +19,7 @@
     "role1": "Full-Stack Developer",
     "role2": "Electronics Specialist",
     "role3": "Trilingual · EN / FR / ES",
-    "description": "I build <strong>full-stack applications</strong> end-to-end — from <strong>.NET</strong> and <strong>Java Spring Boot</strong> backends to <strong>React</strong> frontends. I also work hands-on as an <strong>electronics technician</strong>, equally comfortable in a terminal or with a soldering iron. I communicate fluently in <strong>English</strong>, <strong>French</strong> and <strong>Spanish</strong>. {years}+ years shipping things that actually work."
+    "description": "<strong>{years}+ years</strong> building full-stack applications end-to-end — from <strong>.NET</strong> and <strong>Java Spring Boot</strong> backends to <strong>React</strong> frontends. I also work hands-on as an <strong>electronics technician</strong>, equally comfortable in a terminal or with a soldering iron. I communicate fluently in <strong>English</strong>, <strong>French</strong> and <strong>Spanish</strong>."
   },
 
   "TITLES": {
@@ -68,8 +68,8 @@
 
   "ABOUT": {
     "tagline": "🔥 I build software, break it, fix it, and make it better.",
-    "p1": "Most of the time I'm working with <strong>.NET</strong>, building <strong>APIs and backend systems</strong> that are meant to <strong>handle real usage — not just demos.</strong>",
-    "p2": "I also work <strong>hands-on as an electronic technician</strong>, which means I spend a lot of time dealing with <strong>Linux</strong>, hardware, and figuring out why something that <em>should work…</em> doesn't.",
+    "p1": "With <strong>{years}+ years of experience</strong> building software, I've learned that what matters most is <strong>shipping things that actually work in production — not just in demos.</strong>",
+    "p2": "Most of that time has been with <strong>.NET</strong>, crafting <strong>APIs and backend systems</strong>, while also working <strong>hands-on as an electronic technician</strong> — dealing with <strong>Linux</strong>, hardware, and debugging the unexplainable.",
     "p3": "I've done <strong>full-stack work</strong>, played around with modern frameworks, SQL, and Python — but at the end of the day, I just like <strong>building things that work well and make sense.</strong>",
     "techStack": "⚙️ Tech Stack",
     "strengths": {
