@@ -16,7 +16,10 @@
     "badge": "Abierto a oportunidades",
     "contact": "Contacto",
     "resume": "Currículum",
-    "description": "Desarrollador Full-Stack · {years}+ años de experiencia · Trilingüe (EN / FR / ES) Colombiano 🇨🇴 — Construyo aplicaciones web y móviles robustas y escalables. Me enfoco en experiencias responsivas y amigables para el usuario, resolviendo problemas reales a través del código."
+    "role1": "Desarrollador Full-Stack",
+    "role2": "Especialista en Electrónica",
+    "role3": "Trilingüe · EN / FR / ES",
+    "description": "Construyo <strong>backends robustos</strong> y <strong>APIs escalables</strong> con <strong>.NET</strong>, <strong>Java Spring Boot</strong> y <strong>React</strong> — código que aguanta tráfico real, no solo demos. También trabajo como <strong>técnico electrónico</strong>, igual de cómodo en una terminal que con un soldador. Me comunico con fluidez en <strong>inglés</strong>, <strong>francés</strong> y <strong>español</strong>. {years}+ años entregando cosas que realmente funcionan."
   },
 
   "TITLES": {
