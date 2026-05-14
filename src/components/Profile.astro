@@ -39,7 +39,7 @@ const years = currentYear - graduationYear;
           <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
         </span>
         {i18n.PROFILE.badge ?? 'Open to Opportunities'}
-        <span class="tooltip tooltip-bottom">Currently looking for new roles</span>
+        <span class="tooltip tooltip-bottom">{i18n.PROFILE.tooltipBadge}</span>
       </span>
     </div>
 
@@ -48,7 +48,6 @@ const years = currentYear - graduationYear;
         class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight
                text-gray-900 dark:text-white
                text-center lg:text-left leading-tight"
-        data-text={i18n.PROFILE.greeting}
         aria-label={i18n.PROFILE.greeting}>
       {i18n.PROFILE.greeting}
     </h1>
@@ -91,7 +90,7 @@ const years = currentYear - graduationYear;
           </svg>
           {i18n.PROFILE.resume}
         </a>
-        <span class="tooltip tooltip-bottom">Download CV (PDF)</span>
+        <span class="tooltip tooltip-bottom">{i18n.PROFILE.tooltipResume}</span>
       </div>
 
       <!-- LinkedIn — bare icon -->
@@ -142,7 +141,7 @@ const years = currentYear - graduationYear;
           <span class="opacity-0 hover:opacity-100 transition-opacity duration-300
                        text-white text-xs font-medium">View</span>
         </div>
-        <span class="tooltip tooltip-bottom">Click to view photo</span>
+        <span class="tooltip tooltip-bottom">{i18n.PROFILE.tooltipPhoto}</span>
 
         <!-- Flag badge — LinkedIn-style status indicator -->
         <div class="absolute bottom-2 right-2 z-20
@@ -270,20 +269,6 @@ const years = currentYear - graduationYear;
     40%  { transform: rotate(-10deg); }
   }
 
-  /* ── TYPING CURSOR ─────────────────────────────────────────── */
-  #typing-cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1em;
-    background: currentColor;
-    margin-left: 2px;
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-  }
-
   /* ── MAGNETIC BUTTONS ──────────────────────────────────────── */
   .magnetic-btn {
     position: relative;
@@ -386,7 +371,7 @@ const years = currentYear - graduationYear;
     transition: transform 0.2s ease;
   }
   :root:not(.dark) .halo-btn-inner {
-    background: linear-gradient(160deg, #ede9fe, #e8e4f8, #ede9fe);
+    background: linear-gradient(160deg, #ddd6fe, #d4cafe, #ddd6fe);
     color: #1e1b4b;
   }
   #halo-btn:hover .halo-btn-inner {
@@ -428,9 +413,9 @@ const years = currentYear - graduationYear;
     background-image: conic-gradient(transparent,#402fb5 4%,transparent 20%,transparent 48%,#cf30aa 58%,transparent 74%,transparent 100%);
     animation: halo-spin 7s linear infinite;
   }
-  :root:not(.dark) .aurora-glow { opacity: 0.25; filter: blur(20px); }
+  :root:not(.dark) .aurora-glow { opacity: 0.35; filter: blur(20px); }
   :root:not(.dark) .aurora-glow::before {
-    background-image: conic-gradient(#ede9fe,#c4b5fd 4%,#ede9fe 20%,#ede9fe 48%,#f9a8d4 58%,#ede9fe 74%,#ede9fe 100%);
+    background-image: conic-gradient(transparent,#c4b5fd 4%,transparent 20%,transparent 48%,#f9a8d4 58%,transparent 74%,transparent 100%);
   }
   .outer-ring { inset: -8px -8px; filter: blur(2.5px); }
   .outer-ring::before {
@@ -440,13 +425,13 @@ const years = currentYear - graduationYear;
   .outer-ring:nth-child(3)::before { animation-duration: 4.8s; }
   .outer-ring:nth-child(4)::before { animation-duration: 5.6s; }
   :root:not(.dark) .outer-ring::before {
-    background-image: conic-gradient(#ede9fe,#a78bfa 0%,#ddd6fe 6%,#ede9fe 14%,#ede9fe 50%,#f0abfc 56%,#fae8ff 62%,#ede9fe 70%);
+    background-image: conic-gradient(transparent,#a78bfa 0%,#ddd6fe 6%,transparent 14%,transparent 50%,#f0abfc 56%,#fae8ff 62%,transparent 70%);
   }
   :root:not(.dark) .outer-ring:nth-child(3)::before {
-    background-image: conic-gradient(#ede9fe,#c4b5fd 3%,#ede9fe 12%,#ede9fe 50%,#f5d0fe 58%,#ede9fe 68%);
+    background-image: conic-gradient(transparent,#c4b5fd 3%,transparent 12%,transparent 50%,#f5d0fe 58%,transparent 68%);
   }
   :root:not(.dark) .outer-ring:nth-child(4)::before {
-    background-image: conic-gradient(#ede9fe,#ede9fe 4%,#ede9fe 11%,#ede9fe 52%,#fdf4ff 60%,#ede9fe 70%);
+    background-image: conic-gradient(transparent,transparent 4%,transparent 11%,transparent 52%,#fdf4ff 60%,transparent 70%);
   }
   .inner-glow { inset: -4px -4px; filter: blur(1.5px); }
   .inner-glow::before {
@@ -457,7 +442,7 @@ const years = currentYear - graduationYear;
   :root:not(.dark) .inner-glow { opacity: 0.9; }
   :root:not(.dark) .inner-glow::before {
     filter: brightness(1.1);
-    background-image: conic-gradient(#ede9fe 0%,#8b5cf6 3%,#c4b5fd 6%,#ede9fe 12%,#ede9fe 50%,#d946ef 56%,#f0abfc 60%,#ede9fe 66%);
+    background-image: conic-gradient(transparent 0%,#8b5cf6 3%,#c4b5fd 6%,transparent 12%,transparent 50%,#d946ef 56%,#f0abfc 60%,transparent 66%);
   }
   .main-border { inset: -1.5px -1.5px; filter: blur(0px); }
   .main-border::before {
@@ -468,7 +453,7 @@ const years = currentYear - graduationYear;
   :root:not(.dark) .main-border { opacity: 1; }
   :root:not(.dark) .main-border::before {
     filter: brightness(1.1);
-    background-image: conic-gradient(#ede9fe,#7c3aed 5%,#ede9fe 14%,#ede9fe 50%,#a21caf 60%,#ede9fe 64%);
+    background-image: conic-gradient(transparent,#7c3aed 5%,transparent 14%,transparent 50%,#a21caf 60%,transparent 64%);
   }
 
   @keyframes halo-spin {
@@ -479,70 +464,6 @@ const years = currentYear - graduationYear;
 
 <script>
   document.addEventListener('astro:page-load', () => {
-
-    // ── Scramble / decrypt greeting (once per session) ────────────
-    const CHARSET         = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    const REVEAL_DELAY_MS = 40;   // ms before each letter is locked in
-    const SCRAMBLE_CYCLES = 3;    // how many random chars flash before locking
-    const FLIP_DELAY_MS   = 25;   // ms between each scramble flip
-    const SESSION_KEY     = 'hero-scramble-done';
-
-    const greetingEl = document.getElementById('hero-greeting');
-
-    if (greetingEl && !sessionStorage.getItem(SESSION_KEY)) {
-      sessionStorage.setItem(SESSION_KEY, '1');
-
-      const text = (greetingEl as HTMLElement).dataset.text ?? greetingEl.textContent ?? '';
-
-      // Reserve full space upfront — no layout shift
-      greetingEl.innerHTML =
-        text.split('').map((ch, i) =>
-          `<span data-index="${i}" data-final="${ch}" style="visibility:hidden">${ch}</span>`
-        ).join('') +
-        '<span id="typing-cursor" aria-hidden="true"></span>';
-
-      const spans = Array.from(
-        greetingEl.querySelectorAll<HTMLElement>('span[data-index]')
-      );
-      const cursor = document.getElementById('typing-cursor');
-
-      function randomChar(): string {
-        return CHARSET[Math.floor(Math.random() * CHARSET.length)];
-      }
-
-      // Scramble a single span N times, then lock it to its final char
-      function scrambleAndLock(span: HTMLElement, done: () => void) {
-        const final = span.dataset.final ?? '';
-        if (final === ' ') { span.style.visibility = 'visible'; done(); return; }
-
-        span.style.visibility = 'visible';
-        let cycles = 0;
-
-        const flip = setInterval(() => {
-          if (cycles >= SCRAMBLE_CYCLES) {
-            clearInterval(flip);
-            span.textContent = final;
-            done();
-          } else {
-            span.textContent = randomChar();
-            cycles++;
-          }
-        }, FLIP_DELAY_MS);
-      }
-
-      // Reveal letters one by one, each with its own scramble burst
-      function revealNext(index: number) {
-        if (index >= spans.length) {
-          setTimeout(() => cursor?.remove(), 500);
-          return;
-        }
-        scrambleAndLock(spans[index], () => {
-          setTimeout(() => revealNext(index + 1), REVEAL_DELAY_MS);
-        });
-      }
-
-      revealNext(0);
-    }
 
     // ── Years of experience (client-side update for cached pages) ──
     const el = document.getElementById('profile-description');

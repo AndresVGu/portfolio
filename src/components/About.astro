@@ -1,5 +1,4 @@
 ---
-import Photocard from './photocards/photocard.astro';
 import { getI18N } from '@/i18n';
 
 interface Props {
@@ -12,128 +11,339 @@ const t = i18n.ABOUT;
 
 const graduationYear = 2024;
 const years = new Date().getFullYear() - graduationYear;
-
 const p1 = t.p1.replace('{years}', String(years));
-const p2 = t.p2.replace('{years}', String(years));
-const p3 = t.p3.replace('{years}', String(years));
 
-const techs = [
-  'Java', 'Spring Boot', 'Linux', 'Python', '.NET Core', 'AWS',
-  'Docker', 'Kubernetes', 'SQL', 'PostgreSQL', 'JavaScript', 'Angular', 'Astro',
-];
+let ghContributions: { date: string; count: number; level: number }[] = [];
+let ghTotal = 0;
+try {
+  const res = await fetch('https://github-contributions-api.jogruber.de/v4/AndresVGu?y=last');
+  if (res.ok) {
+    const data = await res.json();
+    ghTotal = data.total?.lastYear ?? 0;
+    ghContributions = (data.contributions ?? []).slice(-140);
+  }
+} catch {}
 ---
 
-<article class="grid grid-cols-1 gap-8 lg:gap-12 lg:grid-cols-2 items-start text-gray-700 dark:text-gray-300">
+<div class="bento-about">
 
-  <!-- LEFT -->
-  <div class="space-y-6">
+  <!-- Bio -->
+  <div class="bento-cell cell-bio">
+    <p class="text-sm sm:text-base font-bold text-yellow-500 dark:text-yellow-400 mb-3">{t.tagline}</p>
+    <div class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed [&_strong]:text-gray-900 dark:[&_strong]:text-white [&_strong]:font-semibold" set:html={p1}></div>
+    <p class="mt-4 text-[11px] text-gray-400 dark:text-gray-500">{t.focus}</p>
+  </div>
 
-    <!-- Tagline -->
-    <p class="text-lg font-semibold text-yellow-500 dark:text-yellow-200">
-      {t.tagline}
-    </p>
-
-    <!-- Description -->
-    <div class="space-y-4 text-pretty
-                [&>p>strong]:font-mono
-                [&>p>strong]:text-gray-900
-                dark:[&>p>strong]:text-yellow-100">
-      <p set:html={p1} />
-      <p set:html={p2} />
-      <p set:html={p3} />
+  <!-- Map -->
+  <div class="bento-cell cell-map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.2!2d-79.3871!3d43.6426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b34d68bf33a9b%3A0x15edd8c4de1c7581!2sCN%20Tower!5e0!3m2!1sen!2sca!4v1700000000000" class="map-iframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="CN Tower, Toronto"></iframe>
+    <div class="map-overlay">
+      <div class="map-dot-live"></div>
+      <div class="map-overlay-text"><span>Toronto, ON</span><span>Based here</span></div>
     </div>
+  </div>
 
-    <!-- Tech Stack -->
-    <div>
-      <p class="mb-2 text-sm font-semibold text-gray-500 dark:text-gray-400">
-        {t.techStack}
-      </p>
-      <div class="flex flex-wrap gap-3 text-xs">
-        {techs.map((tech) => (
-          <span
-            class="group relative px-3 py-1 rounded-md border
-                   border-black/10 dark:border-white/10
-                   bg-black/5 dark:bg-white/5
-                   transition-all duration-300 ease-out
-                   hover:-translate-y-1 hover:scale-105
-                   hover:border-cyan-500/60 dark:hover:border-cyan-400/40
-                   hover:bg-gradient-to-r
-                   hover:from-cyan-500/20 hover:to-purple-500/20
-                   dark:hover:from-cyan-500/10 dark:hover:to-purple-500/10
-                   cursor-default overflow-hidden"
-          >
-            <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300
-                         bg-gradient-to-r from-cyan-500/20 to-purple-500/20
-                         dark:from-cyan-400/20 dark:to-purple-500/20 blur-md"></span>
-            <span class="relative z-10 tracking-wide text-gray-800 dark:text-gray-200
-                         group-hover:text-black dark:group-hover:text-white">
-              {tech}
-            </span>
-          </span>
-        ))}
+  <!-- Clock -->
+  <div class="bento-cell cell-clock">
+    <div class="clock-display">
+      <span id="about-clock" class="text-2xl sm:text-3xl font-mono font-bold text-gray-900 dark:text-white tabular-nums">--:--</span>
+      <span class="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-widest mt-1">EST · Toronto</span>
+    </div>
+  </div>
+
+  <!-- Terminal -->
+  <div class="bento-cell cell-terminal">
+    <div class="terminal-window">
+      <div class="terminal-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+      <div class="terminal-body">
+        <p class="terminal-line"><span class="text-green-400">$</span><span id="terminal-cmd" class="text-gray-300"></span><span id="terminal-cursor" class="terminal-cursor">▌</span></p>
+        <p id="terminal-output" class="text-cyan-400 mt-1 text-xs hidden"></p>
       </div>
     </div>
-
-    <!-- Strengths -->
-    <div class="grid grid-cols-2 gap-3 text-sm text-gray-700 dark:text-gray-300">
-      <div>{t.strengths.backend}</div>
-      <div>{t.strengths.cloud}</div>
-      <div>{t.strengths.data}</div>
-      <div>{t.strengths.linux}</div>
-    </div>
-
-    <!-- Focus -->
-    <p class="text-sm text-gray-500 dark:text-gray-400">{t.focus}</p>
-
   </div>
 
-  <!-- RIGHT (BENTO) -->
-  <div class="grid grid-cols-2 gap-3 md:gap-4">
-
-    <!-- Image -->
-    <div class="col-span-2 group relative">
-      <Photocard
-        src="/me3.jpg"
-        alt="Andres Villarreal"
-        badgeText={`🚀 ${t.cards.focused}`}
-      />
+  <!-- Status -->
+  <div class="bento-cell cell-status">
+    <div class="status-list">
+      <div class="status-item"><span class="text-sm">🔨</span><span class="text-xs text-gray-700 dark:text-gray-300">Building an ERP</span></div>
+      <div class="status-item"><span class="text-sm">☕</span><span class="text-xs text-gray-700 dark:text-gray-300" id="coffee-count">Coffee: 2</span></div>
+      <div class="status-item"><span class="text-sm">🎯</span><span class="text-xs text-gray-700 dark:text-gray-300">{t.cards.focusedItems[2]}</span></div>
     </div>
-
-    <!-- Card 1 -->
-    <div class="rounded-2xl p-4 text-sm
-                bg-black/5 dark:bg-white/5
-                border border-black/10 dark:border-white/10
-                hover:scale-[1.02] transition">
-      <p class="font-semibold mb-1 text-gray-800 dark:text-gray-100">{t.cards.focused}</p>
-      {t.cards.focusedItems.map((item) => (
-        <p class="text-gray-600 dark:text-gray-400">{item}</p>
-      ))}
-    </div>
-
-    <!-- Card 2 -->
-    <div class="rounded-2xl p-4 text-sm
-                bg-black/5 dark:bg-white/5
-                border border-black/10 dark:border-white/10
-                hover:scale-[1.02] transition">
-      <p class="font-semibold mb-1 text-gray-800 dark:text-gray-100">{t.cards.location}</p>
-      <p class="text-gray-600 dark:text-gray-400">{t.cards.locationValue}</p>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="col-span-2 rounded-2xl p-4 text-sm
-                bg-gradient-to-r from-cyan-500/10 to-purple-500/10
-                border border-cyan-500/20
-                hover:scale-[1.02] transition">
-      <p class="font-semibold mb-1 text-gray-800 dark:text-gray-100">{t.cards.interests}</p>
-      {t.cards.interestItems.map((item) => (
-        <p class="text-gray-700 dark:text-gray-300">{item}</p>
-      ))}
-    </div>
-
   </div>
 
-</article>
+  <!-- Interests -->
+  <div class="bento-cell cell-interests">
+    <div class="flex flex-col gap-3">
+      <div class="flex items-center gap-2"><span class="text-sm">🗣️</span><div class="flex gap-1.5"><span class="lang-pill pill-en">EN</span><span class="lang-pill pill-fr">FR</span><span class="lang-pill pill-es">ES</span></div></div>
+      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">🚴</span><span>Cycling</span></div>
+      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">📚</span><span>Reading</span></div>
+      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">🧙‍♂️</span><span>LOTR fan</span></div>
+    </div>
+  </div>
+
+  <!-- GitHub -->
+  <div class="bento-cell cell-github">
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center gap-2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-gray-700 dark:text-gray-300"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span class="text-xs font-bold text-gray-700 dark:text-gray-300">GitHub</span>
+      </div>
+      <span class="text-[10px] text-gray-400 dark:text-gray-500">{ghTotal} contributions</span>
+    </div>
+    <div class="gh-heatmap">{ghContributions.map((day) => (<div class={`gh-cell gh-level-${day.level}`} title={`${day.date}: ${day.count}`}></div>))}</div>
+  </div>
+
+  <!-- Photocards Gallery -->
+  <div class="bento-cell cell-gallery">
+    <div class="gallery-header">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">Photocards</p>
+      <div class="gallery-nav">
+        <button id="gallery-prev-btn" aria-label="Previous" class="gallery-nav-btn">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button id="gallery-next-btn" aria-label="Next" class="gallery-nav-btn">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="gallery-scroll" id="gallery-scroll">
+      <div class="gallery-card" data-img="/me3.jpg" data-label="Developer"><img src="/me3.jpg" alt="Andrés" loading="lazy" /><span>Developer</span></div>
+      <div class="gallery-card" data-img="/profile.jpeg" data-label="Toronto"><img src="/profile.jpeg" alt="Andrés" loading="lazy" /><span>Toronto</span></div>
+      <div class="gallery-card" data-img="/me3.jpg" data-label="Code"><img src="/me3.jpg" alt="Andrés" loading="lazy" /><span>Code</span></div>
+      <div class="gallery-card" data-img="/profile.jpeg" data-label="Build"><img src="/profile.jpeg" alt="Andrés" loading="lazy" /><span>Build</span></div>
+    </div>
+  </div>
+
+  <!-- Gallery Photocard Modal -->
+  <div id="gallery-modal-backdrop" class="hidden fixed inset-0 z-[9999] items-center justify-center bg-black/80 backdrop-blur-md">
+    <button id="gallery-modal-close" aria-label="Close" class="fixed top-5 right-5 z-[10000] p-2 rounded-full text-white/70 hover:text-white bg-white/10 hover:bg-white/20 transition"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <!-- Nav arrows -->
+    <button id="gallery-modal-prev" aria-label="Previous" class="fixed left-4 top-1/2 -translate-y-1/2 z-[10000] p-2 rounded-full text-white/70 hover:text-white bg-white/10 hover:bg-white/20 transition"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg></button>
+    <button id="gallery-modal-next" aria-label="Next" class="fixed right-4 top-1/2 -translate-y-1/2 z-[10000] p-2 rounded-full text-white/70 hover:text-white bg-white/10 hover:bg-white/20 transition"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
+    <div id="gallery-modal-card" class="relative select-none" style="width:min(280px,80vw); perspective:900px;">
+      <div id="gallery-modal-inner" style="transform-style:preserve-3d; transition:transform 0s; will-change:transform;">
+        <div class="gallery-face gallery-front" style="border-radius:24px; overflow:hidden; backface-visibility:hidden;">
+          <img id="gallery-modal-img" src="" alt="" style="width:100%; aspect-ratio:2/3; object-fit:cover; object-position:top; display:block;" />
+          <div id="gallery-modal-glare" class="absolute inset-0 pointer-events-none" style="border-radius:24px; mix-blend-mode:overlay; opacity:0; transition:opacity 300ms;"></div>
+          <div id="gallery-modal-foil" class="absolute inset-0 pointer-events-none" style="border-radius:24px; mix-blend-mode:color-dodge; opacity:0; transition:opacity 300ms;"></div>
+          <div id="gallery-modal-shine" class="absolute inset-0 pointer-events-none" style="border-radius:24px; mix-blend-mode:screen; opacity:0; transition:opacity 300ms;"></div>
+          <div class="absolute bottom-0 left-0 right-0 px-4 py-3" style="background:linear-gradient(to top,rgba(0,0,0,0.8),transparent); border-radius:0 0 24px 24px;"><p id="gallery-modal-label" class="text-white font-bold text-sm"></p></div>
+          <div class="absolute top-2 right-2 text-white/40 text-[10px]">click to flip</div>
+        </div>
+        <div class="gallery-face gallery-back" style="border-radius:24px; overflow:hidden; backface-visibility:hidden; transform:rotateY(180deg); position:absolute; inset:0;">
+          <div style="width:100%; height:100%; aspect-ratio:2/3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; padding:1.5rem; background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);">
+            <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#60a5fa);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:#fff;">AV</div>
+            <p style="color:#fff;font-weight:700;font-size:1rem;">Andrés Villarreal</p>
+            <p style="color:rgba(255,255,255,0.5);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;">Full-Stack Developer</p>
+            <div class="absolute top-2 right-2 text-white/30 text-[10px]">click to flip back</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style is:global>
+  .bento-about {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* Tablet (md) */
+  @media (min-width: 768px) {
+    .bento-about {
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: minmax(130px, auto);
+      gap: 0.875rem;
+    }
+    .cell-bio       { grid-column: span 2; grid-row: span 2; }
+    .cell-map       { grid-column: span 2; grid-row: span 2; }
+    .cell-clock     { grid-column: span 1; }
+    .cell-terminal  { grid-column: span 2; }
+    .cell-status    { grid-column: span 1; }
+    .cell-interests { grid-column: span 2; }
+    .cell-github    { grid-column: span 4; }
+    .cell-gallery   { grid-column: span 4; height: 280px; }
+  }
+
+  /* Large desktop */
+  @media (min-width: 1024px) {
+    .bento-about {
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: minmax(140px, auto);
+      gap: 1rem;
+    }
+    .cell-bio       { grid-column: span 3; grid-row: span 2; }
+    .cell-map       { grid-column: span 3; grid-row: span 2; }
+    .cell-clock     { grid-column: span 1; }
+    .cell-terminal  { grid-column: span 3; }
+    .cell-status    { grid-column: span 2; }
+    .cell-interests { grid-column: span 2; }
+    .cell-github    { grid-column: span 4; }
+    .cell-gallery   { grid-column: span 6; height: 300px; }
+  }
+
+  /* Mobile */
+  @media (max-width: 767px) {
+    .cell-bio, .cell-map, .cell-terminal,
+    .cell-github, .cell-interests,
+    .cell-gallery { grid-column: span 2; }
+    .cell-gallery { height: 240px; }
+  }
+
+  .bento-cell {
+    border-radius: 1.25rem; padding: 1.25rem;
+    background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06);
+    position: relative; overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .bento-cell:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
+  .dark .bento-cell { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.06); }
+  .dark .bento-cell:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+
+  /* MAP */
+  .cell-map { padding: 0 !important; position: relative; }
+  .cell-map::after { content:''; position:absolute; inset:0; border-radius:1.25rem; pointer-events:none; z-index:2; background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 30%); }
+  .map-iframe { width:100%; height:100%; min-height:200px; border:none; border-radius:1.25rem; filter:grayscale(0.4) brightness(1.05) contrast(1.05); transition:filter 0.4s ease; }
+  .cell-map:hover .map-iframe { filter:grayscale(0) brightness(1.05) contrast(1); }
+  .dark .map-iframe { filter:invert(1) hue-rotate(180deg) grayscale(0.4) brightness(1.1) contrast(1.1); }
+  .dark .cell-map:hover .map-iframe { filter:invert(1) hue-rotate(180deg) grayscale(0.1) brightness(1.15) contrast(1.05); }
+  .map-overlay { position:absolute; bottom:12px; left:12px; z-index:3; display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.9); backdrop-filter:blur(8px); padding:6px 12px; border-radius:10px; border:1px solid rgba(0,0,0,0.08); box-shadow:0 2px 12px rgba(0,0,0,0.1); }
+  .dark .map-overlay { background:rgba(20,20,30,0.85); border-color:rgba(255,255,255,0.1); }
+  .map-dot-live { width:8px; height:8px; border-radius:50%; background:#22c55e; box-shadow:0 0 6px #22c55e; animation:mapLivePulse 2s ease-in-out infinite; }
+  .map-overlay-text { display:flex; flex-direction:column; }
+  .map-overlay-text span:first-child { color:#111; font-size:11px; font-weight:700; }
+  .map-overlay-text span:last-child { color:#6b7280; font-size:9px; }
+  .dark .map-overlay-text span:first-child { color:#f1f5f9; }
+  .dark .map-overlay-text span:last-child { color:#9ca3af; }
+  @keyframes mapLivePulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.6; transform:scale(0.8); } }
+
+  /* CLOCK */
+  .cell-clock { display:flex; align-items:center; justify-content:center; }
+  .clock-display { display:flex; flex-direction:column; align-items:center; }
+
+  /* TERMINAL */
+  .cell-terminal { padding:0 !important; }
+  .terminal-window { width:100%; height:100%; min-height:110px; background:#1a1b26; border-radius:1.25rem; padding:0.75rem 1rem; display:flex; flex-direction:column; }
+  .terminal-dots { display:flex; gap:5px; margin-bottom:0.5rem; }
+  .dot-red { width:8px; height:8px; border-radius:50%; background:#ff5f57; }
+  .dot-yellow { width:8px; height:8px; border-radius:50%; background:#ffbd2e; }
+  .dot-green { width:8px; height:8px; border-radius:50%; background:#28c840; }
+  .terminal-body { font-family:'JetBrains Mono',monospace; font-size:0.72rem; flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .terminal-line { display:flex; gap:0.4rem; align-items:center; }
+  .terminal-cursor { color:#7aa2f7; animation:termBlink 1s step-end infinite; }
+  @keyframes termBlink { 0%,50% { opacity:1; } 51%,100% { opacity:0; } }
+
+  /* STATUS */
+  .cell-status { display:flex; align-items:center; }
+  .status-list { display:flex; flex-direction:column; gap:0.5rem; }
+  .status-item { display:flex; align-items:center; gap:0.5rem; }
+
+  /* INTERESTS */
+  .cell-interests { display:flex; align-items:center; }
+  .lang-pill { padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700; border:1px solid; }
+  .pill-en { background:rgba(59,130,246,0.1); color:#2563eb; border-color:rgba(59,130,246,0.25); }
+  .pill-fr { background:rgba(239,68,68,0.1); color:#dc2626; border-color:rgba(239,68,68,0.25); }
+  .pill-es { background:rgba(250,204,21,0.1); color:#ca8a04; border-color:rgba(250,204,21,0.25); }
+  .dark .pill-en { color:#60a5fa; } .dark .pill-fr { color:#f87171; } .dark .pill-es { color:#fbbf24; }
+
+  /* GITHUB */
+  .gh-heatmap { display:grid; grid-template-rows:repeat(7,1fr); grid-auto-flow:column; grid-auto-columns:minmax(8px,1fr); gap:2px; width:100%; height:72px; }
+  .gh-cell { border-radius:2px; min-width:0; }
+  .gh-level-0 { background:rgba(0,0,0,0.05); } .gh-level-1 { background:#9be9a8; } .gh-level-2 { background:#40c463; } .gh-level-3 { background:#30a14e; } .gh-level-4 { background:#216e39; }
+  .dark .gh-level-0 { background:rgba(255,255,255,0.05); } .dark .gh-level-1 { background:#0e4429; } .dark .gh-level-2 { background:#006d32; } .dark .gh-level-3 { background:#26a641; } .dark .gh-level-4 { background:#39d353; }
+
+  /* GALLERY */
+  .cell-gallery { padding:0.75rem !important; display:flex; flex-direction:column; }
+  .gallery-header { display:flex; align-items:center; justify-content:space-between; padding:0 0.25rem; margin-bottom:0.5rem; }
+  .gallery-nav { display:flex; gap:4px; }
+  .gallery-nav-btn { width:26px; height:26px; border-radius:50%; border:1px solid rgba(0,0,0,0.1); background:rgba(0,0,0,0.03); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; color:#6b7280; }
+  .gallery-nav-btn:hover { background:rgba(0,0,0,0.08); color:#111; transform:scale(1.1); }
+  .dark .gallery-nav-btn { border-color:rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:#9ca3af; }
+  .dark .gallery-nav-btn:hover { background:rgba(255,255,255,0.12); color:#fff; }
+  .gallery-scroll { display:flex; gap:0.75rem; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding:0.5rem; scrollbar-width:none; flex:1; }
+  .gallery-scroll::-webkit-scrollbar { display:none; }
+  .gallery-card { flex-shrink:0; width:150px; height:100%; border-radius:1rem; overflow:hidden; position:relative; scroll-snap-align:center; cursor:pointer; transition:transform 0.3s ease,box-shadow 0.3s ease; }
+  .gallery-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.2); }
+  .gallery-card img { width:100%; height:100%; object-fit:cover; object-position:top; }
+  .gallery-card span { position:absolute; bottom:0; left:0; right:0; padding:8px 12px; font-size:11px; font-weight:700; color:#fff; background:linear-gradient(to top,rgba(0,0,0,0.7),transparent); text-align:center; }
+
+  /* GALLERY MODAL */
+  .gallery-face { position:relative; width:100%; }
+  .gallery-back { position:absolute; inset:0; }
+  #gallery-modal-foil { background:repeating-linear-gradient(105deg,hsl(0,100%,60%) 0%,hsl(40,100%,60%) 10%,hsl(80,100%,60%) 20%,hsl(140,100%,60%) 30%,hsl(200,100%,60%) 40%,hsl(260,100%,60%) 50%,hsl(320,100%,60%) 60%,hsl(360,100%,60%) 70%); background-size:400% 400%; filter:brightness(1.1) saturate(1.4); }
+  #gallery-modal-shine { background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,0.08) 35%,rgba(255,255,255,0.55) 50%,rgba(255,255,255,0.08) 65%,transparent 80%); background-size:300% 300%; }
+  #gallery-modal-card.pop { animation:galleryPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+  @keyframes galleryPop { from { transform:scale(0.82); opacity:0; } to { transform:scale(1); opacity:1; } }
+</style>
 
 <script>
-  import '../scripts/about';
+  document.addEventListener('astro:page-load', () => {
+    // CLOCK
+    const clockEl = document.getElementById('about-clock');
+    function updateClock() { if (!clockEl) return; clockEl.textContent = new Date().toLocaleTimeString('en-US', { timeZone:'America/Toronto', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false }); }
+    updateClock(); setInterval(updateClock, 1000);
+
+    // TERMINAL
+    const cmdEl = document.getElementById('terminal-cmd');
+    const outputEl = document.getElementById('terminal-output');
+    const commands = [{ cmd:'whoami', out:'andrés villarreal' },{ cmd:'cat role.txt', out:'Full-Stack Engineer @ Rugged Books' },{ cmd:'echo $STACK', out:'Java · Spring Boot · React · TypeScript' }];
+    let cmdIdx = 0;
+    function typeCommand() { if (!cmdEl||!outputEl) return; const {cmd,out}=commands[cmdIdx%commands.length]; cmdEl.textContent=''; outputEl.classList.add('hidden'); let i=0; const iv=setInterval(()=>{ cmdEl.textContent+=cmd[i++]; if(i>=cmd.length){ clearInterval(iv); setTimeout(()=>{ outputEl.textContent=out; outputEl.classList.remove('hidden'); cmdIdx++; setTimeout(typeCommand,3000); },400); } },60); }
+    setTimeout(typeCommand, 800);
+
+    // COFFEE
+    const coffeeEl = document.getElementById('coffee-count');
+    if (coffeeEl) { const h=new Date().getHours(); coffeeEl.textContent=`Coffee: ${h<9?1:h<12?2:h<15?3:h<18?4:2}`; }
+
+    // GALLERY SCROLL NAV
+    const galleryScroll = document.getElementById('gallery-scroll');
+    const galPrev = document.getElementById('gallery-prev-btn');
+    const galNext = document.getElementById('gallery-next-btn');
+    if (galleryScroll) {
+      const scrollAmount = 170; // card width + gap
+      galPrev?.addEventListener('click', () => { galleryScroll.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); });
+      galNext?.addEventListener('click', () => { galleryScroll.scrollBy({ left: scrollAmount, behavior: 'smooth' }); });
+    }
+
+    // GALLERY MODAL
+    const gBackdrop=document.getElementById('gallery-modal-backdrop');
+    const gCard=document.getElementById('gallery-modal-card');
+    const gInner=document.getElementById('gallery-modal-inner') as HTMLElement|null;
+    const gImg=document.getElementById('gallery-modal-img') as HTMLImageElement|null;
+    const gLabel=document.getElementById('gallery-modal-label');
+    const gGlare=document.getElementById('gallery-modal-glare') as HTMLElement|null;
+    const gFoil=document.getElementById('gallery-modal-foil') as HTMLElement|null;
+    const gShine=document.getElementById('gallery-modal-shine') as HTMLElement|null;
+    const gClose=document.getElementById('gallery-modal-close');
+
+    if(gBackdrop&&gCard&&gInner&&gGlare&&gFoil&&gShine){
+      let gFlipped=false,gFlipping=false;
+      const galleryCards = Array.from(document.querySelectorAll<HTMLElement>('.gallery-card'));
+      let gCurrentIdx = 0;
+
+      function gOpen(img:string,label:string){ if(gImg)gImg.src=img; if(gLabel)gLabel.textContent=label; gFlipped=false; gFlipping=false; gInner!.style.transform=''; gInner!.style.transition='transform 0s'; gBackdrop!.classList.remove('hidden'); gBackdrop!.classList.add('flex'); gCard!.classList.remove('pop'); void(gCard as HTMLElement).offsetWidth; gCard!.classList.add('pop'); document.body.style.overflow='hidden'; gHideLayers(); }
+      function gCloseModal(){ gBackdrop!.classList.add('hidden'); gBackdrop!.classList.remove('flex'); document.body.style.overflow=''; gInner!.style.transform=''; gHideLayers(); gFlipped=false; }
+      function gNav(dir: number){ gCurrentIdx = ((gCurrentIdx + dir) % galleryCards.length + galleryCards.length) % galleryCards.length; const card = galleryCards[gCurrentIdx]; gOpen(card.dataset.img??'', card.dataset.label??''); }
+      function gFlip(){ if(gFlipping)return; gFlipping=true; gHideLayers(); gFlipped=!gFlipped; gInner!.style.transition='transform 600ms cubic-bezier(0.4,0,0.2,1)'; gInner!.style.transform=gFlipped?'rotateY(180deg)':'rotateY(0deg)'; setTimeout(()=>{gFlipping=false;gInner!.style.transition='transform 0s';},620); }
+      function gApplyGlare(px:number,py:number){ if(gFlipped||gFlipping)return; const dx=px-50,dy=py-50; gInner!.style.transform=`rotateY(${(dx/50)*12}deg) rotateX(${-(dy/50)*12}deg)`; gGlare!.style.background=`radial-gradient(ellipse 80% 70% at ${px}% ${py}%,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.06) 50%,transparent 75%)`; gFoil!.style.backgroundPosition=`${px}% ${py}%`; gShine!.style.backgroundPosition=`${(px*0.7+py*0.3)}% 50%`; }
+      function gShowLayers(){ if(gFlipped||gFlipping)return; gGlare!.style.opacity='0.4'; gFoil!.style.opacity='0.35'; gShine!.style.opacity='0.6'; }
+      function gHideLayers(){ if(!gFlipped&&!gFlipping)gInner!.style.transform='rotateX(0) rotateY(0)'; gGlare!.style.opacity='0'; gFoil!.style.opacity='0'; gShine!.style.opacity='0'; }
+
+      document.querySelectorAll<HTMLElement>('.gallery-card').forEach((card,i)=>{ card.addEventListener('click',()=>{ gCurrentIdx=i; gOpen(card.dataset.img??'',card.dataset.label??''); }); });
+      gCard.addEventListener('click',(e)=>{ if((e.target as HTMLElement).closest('#gallery-modal-close')||(e.target as HTMLElement).closest('#gallery-modal-prev')||(e.target as HTMLElement).closest('#gallery-modal-next'))return; gFlip(); });
+      document.getElementById('gallery-modal-prev')?.addEventListener('click',()=>gNav(-1));
+      document.getElementById('gallery-modal-next')?.addEventListener('click',()=>gNav(1));
+      gCard.addEventListener('pointerenter',(e)=>{ if(e.pointerType==='touch'||gFlipped)return; setTimeout(()=>{if(!gFlipped)gInner!.style.transition='transform 0s';},300); gShowLayers(); });
+      gCard.addEventListener('pointerleave',(e)=>{ if(e.pointerType==='touch')return; if(!gFlipped&&!gFlipping)gHideLayers(); });
+      gCard.addEventListener('pointermove',(e)=>{ if(e.pointerType==='touch'||gFlipped||gFlipping)return; const rect=gCard!.getBoundingClientRect(); gApplyGlare(((e.clientX-rect.left)/rect.width)*100,((e.clientY-rect.top)/rect.height)*100); });
+      gClose?.addEventListener('click',gCloseModal);
+      gBackdrop.addEventListener('click',(e)=>{if(e.target===gBackdrop)gCloseModal();});
+      document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&!gBackdrop!.classList.contains('hidden'))gCloseModal();});
+    }
+  });
 </script>

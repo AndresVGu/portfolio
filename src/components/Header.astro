@@ -50,11 +50,7 @@ const languages = [
        class="hidden md:flex items-center gap-1 lg:gap-2
               mx-auto
               px-3 py-1.5 rounded-full
-              bg-white/80 dark:bg-gray-900/80
-              border border-gray-200 dark:border-gray-700
-              backdrop-blur-md shadow-sm
-              text-sm lg:text-base
-              transition-all duration-300">
+              text-sm lg:text-base">
 
     {navItems.map((link) => (
       <a
@@ -128,10 +124,7 @@ const languages = [
       aria-expanded="false"
       class="p-2 rounded-xl
              text-gray-700 dark:text-gray-200
-             bg-white/80 dark:bg-gray-900/80
-             border border-gray-200 dark:border-gray-700
-             backdrop-blur-md shadow-sm
-             hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+             transition"
     >
       <Menu />
     </button>
@@ -306,29 +299,58 @@ const languages = [
 
     // ── Mobile header background on scroll ───────────────────────────────
     const siteHeader = document.getElementById('site-header');
+    const desktopNav = document.getElementById('desktop-nav');
 
-    function updateMobileHeaderBg() {
-      // Only apply on mobile (< md = 768px)
-      if (!siteHeader || window.innerWidth >= 768) return;
+    const SCROLLED_DESKTOP_CLASSES = [
+      'bg-white/80', 'dark:bg-gray-900/80',
+      'border', 'border-gray-200', 'dark:border-gray-700',
+      'backdrop-blur-md', 'shadow-sm'
+    ];
+    const SCROLLED_MOBILE_CLASSES = [
+      'bg-white/60', 'dark:bg-gray-950/60',
+      'backdrop-blur-md', 'shadow-sm'
+    ];
+    const SCROLLED_HAMBURGUER_CLASSES = [
+      'bg-white/80', 'dark:bg-gray-900/80',
+      'border', 'border-gray-200', 'dark:border-gray-700',
+      'backdrop-blur-md', 'shadow-sm', 'hover:bg-gray-100', 'dark:hover:bg-gray-800'
+    ];
 
-      if (window.scrollY > 10) {
-        siteHeader.classList.add(
-          'bg-white/60', 'dark:bg-gray-950/60',
-          'backdrop-blur-md',
-          'shadow-sm'
+    function updateHeaderBg() {
+      const scrolled = window.scrollY > 10;
+      const isMobile = window.innerWidth < 768;
+
+      // Desktop nav pill
+      if (desktopNav) {
+        if (scrolled) {
+          // Scrolling down: enable transition first, then add classes
+          desktopNav.classList.add('transition-all', 'duration-300');
+          SCROLLED_DESKTOP_CLASSES.forEach(cls => desktopNav.classList.add(cls));
+        } else {
+          // Back to top: remove instantly, no transition flash
+          desktopNav.classList.remove('transition-all', 'duration-300');
+          SCROLLED_DESKTOP_CLASSES.forEach(cls => desktopNav.classList.remove(cls));
+        }
+      }
+
+      // Mobile header bg
+      if (siteHeader && isMobile) {
+        SCROLLED_MOBILE_CLASSES.forEach(cls =>
+          siteHeader.classList.toggle(cls, scrolled)
         );
-      } else {
-        siteHeader.classList.remove(
-          'bg-white/60', 'dark:bg-gray-950/60',
-          'backdrop-blur-md',
-          'shadow-sm'
+      }
+
+      // Mobile hamburger button
+      if (openBtn && isMobile) {
+        SCROLLED_HAMBURGUER_CLASSES.forEach(cls =>
+          (openBtn as HTMLElement).classList.toggle(cls, scrolled)
         );
       }
     }
 
-    window.addEventListener('scroll', updateMobileHeaderBg, { passive: true });
-    // Run once on load in case page starts scrolled
-    updateMobileHeaderBg();
+    window.addEventListener('scroll', updateHeaderBg, { passive: true });
+    window.addEventListener('resize', updateHeaderBg, { passive: true });
+    updateHeaderBg();
     const hash = window.location.hash.slice(1);
     if (hash && hash !== 'header-menu' && hash !== 'header-nav') {
       setTimeout(() => scrollToSection(hash), 120);
@@ -400,18 +422,7 @@ const languages = [
     to   { transform: scale(1)    translateY(0);    opacity: 1; }
   }
 
-  /* Desktop nav scroll animation */
-  #desktop-nav {
-    animation: nav-scroll 1s linear both;
-    animation-timeline: scroll();
-    animation-range: 0 80px;
-  }
-
-  @keyframes nav-scroll {
-    to {
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    }
-  }
+  /* Desktop nav scroll animation handled via JS */
 
   /* Active nav link in desktop */
   .nav-link.active,

@@ -1,5 +1,7 @@
 ---
-import ExperienceItem from '../components/TimeLineItem.astro';
+import ExperienceItem  from '../components/TimeLineItem.astro';
+import ExperienceGroup from '../components/TimeLineGroup.astro';
+import ExperienceModal from '../components/ExperienceModal.astro';
 import { getI18N } from '@/i18n';
 
 interface Props {
@@ -8,19 +10,70 @@ interface Props {
 
 const { currentLocale = 'en' } = Astro.props;
 const i18n = getI18N({ currentLocale });
+
+// Group consecutive entries that share the same company into a single block.
+// Non-consecutive same-company entries are kept separate.
+type ExpEntry = typeof i18n.EXPERIENCE[number];
+
+interface SingleEntry { type: 'single'; data: ExpEntry }
+interface GroupEntry  { type: 'group';  company: string; roles: ExpEntry[] }
+type RenderEntry = SingleEntry | GroupEntry;
+
+const renderList: RenderEntry[] = [];
+
+for (const exp of i18n.EXPERIENCE) {
+  const last = renderList[renderList.length - 1];
+  if (last?.type === 'group' && last.company === exp.company) {
+    last.roles.push(exp);
+  } else if (last?.type === 'single' && last.data.company === exp.company) {
+    // Upgrade the previous single into a group
+    renderList[renderList.length - 1] = {
+      type: 'group',
+      company: exp.company,
+      roles: [last.data, exp],
+    };
+  } else {
+    renderList.push({ type: 'single', data: exp });
+  }
+}
 ---
 
-<ol class="relative mt-16">
-  {i18n.EXPERIENCE.map((exp) => (
+<ol class="relative mt-16 before:absolute before:left-3 md:before:left-0
+           before:top-0 before:bottom-0 before:w-[2px] md:before:w-[3px]
+           before:bg-black/10 dark:before:bg-white/10">
+  {renderList.map((entry) => (
     <li>
-      <ExperienceItem
-        startDate={exp.startDate}
-        endDate={exp.endDate}
-        title={exp.title}
-        company={exp.company}
-        description={exp.description}
-        list={exp.list}
-      />
+      {entry.type === 'group'
+        ? <ExperienceGroup company={entry.company} roles={entry.roles} labels={{ stack: i18n.TITLES.techStack, highlights: i18n.TITLES.highlights, career: i18n.TITLES.careerProgression, viewDetails: i18n.TITLES.viewDetails, current: i18n.TITLES.current, promoted: i18n.TITLES.promoted, permanent: i18n.TITLES.permanent }} />
+        : <ExperienceItem
+            startDate={entry.data.startDate}
+            endDate={entry.data.endDate}
+            title={entry.data.title}
+            company={entry.data.company}
+            location={entry.data.location}
+            description={entry.data.description}
+            list={entry.data.list}
+            modalDescription={entry.data.modalDescription}
+            stack={entry.data.stack}
+            highlights={entry.data.highlights}
+            labels={{ stack: i18n.TITLES.techStack, highlights: i18n.TITLES.highlights, viewDetails: i18n.TITLES.viewDetails, permanent: i18n.TITLES.permanent }}
+          />
+      }
     </li>
   ))}
 </ol>
+
+<ExperienceModal />
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLButtonElement>('.exp-detail-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        try {
+          const data = JSON.parse(btn.dataset.exp ?? '{}');
+          document.dispatchEvent(new CustomEvent('exp:open', { detail: data }));
+        } catch {}
+      });
+    });
+  });
+</script>

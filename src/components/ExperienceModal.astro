@@ -1,0 +1,348 @@
+---
+// ExperienceModal.astro
+// Supports two modes:
+//   - Single role:  exp:open  with { title, company, dates, description, stack, highlights }
+//   - Career group: exp:open  with { company, roles: [ { title, dates, description, stack, highlights, isCurrent } ] }
+---
+
+<div
+  id="exp-modal-backdrop"
+  aria-hidden="true"
+  class="hidden fixed inset-0 z-[9999] items-center justify-center
+         bg-black/70 backdrop-blur-md px-4"
+>
+  <div
+    id="exp-modal-panel"
+    role="dialog"
+    aria-modal="true"
+    class="relative w-full max-w-xl max-h-[88vh] overflow-y-auto
+           rounded-3xl
+           bg-white dark:bg-gray-900
+           border border-black/10 dark:border-white/10
+           shadow-2xl flex flex-col"
+  >
+    <!-- Accent bar -->
+    <div class="h-1 w-full rounded-t-3xl flex-shrink-0
+                bg-gradient-to-r from-yellow-400 via-cyan-400 to-violet-500"></div>
+
+    <!-- Header -->
+    <div class="flex items-start justify-between gap-4 px-6 pt-5 pb-4 flex-shrink-0">
+      <div class="flex-1 min-w-0">
+        <p id="exp-modal-dates"
+           class="text-xs font-semibold uppercase tracking-widest
+                  text-yellow-500 dark:text-yellow-400 mb-1"></p>
+        <h2 id="exp-modal-title"
+            class="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white leading-tight"></h2>
+        <p id="exp-modal-company"
+           class="text-sm font-medium text-gray-500 dark:text-gray-400 mt-0.5"></p>
+        <p id="exp-modal-location"
+           class="hidden text-xs text-gray-400 dark:text-gray-500 mt-0.5 items-center gap-1"></p>
+      </div>
+      <button
+        id="exp-modal-close"
+        aria-label="Close"
+        class="flex-shrink-0 p-2 rounded-full
+               text-gray-400 hover:text-gray-700 dark:hover:text-white
+               bg-gray-100 dark:bg-white/10
+               hover:bg-gray-200 dark:hover:bg-white/20 transition mt-0.5"
+      >
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="mx-6 border-t border-black/8 dark:border-white/8 flex-shrink-0"></div>
+
+    <!-- Body — single role mode -->
+    <div id="exp-modal-single" class="px-6 py-5 flex flex-col gap-5">
+      <p id="exp-modal-description"
+         class="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed
+                [&_strong]:text-gray-900 [&_strong]:dark:text-white [&_strong]:font-semibold"></p>
+
+      <div id="exp-modal-stack-wrap" class="hidden">
+        <p id="exp-modal-stack-label" class="text-xs font-semibold uppercase tracking-widest
+                  text-gray-400 dark:text-gray-500 mb-3">Tech Stack</p>
+        <div id="exp-modal-stack" class="flex flex-wrap gap-3"></div>
+      </div>
+
+      <div id="exp-modal-highlights-wrap" class="hidden">
+        <p id="exp-modal-hl-label" class="text-xs font-semibold uppercase tracking-widest
+                  text-gray-400 dark:text-gray-500 mb-2">Highlights</p>
+        <ul id="exp-modal-highlights" class="flex flex-col gap-2"></ul>
+      </div>
+    </div>
+
+    <!-- Body — career progression mode -->
+    <div id="exp-modal-career" class="hidden px-6 py-5">
+      <div id="exp-modal-career-timeline" class="flex flex-col"></div>
+    </div>
+
+    <div class="h-3 flex-shrink-0"></div>
+  </div>
+</div>
+
+<script>
+  function initExpModal() {
+    const backdrop       = document.getElementById('exp-modal-backdrop');
+    const panel          = document.getElementById('exp-modal-panel');
+    const closeBtn       = document.getElementById('exp-modal-close');
+    const titleEl        = document.getElementById('exp-modal-title');
+    const companyEl      = document.getElementById('exp-modal-company');
+    const locationEl     = document.getElementById('exp-modal-location');
+    const datesEl        = document.getElementById('exp-modal-dates');
+    const descEl         = document.getElementById('exp-modal-description');
+    const stackWrap      = document.getElementById('exp-modal-stack-wrap');
+    const stackEl        = document.getElementById('exp-modal-stack');
+    const hlWrap         = document.getElementById('exp-modal-highlights-wrap');
+    const hlEl           = document.getElementById('exp-modal-highlights');
+    const singleBody     = document.getElementById('exp-modal-single');
+    const careerBody     = document.getElementById('exp-modal-career');
+    const careerTimeline = document.getElementById('exp-modal-career-timeline');
+
+    if (!backdrop || !panel) return;
+    const _backdrop = backdrop;
+    const _panel    = panel;
+
+    // ── Render helpers ────────────────────────────────────────────
+    function pillsHTML(items: string[]) {
+      return items.map(t =>
+        `<span class="px-3 py-1.5 rounded-full text-xs font-semibold
+                      bg-gray-100 dark:bg-white/10
+                      text-gray-700 dark:text-gray-200
+                      border border-black/8 dark:border-white/10
+                      hover:bg-gray-200 dark:hover:bg-white/20
+                      hover:scale-105 transition-all cursor-default">${t}</span>`
+      ).join('');
+    }
+
+    function highlightsHTML(items: string[]) {
+      return items.map(h =>
+        `<li class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+           <span class="mt-[6px] flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400"></span>
+           <span>${h}</span>
+         </li>`
+      ).join('');
+    }
+
+    // ── Career progression — Rocket Path SVG ─────────────────────
+    function careerTimelineHTML(roles: any[], labels?: { stack?: string; highlights?: string; promoted?: string; current?: string }) {
+      const labelPromoted = labels?.promoted ?? 'Promoted';
+      const labelCurrent  = labels?.current ?? 'Current';
+
+      const start = roles[roles.length - 1];
+      const end   = roles[0];
+
+      return `
+        <div class="rocket-path-wrap flex flex-col gap-0">
+          <!-- Top: current role label -->
+          <div class="flex items-center gap-2 mb-1">
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold
+                         bg-green-400/15 text-green-600 dark:text-green-400
+                         border border-green-400/25">${labelCurrent}</span>
+            <p class="text-sm font-bold text-gray-900 dark:text-white">${end.title}</p>
+          </div>
+          <p class="text-[11px] text-gray-400 dark:text-gray-500 mb-3">${end.dates}</p>
+
+          <!-- SVG chart -->
+          <div class="relative w-full" style="height:180px;">
+            <svg class="rocket-svg w-full h-full" viewBox="0 0 400 180" fill="none" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="rocketGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#6b7280"/>
+                  <stop offset="45%" stop-color="#22d3ee"/>
+                  <stop offset="100%" stop-color="#facc15"/>
+                </linearGradient>
+              </defs>
+              <!-- Glow -->
+              <path class="rocket-glow" d="M 20 155 C 80 145, 140 100, 200 80 S 330 20, 380 15"
+                    stroke="url(#rocketGrad)" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.2"/>
+              <!-- Main line -->
+              <path class="rocket-line" d="M 20 155 C 80 145, 140 100, 200 80 S 330 20, 380 15"
+                    stroke="url(#rocketGrad)" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <!-- Start dot -->
+              <circle class="rocket-dot-start" cx="20" cy="155" r="5" fill="#6b7280"/>
+              <!-- End star (no circle) -->
+              <polygon class="rocket-star" points="380,4 382,10 388,10 383,14 385,20 380,16 375,20 377,14 372,10 378,10"
+                       fill="#facc15" opacity="0"/>
+            </svg>
+
+            <!-- Promoted badge — positioned below the curve to avoid overlap -->
+            <div class="rocket-badge absolute bottom-3 left-1/2 -translate-x-1/2 z-10">
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold
+                           bg-yellow-400/20 text-yellow-600 dark:text-yellow-400
+                           border border-yellow-400/30 shadow-lg shadow-yellow-400/10
+                           backdrop-blur-sm">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                ${labelPromoted}
+              </span>
+            </div>
+          </div>
+
+          <!-- Bottom: previous role label -->
+          <div class="mt-3">
+            <p class="text-xs font-bold text-gray-500 dark:text-gray-400">${start.title}</p>
+            <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5">${start.dates}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // ── Open modal ────────────────────────────────────────────────
+    function openModal(data: any) {
+      const isCareer = Array.isArray(data.roles);
+
+      if (isCareer) {
+        // Career progression mode
+        if (titleEl)   titleEl.textContent   = data.company;
+        if (companyEl) companyEl.textContent = data.labelCareer ?? 'Career progression';
+        if (datesEl)   datesEl.textContent   = data.tenure ?? '';
+        if (locationEl) {
+          if (data.location) {
+            locationEl.innerHTML = `<svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${data.location}`;
+            locationEl.classList.remove('hidden');
+            locationEl.classList.add('flex');
+          } else {
+            locationEl.classList.add('hidden');
+            locationEl.classList.remove('flex');
+          }
+        }
+
+        singleBody?.classList.add('hidden');
+        careerBody?.classList.remove('hidden');
+        if (careerTimeline) {
+          careerTimeline.innerHTML = careerTimelineHTML(data.roles, { stack: data.labelStack, highlights: data.labelHighlights, promoted: data.labelPromoted, current: data.labelCurrent });
+          // Force reflow to trigger CSS animations on dynamically inserted elements
+          void careerTimeline.offsetWidth;
+          careerTimeline.querySelectorAll('.rocket-line, .rocket-glow, .rocket-dot-start, .rocket-star, .rocket-badge').forEach(el => {
+            (el as HTMLElement).style.animation = 'none';
+            void (el as HTMLElement).offsetHeight;
+            (el as HTMLElement).style.animation = '';
+          });
+        }
+
+      } else {
+        // Single role mode
+        if (titleEl)   titleEl.textContent   = data.title;
+        if (companyEl) companyEl.textContent = data.company;
+        if (datesEl)   datesEl.textContent   = data.dates;
+        if (locationEl) {
+          if (data.location) {
+            locationEl.innerHTML = `<svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${data.location}`;
+            locationEl.classList.remove('hidden');
+            locationEl.classList.add('flex');
+          } else {
+            locationEl.classList.add('hidden');
+            locationEl.classList.remove('flex');
+          }
+        }
+        if (descEl)    descEl.innerHTML    = data.description;
+
+        // Update labels with translated text
+        const stackLabel = document.getElementById('exp-modal-stack-label');
+        const hlLabel    = document.getElementById('exp-modal-hl-label');
+        if (stackLabel && data.labelStack) stackLabel.textContent = data.labelStack;
+        if (hlLabel && data.labelHighlights) hlLabel.textContent = data.labelHighlights;
+
+        if (stackEl && stackWrap) {
+          if (data.stack?.length) {
+            stackEl.innerHTML = pillsHTML(data.stack);
+            stackWrap.classList.remove('hidden');
+          } else {
+            stackWrap.classList.add('hidden');
+          }
+        }
+        if (hlEl && hlWrap) {
+          if (data.highlights?.length) {
+            hlEl.innerHTML = highlightsHTML(data.highlights);
+            hlWrap.classList.remove('hidden');
+          } else {
+            hlWrap.classList.add('hidden');
+          }
+        }
+
+        singleBody?.classList.remove('hidden');
+        careerBody?.classList.add('hidden');
+      }
+
+      _backdrop.classList.remove('hidden');
+      _backdrop.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+
+      _panel.style.transform  = 'scale(0.92)';
+      _panel.style.opacity    = '0';
+      _panel.style.transition = 'none';
+      requestAnimationFrame(() => {
+        _panel.style.transition = 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease';
+        _panel.style.transform  = 'scale(1)';
+        _panel.style.opacity    = '1';
+      });
+    }
+
+    function closeModal() {
+      _panel.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+      _panel.style.transform  = 'scale(0.94)';
+      _panel.style.opacity    = '0';
+      setTimeout(() => {
+        _backdrop.classList.add('hidden');
+        _backdrop.classList.remove('flex');
+        document.body.style.overflow = '';
+      }, 200);
+    }
+
+    closeBtn?.addEventListener('click', closeModal);
+    _backdrop.addEventListener('click', (e) => { if (e.target === _backdrop) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    document.addEventListener('exp:open', (e: Event) => openModal((e as CustomEvent).detail));
+  }
+
+  document.addEventListener('astro:page-load', initExpModal);
+</script>
+
+<style>
+  /* These need is:global because they target dynamically inserted elements */
+</style>
+<style is:global>
+  .rocket-line {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: drawRocketPath 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+  }
+  .rocket-glow {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: drawRocketPath 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    filter: blur(4px);
+  }
+  .rocket-dot-start {
+    opacity: 0;
+    animation: rocketDotPop 0.3s ease 0.2s forwards;
+  }
+  .rocket-star {
+    opacity: 0;
+    animation: rocketStarPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s forwards;
+  }
+  .rocket-badge {
+    opacity: 0;
+    animation: rocketBadgePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s forwards;
+  }
+
+  @keyframes drawRocketPath {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes rocketDotPop {
+    from { opacity: 0; transform: scale(0); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes rocketStarPop {
+    from { opacity: 0; transform: scale(0) rotate(-30deg); }
+    to   { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+  @keyframes rocketBadgePop {
+    from { opacity: 0; transform: translateX(-50%) scale(0.7); }
+    to   { opacity: 1; transform: translateX(-50%) scale(1); }
+  }
+</style>

@@ -37,7 +37,7 @@
     <div
       id="glare-inner"
       class="relative"
-      style="transform-style: preserve-3d; transition: transform 300ms ease; will-change: transform;"
+      style="transform-style: preserve-3d; transition: transform 300ms ease; will-change: transform; transform: translateZ(0);"
     >
 
       <!-- ── FRONT FACE ─────────────────────────────────────── -->
@@ -55,20 +55,27 @@
         <!-- Glare -->
         <div id="glare-layer"
              class="absolute inset-0 pointer-events-none"
-             style="border-radius:36px; mix-blend-mode:soft-light; opacity:0;
+             style="border-radius:36px; mix-blend-mode:overlay; opacity:0;
                     transition:opacity 300ms ease;"></div>
 
-        <!-- Foil -->
+        <!-- Foil — diagonal rainbow holo stripes -->
         <div id="foil-layer"
              class="absolute inset-0 pointer-events-none"
              style="border-radius:36px; mix-blend-mode:color-dodge; opacity:0;
-                    transition:opacity 300ms ease;"></div>
+                    transition:opacity 300ms ease;
+                    will-change: background-position;"></div>
 
-        <!-- Shine -->
+        <!-- Shine — specular glint sweeping across -->
         <div id="shine-layer"
              class="absolute inset-0 pointer-events-none"
              style="border-radius:36px; mix-blend-mode:screen; opacity:0;
                     transition:opacity 300ms ease;"></div>
+
+        <!-- Sparkles — star/glitter dots like Magic/Pokémon foil cards -->
+        <div id="sparkle-layer"
+             class="absolute inset-0 pointer-events-none"
+             style="border-radius:36px; mix-blend-mode:screen; opacity:0;
+                    transition:opacity 400ms ease;"></div>
 
         <!-- Badge -->
         <div class="absolute bottom-0 left-0 right-0 px-5 py-4"
@@ -174,32 +181,87 @@
   .card-face {
     position: relative;
     width: 100%;
+    image-rendering: high-quality;
   }
   .card-back {
     position: absolute;
     inset: 0;
   }
 
-  /* Foil rainbow */
+  /* Force GPU compositing on all effect layers to prevent CPU rasterization artifacts */
+  #glare-layer,
+  #foil-layer,
+  #shine-layer,
+  #sparkle-layer {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Sparkle / glitter dots — multiple radial-gradient layers at different sizes/offsets */
+  #sparkle-layer {
+    background-image:
+      /* Large bright stars */
+      radial-gradient(circle, rgba(255,255,255,0.95) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.90) 1px, transparent 1px),
+      /* Medium stars */
+      radial-gradient(circle, rgba(255,220,180,0.85) 1px, transparent 1px),
+      radial-gradient(circle, rgba(180,220,255,0.85) 1px, transparent 1px),
+      radial-gradient(circle, rgba(220,180,255,0.85) 1px, transparent 1px),
+      /* Small glitter dots */
+      radial-gradient(circle, rgba(255,255,255,0.70) 0.5px, transparent 0.5px),
+      radial-gradient(circle, rgba(255,255,255,0.70) 0.5px, transparent 0.5px),
+      radial-gradient(circle, rgba(255,255,255,0.70) 0.5px, transparent 0.5px);
+    background-size:
+      120px 140px,
+      90px  110px,
+      80px  100px,
+      100px  80px,
+      70px   90px,
+      50px   60px,
+      65px   45px,
+      40px   55px;
+    background-position:
+      10px  20px,
+      55px  70px,
+      30px  55px,
+      70px  25px,
+      15px  80px,
+      25px  35px,
+      60px  50px,
+      80px  75px;
+    filter: blur(0.2px);
+  }
+
+  /* Foil rainbow — diagonal holo stripes like a real holographic card */
   #foil-layer {
-    background:
-      repeating-linear-gradient(
-        125deg,
-        hsl(  0, 100%, 65%) 0%,
-        hsl( 30, 100%, 65%) 8%,
-        hsl( 60, 100%, 65%) 16%,
-        hsl(120, 100%, 65%) 24%,
-        hsl(180, 100%, 65%) 32%,
-        hsl(240, 100%, 65%) 40%,
-        hsl(300, 100%, 65%) 48%,
-        hsl(360, 100%, 65%) 56%
-      ) 0% 0% / 200% 200%,
-      repeating-linear-gradient(
-        125deg,
-        #0e152e 0%, hsl(180,10%,60%) 3.8%, hsl(180,10%,60%) 4.5%,
-        hsl(180,10%,60%) 5.2%, #0e152e 10%, #0e152e 12%
-      ) 50% 50% / 300% no-repeat;
-    background-blend-mode: color, hue;
+    background: repeating-linear-gradient(
+      105deg,
+      hsl(  0, 100%, 60%) 0%,
+      hsl( 40, 100%, 60%) 10%,
+      hsl( 80, 100%, 60%) 20%,
+      hsl(140, 100%, 60%) 30%,
+      hsl(200, 100%, 60%) 40%,
+      hsl(260, 100%, 60%) 50%,
+      hsl(320, 100%, 60%) 60%,
+      hsl(360, 100%, 60%) 70%
+    );
+    background-size: 400% 400%;
+    filter: brightness(1.1) saturate(1.4);
+  }
+
+  /* Specular highlight — sharp moving glint like light catching a foil surface */
+  #shine-layer {
+    background: linear-gradient(
+      105deg,
+      transparent 20%,
+      rgba(255,255,255,0.08) 35%,
+      rgba(255,255,255,0.55) 50%,
+      rgba(255,255,255,0.08) 65%,
+      transparent 80%
+    );
+    background-size: 300% 300%;
+    filter: blur(0.5px);
   }
 
   @keyframes card-pop {
@@ -223,12 +285,13 @@
     const backdrop = document.getElementById('photocard-backdrop');
     const card     = document.getElementById('glare-card');
     const inner    = document.getElementById('glare-inner')  as HTMLElement | null;
-    const glare    = document.getElementById('glare-layer')  as HTMLElement | null;
-    const foil     = document.getElementById('foil-layer')   as HTMLElement | null;
-    const shine    = document.getElementById('shine-layer')  as HTMLElement | null;
+    const glare    = document.getElementById('glare-layer')    as HTMLElement | null;
+    const foil     = document.getElementById('foil-layer')     as HTMLElement | null;
+    const shine    = document.getElementById('shine-layer')    as HTMLElement | null;
+    const sparkle  = document.getElementById('sparkle-layer')  as HTMLElement | null;
     const trigger  = document.getElementById('profile-pic-trigger');
 
-    if (!backdrop || !card || !inner || !glare || !foil || !shine) return;
+    if (!backdrop || !card || !inner || !glare || !foil || !shine || !sparkle) return;
 
     document.body.appendChild(backdrop);
 
@@ -313,45 +376,57 @@
       const dX = pctX - 50;
       const dY = pctY - 50;
 
+      // Tilt
       inner!.style.transform =
         `rotateY(${(dX / 50) * 12}deg) rotateX(${-(dY / 50) * 12}deg)`;
 
+      // Soft ambient glare following cursor
       glare!.style.background =
-        `radial-gradient(farthest-corner circle at ${pctX}% ${pctY}%,
-         rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0) 70%)`;
+        `radial-gradient(ellipse 80% 70% at ${pctX}% ${pctY}%,
+         rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 50%, transparent 75%)`;
 
-      const bgX = (pctX / 100) * 100;
-      const bgY = (pctY / 100) * 100;
-      foil!.style.backgroundPosition = `${bgX}% ${bgY}%, 50% 50%`;
+      // Holo foil: background-position shifts with tilt angle
+      // X axis controls hue shift (left-right), Y axis controls vertical band position
+      const foilX = (pctX / 100) * 100;
+      const foilY = (pctY / 100) * 100;
+      foil!.style.backgroundPosition = `${foilX}% ${foilY}%`;
 
-      const beamPos = (pctX * 0.6 + pctY * 0.4);
-      const b = beamPos.toFixed(1);
-      shine!.style.background = `linear-gradient(
-        125deg,
-        transparent                       0%,
-        transparent                       ${Math.max(0,  parseFloat(b) - 18).toFixed(1)}%,
-        rgba(255,255,255,0.0)             ${Math.max(0,  parseFloat(b) - 10).toFixed(1)}%,
-        rgba(255,255,255,0.65)            ${b}%,
-        rgba(255,255,255,0.0)             ${Math.min(100,parseFloat(b) + 10).toFixed(1)}%,
-        transparent                       ${Math.min(100,parseFloat(b) + 18).toFixed(1)}%,
-        transparent                       100%
-      )`;
-      shine!.style.backgroundSize = '100% 100%';
+      // Specular shine: a sharp glint that sweeps across the card
+      // Position is driven by the combined tilt — mimics light catching a foil edge
+      const shinePos = (pctX * 0.7 + pctY * 0.3);
+      shine!.style.backgroundPosition = `${shinePos}% 50%`;
+
+      // Sparkles: each dot layer shifts at a slightly different rate
+      // creating parallax — some stars "pop" more than others as you tilt
+      const sX = (pctX - 50) * 0.4;
+      const sY = (pctY - 50) * 0.4;
+      sparkle!.style.backgroundPosition = `
+        ${10  + sX * 1.8}px ${20  + sY * 1.8}px,
+        ${55  + sX * 1.2}px ${70  + sY * 1.2}px,
+        ${30  + sX * 2.2}px ${55  + sY * 2.2}px,
+        ${70  + sX * 0.9}px ${25  + sY * 0.9}px,
+        ${15  + sX * 1.5}px ${80  + sY * 1.5}px,
+        ${25  + sX * 2.5}px ${35  + sY * 2.5}px,
+        ${60  + sX * 1.1}px ${50  + sY * 1.1}px,
+        ${80  + sX * 1.9}px ${75  + sY * 1.9}px
+      `;
     }
 
     function showLayers() {
       if (isFlipped || isFlipping) return;
-      glare!.style.opacity = '0.8';
-      foil!.style.opacity  = '0.5';
-      shine!.style.opacity = '1';
+      glare!.style.opacity   = '0.9';
+      foil!.style.opacity    = '0.65';
+      shine!.style.opacity   = '1';
+      sparkle!.style.opacity = '1';
     }
 
     function hideLayers() {
       inner!.style.transition = isFlipping ? inner!.style.transition : 'transform 300ms ease';
       if (!isFlipped && !isFlipping) inner!.style.transform = 'rotateX(0deg) rotateY(0deg)';
-      glare!.style.opacity = '0';
-      foil!.style.opacity  = '0';
-      shine!.style.opacity = '0';
+      glare!.style.opacity   = '0';
+      foil!.style.opacity    = '0';
+      shine!.style.opacity   = '0';
+      sparkle!.style.opacity = '0';
     }
 
     // Desktop

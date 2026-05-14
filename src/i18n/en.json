@@ -19,7 +19,10 @@
     "role1": "Full-Stack Developer",
     "role2": "Electronics Specialist",
     "role3": "Trilingual · EN / FR / ES",
-    "description": "<strong>{years}+ years</strong> building full-stack applications end-to-end — from <strong>.NET</strong> and <strong>Java Spring Boot</strong> backends to <strong>React</strong> frontends. I also work hands-on as an <strong>electronics technician</strong>, equally comfortable in a terminal or with a soldering iron. I communicate fluently in <strong>English</strong>, <strong>French</strong> and <strong>Spanish</strong>."
+    "tooltipBadge": "Currently looking for new roles",
+    "tooltipResume": "Download CV (PDF)",
+    "tooltipPhoto": "Click to view photo",
+    "description": "<strong>{years}+ years</strong> building scalable full-stack apps with <strong>.NET</strong>, <strong>Java Spring Boot</strong> and <strong>React</strong> — code that holds up under real traffic. I also have hands-on experience in <strong>electronics</strong>, equally at home in a terminal or with a soldering iron. Fluent in <strong>English</strong>, <strong>French</strong> and <strong>Spanish</strong>."
   },
 
   "TITLES": {
@@ -27,33 +30,82 @@
     "projects": "Projects",
     "education": "Education",
     "certificates": "Certificates",
-    "about": "About Me"
+    "about": "About Me",
+    "techStack": "Tech Stack",
+    "highlights": "Highlights",
+    "careerProgression": "Career progression",
+    "viewDetails": "View details",
+    "current": "Current",
+    "promoted": "Promoted",
+    "permanent": "Permanent · Full-time"
   },
 
   "EXPERIENCE": [
     {
-      "startDate": "October 2024",
+      "startDate": "Mar 2026",
       "endDate": "Present",
+      "title": "Full-Stack Engineer",
+      "company": "Rugged Books",
+      "location": "Ontario, Canada · On-site",
+      "description": "Promoted to lead end-to-end development of a custom enterprise ERP system built from scratch.",
+      "list": "Java · Spring Boot · React · TypeScript · Tailwind CSS",
+      "modalDescription": "Promoted from <strong>IT Electronic Specialist</strong> to focus on the <strong>full-cycle development of a proprietary ERP platform</strong> built from the ground up to streamline and centralize core business operations. The system covers <strong>inventory management, employee management, order processing, returns handling, purchase orders, and warehouse operations</strong>. This role involves <strong>end-to-end ownership</strong> — from system architecture and database design to UI/UX implementation and business logic — working closely with stakeholders across departments.",
+      "stack": ["Java", "Spring Boot", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "REST APIs"],
+      "highlights": [
+        "Promoted from Electronic Specialist after demonstrating strong technical ownership",
+        "Architecting a full ERP platform covering inventory, orders, returns and warehouse ops",
+        "End-to-end ownership: system design, DB schema, backend APIs and React frontend",
+        "Working directly with stakeholders to deliver a production-ready scalable solution"
+      ]
+    },
+    {
+      "startDate": "Sep 2024",
+      "endDate": "Feb 2026",
       "title": "Electronics Specialist",
       "company": "Rugged Books",
-      "description": "Deployed and configured Linux operating systems, and performed hardware repairs for brands such as:",
-      "list": "Panasonic, Dell and Getac"
+      "location": "Ontario, Canada · On-site",
+      "description": "Diagnostics, repair and hardware-software integration for mission-critical rugged devices.",
+      "list": "Panasonic · Dell · Getac · Linux",
+      "modalDescription": "Specialized in keeping <strong>mission-critical rugged hardware</strong> running at peak performance. Handled <strong>end-to-end diagnostics, repair, and hardware-software integration</strong> — including embedded applications and external device compatibility for <strong>Panasonic Toughbooks, Dell, and Getac</strong> platforms. Leveraged <strong>DevOps principles in Linux environments</strong> to streamline deployments, enforce configuration consistency, and build more resilient systems.",
+      "stack": ["Linux", "Hardware Diagnostics", "DevOps", "Panasonic Toughbook", "Dell", "Getac"],
+      "highlights": [
+        "End-to-end diagnostics and repair for Panasonic, Dell and Getac rugged platforms",
+        "Hardware-software integration including embedded apps and external device compatibility",
+        "Applied DevOps practices in Linux environments to streamline deployments",
+        "Promoted to Full-Stack Engineer role based on performance"
+      ]
     },
     {
       "startDate": "January 2021",
       "endDate": "August 2023",
       "title": "Full-Stack Developer",
       "company": "Floridabama Autosales",
+      "location": "Alabama, United States · Remote",
       "description": "Developed and delivered a business application for an automotive dealership.",
-      "list": "Building scalable modules using ASP.NET & React"
+      "list": "ASP.NET · React · SQL Server",
+      "modalDescription": "Developed and delivered a <strong>full business application for an automotive dealership</strong>, enabling staff to manage <strong>inventory, customers and sales workflows</strong>. Built <strong>scalable modules using ASP.NET MVC and React</strong>, with a <strong>SQL Server</strong> backend.",
+      "stack": ["ASP.NET MVC", "React", "SQL Server", "C#", "JavaScript"],
+      "highlights": [
+        "Built scalable modules using ASP.NET & React",
+        "Designed and maintained SQL Server database schema",
+        "Delivered end-to-end from requirements to production deployment"
+      ]
     },
     {
       "startDate": "June 2018",
       "endDate": "December 2021",
       "title": "Junior Web Developer",
       "company": "V12 Comunicaciones",
-      "description": "Full-Stack web development for startups to enterprises based in Colombia, focusing on:",
-      "list": "Custom apps, eCommerce, APIs & Cloud solutions"
+      "location": "Bogotá D.C., Colombia · On-site",
+      "description": "Full-Stack web development for startups to enterprises based in Colombia.",
+      "list": "Custom apps · eCommerce · APIs · Cloud",
+      "modalDescription": "<strong>Full-Stack web development</strong> for startups and enterprises based in Colombia. Focused on <strong>custom applications, eCommerce platforms, REST APIs</strong> and <strong>cloud solutions</strong> — working across the full stack from frontend to deployment.",
+      "stack": ["HTML", "CSS", "JavaScript", "PHP", "WordPress", "MySQL", "AWS"],
+      "highlights": [
+        "Delivered custom apps and eCommerce sites for Colombian startups and enterprises",
+        "Built and maintained REST APIs and cloud-hosted solutions",
+        "Worked across the full stack from UI to server and deployment"
+      ]
     }
   ],
 

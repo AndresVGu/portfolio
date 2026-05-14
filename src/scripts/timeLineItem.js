@@ -2,45 +2,41 @@ function initTimeline() {
   const steps = document.querySelectorAll(".step");
   if (!steps.length) return;
 
-  // Disconnect any previous observer stored on the window to avoid duplicates
   if (window.__timelineObserver) {
     window.__timelineObserver.disconnect();
   }
+
+  // Track which steps have been revealed so we don't re-hide them
+  const revealed = new WeakSet();
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const step = entry.target;
 
-      const left     = step.querySelector(".content-left");
-      const right    = step.querySelector(".content-right");
-      const dot      = step.querySelector(".dot");
-      const progress = step.querySelector(".progress");
-
-      if (!left || !right || !dot || !progress) return;
+      // Once revealed, never hide again — prevents glitchy reverse-scroll
+      if (revealed.has(step)) return;
 
       if (entry.isIntersecting) {
-        left.classList.remove("opacity-0", "translate-y-10");
-        right.classList.remove("opacity-0", "translate-y-10");
+        revealed.add(step);
 
-        dot.classList.remove("bg-black/30", "dark:bg-white/30");
-        dot.classList.add("bg-yellow-400", "shadow-lg", "shadow-yellow-400/60", "dot-pop");
+        const dot    = step.querySelector(".dot");
+        const lefts  = step.querySelectorAll(".content-left");
+        const rights = step.querySelectorAll(".content-right");
 
-        progress.style.height = "100%";
-      } else {
-        left.classList.add("opacity-0", "translate-y-10");
-        right.classList.add("opacity-0", "translate-y-10");
+        lefts.forEach(el => el.classList.remove("opacity-0", "translate-y-10"));
+        rights.forEach((el, i) => {
+          setTimeout(() => el.classList.remove("opacity-0", "translate-y-10"), i * 100);
+        });
 
-        dot.classList.add("bg-black/30", "dark:bg-white/30");
-        dot.classList.remove("bg-yellow-400", "shadow-lg", "dot-pop");
-
-        progress.style.height = "0%";
+        if (dot) {
+          dot.classList.remove("bg-black/30", "dark:bg-white/30");
+          dot.classList.add("bg-yellow-400", "shadow-lg", "shadow-yellow-400/60", "dot-pop");
+        }
       }
     });
-  }, { threshold: 0.3 });
+  }, { threshold: 0.2, rootMargin: "0px 0px -50px 0px" });
 
   steps.forEach(step => observer.observe(step));
-
-  // Store reference so we can disconnect on next navigation
   window.__timelineObserver = observer;
 
   // ✨ GLOW effect on cards
@@ -62,5 +58,4 @@ function initTimeline() {
   });
 }
 
-// Run on first load AND on every ViewTransitions navigation
 document.addEventListener("astro:page-load", initTimeline);

@@ -19,7 +19,10 @@
     "role1": "Développeur Full-Stack",
     "role2": "Spécialiste en Électronique",
     "role3": "Trilingue · EN / FR / ES",
-    "description": "<strong>+{years} ans</strong> à construire des <strong>backends robustes</strong> et des <strong>APIs évolutives</strong> avec <strong>.NET</strong>, <strong>Java Spring Boot</strong> et <strong>React</strong> — du code qui tient la charge en production, pas seulement en démo. Je travaille aussi comme <strong>technicien électronique</strong>, aussi à l'aise dans un terminal que fer à souder en main. Je communique couramment en <strong>anglais</strong>, <strong>français</strong> et <strong>espagnol</strong>."
+    "tooltipBadge": "À la recherche de nouvelles opportunités",
+    "tooltipResume": "Télécharger le CV (PDF)",
+    "tooltipPhoto": "Cliquer pour voir la photo",
+    "description": "<strong>+{years} ans</strong> à développer des applications full-stack évolutives avec <strong>.NET</strong>, <strong>Java Spring Boot</strong> et <strong>React</strong> — du code qui tient la charge en production. J'ai aussi une expérience pratique en <strong>électronique</strong>, aussi à l'aise dans un terminal que fer à souder en main. Courant en <strong>anglais</strong>, <strong>français</strong> et <strong>espagnol</strong>."
   },
 
   "TITLES": {
@@ -27,33 +30,82 @@
     "projects": "Projets",
     "education": "Formation",
     "certificates": "Certificats",
-    "about": "À propos de moi"
+    "about": "À propos de moi",
+    "techStack": "Technologies",
+    "highlights": "Points forts",
+    "careerProgression": "Parcours professionnel",
+    "viewDetails": "Voir détails",
+    "current": "Actuel",
+    "promoted": "Promu",
+    "permanent": "Permanent · Temps plein"
   },
 
   "EXPERIENCE": [
     {
-      "startDate": "Octobre 2024",
+      "startDate": "Mar 2026",
       "endDate": "Présent",
+      "title": "Full-Stack Engineer",
+      "company": "Rugged Books",
+      "location": "Ontario, Canada · Sur site",
+      "description": "Promu pour diriger le développement end-to-end d'un système ERP d'entreprise construit de zéro.",
+      "list": "Java · Spring Boot · React · TypeScript · Tailwind CSS",
+      "modalDescription": "Promu depuis <strong>Spécialiste Électronique</strong> pour piloter le <strong>développement complet d'une plateforme ERP propriétaire</strong> construite de zéro, visant à centraliser les opérations métier. Le système couvre <strong>la gestion des stocks, des employés, le traitement des commandes, les retours, les bons de commande et les opérations d'entrepôt</strong>. Ce rôle implique une <strong>responsabilité totale</strong> — de l'architecture système et la conception de la base de données à l'implémentation UI/UX et la logique métier.",
+      "stack": ["Java", "Spring Boot", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "REST APIs"],
+      "highlights": [
+        "Promu depuis Spécialiste Électronique pour ses compétences techniques démontrées",
+        "Architecture d'une plateforme ERP complète : stocks, commandes, retours et entrepôt",
+        "Responsabilité totale : conception système, schéma BD, APIs backend et frontend React",
+        "Collaboration directe avec les parties prenantes pour livrer une solution scalable en production"
+      ]
+    },
+    {
+      "startDate": "Sep 2024",
+      "endDate": "Fév 2026",
       "title": "Spécialiste en Électronique",
       "company": "Rugged Books",
-      "description": "Déploiement et configuration de systèmes d'exploitation Linux, et réparations matérielles pour des marques telles que :",
-      "list": "Panasonic, Dell et Getac"
+      "location": "Ontario, Canada · Sur site",
+      "description": "Diagnostic, réparation et intégration matériel-logiciel pour appareils robustes critiques.",
+      "list": "Panasonic · Dell · Getac · Linux",
+      "modalDescription": "Spécialisé dans le maintien en performance optimale du <strong>matériel robuste critique</strong>. <strong>Diagnostic complet, réparation et intégration matériel-logiciel</strong> — incluant les applications embarquées et la compatibilité des périphériques pour les plateformes <strong>Panasonic Toughbook, Dell et Getac</strong>. Application des <strong>principes DevOps en environnements Linux</strong> pour optimiser les déploiements et assurer la cohérence des configurations.",
+      "stack": ["Linux", "Diagnostic Matériel", "DevOps", "Panasonic Toughbook", "Dell", "Getac"],
+      "highlights": [
+        "Diagnostic et réparation end-to-end pour plateformes Panasonic, Dell et Getac",
+        "Intégration matériel-logiciel incluant apps embarquées et périphériques externes",
+        "Pratiques DevOps en environnements Linux pour optimiser les déploiements",
+        "Promu Full-Stack Engineer suite à ses performances"
+      ]
     },
     {
       "startDate": "Janvier 2021",
       "endDate": "Août 2023",
       "title": "Développeur Full-Stack",
       "company": "Floridabama Autosales",
+      "location": "Alabama, États-Unis · À distance",
       "description": "Développement et livraison d'une application métier pour un concessionnaire automobile.",
-      "list": "Construction de modules évolutifs avec ASP.NET et React"
+      "list": "ASP.NET · React · SQL Server",
+      "modalDescription": "Développement et livraison d'une <strong>application métier complète pour un concessionnaire automobile</strong>, permettant au personnel de gérer <strong>l'inventaire, les clients et les flux de vente</strong>. Modules évolutifs construits avec <strong>ASP.NET MVC et React</strong>, avec un backend <strong>SQL Server</strong>.",
+      "stack": ["ASP.NET MVC", "React", "SQL Server", "C#", "JavaScript"],
+      "highlights": [
+        "Construction de modules évolutifs avec ASP.NET et React",
+        "Conception et maintenance du schéma de base de données SQL Server",
+        "Livraison complète des exigences jusqu'au déploiement en production"
+      ]
     },
     {
       "startDate": "Juin 2018",
       "endDate": "Décembre 2021",
       "title": "Développeur Web Junior",
       "company": "V12 Comunicaciones",
-      "description": "Développement web Full-Stack pour des startups et entreprises en Colombie, axé sur :",
-      "list": "Applications personnalisées, eCommerce, APIs et solutions cloud"
+      "location": "Bogotá D.C., Colombie · Sur site",
+      "description": "Développement web Full-Stack pour startups et entreprises en Colombie.",
+      "list": "Apps personnalisées · eCommerce · APIs · Cloud",
+      "modalDescription": "<strong>Développement web Full-Stack</strong> pour startups et entreprises en Colombie. Axé sur les <strong>applications personnalisées, les plateformes eCommerce, les APIs REST</strong> et les <strong>solutions cloud</strong> — travaillant sur toute la stack du frontend au déploiement.",
+      "stack": ["HTML", "CSS", "JavaScript", "PHP", "WordPress", "MySQL", "AWS"],
+      "highlights": [
+        "Livraison d'apps personnalisées et de sites eCommerce pour des entreprises colombiennes",
+        "Construction et maintenance d'APIs REST et de solutions cloud",
+        "Travail full-stack de l'UI au serveur et au déploiement"
+      ]
     }
   ],
 
