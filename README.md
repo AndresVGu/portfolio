@@ -1,55 +1,118 @@
-# Astro Starter Kit: Basics
+# Andrés Villarreal — Personal Portfolio
 
-```sh
-npm create astro@latest -- --template basics
+A modern, multilingual personal portfolio built with **Astro**, **Tailwind CSS**, and vanilla TypeScript. Designed to showcase my work as a Full-Stack Engineer with a focus on performance, clean UI, and interactive experiences.
+
+**Live:** [andresvillarreal.dev](https://andresvillarreal.netlify.app) &nbsp;·&nbsp; **Location:** Toronto, ON, Canada
+
+---
+
+## About Me
+
+I'm a Full-Stack Engineer currently at **Rugged Books** (Ontario, Canada), where I was promoted from Electronics Specialist to lead the end-to-end development of a custom enterprise ERP system built from scratch. The platform covers inventory management, employee management, order processing, returns handling, purchase orders, and warehouse operations.
+
+Previously I worked as a Full-Stack Developer at **Floridabama Autosales** (Alabama, USA — remote), building a business application for an automotive dealership using ASP.NET MVC and React. Before that, I was a Junior Web Developer at **V12 Comunicaciones** (Bogotá, Colombia), delivering custom apps, eCommerce platforms, and REST APIs for startups and enterprises.
+
+I also hold a diploma in **Computer Programming & Analysis** from Niagara College Canada (2024), and I'm fluent in **English**, **French**, and **Spanish**.
+
+**Current stack:** Java · Spring Boot · React · TypeScript · Tailwind CSS · PostgreSQL · .NET · Linux · AWS
+
+---
+
+## Features
+
+- **Multilingual** — Full EN / ES / FR support via a custom i18n system
+- **Dark / Light mode** — System preference detection + manual toggle
+- **Interactive Experience Timeline** — Scroll-reveal parallax with grouped company entries, role cards, and a detail modal
+- **About Bento Grid** — Interactive cells including:
+  - Real-time clock (Toronto EST)
+  - Interactive Leaflet map centered on the CN Tower
+  - GitHub contribution heatmap (live data from API)
+  - Terminal with typing animation
+  - Auto-scrolling photocard carousel with holographic flip effect
+- **Photocard Modal** — Pokémon/Magic-style holographic card with foil, shine, sparkle effects and 3D flip
+- **Contact Form** — Functional contact section
+- **Responsive** — Mobile, tablet, and desktop layouts
+- **Performance** — Static generation (SSG), lazy loading, no heavy frameworks
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | [Astro](https://astro.build) 5.x |
+| Styling | [Tailwind CSS](https://tailwindcss.com) 3.x |
+| Language | TypeScript |
+| Map | [Leaflet](https://leafletjs.com) + CartoDB tiles |
+| Fonts | Onest Variable |
+| Deployment | [Netlify](https://netlify.com) |
+
+---
+
+## Project Structure
+
 ```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
 ├── public/
-│   └── favicon.svg
+│   ├── docs/          # CV / Resume PDF
+│   ├── photocards/    # Gallery photos
+│   └── projects/      # Project screenshots
 ├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
+│   ├── components/    # Astro components
+│   │   ├── About.astro
+│   │   ├── Header.astro
+│   │   ├── Profile.astro
+│   │   ├── TimeLine.astro
+│   │   ├── TimeLineGroup.astro
+│   │   ├── TimeLineItem.astro
+│   │   ├── ExperienceModal.astro
+│   │   ├── PhotoCardModal.astro
+│   │   └── ...
+│   ├── i18n/          # Translation files (en, es, fr)
+│   ├── layouts/       # Page layout
+│   ├── pages/         # Routes (/, /es/, /fr/)
+│   └── scripts/       # Vanilla JS (timeline, about)
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Getting Started
 
-Any static assets, like images, can be placed in the `public/` directory.
+```bash
+# Install dependencies
+npm install
 
-## 🧞 Commands
+# Start dev server
+npm run dev
 
-All commands are run from the root of the project, from a terminal:
+# Build for production
+npm run build
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+# Preview production build
+npm run preview
+```
 
-## 👀 Want to learn more?
+---
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-# portfolio
+## i18n
+
+Content is managed through JSON files in `src/i18n/`:
+
+```
+src/i18n/
+├── en.json   # English
+├── es.json   # Spanish
+├── fr.json   # French
+└── index.ts  # getI18N helper
+```
+
+Routes are automatically generated for each locale: `/` (EN), `/es/` (ES), `/fr/` (FR).
+
+---
+
+## Contact
+
+- **Email:** andresvillarrealguti@gmail.com
+- **LinkedIn:** [linkedin.com/in/avillarrealg](https://www.linkedin.com/in/avillarrealg/)
+- **GitHub:** [github.com/AndresVGu](https://github.com/AndresVGu)

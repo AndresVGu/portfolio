@@ -206,11 +206,11 @@ try {
     border-radius: 1.25rem; padding: 1.25rem;
     background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06);
     position: relative; overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  .bento-cell:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
-  .dark .bento-cell { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.06); }
-  .dark .bento-cell:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  .dark .bento-cell {
+    background: rgba(255,255,255,0.02);
+    border-color: rgba(255,255,255,0.06);
+  }
 
   /* MAP - Leaflet */
   .cell-map { padding: 0 !important; position: relative; }
@@ -377,16 +377,46 @@ try {
       function gHideLayers(){ if(!gFlipped&&!gFlipping)gInner!.style.transform='rotateX(0) rotateY(0)'; gGlare!.style.opacity='0'; gFoil!.style.opacity='0'; gShine!.style.opacity='0'; }
 
       document.querySelectorAll<HTMLElement>('.gallery-card').forEach((card,i)=>{ card.addEventListener('click',()=>{ gCurrentIdx=i; gOpen(card.dataset.img??'',card.dataset.label??''); }); });
-      gCard.addEventListener('click',(e)=>{ if((e.target as HTMLElement).closest('#gallery-modal-close')||(e.target as HTMLElement).closest('#gallery-modal-prev')||(e.target as HTMLElement).closest('#gallery-modal-next'))return; gFlip(); });      document.getElementById('gallery-modal-prev')?.addEventListener('click',()=>gNav(-1));
+      gCard.addEventListener('click',(e)=>{
+        // En desktop el click hace flip; en mobile lo maneja touchend
+        if(window.matchMedia('(pointer:coarse)').matches) return;
+        if((e.target as HTMLElement).closest('#gallery-modal-close')||(e.target as HTMLElement).closest('#gallery-modal-prev')||(e.target as HTMLElement).closest('#gallery-modal-next'))return;
+        gFlip();
+      });      document.getElementById('gallery-modal-prev')?.addEventListener('click',()=>gNav(-1));
       document.getElementById('gallery-modal-next')?.addEventListener('click',()=>gNav(1));
       // Desktop hover + tilt
       gCard.addEventListener('pointerenter',(e)=>{ if(e.pointerType==='touch'||gFlipped)return; setTimeout(()=>{if(!gFlipped)gInner!.style.transition='transform 0s';},300); gShowLayers(); });
       gCard.addEventListener('pointerleave',(e)=>{ if(e.pointerType==='touch')return; if(!gFlipped&&!gFlipping)gHideLayers(); });
       gCard.addEventListener('pointermove',(e)=>{ if(e.pointerType==='touch'||gFlipped||gFlipping)return; const rect=gCard!.getBoundingClientRect(); gApplyGlare(((e.clientX-rect.left)/rect.width)*100,((e.clientY-rect.top)/rect.height)*100); });
-      // Mobile touch tilt
-      gCard.addEventListener('touchstart',(e)=>{ if(gFlipped)return; e.preventDefault(); gInner!.style.transition='transform 0s'; gShowLayers(); },{passive:false});
-      gCard.addEventListener('touchend',()=>{ if(!gFlipped&&!gFlipping)gHideLayers(); });
-      gCard.addEventListener('touchmove',(e)=>{ if(gFlipped||gFlipping)return; e.preventDefault(); const t=e.touches[0]; const rect=gCard!.getBoundingClientRect(); gApplyGlare(Math.min(100,Math.max(0,((t.clientX-rect.left)/rect.width)*100)),Math.min(100,Math.max(0,((t.clientY-rect.top)/rect.height)*100))); },{passive:false});
+      // Mobile touch — paso 3: preventDefault solo en touchmove, no en touchstart
+      // paso 4: medir movimiento para distinguir tap de drag
+      let touchStartX = 0, touchStartY = 0, touchMoved = false;
+      gCard.addEventListener('touchstart',(e)=>{
+        if(gFlipped)return;
+        // Guardar posición inicial para detectar tap vs drag
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchMoved = false;
+        gInner!.style.transition='transform 0s';
+        gShowLayers();
+      },{passive:true}); // passive:true — no cancelamos nada aquí
+      gCard.addEventListener('touchend',()=>{
+        if(!gFlipped&&!gFlipping) gHideLayers();
+        // Si no hubo movimiento significativo → es un tap → flip
+        if(!touchMoved && !gFlipping){
+          gFlip();
+        }
+      });
+      gCard.addEventListener('touchmove',(e)=>{
+        if(gFlipped||gFlipping)return;
+        const dx = Math.abs(e.touches[0].clientX - touchStartX);
+        const dy = Math.abs(e.touches[0].clientY - touchStartY);
+        // Si se movió más de 8px es drag, no tap
+        if(dx > 8 || dy > 8) touchMoved = true;
+        e.preventDefault(); // solo aquí prevenimos el scroll
+        const t=e.touches[0]; const rect=gCard!.getBoundingClientRect();
+        gApplyGlare(Math.min(100,Math.max(0,((t.clientX-rect.left)/rect.width)*100)),Math.min(100,Math.max(0,((t.clientY-rect.top)/rect.height)*100)));
+      },{passive:false});
       gClose?.addEventListener('click',gCloseModal);
       gBackdrop.addEventListener('click',(e)=>{if(e.target===gBackdrop)gCloseModal();});
       document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&!gBackdrop!.classList.contains('hidden'))gCloseModal();});
