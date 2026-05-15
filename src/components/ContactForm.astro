@@ -275,7 +275,16 @@ const t = i18n.CONTACT;
       // Client-side validation
       let valid = true;
       if (!nameEl?.value.trim()) {
-        markError(nameEl, nameEl.labels?.[0]?.textContent?.replace("*","").trim() + " is required" || "Required");
+        // Get clean label text by reading only the label's own text nodes (excluding child elements like the * span)
+        const nameLabel = nameEl.labels?.[0];
+        const cleanLabel = nameLabel
+          ? Array.from(nameLabel.childNodes)
+              .filter((n) => n.nodeType === Node.TEXT_NODE)
+              .map((n) => n.textContent ?? '')
+              .join('')
+              .trim()
+          : 'Name';
+        markError(nameEl, `${cleanLabel} is required`);
         valid = false;
       }
       const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -10,7 +10,7 @@ const i18n = getI18N({ currentLocale });
 const t = i18n.ABOUT;
 
 const graduationYear = 2024;
-const years = new Date().getFullYear() - graduationYear;
+const years = Math.max(1, new Date().getFullYear() - graduationYear);
 const p1 = t.p1.replace('{years}', String(years));
 
 let ghContributions: { date: string; count: number; level: number }[] = [];
@@ -39,7 +39,7 @@ try {
     <div id="leaflet-map"></div>
     <div class="map-overlay">
       <div class="map-dot-live"></div>
-      <div class="map-overlay-text"><span>Toronto, ON</span><span>Based here</span></div>
+      <div class="map-overlay-text"><span>Toronto, ON</span><span>{t.bento.basedHere}</span></div>
     </div>
   </div>
 
@@ -65,8 +65,8 @@ try {
   <!-- Status -->
   <div class="bento-cell cell-status">
     <div class="status-list">
-      <div class="status-item"><span class="text-sm">🔨</span><span class="text-xs text-gray-700 dark:text-gray-300">Building an ERP</span></div>
-      <div class="status-item"><span class="text-sm">☕</span><span class="text-xs text-gray-700 dark:text-gray-300" id="coffee-count">Coffee: 2</span></div>
+      <div class="status-item"><span class="text-sm">🔨</span><span class="text-xs text-gray-700 dark:text-gray-300">{t.bento.buildingErp}</span></div>
+      <div class="status-item"><span class="text-sm">☕</span><span class="text-xs text-gray-700 dark:text-gray-300" id="coffee-count" data-label={t.bento.coffee}>{t.bento.coffee}: 2</span></div>
       <div class="status-item"><span class="text-sm">🎯</span><span class="text-xs text-gray-700 dark:text-gray-300">{t.cards.focusedItems[2]}</span></div>
     </div>
   </div>
@@ -75,9 +75,9 @@ try {
   <div class="bento-cell cell-interests">
     <div class="flex flex-col gap-3">
       <div class="flex items-center gap-2"><span class="text-sm">🗣️</span><div class="flex gap-1.5"><span class="lang-pill pill-en">EN</span><span class="lang-pill pill-fr">FR</span><span class="lang-pill pill-es">ES</span></div></div>
-      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">🚴</span><span>Cycling</span></div>
-      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">📚</span><span>Reading</span></div>
-      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">🧙‍♂️</span><span>LOTR fan</span></div>
+      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">🚴</span><span>{t.bento.cycling}</span></div>
+      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">📚</span><span>{t.bento.reading}</span></div>
+      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">🧙‍♂️</span><span>{t.bento.lotr}</span></div>
     </div>
   </div>
 
@@ -350,7 +350,12 @@ try {
 
     // COFFEE
     const coffeeEl = document.getElementById('coffee-count');
-    if (coffeeEl) { const h=new Date().getHours(); coffeeEl.textContent=`Coffee: ${h<9?1:h<12?2:h<15?3:h<18?4:2}`; }
+    if (coffeeEl) {
+      const h = new Date().getHours();
+      const count = h < 9 ? 1 : h < 12 ? 2 : h < 15 ? 3 : h < 18 ? 4 : 2;
+      const label = coffeeEl.dataset.label ?? 'Coffee';
+      coffeeEl.textContent = `${label}: ${count}`;
+    }
 
     // GALLERY MODAL
     const gBackdrop=document.getElementById('gallery-modal-backdrop');

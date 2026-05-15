@@ -334,6 +334,8 @@
     }
 
     card.addEventListener('click', (e: MouseEvent) => {
+      // En mobile el flip lo maneja touchend — evitar doble flip
+      if (window.matchMedia('(pointer: coarse)').matches) return;
       // Don't flip if clicking close button
       if ((e.target as HTMLElement).closest('#photocard-close')) return;
       flipCard();
@@ -457,21 +459,33 @@
     });
 
     // Mobile touch
+    let touchStartX = 0, touchStartY = 0, touchMoved = false;
+
     card.addEventListener('touchstart', (e: TouchEvent) => {
       if (isFlipped) return;
-      e.preventDefault();
+      // Guardar posición inicial — no cancelamos aquí para que el click llegue
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchMoved = false;
       inner!.style.transition = 'transform 0s';
       showLayers();
-    }, { passive: false });
+    }, { passive: true });
 
     card.addEventListener('touchend', () => {
       if (!isFlipped && !isFlipping) hideLayers();
       cancelAnimationFrame(rafId);
+      // Tap limpio sin arrastre → flip
+      if (!touchMoved && !isFlipping) {
+        flipCard();
+      }
     });
 
     card.addEventListener('touchmove', (e: TouchEvent) => {
       if (isFlipped || isFlipping) return;
-      e.preventDefault();
+      const dx = Math.abs(e.touches[0].clientX - touchStartX);
+      const dy = Math.abs(e.touches[0].clientY - touchStartY);
+      if (dx > 8 || dy > 8) touchMoved = true;
+      e.preventDefault(); // solo aquí prevenimos el scroll
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         const touch = e.touches[0];
