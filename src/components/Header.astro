@@ -354,6 +354,9 @@ const languages = [
     const hash = window.location.hash.slice(1);
     if (hash && hash !== 'header-menu' && hash !== 'header-nav') {
       setTimeout(() => scrollToSection(hash), 120);
+    } else if (!hash) {
+      // Ensure page starts at the top on first load (no hash)
+      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
     }
 
     // ── Active section highlight ──────────────────────────────────────────
