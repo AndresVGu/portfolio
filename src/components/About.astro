@@ -27,73 +27,7 @@ try {
 
 <div class="bento-about">
 
-  <!-- Bio -->
-  <div class="bento-cell cell-bio">
-    <p class="text-sm sm:text-base font-bold text-yellow-500 dark:text-yellow-400 mb-3">{t.tagline}</p>
-    <div class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed [&_strong]:text-gray-900 dark:[&_strong]:text-white [&_strong]:font-semibold" set:html={p1}></div>
-    <p class="mt-4 text-[11px] text-gray-400 dark:text-gray-500">{t.focus}</p>
-  </div>
-
-  <!-- Map -->
-  <div class="bento-cell cell-map">
-    <div id="leaflet-map"></div>
-    <div class="map-overlay">
-      <div class="map-dot-live"></div>
-      <div class="map-overlay-text"><span>Toronto, ON</span><span>{t.bento.basedHere}</span></div>
-    </div>
-  </div>
-
-  <!-- Clock -->
-  <div class="bento-cell cell-clock">
-    <div class="clock-display">
-      <span id="about-clock" class="text-2xl sm:text-3xl font-mono font-bold text-gray-900 dark:text-white tabular-nums">--:--</span>
-      <span class="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-widest mt-1">EST · Toronto</span>
-    </div>
-  </div>
-
-  <!-- Terminal -->
-  <div class="bento-cell cell-terminal">
-    <div class="terminal-window">
-      <div class="terminal-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
-      <div class="terminal-body">
-        <p class="terminal-line"><span class="text-green-400">$</span><span id="terminal-cmd" class="text-gray-300"></span><span id="terminal-cursor" class="terminal-cursor">▌</span></p>
-        <p id="terminal-output" class="text-cyan-400 mt-1 text-xs hidden"></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Status -->
-  <div class="bento-cell cell-status">
-    <div class="status-list">
-      <div class="status-item"><span class="text-sm">🔨</span><span class="text-xs text-gray-700 dark:text-gray-300">{t.bento.buildingErp}</span></div>
-      <div class="status-item"><span class="text-sm">☕</span><span class="text-xs text-gray-700 dark:text-gray-300" id="coffee-count" data-label={t.bento.coffee}>{t.bento.coffee}: 2</span></div>
-      <div class="status-item"><span class="text-sm">🎯</span><span class="text-xs text-gray-700 dark:text-gray-300">{t.cards.focusedItems[2]}</span></div>
-    </div>
-  </div>
-
-  <!-- Interests -->
-  <div class="bento-cell cell-interests">
-    <div class="flex flex-col gap-3">
-      <div class="flex items-center gap-2"><span class="text-sm">🗣️</span><div class="flex gap-1.5"><span class="lang-pill pill-en">EN</span><span class="lang-pill pill-fr">FR</span><span class="lang-pill pill-es">ES</span></div></div>
-      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">🚴</span><span>{t.bento.cycling}</span></div>
-      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">📚</span><span>{t.bento.reading}</span></div>
-      <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400"><span class="text-sm">🧙‍♂️</span><span>{t.bento.lotr}</span></div>
-    </div>
-  </div>
-
-  <!-- GitHub -->
-  <div class="bento-cell cell-github">
-    <div class="flex items-center justify-between mb-3">
-      <div class="flex items-center gap-2">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-gray-700 dark:text-gray-300"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        <span class="text-xs font-bold text-gray-700 dark:text-gray-300">GitHub</span>
-      </div>
-      <span class="text-[10px] text-gray-400 dark:text-gray-500">{ghTotal} contributions</span>
-    </div>
-    <div class="gh-heatmap">{ghContributions.map((day) => (<div class={`gh-cell gh-level-${day.level}`} title={`${day.date}: ${day.count}`}></div>))}</div>
-  </div>
-
-  <!-- Photocards Gallery -->
+  <!-- 1. Photocards Gallery — hero row, full width -->
   <div class="bento-cell cell-gallery">
     <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2 px-1">Photocards</p>
     <div class="gallery-scroll" id="gallery-scroll">
@@ -119,6 +53,102 @@ try {
         <div class="gallery-card" aria-hidden="true" data-img="/photocards/falls2.webp" data-label="Water fall"><img src="/photocards/falls2.webp" alt="" loading="lazy" /><span>Falls</span></div>
       </div>
     </div>
+  </div>
+
+  <!-- 2. Bio -->
+  <div class="bento-cell cell-bio">
+    <p class="bio-tagline">{t.tagline}</p>
+    <div class="bio-text [&_strong]:text-gray-900 dark:[&_strong]:text-white [&_strong]:font-semibold" set:html={p1}></div>
+    <div class="bio-text mt-2 [&_strong]:text-gray-900 dark:[&_strong]:text-white [&_strong]:font-semibold" set:html={t.p2}></div>
+    <p class="bio-focus mt-4">{t.focus}</p>
+  </div>
+
+  <!-- Map (with embedded clock overlay) -->
+  <div class="bento-cell cell-map">
+    <div id="leaflet-map"></div>
+    <!-- Clock overlay — top right corner of the map -->
+    <div class="map-clock-overlay">
+      <span id="about-clock" class="map-clock-time tabular-nums">--:--</span>
+      <span class="map-clock-label">EST · Toronto</span>
+    </div>
+    <!-- Location badge — bottom left, clickable to Google Maps -->
+    <a
+      href="https://www.google.com/maps/place/Toronto,+Ontario/@43.7183357,-79.4604575,12z/data=!3m1!4b1!4m6!3m5!1s0x89d4cb90d7c63ba5:0x323555502ab4c477!8m2!3d43.6548253!4d-79.388447!16zL20vMGg3aDY?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="map-overlay map-overlay-link"
+      aria-label="View Toronto on Google Maps"
+    >
+      <div class="map-dot-live"></div>
+      <div class="map-overlay-text"><span>Toronto, ON</span><span>{t.bento.basedHere}</span></div>
+    </a>
+  </div>
+
+  <!-- Terminal -->
+  <div class="bento-cell cell-terminal" id="terminal-container">
+    <div class="terminal-window">
+      <!-- Traffic lights -->
+      <div class="terminal-dots">
+        <span class="dot-red"></span>
+        <span class="dot-yellow"></span>
+        <span class="dot-green"></span>
+        <span class="terminal-title">andrés@portfolio ~ </span>
+      </div>
+      <!-- Scrollable output history -->
+      <div class="terminal-body" id="terminal-body">
+        <div id="terminal-history"></div>
+        <!-- Active input line -->
+        <div class="terminal-input-line">
+          <span class="text-green-400">$&nbsp;</span>
+          <span id="terminal-display" class="text-gray-300"></span>
+          <span class="terminal-cursor">▌</span>
+          <!-- Hidden real input to capture keystrokes -->
+          <input
+            id="terminal-input"
+            type="text"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Terminal input"
+            class="terminal-hidden-input"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Interests / Hobbies -->
+  <div class="bento-cell cell-interests">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">{t.hobbiesTitle}</p>
+    <div class="hobbies-grid">
+      {t.hobbies.map((h: { icon: string; label: string }) => (
+        <div class="hobby-pill">
+          <span class="hobby-icon">{h.icon}</span>
+          <span class="hobby-label">{h.label}</span>
+        </div>
+      ))}
+      <!-- Languages always shown -->
+      <div class="hobby-pill hobby-pill-langs">
+        <span class="lang-pill pill-en">EN</span>
+        <span class="lang-pill pill-fr">FR</span>
+        <span class="lang-pill pill-es">ES</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. GitHub heatmap — full width bottom -->
+  <div class="bento-cell cell-github">
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center gap-2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-gray-700 dark:text-gray-300"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span class="text-xs font-bold text-gray-700 dark:text-gray-300">GitHub</span>
+      </div>
+      <span class="text-[10px] text-gray-400 dark:text-gray-500">{ghTotal} contributions</span>
+    </div>
+    <div class="gh-heatmap">{ghContributions.map((day) => (<div class={`gh-cell gh-level-${day.level}`} title={`${day.date}: ${day.count}`}></div>))}</div>
   </div>
 
   <!-- Gallery Photocard Modal -->
@@ -167,14 +197,12 @@ try {
       grid-auto-rows: minmax(130px, auto);
       gap: 0.875rem;
     }
+    .cell-gallery   { grid-column: span 4; height: 260px; }
     .cell-bio       { grid-column: span 2; grid-row: span 2; }
     .cell-map       { grid-column: span 2; grid-row: span 2; }
-    .cell-clock     { grid-column: span 1; }
-    .cell-terminal  { grid-column: span 2; }
-    .cell-status    { grid-column: span 1; }
-    .cell-interests { grid-column: span 2; }
+    .cell-terminal  { grid-column: span 3; height: 180px; }
+    .cell-interests { grid-column: span 1; }
     .cell-github    { grid-column: span 4; }
-    .cell-gallery   { grid-column: span 4; height: 280px; }
   }
 
   /* Large desktop */
@@ -184,22 +212,20 @@ try {
       grid-auto-rows: minmax(140px, auto);
       gap: 1rem;
     }
+    .cell-gallery   { grid-column: span 6; height: 300px; }
     .cell-bio       { grid-column: span 3; grid-row: span 2; }
     .cell-map       { grid-column: span 3; grid-row: span 2; }
-    .cell-clock     { grid-column: span 1; }
-    .cell-terminal  { grid-column: span 3; }
-    .cell-status    { grid-column: span 2; }
+    .cell-terminal  { grid-column: span 4; height: 200px; }
     .cell-interests { grid-column: span 2; }
-    .cell-github    { grid-column: span 4; }
-    .cell-gallery   { grid-column: span 6; height: 300px; }
+    .cell-github    { grid-column: span 6; }
   }
 
   /* Mobile */
   @media (max-width: 767px) {
-    .cell-bio, .cell-map, .cell-terminal,
-    .cell-github, .cell-interests,
-    .cell-gallery { grid-column: span 2; }
-    .cell-gallery { height: 240px; }
+    .cell-gallery, .cell-bio, .cell-map, .cell-terminal,
+    .cell-github, .cell-interests { grid-column: span 2; }
+    .cell-gallery { height: 220px; }
+    .cell-terminal { height: 200px; }
   }
 
   .bento-cell {
@@ -217,42 +243,86 @@ try {
   #leaflet-map { width: 100%; height: 100%; min-height: 200px; border-radius: 1.25rem; z-index: 1; }
   .map-overlay { position: absolute; bottom: 14px; left: 14px; z-index: 10; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); padding: 5px 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.07); box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
   .dark .map-overlay { background: rgba(15,15,25,0.88); border-color: rgba(255,255,255,0.08); }
-  .map-dot-live { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e; animation: mapLivePulse 2s ease-in-out infinite; }
+  .map-overlay-link { text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .map-overlay-link:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+  .map-dot-live { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e; animation: mapLivePulse 2s ease-in-out infinite; flex-shrink: 0; }
   .map-overlay-text { display: flex; flex-direction: column; }
   .map-overlay-text span:first-child { color: #111; font-size: 11px; font-weight: 700; }
   .map-overlay-text span:last-child { color: #6b7280; font-size: 9px; }
   .dark .map-overlay-text span:first-child { color: #f1f5f9; }
   .dark .map-overlay-text span:last-child { color: #9ca3af; }
   @keyframes mapLivePulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(0.8); } }
+  @keyframes markerPulse  { 0% { transform:scale(0.5); opacity:0.8; } 100% { transform:scale(2.2); opacity:0; } }
   .leaflet-control-attribution, .leaflet-control-zoom { display: none !important; }
-  /* CLOCK */
-  .cell-clock { display:flex; align-items:center; justify-content:center; }
-  .clock-display { display:flex; flex-direction:column; align-items:center; }
+
+  /* CLOCK inside map */
+  .map-clock-overlay { position: absolute; top: 12px; right: 12px; z-index: 10; display: flex; flex-direction: column; align-items: flex-end; background: rgba(255,255,255,0.88); backdrop-filter: blur(10px); padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.07); box-shadow: 0 2px 12px rgba(0,0,0,0.1); pointer-events: none; }
+  .dark .map-clock-overlay { background: rgba(15,15,25,0.88); border-color: rgba(255,255,255,0.08); }
+  .map-clock-time { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; color: #111; line-height: 1.2; }
+  .dark .map-clock-time { color: #f1f5f9; }
+  .map-clock-label { font-size: 8px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6b7280; margin-top: 1px; }
+  .dark .map-clock-label { color: #9ca3af; }
 
   /* TERMINAL */
-  .cell-terminal { padding:0 !important; }
-  .terminal-window { width:100%; height:100%; min-height:110px; background:#1a1b26; border-radius:1.25rem; padding:0.75rem 1rem; display:flex; flex-direction:column; }
-  .terminal-dots { display:flex; gap:5px; margin-bottom:0.5rem; }
-  .dot-red { width:8px; height:8px; border-radius:50%; background:#ff5f57; }
-  .dot-yellow { width:8px; height:8px; border-radius:50%; background:#ffbd2e; }
+  .cell-terminal { padding:0 !important; height: 200px; }
+  .terminal-window { width:100%; height:100%; background:#1a1b26; border-radius:1.25rem; padding:0.75rem 1rem; display:flex; flex-direction:column; overflow:hidden; cursor:text; }
+  /* Light mode terminal */
+  :root:not(.dark) .terminal-window { background:#f6f8fa; border: 1px solid #d0d7de; }
+  :root:not(.dark) .terminal-title  { color:#57606a; }
+  :root:not(.dark) .t-prompt        { color:#24292f; }
+  :root:not(.dark) .t-cmd           { color:#0550ae; }
+  :root:not(.dark) .t-out           { color:#116329; }
+  :root:not(.dark) .t-err           { color:#cf222e; }
+  :root:not(.dark) .t-info          { color:#0550ae; }
+  :root:not(.dark) .terminal-cursor { color:#0550ae; }
+  :root:not(.dark) #terminal-display { color:#24292f; }
+  .terminal-dots { display:flex; gap:5px; margin-bottom:0.6rem; align-items:center; flex-shrink:0; }
+  .dot-red   { width:8px; height:8px; border-radius:50%; background:#ff5f57; }
+  .dot-yellow{ width:8px; height:8px; border-radius:50%; background:#ffbd2e; }
   .dot-green { width:8px; height:8px; border-radius:50%; background:#28c840; }
-  .terminal-body { font-family:'JetBrains Mono',monospace; font-size:0.72rem; flex:1; display:flex; flex-direction:column; justify-content:center; }
-  .terminal-line { display:flex; gap:0.4rem; align-items:center; }
+  .terminal-title { margin-left:6px; font-size:0.65rem; color:#565f89; font-family:'JetBrains Mono',monospace; }
+  .terminal-body { font-family:'JetBrains Mono',monospace; font-size:0.7rem; flex:1; min-height:0; display:flex; flex-direction:column; overflow-y:auto; gap:2px; scrollbar-width:thin; scrollbar-color: #565f89 transparent; }
+  .terminal-body::-webkit-scrollbar { width: 3px; }
+  .terminal-body::-webkit-scrollbar-thumb { background: #565f89; border-radius: 2px; }
+  .terminal-body::-webkit-scrollbar-track { background: transparent; }
+  /* History lines */
+  .t-line { display:flex; gap:0.35rem; flex-wrap:wrap; line-height:1.5; }
+  .t-prompt { color:#a9b1d6; white-space:nowrap; }
+  .t-cmd    { color:#e0af68; }
+  .t-out    { color:#9ece6a; padding-left:1rem; line-height:1.5; white-space:pre-wrap; }
+  .t-err    { color:#f7768e; padding-left:1rem; line-height:1.5; }
+  .t-info   { color:#7dcfff; padding-left:0.5rem; line-height:1.6; white-space:pre; }
+  /* Active input line */
+  .terminal-input-line { display:flex; align-items:center; gap:0.35rem; position:relative; flex-shrink:0; margin-top:2px; }
+  .terminal-hidden-input { position:absolute; opacity:0; width:1px; height:1px; border:none; outline:none; padding:0; margin:0; pointer-events:none; }
   .terminal-cursor { color:#7aa2f7; animation:termBlink 1s step-end infinite; }
-  @keyframes termBlink { 0%,50% { opacity:1; } 51%,100% { opacity:0; } }
+  @keyframes termBlink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
 
-  /* STATUS */
-  .cell-status { display:flex; align-items:center; }
-  .status-list { display:flex; flex-direction:column; gap:0.5rem; }
-  .status-item { display:flex; align-items:center; gap:0.5rem; }
+  /* STATUS — removed */
 
   /* INTERESTS */
-  .cell-interests { display:flex; align-items:center; }
+  .cell-interests { display:flex; flex-direction:column; justify-content:center; }
+  .hobbies-grid { display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .hobby-pill { display:inline-flex; align-items:center; gap:0.35rem; padding:4px 10px; border-radius:999px; font-size:11px; font-weight:600; background:rgba(0,0,0,0.04); border:1px solid rgba(0,0,0,0.08); color:#374151; transition:transform 0.15s ease, box-shadow 0.15s ease; }
+  .hobby-pill:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+  .dark .hobby-pill { background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.1); color:#d1d5db; }
+  .hobby-icon { font-size:13px; }
+  .hobby-label { letter-spacing:0.01em; }
+  .hobby-pill-langs { gap:0.3rem; background:transparent; border:none; padding:4px 0; }
+  .hobby-pill-langs:hover { transform:none; box-shadow:none; }
   .lang-pill { padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700; border:1px solid; }
   .pill-en { background:rgba(59,130,246,0.1); color:#2563eb; border-color:rgba(59,130,246,0.25); }
   .pill-fr { background:rgba(239,68,68,0.1); color:#dc2626; border-color:rgba(239,68,68,0.25); }
   .pill-es { background:rgba(250,204,21,0.1); color:#ca8a04; border-color:rgba(250,204,21,0.25); }
   .dark .pill-en { color:#60a5fa; } .dark .pill-fr { color:#f87171; } .dark .pill-es { color:#fbbf24; }
+
+  /* BIO */
+  .bio-tagline { font-size:0.85rem; font-weight:700; color:#374151; margin-bottom:0.6rem; line-height:1.4; border-left:3px solid #facc15; padding-left:0.6rem; }
+  .dark .bio-tagline { color:#e5e7eb; border-color:#facc15; }
+  .bio-text { font-size:0.78rem; color:#4b5563; line-height:1.65; }
+  .dark .bio-text { color:#9ca3af; }
+  .bio-focus { font-size:0.7rem; color:#9ca3af; font-style:italic; border-top:1px solid rgba(0,0,0,0.06); padding-top:0.5rem; }
+  .dark .bio-focus { color:#6b7280; border-color:rgba(255,255,255,0.06); }
 
   /* GITHUB */
   .gh-heatmap { display:grid; grid-template-rows:repeat(7,1fr); grid-auto-flow:column; grid-auto-columns:minmax(8px,1fr); gap:2px; width:100%; height:72px; }
@@ -314,16 +384,50 @@ try {
 
       L.tileLayer(tiles, { maxZoom: 19 }).addTo(map);
 
-      // Custom pulsing marker
+      // Build marker HTML based on current theme
+      function getMarkerHtml(isDark: boolean) {
+        const color     = isDark ? '#facc15' : '#3b82f6';
+        const colorRgb  = isDark ? '250,204,21' : '59,130,246';
+        return `
+          <div style="position:relative;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">
+            <div style="
+              position:absolute;width:28px;height:28px;border-radius:50%;
+              background:rgba(${colorRgb},0.35);
+              animation:markerPulse 1.8s ease-out infinite;
+            "></div>
+            <div style="
+              position:absolute;width:18px;height:18px;border-radius:50%;
+              background:rgba(${colorRgb},0.2);
+              animation:markerPulse 1.8s ease-out infinite 0.4s;
+            "></div>
+            <div style="
+              position:relative;width:12px;height:12px;border-radius:50%;
+              background:${color};
+              box-shadow:0 0 6px rgba(${colorRgb},0.8);
+              cursor:pointer;z-index:1;
+            "></div>
+          </div>`;
+      }
+
+      // Custom pulsing marker — clickable, opens Google Maps in new tab
+      const isDarkInit = document.documentElement.classList.contains('dark');
       const icon = L.divIcon({
         className: '',
-        html: `<div style="width:14px;height:14px;border-radius:50%;background:#facc15;box-shadow:0 0 0 4px rgba(250,204,21,0.3);"></div>`,
-        iconSize: [14, 14],
-        iconAnchor: [7, 7],
+        html: getMarkerHtml(isDarkInit),
+        iconSize: [28, 28],
+        iconAnchor: [14, 14],
       });
-      L.marker([43.6426, -79.3871], { icon }).addTo(map);
+      const marker = L.marker([43.6426, -79.3871], { icon })
+        .addTo(map)
+        .on('click', () => {
+          window.open(
+            'https://www.google.com/maps/place/Torre+CN/@43.6425813,-79.3973351,15z/data=!3m2!4b1!5s0x882b34d819a55ff7:0xad7cf7bcaf4e239b!4m6!3m5!1s0x882b34d68bf33a9b:0x15edd8c4de1c7581!8m2!3d43.6425662!4d-79.3870568!16zL20vMDF0d3M?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
+            '_blank',
+            'noopener,noreferrer'
+          );
+        });
 
-      // Re-apply tiles on theme change
+      // Re-apply tiles AND marker color on theme change
       const observer = new MutationObserver(() => {
         const dark = document.documentElement.classList.contains('dark');
         const url = dark
@@ -331,6 +435,13 @@ try {
           : 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
         map.eachLayer((l: L.Layer) => { if ((l as any)._url) map.removeLayer(l); });
         L.tileLayer(url, { maxZoom: 19 }).addTo(map);
+        // Update marker color
+        marker.setIcon(L.divIcon({
+          className: '',
+          html: getMarkerHtml(dark),
+          iconSize: [28, 28],
+          iconAnchor: [14, 14],
+        }));
       });
       observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     }
@@ -340,22 +451,138 @@ try {
     function updateClock() { if (!clockEl) return; clockEl.textContent = new Date().toLocaleTimeString('en-US', { timeZone:'America/Toronto', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false }); }
     updateClock(); setInterval(updateClock, 1000);
 
-    // TERMINAL
-    const cmdEl = document.getElementById('terminal-cmd');
-    const outputEl = document.getElementById('terminal-output');
-    const commands = [{ cmd:'whoami', out:'andrés villarreal' },{ cmd:'cat role.txt', out:'Full-Stack Engineer @ Rugged Books' },{ cmd:'echo $STACK', out:'Java · Spring Boot · React · TypeScript' }];
-    let cmdIdx = 0;
-    function typeCommand() { if (!cmdEl||!outputEl) return; const {cmd,out}=commands[cmdIdx%commands.length]; cmdEl.textContent=''; outputEl.classList.add('hidden'); let i=0; const iv=setInterval(()=>{ cmdEl.textContent+=cmd[i++]; if(i>=cmd.length){ clearInterval(iv); setTimeout(()=>{ outputEl.textContent=out; outputEl.classList.remove('hidden'); cmdIdx++; setTimeout(typeCommand,3000); },400); } },60); }
-    setTimeout(typeCommand, 800);
+    // ── INTERACTIVE TERMINAL ─────────────────────────────────────────
+    const termContainer = document.getElementById('terminal-container');
+    const termBody      = document.getElementById('terminal-body');
+    const termHistory   = document.getElementById('terminal-history');
+    const termDisplay   = document.getElementById('terminal-display');
+    const termInput     = document.getElementById('terminal-input') as HTMLInputElement | null;
 
-    // COFFEE
-    const coffeeEl = document.getElementById('coffee-count');
-    if (coffeeEl) {
-      const h = new Date().getHours();
-      const count = h < 9 ? 1 : h < 12 ? 2 : h < 15 ? 3 : h < 18 ? 4 : 2;
-      const label = coffeeEl.dataset.label ?? 'Coffee';
-      coffeeEl.textContent = `${label}: ${count}`;
+    if (termContainer && termBody && termHistory && termDisplay && termInput) {
+
+      // ── Command registry ──────────────────────────────────────────
+      const COMMANDS: Record<string, () => string> = {
+        help: () =>
+`  <span class="text-yellow-400 font-bold">Available commands:</span>
+  <span class="text-purple-400">whoami</span>   → who I am
+  <span class="text-purple-400">role</span>     → current role & company
+  <span class="text-purple-400">stack</span>    → tech stack
+  <span class="text-purple-400">contact</span>  → how to reach me
+  <span class="text-purple-400">clear</span>    → clear the terminal`,
+
+        whoami: () =>
+          `<span class="text-white font-bold">Andrés Villarreal</span> — Full-Stack Developer\n  Trilingual: EN · FR · ES  |  Based in Toronto 🇨🇦`,
+
+        role: () =>
+          `<span class="text-green-400">Full-Stack Engineer</span> @ <span class="text-yellow-400">Rugged Books</span>\n  Building a custom ERP from scratch · Java · Spring Boot · React`,
+
+        stack: () =>
+          `<span class="text-cyan-400">Backend :</span>  Java · Spring Boot · .NET · C#\n  <span class="text-cyan-400">Frontend:</span>  React · TypeScript · Tailwind CSS\n  <span class="text-cyan-400">Cloud   :</span>  Azure · PostgreSQL · REST APIs\n  <span class="text-cyan-400">Other   :</span>  Linux · Git · DevOps`,
+
+        contact: () =>
+          `<span class="text-blue-400">Email  :</span>  andresvillarrealguti@gmail.com\n  <span class="text-blue-400">GitHub :</span>  github.com/AndresVGu\n  <span class="text-blue-400">LinkedIn:</span> linkedin.com/in/andres-villarreal-dev`,
+      };
+
+      const cmdHistory: string[] = [];
+      let histIdx = -1;
+
+      // ── Print help on load ────────────────────────────────────────
+      function printWelcome() {
+        appendInfo(
+`<span class="text-yellow-400 font-bold">Welcome!</span> Type a command and press <span class="text-white">Enter</span>.
+  Type <span class="text-purple-400">help</span> to see available commands.`
+        );
+      }
+
+      // ── DOM helpers ───────────────────────────────────────────────
+      function appendLine(prompt: string, cmd: string, output: string, isErr = false) {
+        const cmdDiv = document.createElement('div');
+        cmdDiv.className = 't-line';
+        cmdDiv.innerHTML = `<span class="t-prompt">${prompt}</span><span class="t-cmd">${escHtml(cmd)}</span>`;
+        termHistory!.appendChild(cmdDiv);
+
+        if (output) {
+          const outDiv = document.createElement('div');
+          outDiv.className = isErr ? 't-err' : 't-out';
+          outDiv.innerHTML = output;
+          termHistory!.appendChild(outDiv);
+        }
+        scrollBottom();
+      }
+
+      function appendInfo(html: string) {
+        const div = document.createElement('div');
+        div.className = 't-info';
+        div.innerHTML = html;
+        termHistory!.appendChild(div);
+        scrollBottom();
+      }
+
+      function scrollBottom() {
+        termBody!.scrollTop = termBody!.scrollHeight;
+      }
+
+      function escHtml(s: string) {
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+
+      // ── Input sync: mirror hidden input → visible display ─────────
+      termInput.addEventListener('input', () => {
+        termDisplay!.textContent = termInput.value;
+      });
+
+      // ── Keyboard handling ─────────────────────────────────────────
+      termInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const raw = termInput.value.trim().toLowerCase();
+          termInput.value = '';
+          termDisplay!.textContent = '';
+          histIdx = -1;
+
+          if (!raw) return;
+
+          cmdHistory.unshift(raw);
+
+          if (raw === 'clear') {
+            termHistory!.innerHTML = '';
+            return;
+          }
+
+          const fn = COMMANDS[raw];
+          if (fn) {
+            appendLine('$ ', raw, fn());
+          } else {
+            appendLine('$ ', raw,
+              `command not found: <span class="text-white">${escHtml(raw)}</span> — try <span class="text-purple-400">help</span>`,
+              true
+            );
+          }
+        }
+
+        // Arrow up/down history
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (histIdx < cmdHistory.length - 1) histIdx++;
+          termInput.value = cmdHistory[histIdx] ?? '';
+          termDisplay!.textContent = termInput.value;
+        }
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (histIdx > 0) histIdx--;
+          else { histIdx = -1; termInput.value = ''; }
+          termDisplay!.textContent = termInput.value;
+        }
+      });
+
+      // ── Click anywhere on terminal → focus input ──────────────────
+      termContainer.addEventListener('click', () => termInput.focus());
+
+      // ── Boot ──────────────────────────────────────────────────────
+      printWelcome();
+      setTimeout(() => termInput.focus(), 100);
     }
+
+
 
     // GALLERY MODAL
     const gBackdrop=document.getElementById('gallery-modal-backdrop');

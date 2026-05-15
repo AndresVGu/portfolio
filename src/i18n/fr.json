@@ -119,10 +119,10 @@
   ],
 
   "ABOUT": {
-    "tagline": "🔥 Je construis des logiciels, je les casse, je les répare et je les améliore.",
-    "p1": "Avec <strong>plus de {years} ans d'expérience</strong> dans le développement logiciel, j'ai appris que ce qui compte le plus c'est de <strong>livrer des choses qui fonctionnent vraiment en production — pas seulement en démo.</strong>",
-    "p2": "La majeure partie de ce temps a été avec <strong>.NET</strong>, en construisant des <strong>APIs et des systèmes backend</strong>, tout en travaillant <strong>en tant que technicien électronique</strong> — avec <strong>Linux</strong>, le matériel, et le débogage de l'inexplicable.",
-    "p3": "J'ai fait du <strong>travail full-stack</strong>, expérimenté avec des frameworks modernes, SQL et Python — mais au final, j'aime simplement <strong>construire des choses qui fonctionnent bien et qui ont du sens.</strong>",
+    "tagline": "Je transforme des idées en expériences numériques propres, fonctionnelles et engageantes.",
+    "p1": "Je suis un développeur qui aime créer des choses qui ne se contentent pas de <strong>fonctionner</strong> — mais qui se sentent <strong>intuitives et agréables à utiliser</strong>. Avec <strong>plus de {years} ans d'expérience</strong>, j'ai livré des projets réels allant de plateformes métier à des applications web interactives — du code qui tient la charge en production, pas seulement en démo.",
+    "p2": "Mon parcours a commencé par la curiosité et a rapidement évolué vers la création de solutions qui améliorent la façon dont les gens interagissent avec les produits et services. Je suis particulièrement attiré par les <strong>interfaces épurées, les systèmes backend solides</strong> et le travail où l'attention aux détails compte vraiment.",
+    "p3": "En dehors du code, j'aime comprendre comment les choses fonctionnent — affiner des systèmes, optimiser des flux de travail, ou redonner vie à de vieux ordinateurs portables. J'ai aussi un côté créatif façonné par mon expérience en <strong>cuisine</strong>, où la présentation et la précision comptent autant que le résultat.",
     "techStack": "⚙️ Stack Technique",
     "strengths": {
       "backend": "🚀 Backend & APIs",
@@ -130,7 +130,15 @@
       "data": "📊 Flux de Données",
       "linux": "🛠 Linux & Matériel"
     },
-    "focus": "🎯 Axé sur la scalabilité backend, l'architecture cloud et la performance.",
+    "focus": "Toujours à la recherche de croissance, de projets significatifs et de collaborations avec des personnes qui valorisent la qualité.",
+    "hobbiesTitle": "Loisirs & Intérêts",
+    "hobbies": [
+      { "icon": "🚴", "label": "Vélo" },
+      { "icon": "📚", "label": "Lecture" },
+      { "icon": "🧙‍♂️", "label": "LOTR" },
+      { "icon": "🍳", "label": "Cuisine" },
+      { "icon": "💻", "label": "Reconditionnement" }
+    ],
     "cards": {
       "focused": "🎯 Focalisé",
       "focusedItems": ["Linux", "Remise en état", "Java"],

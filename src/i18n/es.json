@@ -119,10 +119,10 @@
   ],
 
   "ABOUT": {
-    "tagline": "🔥 Construyo software, lo rompo, lo arreglo y lo mejoro.",
-    "p1": "Con <strong>más de {years} años de experiencia</strong> construyendo software, he aprendido que lo que más importa es <strong>entregar cosas que realmente funcionen en producción — no solo en demos.</strong>",
-    "p2": "La mayor parte de ese tiempo ha sido con <strong>.NET</strong>, construyendo <strong>APIs y sistemas backend</strong>, mientras también trabajo <strong>como técnico electrónico</strong> — lidiando con <strong>Linux</strong>, hardware, y depurando lo inexplicable.",
-    "p3": "He hecho <strong>trabajo full-stack</strong>, experimentado con frameworks modernos, SQL y Python — pero al final del día, simplemente me gusta <strong>construir cosas que funcionen bien y tengan sentido.</strong>",
+    "tagline": "Convierto ideas en experiencias digitales limpias, funcionales y atractivas.",
+    "p1": "Soy un desarrollador al que le gusta construir cosas que no solo <strong>funcionan</strong> — sino que se sienten <strong>intuitivas y agradables de usar</strong>. Con <strong>más de {years} años de experiencia</strong>, he entregado proyectos reales que van desde plataformas de negocio hasta aplicaciones web interactivas — código que aguanta tráfico real, no solo demos.",
+    "p2": "Mi camino empezó con curiosidad y rápidamente evolucionó hacia crear soluciones que mejoran cómo las personas se conectan con productos y servicios. Me atraen especialmente las <strong>interfaces limpias, los sistemas backend sólidos</strong> y el trabajo donde la atención al detalle realmente importa.",
+    "p3": "Fuera del código, disfruto entender cómo funcionan las cosas — refinando sistemas, optimizando flujos de trabajo, o dando nueva vida a laptops viejas. También tengo un lado creativo moldeado por mi experiencia en <strong>cocina</strong>, donde la presentación y la precisión importan tanto como el resultado.",
     "techStack": "⚙️ Stack Tecnológico",
     "strengths": {
       "backend": "🚀 Backend y APIs",
@@ -130,7 +130,15 @@
       "data": "📊 Flujos de Datos",
       "linux": "🛠 Linux y Hardware"
     },
-    "focus": "🎯 Enfocado en escalabilidad backend, arquitectura cloud y rendimiento.",
+    "focus": "Siempre buscando crecer, construir proyectos con impacto y colaborar con personas que valoran la calidad.",
+    "hobbiesTitle": "Hobbies e Intereses",
+    "hobbies": [
+      { "icon": "🚴", "label": "Ciclismo" },
+      { "icon": "📚", "label": "Lectura" },
+      { "icon": "🧙‍♂️", "label": "LOTR" },
+      { "icon": "🍳", "label": "Cocina" },
+      { "icon": "💻", "label": "Refacción" }
+    ],
     "cards": {
       "focused": "🎯 Enfocado",
       "focusedItems": ["Linux", "Refacción", "Java"],
