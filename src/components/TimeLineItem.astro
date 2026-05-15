@@ -2,7 +2,8 @@
 const {
   startDate, endDate, title, company, location,
   description, list,
-  modalDescription, stack, highlights, labels
+  modalDescription, stack, highlights, labels,
+  isFirst = false
 } = Astro.props;
 
 const modalData = JSON.stringify({
@@ -21,17 +22,16 @@ const modalData = JSON.stringify({
 <div class="timeline-item step relative pb-12 md:pb-20">
 
   <!-- DOT -->
-  <span class="dot absolute left-[5px] md:left-[-5px] top-2
-               w-4 h-4 rounded-full
-               bg-black/30 dark:bg-white/30
-               transition-all duration-300 z-10"></span>
+  <span class={`dot absolute left-[5px] md:left-[-5px] top-2
+               w-4 h-4 rounded-full transition-all duration-300 z-10
+               ${isFirst ? 'bg-yellow-400 shadow-lg shadow-yellow-400/60' : 'bg-black/30 dark:bg-white/30'}`}></span>
 
   <!-- Content -->
   <div class="pl-10 md:pl-0 md:ml-8 grid md:grid-cols-5 md:gap-10">
 
     <!-- LEFT: company + dates (title goes in the card, matching group style) -->
     <div class="md:col-span-2 mb-3 md:mb-0">
-      <div class="content-left opacity-0 translate-y-10 transition-all duration-500">
+      <div class={`content-left transition-all duration-500 ${isFirst ? '' : 'opacity-0 translate-y-10'}`}>
         <h3 class="text-xl md:text-2xl font-bold text-black dark:text-white">{company}</h3>
         <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-1">
           {startDate} — {endDate}
@@ -53,9 +53,10 @@ const modalData = JSON.stringify({
 
     <!-- RIGHT: description card — identical style to TimeLineGroup cards -->
     <div class="md:col-span-3">
-      <div class="card content-right opacity-0 translate-y-10 relative p-4 md:p-5
-                  rounded-2xl backdrop-blur-xl overflow-hidden transition-all duration-500
-                  bg-yellow-400/8 border border-yellow-400/25 dark:border-yellow-400/20">
+      <div class={`card content-right relative p-4 md:p-5
+                  rounded-2xl overflow-hidden transition-all duration-500
+                  bg-yellow-400/8 border border-yellow-400/25 dark:border-yellow-400/20
+                  ${isFirst ? '' : 'opacity-0 translate-y-10'}`}>
 
         <div class="glow pointer-events-none absolute inset-0 opacity-0 transition duration-300"></div>
 
@@ -91,10 +92,6 @@ const modalData = JSON.stringify({
 
   </div>
 </div>
-
-<script>
-  import '../scripts/timeLineItem'
-</script>
 
 <style>
   .dot-pop {

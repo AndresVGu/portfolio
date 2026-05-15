@@ -6,14 +6,30 @@ function initTimeline() {
     window.__timelineObserver.disconnect();
   }
 
-  // Track which steps have been revealed so we don't re-hide them
+  // Reveal a step immediately (no animation)
+  function revealStep(step) {
+    const dot    = step.querySelector(".dot");
+    const lefts  = step.querySelectorAll(".content-left");
+    const rights = step.querySelectorAll(".content-right");
+
+    lefts.forEach(el => el.classList.remove("opacity-0", "translate-y-10"));
+    rights.forEach(el => el.classList.remove("opacity-0", "translate-y-10"));
+
+    if (dot) {
+      dot.classList.remove("bg-black/30", "dark:bg-white/30");
+      dot.classList.add("bg-yellow-400", "shadow-lg", "shadow-yellow-400/60");
+    }
+  }
+
+  // First step is always visible immediately — no scroll needed
+  revealStep(steps[0]);
+
   const revealed = new WeakSet();
+  revealed.add(steps[0]);
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const step = entry.target;
-
-      // Once revealed, never hide again — prevents glitchy reverse-scroll
       if (revealed.has(step)) return;
 
       if (entry.isIntersecting) {
@@ -36,7 +52,11 @@ function initTimeline() {
     });
   }, { threshold: 0.2, rootMargin: "0px 0px -50px 0px" });
 
-  steps.forEach(step => observer.observe(step));
+  // Observe all steps except the first
+  steps.forEach((step, i) => {
+    if (i > 0) observer.observe(step);
+  });
+
   window.__timelineObserver = observer;
 
   // ✨ GLOW effect on cards
