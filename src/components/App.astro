@@ -11,6 +11,7 @@ import Profile from '../components/Profile.astro';
 import About from '../components/About.astro';
 import Certificates from '@/components/Certificates.astro';
 import Test from '@/components/Test.astro';
+import AppleCarousel from '@/components/AppleCarousel.astro';
 import ContactForm from '@/components/ContactForm.astro';
 import SendModal from '@/components/SendModal.astro';
 import PhotoCardModal from '@/components/PhotoCardModal.astro';
@@ -46,12 +47,22 @@ const i18n = getI18N({ currentLocale });
         <Experience currentLocale={currentLocale} />
       </SectionContainer>
 
-      <SectionContainer id="projects">
+      {/* Bento projects — hidden, kept for reference */}
+      {/* <SectionContainer id="projects">
         <h2 class="flex items-center mb-6 text-2xl sm:text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
           <CodeIcon class="size-6 sm:size-7" />
           {i18n.TITLES.projects}
         </h2>
         <Test currentLocale={currentLocale} />
+      </SectionContainer> */}
+
+      <SectionContainer id="projects" class="!max-w-none !px-0 overflow-visible">
+        <h2 class="flex items-center mb-6 text-2xl sm:text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300
+                   max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6">
+          <CodeIcon class="size-6 sm:size-7" />
+          {i18n.TITLES.projects}
+        </h2>
+        <AppleCarousel currentLocale={currentLocale} />
       </SectionContainer>
 
       <SectionContainer id="education">

@@ -158,6 +158,21 @@
       "reading": "Lecture",
       "lotr": "Fan du LOTR",
       "basedHere": "Basé ici"
+    },
+    "weather": {
+      "feelsLike": "Ressenti",
+      "loading": "Chargement...",
+      "unavailable": "Indisponible",
+      "clearDay": "Ciel dégagé",
+      "clearNight": "Nuit dégagée",
+      "partlyCloudy": "Partiellement nuageux",
+      "foggy": "Brouillard",
+      "drizzle": "Bruine",
+      "rain": "Pluie",
+      "snow": "Neige",
+      "rainShowers": "Averses",
+      "snowShowers": "Averses de neige",
+      "thunderstorm": "Orage"
     }
   },
 
@@ -207,6 +222,14 @@
       "link": "Lien"
     }
   ],
+
+  "CAROUSEL": {
+    "scrollLeft": "Défiler à gauche",
+    "scrollRight": "Défiler à droite",
+    "regionLabel": "Carrousel de projets",
+    "hint": "Glissez ou utilisez les flèches",
+    "hintMobile": "Glissez"
+  },
 
   "FOOTER": {
     "education": "Formation",

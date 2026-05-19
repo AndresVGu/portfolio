@@ -140,11 +140,25 @@ try {
   </div>
 
   <!-- 5. Weather -->
-  <div class="bento-cell cell-weather" id="weather-cell">
+  <div class="bento-cell cell-weather" id="weather-cell"
+       data-feels-like={t.weather.feelsLike}
+       data-loading={t.weather.loading}
+       data-unavailable={t.weather.unavailable}
+       data-clear-day={t.weather.clearDay}
+       data-clear-night={t.weather.clearNight}
+       data-partly-cloudy={t.weather.partlyCloudy}
+       data-foggy={t.weather.foggy}
+       data-drizzle={t.weather.drizzle}
+       data-rain={t.weather.rain}
+       data-snow={t.weather.snow}
+       data-rain-showers={t.weather.rainShowers}
+       data-snow-showers={t.weather.snowShowers}
+       data-thunderstorm={t.weather.thunderstorm}>
     <div class="weather-animation" id="weather-animation"></div>
     <div class="weather-content">
       <span class="weather-temp" id="weather-temp">--°</span>
-      <span class="weather-desc" id="weather-desc">Loading...</span>
+      <span class="weather-feels" id="weather-feels"></span>
+      <span class="weather-desc" id="weather-desc">{t.weather.loading}</span>
       <span class="weather-location">Toronto</span>
     </div>
   </div>
@@ -332,31 +346,67 @@ try {
   .dark .pill-en { color:#60a5fa; } .dark .pill-fr { color:#f87171; } .dark .pill-es { color:#fbbf24; }
 
   /* WEATHER */
-  .cell-weather { position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:1rem !important; }
+  .cell-weather { position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:1rem !important; border-radius:1.25rem; transition:background 0.5s ease; }
   .weather-animation { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
   .weather-content { position:relative; z-index:1; display:flex; flex-direction:column; gap:2px; }
-  .weather-temp { font-size:1.4rem; font-weight:800; line-height:1; color:#1f2937; }
-  .dark .weather-temp { color:#f9fafb; }
-  .weather-desc { font-size:0.7rem; font-weight:600; text-transform:capitalize; color:#6b7280; }
-  .dark .weather-desc { color:#9ca3af; }
-  .weather-location { font-size:0.6rem; color:#9ca3af; letter-spacing:0.05em; }
-  .dark .weather-location { color:#6b7280; }
+  .weather-temp { font-size:2rem; font-weight:800; line-height:1; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.2); }
+  .weather-desc { font-size:0.75rem; font-weight:600; text-transform:capitalize; color:rgba(255,255,255,0.85); }
+  .weather-feels { font-size:0.65rem; font-weight:500; color:rgba(255,255,255,0.7); }
+  .weather-location { font-size:0.6rem; color:rgba(255,255,255,0.6); letter-spacing:0.05em; }
+
+  /* Weather gradient backgrounds — light mode: softer, muted tones */
+  .cell-weather[data-weather-bg="sun"] { background:linear-gradient(135deg, #fde68a 0%, #fbbf24 40%, #f59e0b 100%); }
+  .cell-weather[data-weather-bg="moon"] { background:linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e3a5f 100%); }
+  .cell-weather[data-weather-bg="cloud"] { background:linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 50%, #94a3b8 100%); }
+  .cell-weather[data-weather-bg="rain"] { background:linear-gradient(135deg, #475569 0%, #64748b 50%, #334155 100%); }
+  .cell-weather[data-weather-bg="snow"] { background:linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%); }
+  .cell-weather[data-weather-bg="storm"] { background:linear-gradient(135deg, #374151 0%, #4b5563 40%, #1f2937 100%); }
+  .cell-weather[data-weather-bg="fog"] { background:linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #cbd5e1 100%); }
+
+  /* Weather gradient backgrounds — dark mode: deeper, richer tones */
+  .dark .cell-weather[data-weather-bg="sun"] { background:linear-gradient(135deg, #92400e 0%, #b45309 40%, #78350f 100%); }
+  .dark .cell-weather[data-weather-bg="moon"] { background:linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #172554 100%); }
+  .dark .cell-weather[data-weather-bg="cloud"] { background:linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e293b 100%); }
+  .dark .cell-weather[data-weather-bg="rain"] { background:linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c4a6e 100%); }
+  .dark .cell-weather[data-weather-bg="snow"] { background:linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #312e81 100%); }
+  .dark .cell-weather[data-weather-bg="storm"] { background:linear-gradient(135deg, #0f172a 0%, #1f2937 40%, #111827 100%); }
+  .dark .cell-weather[data-weather-bg="fog"] { background:linear-gradient(135deg, #1e293b 0%, #374151 50%, #1f2937 100%); }
+
+  /* Text colors adapt to background brightness */
+  .cell-weather[data-weather-bg="sun"] .weather-temp,
+  .cell-weather[data-weather-bg="cloud"] .weather-temp,
+  .cell-weather[data-weather-bg="snow"] .weather-temp,
+  .cell-weather[data-weather-bg="fog"] .weather-temp { color:#1f2937; text-shadow:none; }
+  .cell-weather[data-weather-bg="sun"] .weather-desc,
+  .cell-weather[data-weather-bg="cloud"] .weather-desc,
+  .cell-weather[data-weather-bg="snow"] .weather-desc,
+  .cell-weather[data-weather-bg="fog"] .weather-desc { color:#374151; }
+  .cell-weather[data-weather-bg="sun"] .weather-feels,
+  .cell-weather[data-weather-bg="cloud"] .weather-feels,
+  .cell-weather[data-weather-bg="snow"] .weather-feels,
+  .cell-weather[data-weather-bg="fog"] .weather-feels { color:#4b5563; }
+  .cell-weather[data-weather-bg="sun"] .weather-location,
+  .cell-weather[data-weather-bg="cloud"] .weather-location,
+  .cell-weather[data-weather-bg="snow"] .weather-location,
+  .cell-weather[data-weather-bg="fog"] .weather-location { color:#6b7280; }
+
+  /* Dark mode always uses white text */
+  .dark .cell-weather .weather-temp { color:#f9fafb !important; text-shadow:0 1px 3px rgba(0,0,0,0.3) !important; }
+  .dark .cell-weather .weather-desc { color:rgba(255,255,255,0.85) !important; }
+  .dark .cell-weather .weather-feels { color:rgba(255,255,255,0.7) !important; }
+  .dark .cell-weather .weather-location { color:rgba(255,255,255,0.6) !important; }
 
   /* Weather animations */
-  .weather-sun { position:absolute; top:-10px; right:-10px; width:80px; height:80px; border-radius:50%; background:radial-gradient(circle,#fbbf24 30%,rgba(251,191,36,0) 70%); animation:weatherPulse 3s ease-in-out infinite; }
-  .weather-moon { position:absolute; top:-5px; right:-5px; width:60px; height:60px; border-radius:50%; background:radial-gradient(circle,#e2e8f0 40%,rgba(226,232,240,0) 70%); box-shadow:0 0 20px rgba(226,232,240,0.3); animation:weatherPulse 4s ease-in-out infinite; }
-  .dark .weather-moon { background:radial-gradient(circle,#f1f5f9 40%,rgba(241,245,249,0) 70%); box-shadow:0 0 20px rgba(241,245,249,0.2); }
-  .weather-star { position:absolute; width:3px; height:3px; border-radius:50%; background:#cbd5e1; animation:starTwinkle 2s ease-in-out infinite; }
-  .dark .weather-star { background:#e2e8f0; }
+  .weather-sun { position:absolute; top:-15px; right:-15px; width:90px; height:90px; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,0.4) 20%,rgba(251,191,36,0.3) 50%,transparent 70%); animation:weatherPulse 3s ease-in-out infinite; }
+  .weather-moon { position:absolute; top:-5px; right:-5px; width:60px; height:60px; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,0.6) 30%,rgba(255,255,255,0) 70%); box-shadow:0 0 20px rgba(255,255,255,0.2); animation:weatherPulse 4s ease-in-out infinite; }
+  .weather-star { position:absolute; width:3px; height:3px; border-radius:50%; background:rgba(255,255,255,0.7); animation:starTwinkle 2s ease-in-out infinite; }
   @keyframes starTwinkle { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:1;transform:scale(1.5)} }
-  .weather-cloud { position:absolute; border-radius:50px; background:rgba(148,163,184,0.3); animation:cloudFloat 6s ease-in-out infinite; }
-  .dark .weather-cloud { background:rgba(148,163,184,0.15); }
+  .weather-cloud { position:absolute; border-radius:50px; background:rgba(255,255,255,0.15); animation:cloudFloat 6s ease-in-out infinite; }
   .weather-cloud:nth-child(1) { width:60px; height:24px; top:15px; left:10%; animation-delay:0s; }
   .weather-cloud:nth-child(2) { width:45px; height:18px; top:35px; left:50%; animation-delay:2s; }
   .weather-cloud:nth-child(3) { width:55px; height:20px; top:10px; left:65%; animation-delay:4s; }
-  .weather-raindrop { position:absolute; width:2px; height:10px; background:linear-gradient(to bottom,transparent,#60a5fa); border-radius:0 0 2px 2px; animation:rainFall 1s linear infinite; opacity:0.6; }
+  .weather-raindrop { position:absolute; width:2px; height:10px; background:linear-gradient(to bottom,transparent,rgba(255,255,255,0.6)); border-radius:0 0 2px 2px; animation:rainFall 1s linear infinite; opacity:0.6; }
   .weather-snowflake { position:absolute; width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,0.8); animation:snowFall 3s linear infinite; }
-  .dark .weather-snowflake { background:rgba(255,255,255,0.5); }
   @keyframes weatherPulse { 0%,100%{transform:scale(1);opacity:0.8} 50%{transform:scale(1.1);opacity:1} }
   @keyframes cloudFloat { 0%,100%{transform:translateX(0)} 50%{transform:translateX(8px)} }
   @keyframes rainFall { 0%{transform:translateY(-10px);opacity:0} 20%{opacity:0.6} 100%{transform:translateY(120px);opacity:0} }
@@ -628,38 +678,67 @@ try {
     const weatherAnim = document.getElementById('weather-animation');
     const weatherTemp = document.getElementById('weather-temp');
     const weatherDesc = document.getElementById('weather-desc');
+    const weatherFeels = document.getElementById('weather-feels');
+    const weatherCell = document.getElementById('weather-cell');
 
-    if (weatherAnim && weatherTemp && weatherDesc) {
-      // Open-Meteo: Toronto coords — include is_day for night/day awareness
-      fetch('https://api.open-meteo.com/v1/forecast?latitude=43.65&longitude=-79.38&current=temperature_2m,weather_code,is_day&timezone=America/Toronto')
+    if (weatherAnim && weatherTemp && weatherDesc && weatherCell) {
+      const feelsLikeLabel = weatherCell.getAttribute('data-feels-like') || 'Feels like';
+      const unavailableLabel = weatherCell.getAttribute('data-unavailable') || 'Unavailable';
+
+      // Weather description translations from data attributes
+      const weatherLabels = {
+        clearDay: weatherCell.getAttribute('data-clear-day') || 'Clear sky',
+        clearNight: weatherCell.getAttribute('data-clear-night') || 'Clear night',
+        partlyCloudy: weatherCell.getAttribute('data-partly-cloudy') || 'Partly cloudy',
+        foggy: weatherCell.getAttribute('data-foggy') || 'Foggy',
+        drizzle: weatherCell.getAttribute('data-drizzle') || 'Drizzle',
+        rain: weatherCell.getAttribute('data-rain') || 'Rain',
+        snow: weatherCell.getAttribute('data-snow') || 'Snow',
+        rainShowers: weatherCell.getAttribute('data-rain-showers') || 'Rain showers',
+        snowShowers: weatherCell.getAttribute('data-snow-showers') || 'Snow showers',
+        thunderstorm: weatherCell.getAttribute('data-thunderstorm') || 'Thunderstorm',
+      };
+
+      // Open-Meteo: Toronto coords — include is_day and apparent_temperature
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=43.65&longitude=-79.38&current=temperature_2m,apparent_temperature,weather_code,is_day&timezone=America/Toronto')
         .then(r => r.json())
         .then(data => {
           const tempC = Math.round(data.current?.temperature_2m ?? 0);
           const tempF = Math.round(tempC * 9 / 5 + 32);
+          const feelsC = Math.round(data.current?.apparent_temperature ?? tempC);
+          const feelsF = Math.round(feelsC * 9 / 5 + 32);
           const code  = data.current?.weather_code ?? 0;
           const isDay = data.current?.is_day === 1;
 
           // Show both C and F
           weatherTemp.textContent = `${tempC}°C / ${tempF}°F`;
 
+          // Show feels like
+          if (weatherFeels) {
+            weatherFeels.textContent = `${feelsLikeLabel} ${feelsC}°C / ${feelsF}°F`;
+          }
+
           // Map WMO weather codes to descriptions and animations
-          let desc = 'Clear';
+          let desc = weatherLabels.clearDay;
           let animType: 'sun' | 'moon' | 'cloud' | 'rain' | 'snow' | 'storm' = isDay ? 'sun' : 'moon';
 
           if (code === 0) {
-            desc = isDay ? 'Clear sky' : 'Clear night';
+            desc = isDay ? weatherLabels.clearDay : weatherLabels.clearNight;
             animType = isDay ? 'sun' : 'moon';
           }
-          else if (code <= 3) { desc = 'Partly cloudy'; animType = 'cloud'; }
-          else if (code <= 49) { desc = 'Foggy'; animType = 'cloud'; }
-          else if (code <= 59) { desc = 'Drizzle'; animType = 'rain'; }
-          else if (code <= 69) { desc = 'Rain'; animType = 'rain'; }
-          else if (code <= 79) { desc = 'Snow'; animType = 'snow'; }
-          else if (code <= 84) { desc = 'Rain showers'; animType = 'rain'; }
-          else if (code <= 86) { desc = 'Snow showers'; animType = 'snow'; }
-          else if (code <= 99) { desc = 'Thunderstorm'; animType = 'storm'; }
+          else if (code <= 3) { desc = weatherLabels.partlyCloudy; animType = 'cloud'; }
+          else if (code <= 49) { desc = weatherLabels.foggy; animType = 'cloud'; weatherCell.setAttribute('data-weather-bg', 'fog'); }
+          else if (code <= 59) { desc = weatherLabels.drizzle; animType = 'rain'; }
+          else if (code <= 69) { desc = weatherLabels.rain; animType = 'rain'; }
+          else if (code <= 79) { desc = weatherLabels.snow; animType = 'snow'; }
+          else if (code <= 84) { desc = weatherLabels.rainShowers; animType = 'rain'; }
+          else if (code <= 86) { desc = weatherLabels.snowShowers; animType = 'snow'; }
+          else if (code <= 99) { desc = weatherLabels.thunderstorm; animType = 'storm'; }
 
           weatherDesc.textContent = desc;
+
+          // Apply gradient background based on weather type
+          weatherCell.setAttribute('data-weather-bg', animType === 'storm' ? 'storm' : animType);
 
           // Build animation elements
           let html = '';
@@ -689,7 +768,7 @@ try {
           weatherAnim.innerHTML = html;
         })
         .catch(() => {
-          weatherDesc.textContent = 'Unavailable';
+          weatherDesc.textContent = unavailableLabel;
         });
     }
 

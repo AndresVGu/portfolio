@@ -158,6 +158,21 @@
       "reading": "Reading",
       "lotr": "LOTR fan",
       "basedHere": "Based here"
+    },
+    "weather": {
+      "feelsLike": "Feels like",
+      "loading": "Loading...",
+      "unavailable": "Unavailable",
+      "clearDay": "Clear sky",
+      "clearNight": "Clear night",
+      "partlyCloudy": "Partly cloudy",
+      "foggy": "Foggy",
+      "drizzle": "Drizzle",
+      "rain": "Rain",
+      "snow": "Snow",
+      "rainShowers": "Rain showers",
+      "snowShowers": "Snow showers",
+      "thunderstorm": "Thunderstorm"
     }
   },
 
@@ -207,6 +222,14 @@
       "link": "Link"
     }
   ],
+
+  "CAROUSEL": {
+    "scrollLeft": "Scroll left",
+    "scrollRight": "Scroll right",
+    "regionLabel": "Projects carousel",
+    "hint": "Swipe or use arrows",
+    "hintMobile": "Swipe"
+  },
 
   "FOOTER": {
     "education": "Education",
