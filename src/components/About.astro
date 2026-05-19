@@ -335,7 +335,7 @@ try {
   .cell-weather { position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:1rem !important; }
   .weather-animation { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
   .weather-content { position:relative; z-index:1; display:flex; flex-direction:column; gap:2px; }
-  .weather-temp { font-size:1.8rem; font-weight:800; line-height:1; color:#1f2937; }
+  .weather-temp { font-size:1.4rem; font-weight:800; line-height:1; color:#1f2937; }
   .dark .weather-temp { color:#f9fafb; }
   .weather-desc { font-size:0.7rem; font-weight:600; text-transform:capitalize; color:#6b7280; }
   .dark .weather-desc { color:#9ca3af; }
@@ -344,6 +344,11 @@ try {
 
   /* Weather animations */
   .weather-sun { position:absolute; top:-10px; right:-10px; width:80px; height:80px; border-radius:50%; background:radial-gradient(circle,#fbbf24 30%,rgba(251,191,36,0) 70%); animation:weatherPulse 3s ease-in-out infinite; }
+  .weather-moon { position:absolute; top:-5px; right:-5px; width:60px; height:60px; border-radius:50%; background:radial-gradient(circle,#e2e8f0 40%,rgba(226,232,240,0) 70%); box-shadow:0 0 20px rgba(226,232,240,0.3); animation:weatherPulse 4s ease-in-out infinite; }
+  .dark .weather-moon { background:radial-gradient(circle,#f1f5f9 40%,rgba(241,245,249,0) 70%); box-shadow:0 0 20px rgba(241,245,249,0.2); }
+  .weather-star { position:absolute; width:3px; height:3px; border-radius:50%; background:#cbd5e1; animation:starTwinkle 2s ease-in-out infinite; }
+  .dark .weather-star { background:#e2e8f0; }
+  @keyframes starTwinkle { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:1;transform:scale(1.5)} }
   .weather-cloud { position:absolute; border-radius:50px; background:rgba(148,163,184,0.3); animation:cloudFloat 6s ease-in-out infinite; }
   .dark .weather-cloud { background:rgba(148,163,184,0.15); }
   .weather-cloud:nth-child(1) { width:60px; height:24px; top:15px; left:10%; animation-delay:0s; }
@@ -625,19 +630,26 @@ try {
     const weatherDesc = document.getElementById('weather-desc');
 
     if (weatherAnim && weatherTemp && weatherDesc) {
-      // Open-Meteo: Toronto coords, no API key needed
-      fetch('https://api.open-meteo.com/v1/forecast?latitude=43.65&longitude=-79.38&current=temperature_2m,weather_code&timezone=America/Toronto')
+      // Open-Meteo: Toronto coords — include is_day for night/day awareness
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=43.65&longitude=-79.38&current=temperature_2m,weather_code,is_day&timezone=America/Toronto')
         .then(r => r.json())
         .then(data => {
-          const temp = Math.round(data.current?.temperature_2m ?? 0);
-          const code = data.current?.weather_code ?? 0;
-          weatherTemp.textContent = `${temp}°C`;
+          const tempC = Math.round(data.current?.temperature_2m ?? 0);
+          const tempF = Math.round(tempC * 9 / 5 + 32);
+          const code  = data.current?.weather_code ?? 0;
+          const isDay = data.current?.is_day === 1;
+
+          // Show both C and F
+          weatherTemp.textContent = `${tempC}°C / ${tempF}°F`;
 
           // Map WMO weather codes to descriptions and animations
           let desc = 'Clear';
-          let animType: 'sun' | 'cloud' | 'rain' | 'snow' | 'storm' = 'sun';
+          let animType: 'sun' | 'moon' | 'cloud' | 'rain' | 'snow' | 'storm' = isDay ? 'sun' : 'moon';
 
-          if (code === 0) { desc = 'Clear sky'; animType = 'sun'; }
+          if (code === 0) {
+            desc = isDay ? 'Clear sky' : 'Clear night';
+            animType = isDay ? 'sun' : 'moon';
+          }
           else if (code <= 3) { desc = 'Partly cloudy'; animType = 'cloud'; }
           else if (code <= 49) { desc = 'Foggy'; animType = 'cloud'; }
           else if (code <= 59) { desc = 'Drizzle'; animType = 'rain'; }
@@ -653,6 +665,8 @@ try {
           let html = '';
           if (animType === 'sun') {
             html = '<div class="weather-sun"></div>';
+          } else if (animType === 'moon') {
+            html = '<div class="weather-moon"></div><div class="weather-star" style="top:12px;left:20%;animation-delay:0s;"></div><div class="weather-star" style="top:25px;left:55%;animation-delay:1.2s;"></div><div class="weather-star" style="top:8px;left:75%;animation-delay:0.6s;"></div>';
           } else if (animType === 'cloud') {
             html = '<div class="weather-cloud"></div><div class="weather-cloud"></div><div class="weather-cloud"></div>';
           } else if (animType === 'rain' || animType === 'storm') {
