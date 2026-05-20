@@ -240,7 +240,7 @@ try {
     .cell-map       { grid-column: span 2; grid-row: span 2; }
     .cell-terminal  { grid-column: span 3; height: 180px; }
     .cell-interests { grid-column: span 1; }
-    .cell-weather   { grid-column: span 1; }
+    .cell-weather   { grid-column: span 1; align-self: start; }
     .cell-github    { grid-column: span 3; }
   }
 
@@ -256,7 +256,7 @@ try {
     .cell-map       { grid-column: span 3; grid-row: span 2; }
     .cell-terminal  { grid-column: span 4; height: 200px; }
     .cell-interests { grid-column: span 2; }
-    .cell-weather   { grid-column: span 2; }
+    .cell-weather   { grid-column: span 2; align-self: start; }
     .cell-github    { grid-column: span 4; }
   }
 
@@ -365,105 +365,95 @@ try {
     justify-content: space-between;
     padding: 0 !important;
     border-radius: 1.25rem;
-    background: #cbd5e1;
-    /* Let the card height be determined by the bento grid, don't force min-height */
+    background: #1e293b;
+    aspect-ratio: 354 / 249;
+    height: auto !important;
+    border: none !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06);
+    isolation: isolate;
   }
-  .dark .cell-weather { background: #1e293b; }
+  .dark .cell-weather {
+    background: #0f172a;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.06);
+  }
 
-  /* Fix 1: image uses contain so it's never stretched, centered */
+  /* Image fills the cell — border-radius clipped by parent overflow:hidden */
   .weather-bg-img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: center bottom;
+    object-fit: cover;
+    object-position: center center;
     z-index: 0;
-    border-radius: 1.25rem;
+    /* No border-radius here — parent overflow:hidden handles clipping */
     transition: opacity 0.4s ease;
   }
 
-  /* Dark overlay so text is always readable */
-  .cell-weather::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    border-radius: 1.25rem;
-    background: linear-gradient(
-      to bottom,
-      rgba(0,0,0,0.5) 0%,
-      rgba(0,0,0,0.2) 45%,
-      rgba(0,0,0,0.0) 70%
-    );
-    pointer-events: none;
-  }
+  /* NO ::after overlay — image shows at full brightness */
 
-  /* Top section — overlaid on image */
+  /* Top section — text with backdrop pill for readability without darkening image */
   .weather-top {
     position: relative;
     z-index: 2;
-    padding: 0.75rem 0.875rem 0.5rem;
+    padding: 0.6rem 0.75rem 0.4rem;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
   }
-  .weather-top-left { display: flex; flex-direction: column; gap: 2px; }
-  .weather-temp-row { display: flex; align-items: baseline; gap: 0.35rem; flex-wrap: wrap; }
+  .weather-top-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    /* Subtle frosted pill behind the text block only */
+    background: rgba(0,0,0,0.28);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 0.6rem;
+    padding: 0.35rem 0.55rem;
+  }
+  .weather-temp-row { display: flex; align-items: baseline; gap: 0.3rem; flex-wrap: wrap; }
   .weather-temp {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 800;
     line-height: 1;
     color: #fff;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.6);
   }
   .weather-desc {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 600;
     color: rgba(255,255,255,0.95);
-    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
   }
   .weather-location {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 500;
     color: rgba(255,255,255,0.9);
-    letter-spacing: 0.03em;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    letter-spacing: 0.02em;
   }
   .weather-feels {
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     color: rgba(255,255,255,0.85);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
   }
 
-  /* Fix 3: bottom bar uses gradient fade instead of hard line */
+  /* Bottom bar — frosted glass, no hard border */
   .weather-bottom {
     position: relative;
     z-index: 2;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 0.875rem 0.6rem;
-    background: linear-gradient(
-      to bottom,
-      rgba(255,255,255,0) 0%,
-      rgba(255,255,255,0.85) 40%,
-      rgba(255,255,255,0.95) 100%
-    );
-    backdrop-filter: blur(4px);
+    padding: 0.5rem 0.75rem;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-top: none;
     margin-top: auto;
   }
   .dark .weather-bottom {
-    background: linear-gradient(
-      to bottom,
-      rgba(15,23,42,0) 0%,
-      rgba(15,23,42,0.82) 40%,
-      rgba(15,23,42,0.95) 100%
-    );
+    background: rgba(15,23,42,0.72);
   }
   .weather-time {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: #1f2937;
     font-variant-numeric: tabular-nums;
@@ -471,9 +461,9 @@ try {
   }
   .dark .weather-time { color: #f1f5f9; }
   .weather-date {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 500;
-    color: #6b7280;
+    color: #4b5563;
     letter-spacing: 0.02em;
   }
   .dark .weather-date { color: #94a3b8; }
