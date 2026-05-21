@@ -44,14 +44,19 @@ const projectsWithImages = i18n.PROJECTS.map((p, i) => ({
                  sm:w-[320px] sm:h-[440px] sm:max-w-none sm:max-h-none
                  md:w-[380px] md:h-[500px]
                  lg:w-[460px] lg:h-[560px]
-                 rounded-3xl overflow-hidden cursor-pointer
-                 bg-gray-100 dark:bg-neutral-900
-                 ring-1 ring-black/5 dark:ring-white/10"
+                 rounded-3xl cursor-pointer
+                 transition-transform duration-300 ease-out
+                 hover:scale-[1.02]"
           data-carousel-card
           data-index={i}
           data-description={project.description}
           style={`--card-delay: ${0.15 * i}s`}
         >
+          {/* Inner wrapper handles overflow clipping so scale isn't clipped */}
+          <div class="absolute inset-0 rounded-3xl overflow-hidden
+                      bg-gray-100 dark:bg-neutral-900
+                      ring-1 ring-black/5 dark:ring-white/10">
+
           {/* Top gradient overlay for text readability */}
           <div class="pointer-events-none absolute inset-x-0 top-0 z-30 h-full
                       bg-gradient-to-b from-black/50 via-transparent to-transparent" />
@@ -88,6 +93,7 @@ const projectsWithImages = i18n.PROJECTS.map((p, i) => ({
                    group-hover:scale-105 group-hover:brightness-110"
             data-carousel-img
           />
+          </div>{/* end inner overflow wrapper */}
         </div>
       ))}
 
