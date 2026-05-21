@@ -76,22 +76,6 @@
       ]
     },
     {
-      "startDate": "Janvier 2021",
-      "endDate": "Août 2023",
-      "title": "Développeur Full-Stack",
-      "company": "Floridabama Autosales",
-      "location": "Alabama, États-Unis · À distance",
-      "description": "Développement et livraison d'une application métier pour un concessionnaire automobile.",
-      "list": "ASP.NET · React · SQL Server",
-      "modalDescription": "Développement et livraison d'une <strong>application métier complète pour un concessionnaire automobile</strong>, permettant au personnel de gérer <strong>l'inventaire, les clients et les flux de vente</strong>. Modules évolutifs construits avec <strong>ASP.NET MVC et React</strong>, avec un backend <strong>SQL Server</strong>.",
-      "stack": ["ASP.NET MVC", "React", "SQL Server", "C#", "JavaScript"],
-      "highlights": [
-        "Construction de modules évolutifs avec ASP.NET et React",
-        "Conception et maintenance du schéma de base de données SQL Server",
-        "Livraison complète des exigences jusqu'au déploiement en production"
-      ]
-    },
-    {
       "startDate": "Juin 2018",
       "endDate": "Décembre 2021",
       "title": "Développeur Web Junior",
