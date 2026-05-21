@@ -13,33 +13,33 @@ import Cert from "./Cert.astro"
             transition-all relative"
             href={`/projects/Certificates/image-${i+1}.webp`}
             data-pswp-width="2000"
-            data-pswp-height="1345"    
+            data-pswp-height="1345"
             target="_blank"
+            aria-label={`Certificate ${i+1}`}
             >
                 <img
                 class="blur-lg absolute inset-0
                 transition group-hover:contrast-150
                 -z-10"
                 loading="lazy"
+                width="2000"
+                height="1345"
                 src={`/projects/Certificates/image-${i+1}.webp`}
                 alt=""
+                aria-hidden="true"
                 />
                 <img
-                class="rounded-xl"
+                class="rounded-xl w-full h-auto"
                 loading="lazy"
+                width="2000"
+                height="1345"
                 src={`/projects/Certificates/image-${i+1}.webp`}
-                alt=""
+                alt={`Certificate ${i+1}`}
                 />
-
             </a>
         )) 
     }
-        
-
-
-
-    
-  </div>
+</div>
 <script>
     import PhotoSwipeLightbox from 'photoswipe/lightbox';
 

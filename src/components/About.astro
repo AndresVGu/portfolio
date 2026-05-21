@@ -740,48 +740,77 @@ try {
     const weatherDateEl = document.getElementById('weather-date');
 
     // Image map: WMO code range + isDay → public/weather filename
+    // All 20 images from public/weather/ mapped precisely by name meaning
     const WEATHER_IMAGES: Record<string, string> = {
-      'clear-day':              '/weather/dia_soleado.png',
+      // Clear sky (code 0) — despejado = no clouds at all
+      'clear-day':              '/weather/dia_despejado.png',
       'clear-night':            '/weather/noche_despejada.png',
+
+      // Mainly clear (code 1) — still mostly clear, use campo variant at night
+      'mainly-clear-day':       '/weather/dia_despejado.png',
+      'mainly-clear-night':     '/weather/noche_despejada_campo.png',
+
+      // Partly cloudy (code 2) — parcialmente nublado
       'partly-cloudy-day':      '/weather/parcialmente_nublado_dia.png',
       'partly-cloudy-night':    '/weather/parcialmente_nublado_noche.png',
+
+      // Overcast (code 3) — mayormente nublado
       'mostly-cloudy-day':      '/weather/mayormente_nublado_dia.png',
       'mostly-cloudy-night':    '/weather/mayormente_nublado_noche.png',
+
+      // Full overcast / cloudy (codes 4-9) — dia_nublado
       'overcast-day':           '/weather/dia_nublado.png',
-      'overcast-night':         '/weather/noche_despejada_campo.png',
+      'overcast-night':         '/weather/mayormente_nublado_noche.png',
+
+      // Fog / mist (codes 45-49) — niebla
       'fog-day':                '/weather/niebla_densa_dia.png',
       'fog-night':              '/weather/niebla_nocturna.png',
-      'drizzle-day':            '/weather/lluvia_diurna.png',
-      'drizzle-night':          '/weather/lluvia_nocturna.png',
-      'rain-day':               '/weather/lluvia_diurna.png',
-      'rain-night':             '/weather/lluvia_nocturna.png',
-      'snow-day':               '/weather/dia_nevado.png',
-      'snow-night':             '/weather/nieve_nocturna.png',
+
+      // Haze / bruma costera (night only)
+      'haze-night':             '/weather/noche_brumosa_costa.png',
+
+      // Wind (codes 10-29) — ventoso
       'wind-day':               '/weather/dia_ventoso.png',
       'wind-night':             '/weather/noche_ventosa.png',
+
+      // Drizzle (codes 51-59) — lluvia ligera
+      'drizzle-day':            '/weather/lluvia_diurna.png',
+      'drizzle-night':          '/weather/lluvia_nocturna.png',
+
+      // Rain (codes 61-69, 80-84) — lluvia
+      'rain-day':               '/weather/lluvia_diurna.png',
+      'rain-night':             '/weather/lluvia_nocturna.png',
+
+      // Snow (codes 71-77, 85-86) — nieve
+      'snow-day':               '/weather/dia_nevado.png',
+      'snow-night':             '/weather/nieve_nocturna.png',
+
+      // Thunderstorm (codes 95-99) — tormenta eléctrica
       'storm-day':              '/weather/tormenta_electrica_diurna.png',
       'storm-night':            '/weather/tormenta_electrica_nocturna.png',
-      'haze-night':             '/weather/noche_brumosa_costa.png',
-      'clear-field-night':      '/weather/noche_despejada_campo.png',
+
+      // Hot sunny day (temp > 28°C, code 0-1) — dia_soleado (bright sun, high temp)
+      'hot-sunny-day':          '/weather/dia_soleado.png',
     };
 
-    function getWeatherImage(code: number, isDay: boolean): string {
-      const d = isDay ? 'day' : 'night';
-      if (code === 0)        return WEATHER_IMAGES[`clear-${d}`];
-      if (code === 1)        return WEATHER_IMAGES[`partly-cloudy-${d}`];  // Mainly clear → partly cloudy image
-      if (code === 2)        return WEATHER_IMAGES[`partly-cloudy-${d}`];
-      if (code === 3)        return isDay ? WEATHER_IMAGES['mostly-cloudy-day'] : WEATHER_IMAGES['mostly-cloudy-night'];
-      if (code <= 9)         return WEATHER_IMAGES[`overcast-${d}`];
-      if (code <= 19)        return WEATHER_IMAGES[`fog-${d}`];
-      if (code <= 29)        return WEATHER_IMAGES[`wind-${d}`];
-      if (code <= 49)        return WEATHER_IMAGES[`fog-${d}`];
-      if (code <= 59)        return WEATHER_IMAGES[`drizzle-${d}`];
-      if (code <= 69)        return WEATHER_IMAGES[`rain-${d}`];
-      if (code <= 79)        return WEATHER_IMAGES[`snow-${d}`];
-      if (code <= 84)        return WEATHER_IMAGES[`rain-${d}`];
-      if (code <= 86)        return WEATHER_IMAGES[`snow-${d}`];
-      if (code <= 99)        return WEATHER_IMAGES[`storm-${d}`];
-      return WEATHER_IMAGES[`clear-${d}`];
+    function getWeatherImage(code: number, isDay: boolean, tempC: number = 0): string {
+      // Hot sunny day gets the bright soleado image
+      if (isDay && code <= 1 && tempC >= 28) return WEATHER_IMAGES['hot-sunny-day'];
+
+      if (code === 0)   return isDay ? WEATHER_IMAGES['clear-day']        : WEATHER_IMAGES['clear-night'];
+      if (code === 1)   return isDay ? WEATHER_IMAGES['mainly-clear-day'] : WEATHER_IMAGES['mainly-clear-night'];
+      if (code === 2)   return isDay ? WEATHER_IMAGES['partly-cloudy-day']: WEATHER_IMAGES['partly-cloudy-night'];
+      if (code === 3)   return isDay ? WEATHER_IMAGES['mostly-cloudy-day']: WEATHER_IMAGES['mostly-cloudy-night'];
+      if (code <= 9)    return isDay ? WEATHER_IMAGES['overcast-day']     : WEATHER_IMAGES['overcast-night'];
+      if (code <= 29)   return isDay ? WEATHER_IMAGES['wind-day']         : WEATHER_IMAGES['wind-night'];
+      if (code <= 49)   return isDay ? WEATHER_IMAGES['fog-day']          : WEATHER_IMAGES['haze-night'];
+      if (code <= 59)   return isDay ? WEATHER_IMAGES['drizzle-day']      : WEATHER_IMAGES['drizzle-night'];
+      if (code <= 69)   return isDay ? WEATHER_IMAGES['rain-day']         : WEATHER_IMAGES['rain-night'];
+      if (code <= 79)   return isDay ? WEATHER_IMAGES['snow-day']         : WEATHER_IMAGES['snow-night'];
+      if (code <= 84)   return isDay ? WEATHER_IMAGES['rain-day']         : WEATHER_IMAGES['rain-night'];
+      if (code <= 86)   return isDay ? WEATHER_IMAGES['snow-day']         : WEATHER_IMAGES['snow-night'];
+      if (code <= 99)   return isDay ? WEATHER_IMAGES['storm-day']        : WEATHER_IMAGES['storm-night'];
+      return isDay ? WEATHER_IMAGES['clear-day'] : WEATHER_IMAGES['clear-night'];
     }
 
     // Live clock for weather widget
@@ -848,7 +877,7 @@ try {
 
           // Set background image
           if (weatherBgImg) {
-            weatherBgImg.src = getWeatherImage(code, isDay);
+            weatherBgImg.src = getWeatherImage(code, isDay, tempC);
           }
         })
         .catch(() => {

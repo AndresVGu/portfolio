@@ -23,31 +23,28 @@ const { currentLocale } = Astro
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+    <!-- Preload LCP image -->
+    <link rel="preload" as="image" href="/me3.jpg" fetchpriority="high" />
     <ViewTransitions />
 
-    <!-- Auto-detect language on first visit and redirect -->
+    <!-- Auto-detect language on first visit and redirect — deferred to avoid blocking LCP -->
     <script is:inline>
       (function () {
-        // Only redirect if the user hasn't manually chosen a language yet
         if (typeof localStorage === 'undefined') return;
         if (localStorage.getItem('lang-redirected')) return;
 
         const path = window.location.pathname;
-        // Already on a localised route — don't redirect
         if (path.startsWith('/es') || path.startsWith('/fr')) return;
 
-        const lang = (navigator.language || navigator.userLanguage || 'en')
-          .toLowerCase()
-          .slice(0, 2);
-
+        const lang = (navigator.language || 'en').toLowerCase().slice(0, 2);
         localStorage.setItem('lang-redirected', '1');
 
-        if (lang === 'es') {
-          window.location.replace('/es/');
-        } else if (lang === 'fr') {
-          window.location.replace('/fr/');
+        // Defer redirect so it doesn't block first paint / LCP
+        if (lang === 'es' || lang === 'fr') {
+          requestAnimationFrame(function () {
+            window.location.replace('/' + lang + '/');
+          });
         }
-        // Default: stay on English
       })();
     </script>
 
