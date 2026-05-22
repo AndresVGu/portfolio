@@ -1,5 +1,6 @@
 ---
 import { getI18N } from '@/i18n';
+import Profile from './Profile.astro';
 
 interface Props {
   currentLocale?: string;
@@ -23,6 +24,21 @@ try {
     ghContributions = (data.contributions ?? []).slice(-140);
   }
 } catch {}
+
+
+const cards =[
+  { src: '/photocards/cntower.webp', label: 'CN Tower'},
+  { src: '/photocards/falls.webp', label: 'Falls'},
+  {src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/640392787_18566660212048163_1613345032941834764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=MzI4MDk1ODYwMDA3MzY1NTcxMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Lal-UQkkYh4Q7kNvwGn_hxS&_nc_oc=AdrJDgQ6TWn7gtxz-79gAG3IwLm0MY7Putjs_Yzp2SChn9Amjl-QeUioLsAhr_1VFs0&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=MzwnqT2AOuZlwxtHPvyPHQ&_nc_ss=7a22e&oh=00_Af7CmKLGZK0uGyzhyQ6ClOGAFKC6nXZLgJj2jeZ-5GfrUQ&oe=6A16833C', label: 'Andres'},
+  {src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/627659863_18312797884265380_1868754315642144419_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzQ3MjQ3NjM1MjA0NzYxMzgwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3IGYSPL2Vz4Q7kNvwEjphm1&_nc_oc=AdrsN8TkYRXVp2VcDrdD95Trq6LR-Pb_zyYyRunu2WNe1LfARDWLEMbYMQ-nXKiysto&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=FyAAD4NdZXRnb2QBVDIPQQ&_nc_ss=7a22e&oh=00_Af6aH2ZzJk7XxFsIZPEAxp_sU1IeweEyXloDa-tG4cP9Vw&oe=6A168362', label: 'Star'},
+  {src: '/photocards/rack.webp', label: 'Rack'},
+  {src: '/photocards/laptops.webp', label: 'Toughbooks'},
+  {src: '/photocards/moon.webp', label: 'Full Moon'},
+  {src: '/photocards/spider.webp', label: 'Spider'},
+  {src: '/photocards/shellf.webp', label: 'Shellf'},
+  {src: '/photocards/falls2.webp', label: 'Niagara Falls'}
+  // {src: '', label: ''},
+]
 ---
 
 <div class="bento-about">
@@ -32,29 +48,24 @@ try {
     <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2 px-1">Photocards</p>
     <div class="gallery-scroll" id="gallery-scroll">
       <div class="gallery-track" id="gallery-track">
-        <div class="gallery-card" data-img="https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/640392787_18566660212048163_1613345032941834764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=MzI4MDk1ODYwMDA3MzY1NTcxMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Lal-UQkkYh4Q7kNvwGn_hxS&_nc_oc=AdrJDgQ6TWn7gtxz-79gAG3IwLm0MY7Putjs_Yzp2SChn9Amjl-QeUioLsAhr_1VFs0&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=MzwnqT2AOuZlwxtHPvyPHQ&_nc_ss=7a22e&oh=00_Af7CmKLGZK0uGyzhyQ6ClOGAFKC6nXZLgJj2jeZ-5GfrUQ&oe=6A16833C" data-label="Build"><img src="https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/640392787_18566660212048163_1613345032941834764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=MzI4MDk1ODYwMDA3MzY1NTcxMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Lal-UQkkYh4Q7kNvwGn_hxS&_nc_oc=AdrJDgQ6TWn7gtxz-79gAG3IwLm0MY7Putjs_Yzp2SChn9Amjl-QeUioLsAhr_1VFs0&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=MzwnqT2AOuZlwxtHPvyPHQ&_nc_ss=7a22e&oh=00_Af7CmKLGZK0uGyzhyQ6ClOGAFKC6nXZLgJj2jeZ-5GfrUQ&oe=6A16833C" alt="Andrés" loading="lazy" /><span>Andres</span></div>
-        <div class="gallery-card" data-img="/photocards/cntower.webp" data-label="CN Tower"><img src="/photocards/cntower.webp" alt="Cn_tower" loading="lazy" /><span>CN Tower</span></div>
-        <div class="gallery-card" data-img="/photocards/rack.webp" data-label="RB"><img src="/photocards/rack.webp" alt="rb_rack" loading="lazy" /><span>RB</span></div>
-        <div class="gallery-card" data-img="/photocards/falls.webp" data-label="Niagara Falls"><img src="/photocards/falls.webp" alt="Niagara_falls" loading="lazy" /><span>Niagara Falls</span></div>
-        <div class="gallery-card" data-img="/photocards/laptops.webp" data-label="Laptops"><img src="/photocards/laptops.webp" alt="laptops" loading="lazy" /><span>Laptops</span></div>
-        <div class="gallery-card" data-img="/photocards/moon.webp" data-label="October Moon"><img src="/photocards/moon.webp" alt="October_moon" loading="lazy" /><span>Moon</span></div>
-        <div class="gallery-card" data-img="/photocards/spider.webp" data-label="Spider"><img src="/photocards/spider.webp" alt="Spider" loading="lazy" /><span>Spider</span></div>
-        <div class="gallery-card" data-img="/photocards/shellf.webp" data-label="Shellf"><img src="/photocards/shellf.webp" alt="Shellf" loading="lazy" /><span>Shell</span></div>
-        <div class="gallery-card" data-img="/photocards/falls2.webp" data-label="Water fall"><img src="/photocards/falls2.webp" alt="falls" loading="lazy" /><span>Falls</span></div>
-        <div class="gallery-card" data-img="https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/627659863_18312797884265380_1868754315642144419_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzQ3MjQ3NjM1MjA0NzYxMzgwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3IGYSPL2Vz4Q7kNvwEjphm1&_nc_oc=AdrsN8TkYRXVp2VcDrdD95Trq6LR-Pb_zyYyRunu2WNe1LfARDWLEMbYMQ-nXKiysto&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=FyAAD4NdZXRnb2QBVDIPQQ&_nc_ss=7a22e&oh=00_Af6aH2ZzJk7XxFsIZPEAxp_sU1IeweEyXloDa-tG4cP9Vw&oe=6A168362" data-label="St Catharines"><img src="https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/627659863_18312797884265380_1868754315642144419_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzQ3MjQ3NjM1MjA0NzYxMzgwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3IGYSPL2Vz4Q7kNvwEjphm1&_nc_oc=AdrsN8TkYRXVp2VcDrdD95Trq6LR-Pb_zyYyRunu2WNe1LfARDWLEMbYMQ-nXKiysto&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=FyAAD4NdZXRnb2QBVDIPQQ&_nc_ss=7a22e&oh=00_Af6aH2ZzJk7XxFsIZPEAxp_sU1IeweEyXloDa-tG4cP9Vw&oe=6A168362" alt="St catharines" loading="lazy" /><span>St Catherines</span></div>
-        
-        <!-- Duplicate for seamless loop -->
-         <div class="gallery-card" aria-hidden="true" data-img="https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/640392787_18566660212048163_1613345032941834764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=MzI4MDk1ODYwMDA3MzY1NTcxMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Lal-UQkkYh4Q7kNvwGn_hxS&_nc_oc=AdrJDgQ6TWn7gtxz-79gAG3IwLm0MY7Putjs_Yzp2SChn9Amjl-QeUioLsAhr_1VFs0&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=MzwnqT2AOuZlwxtHPvyPHQ&_nc_ss=7a22e&oh=00_Af7CmKLGZK0uGyzhyQ6ClOGAFKC6nXZLgJj2jeZ-5GfrUQ&oe=6A16833C" data-label="Build"><img src="https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/640392787_18566660212048163_1613345032941834764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=MzI4MDk1ODYwMDA3MzY1NTcxMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Lal-UQkkYh4Q7kNvwGn_hxS&_nc_oc=AdrJDgQ6TWn7gtxz-79gAG3IwLm0MY7Putjs_Yzp2SChn9Amjl-QeUioLsAhr_1VFs0&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=MzwnqT2AOuZlwxtHPvyPHQ&_nc_ss=7a22e&oh=00_Af7CmKLGZK0uGyzhyQ6ClOGAFKC6nXZLgJj2jeZ-5GfrUQ&oe=6A16833C" alt="Andrés" loading="lazy" /><span>Andres</span></div>
-        <div class="gallery-card"aria-hidden="true" data-img="/photocards/cntower.webp" data-label="CN Tower"><img src="/photocards/cntower.webp" alt="Cn_tower" loading="lazy" /><span>CN Tower</span></div>
-        <div class="gallery-card"aria-hidden="true" data-img="/photocards/rack.webp" data-label="RB"><img src="/photocards/rack.webp" alt="rb_rack" loading="lazy" /><span>RB</span></div>
-        <div class="gallery-card"aria-hidden="true" data-img="/photocards/falls.webp" data-label="Niagara Falls"><img src="/photocards/falls.webp" alt="Niagara_falls" loading="lazy" /><span>Niagara Falls</span></div>
-        <div class="gallery-card"aria-hidden="true" data-img="/photocards/laptops.webp" data-label="Laptops"><img src="/photocards/laptops.webp" alt="laptops" loading="lazy" /><span>Laptops</span></div>
-        <div class="gallery-card"aria-hidden="true" data-img="/photocards/moon.webp" data-label="October Moon"><img src="/photocards/moon.webp" alt="October_moon" loading="lazy" /><span>Moon</span></div>
-        <div class="gallery-card"aria-hidden="true" data-img="/photocards/spider.webp" data-label="Spider"><img src="/photocards/spider.webp" alt="Spider" loading="lazy" /><span>Spider</span></div>
-        <div class="gallery-card"aria-hidden="true" data-img="/photocards/shellf.webp" data-label="Shellf"><img src="/photocards/shellf.webp" alt="Shellf" loading="lazy" /><span>Shell</span></div>
-        <div class="gallery-card"aria-hidden="true" data-img="/photocards/falls2.webp" data-label="Water fall"><img src="/photocards/falls2.webp" alt="falls" loading="lazy" /><span>Falls</span></div>
-        <div class="gallery-card"aria-hidden="true" data-img="https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/627659863_18312797884265380_1868754315642144419_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzQ3MjQ3NjM1MjA0NzYxMzgwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3IGYSPL2Vz4Q7kNvwEjphm1&_nc_oc=AdrsN8TkYRXVp2VcDrdD95Trq6LR-Pb_zyYyRunu2WNe1LfARDWLEMbYMQ-nXKiysto&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=FyAAD4NdZXRnb2QBVDIPQQ&_nc_ss=7a22e&oh=00_Af6aH2ZzJk7XxFsIZPEAxp_sU1IeweEyXloDa-tG4cP9Vw&oe=6A168362" data-label="St Catharines"><img src="https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/627659863_18312797884265380_1868754315642144419_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzQ3MjQ3NjM1MjA0NzYxMzgwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3IGYSPL2Vz4Q7kNvwEjphm1&_nc_oc=AdrsN8TkYRXVp2VcDrdD95Trq6LR-Pb_zyYyRunu2WNe1LfARDWLEMbYMQ-nXKiysto&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=FyAAD4NdZXRnb2QBVDIPQQ&_nc_ss=7a22e&oh=00_Af6aH2ZzJk7XxFsIZPEAxp_sU1IeweEyXloDa-tG4cP9Vw&oe=6A168362" alt="St catharines" loading="lazy" /><span>St Catherines</span></div>
-        
+
+        <!--Mapping Photocards-->
+        {cards.map(card =>(
+          <div class="gallery-card" data-img={card.src} data-label={card.label}>
+            <img src={card.src} alt={card.label} loading="lazy" />
+            <span>{card.label}</span>
+          </div>
+        ))}
+
+        <!--Duplicate for seamless loop -->
+        {cards.map(card =>(
+          <div class="gallery-card" aria-hidden="true" data-img={card.src} data-label={card.label}>
+            <img src={card.src} alt={card.label} loading="lazy" />
+            <span>{card.label}</span>
+          </div>
+        ))}
+
+     
       </div>
     </div>
   </div>
