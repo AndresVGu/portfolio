@@ -1,6 +1,16 @@
 ---
+/**
+ * About.astro
+ * Bento-grid "About Me" section.
+ *
+ * CSS  → src/styles/about.css
+ * JS   → src/scripts/about-map.ts
+ *        src/scripts/about-terminal.ts
+ *        src/scripts/about-weather.ts
+ *        src/scripts/about-gallery.ts
+ */
 import { getI18N } from '@/i18n';
-import Profile from './Profile.astro';
+import '../styles/about.css';
 
 interface Props {
   currentLocale?: string;
@@ -8,60 +18,58 @@ interface Props {
 
 const { currentLocale = 'en' } = Astro.props;
 const i18n = getI18N({ currentLocale });
-const t = i18n.ABOUT;
+const t    = i18n.ABOUT;
 
 const graduationYear = 2024;
 const years = Math.max(1, new Date().getFullYear() - graduationYear);
-const p1 = t.p1.replace('{years}', String(years));
+const p1    = t.p1.replace('{years}', String(years));
 
+// GitHub contributions heatmap
 let ghContributions: { date: string; count: number; level: number }[] = [];
 let ghTotal = 0;
 try {
   const res = await fetch('https://github-contributions-api.jogruber.de/v4/AndresVGu?y=last');
   if (res.ok) {
     const data = await res.json();
-    ghTotal = data.total?.lastYear ?? 0;
+    ghTotal        = data.total?.lastYear ?? 0;
     ghContributions = (data.contributions ?? []).slice(-140);
   }
 } catch {}
 
-
+// Photo cards — shuffled server-side so each visit shows a different order
 const allCards = [
-  { src: '/photocards/cntower.webp', label: 'CN Tower' },
-  { src: '/photocards/falls.webp',   label: 'Falls' },
-  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/640392787_18566660212048163_1613345032941834764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=MzI4MDk1ODYwMDA3MzY1NTcxMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Lal-UQkkYh4Q7kNvwGn_hxS&_nc_oc=AdrJDgQ6TWn7gtxz-79gAG3IwLm0MY7Putjs_Yzp2SChn9Amjl-QeUioLsAhr_1VFs0&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=MzwnqT2AOuZlwxtHPvyPHQ&_nc_ss=7a22e&oh=00_Af7CmKLGZK0uGyzhyQ6ClOGAFKC6nXZLgJj2jeZ-5GfrUQ&oe=6A16833C', label: 'Andres' },
-  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/627659863_18312797884265380_1868754315642144419_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzQ3MjQ3NjM1MjA0NzYxMzgwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3IGYSPL2Vz4Q7kNvwEjphm1&_nc_oc=AdrsN8TkYRXVp2VcDrdD95Trq6LR-Pb_zyYyRunu2WNe1LfARDWLEMbYMQ-nXKiysto&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=FyAAD4NdZXRnb2QBVDIPQQ&_nc_ss=7a22e&oh=00_Af6aH2ZzJk7XxFsIZPEAxp_sU1IeweEyXloDa-tG4cP9Vw&oe=6A168362', label: 'Star' },
-  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/628177702_18153450658444691_7454772258659146631_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=MzU2NDI0NTg1Mzg0NzM3NjUyMA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTE1Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=7lpZOWnckKQQ7kNvwEMNK-l&_nc_oc=AdpMJ-9NGC0dQtupJR7YyRTkZzBQQHAIZSVwrzADzp029cYiXLIF8Sc2qf96gRNiIbk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=_6fwkYB9zbEEV9yk-KNCCQ&_nc_ss=7a22e&oh=00_Af4ZmU0cjJ3J6pVaKkx4-Ac68mFoXPy1Ro2zjcxU7IFkbA&oe=6A166DF7', label: 'Aquarium' },
-  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/624357037_18093797608792815_2130999175439188737_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&_nc_cat=106&ig_cache_key=MzEzOTY1NDg2Mzk2ODI0NTc4Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=vrtmLFr4W9UQ7kNvwHqWoat&_nc_oc=AdrMzfNZcvnJxLEixdv2lU52fUGnWEkzR3iseRVGKlU-aVqdgvJv7X5QFpzQn8dIq6A&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=_uaMdlcM1xSZmZ4hf0UBMg&_nc_ss=7a22e&oh=00_Af7UK9Bb52OWqLgVeUTqiCBs6-qjt5hksPmTAsFqWaqFdw&oe=6A168D30', label: 'DownTown' },
-  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/625059144_18104634901834883_83615773189430131_n.jpg?stp=dst-jpg_e35_s1080x1080_tt6&_nc_cat=105&ig_cache_key=MzE4MDM4MTEzMjg5NjUwNjQ3MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Qw7f9XKq4AgQ7kNvwEqjydZ&_nc_oc=AdrwRjJtF1fstLyNPMeMhjtXj-rpxaxhg_lZ86abZ-2COp1VvoShgONLdWqHjXtjRuI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=_uaMdlcM1xSZmZ4hf0UBMg&_nc_ss=7a22e&oh=00_Af7qNRaJs-DBe8Q9_yqOHWpz9Am-IEfzUsyyP9hpT-UGag&oe=6A167890', label: 'Grulla' },
-  { src: '/photocards/rack.webp',   label: 'Rack' },
-  { src: '/photocards/laptops.webp', label: 'Toughbooks' },
-  { src: '/photocards/moon.webp',   label: 'Full Moon' },
-  { src: '/photocards/spider.webp', label: 'Spider' },
-  { src: '/photocards/shellf.webp', label: 'Shellf' },
-  { src: '/photocards/falls2.webp', label: 'Niagara Falls' },
+  { src: '/photocards/cntower.webp',  label: 'CN Tower'      },
+  { src: '/photocards/falls.webp',    label: 'Falls'         },
+  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/640392787_18566660212048163_1613345032941834764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=MzI4MDk1ODYwMDA3MzY1NTcxMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Lal-UQkkYh4Q7kNvwGn_hxS&_nc_oc=AdrJDgQ6TWn7gtxz-79gAG3IwLm0MY7Putjs_Yzp2SChn9Amjl-QeUioLsAhr_1VFs0&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=MzwnqT2AOuZlwxtHPvyPHQ&_nc_ss=7a22e&oh=00_Af7CmKLGZK0uGyzhyQ6ClOGAFKC6nXZLgJj2jeZ-5GfrUQ&oe=6A16833C', label: 'Andres'        },
+  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/627659863_18312797884265380_1868754315642144419_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzQ3MjQ3NjM1MjA0NzYxMzgwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3IGYSPL2Vz4Q7kNvwEjphm1&_nc_oc=AdrsN8TkYRXVp2VcDrdD95Trq6LR-Pb_zyYyRunu2WNe1LfARDWLEMbYMQ-nXKiysto&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=FyAAD4NdZXRnb2QBVDIPQQ&_nc_ss=7a22e&oh=00_Af6aH2ZzJk7XxFsIZPEAxp_sU1IeweEyXloDa-tG4cP9Vw&oe=6A168362', label: 'Star'          },
+  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/628177702_18153450658444691_7454772258659146631_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=MzU2NDI0NTg1Mzg0NzM3NjUyMA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTE1Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=7lpZOWnckKQQ7kNvwEMNK-l&_nc_oc=AdpMJ-9NGC0dQtupJR7YyRTkZzBQQHAIZSVwrzADzp029cYiXLIF8Sc2qf96gRNiIbk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=_6fwkYB9zbEEV9yk-KNCCQ&_nc_ss=7a22e&oh=00_Af4ZmU0cjJ3J6pVaKkx4-Ac68mFoXPy1Ro2zjcxU7IFkbA&oe=6A166DF7', label: 'Aquarium'      },
+  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/624357037_18093797608792815_2130999175439188737_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&_nc_cat=106&ig_cache_key=MzEzOTY1NDg2Mzk2ODI0NTc4Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=vrtmLFr4W9UQ7kNvwHqWoat&_nc_oc=AdrMzfNZcvnJxLEixdv2lU52fUGnWEkzR3iseRVGKlU-aVqdgvJv7X5QFpzQn8dIq6A&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=_uaMdlcM1xSZmZ4hf0UBMg&_nc_ss=7a22e&oh=00_Af7UK9Bb52OWqLgVeUTqiCBs6-qjt5hksPmTAsFqWaqFdw&oe=6A168D30', label: 'DownTown'      },
+  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/625059144_18104634901834883_83615773189430131_n.jpg?stp=dst-jpg_e35_s1080x1080_tt6&_nc_cat=105&ig_cache_key=MzE4MDM4MTEzMjg5NjUwNjQ3MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Qw7f9XKq4AgQ7kNvwEqjydZ&_nc_oc=AdrwRjJtF1fstLyNPMeMhjtXj-rpxaxhg_lZ86abZ-2COp1VvoShgONLdWqHjXtjRuI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=_uaMdlcM1xSZmZ4hf0UBMg&_nc_ss=7a22e&oh=00_Af7qNRaJs-DBe8Q9_yqOHWpz9Am-IEfzUsyyP9hpT-UGag&oe=6A167890', label: 'Grulla'        },
+  { src: '/photocards/rack.webp',    label: 'Rack'          },
+  { src: '/photocards/laptops.webp', label: 'Toughbooks'    },
+  { src: '/photocards/moon.webp',    label: 'Full Moon'     },
+  { src: '/photocards/spider.webp',  label: 'Spider'        },
+  { src: '/photocards/shellf.webp',  label: 'Shellf'        },
+  { src: '/photocards/falls2.webp',  label: 'Niagara Falls' },
 ];
 
-// Shuffle server-side (Fisher-Yates) — different order on every page load
 const cards = [...allCards];
 for (let i = cards.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [cards[i], cards[j]] = [cards[j], cards[i]];
 }
-
-const INITIAL_VISIBLE = 6; // cards shown before "See all"
+const INITIAL_VISIBLE = 6;
 ---
 
 <div class="bento-about">
 
-  <!-- 1. Photocards Gallery — grid with "See all" expand -->
+  <!-- ── 1. Photocards gallery ──────────────────────────────────────── -->
   <div class="bento-cell cell-gallery">
     <div class="flex items-center justify-between mb-3 px-1">
       <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">Photocards</p>
       <span class="text-[10px] text-gray-400 dark:text-gray-500">{cards.length} photos</span>
     </div>
 
-    <!-- Grid -->
     <div id="gallery-grid" class="gallery-grid">
       {cards.map((card, i) => (
         <div
@@ -77,7 +85,6 @@ const INITIAL_VISIBLE = 6; // cards shown before "See all"
       ))}
     </div>
 
-    <!-- See all / Collapse button -->
     {cards.length > INITIAL_VISIBLE && (
       <button
         id="gallery-expand-btn"
@@ -94,7 +101,7 @@ const INITIAL_VISIBLE = 6; // cards shown before "See all"
     )}
   </div>
 
-  <!-- 2. Bio -->
+  <!-- ── 2. Bio ──────────────────────────────────────────────────────── -->
   <div class="bento-cell cell-bio">
     <p class="bio-tagline">{t.tagline}</p>
     <div class="bio-text [&_strong]:text-gray-900 dark:[&_strong]:text-white [&_strong]:font-semibold" set:html={p1}></div>
@@ -102,41 +109,39 @@ const INITIAL_VISIBLE = 6; // cards shown before "See all"
     <p class="bio-focus mt-4">{t.focus}</p>
   </div>
 
-  <!-- Map (with embedded clock overlay) -->
+  <!-- ── 3. Map ──────────────────────────────────────────────────────── -->
   <div class="bento-cell cell-map">
     <div id="leaflet-map"></div>
-    <!-- Location badge — bottom left, clickable to Google Maps -->
     <a
-      href="https://www.google.com/maps/place/Toronto,+Ontario/@43.7183357,-79.4604575,12z/data=!3m1!4b1!4m6!3m5!1s0x89d4cb90d7c63ba5:0x323555502ab4c477!8m2!3d43.6548253!4d-79.388447!16zL20vMGg3aDY?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
+      href="https://www.google.com/maps/place/Toronto,+Ontario/@43.7183357,-79.4604575,12z"
       target="_blank"
       rel="noopener noreferrer"
       class="map-overlay map-overlay-link"
       aria-label="View Toronto on Google Maps"
     >
       <div class="map-dot-live"></div>
-      <div class="map-overlay-text"><span>Toronto, ON</span><span>{t.bento.basedHere}</span></div>
+      <div class="map-overlay-text">
+        <span>Toronto, ON</span>
+        <span>{t.bento.basedHere}</span>
+      </div>
     </a>
   </div>
 
-  <!-- Terminal -->
+  <!-- ── 4. Terminal ────────────────────────────────────────────────── -->
   <div class="bento-cell cell-terminal" id="terminal-container">
     <div class="terminal-window">
-      <!-- Traffic lights -->
       <div class="terminal-dots">
         <span class="dot-red"></span>
         <span class="dot-yellow"></span>
         <span class="dot-green"></span>
         <span class="terminal-title">andrés@portfolio ~ </span>
       </div>
-      <!-- Scrollable output history -->
       <div class="terminal-body" id="terminal-body">
         <div id="terminal-history"></div>
-        <!-- Active input line -->
         <div class="terminal-input-line">
           <span class="text-green-400">$&nbsp;</span>
           <span id="terminal-display" class="text-gray-300"></span>
           <span class="terminal-cursor">▌</span>
-          <!-- Hidden real input to capture keystrokes -->
           <input
             id="terminal-input"
             type="text"
@@ -152,9 +157,7 @@ const INITIAL_VISIBLE = 6; // cards shown before "See all"
     </div>
   </div>
 
-
-
-  <!-- Interests / Hobbies -->
+  <!-- ── 5. Interests / Hobbies ─────────────────────────────────────── -->
   <div class="bento-cell cell-interests">
     <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">{t.hobbiesTitle}</p>
     <div class="hobbies-grid">
@@ -164,7 +167,6 @@ const INITIAL_VISIBLE = 6; // cards shown before "See all"
           <span class="hobby-label">{h.label}</span>
         </div>
       ))}
-      <!-- Languages always shown -->
       <div class="hobby-pill hobby-pill-langs">
         <span class="lang-pill pill-en">EN</span>
         <span class="lang-pill pill-fr">FR</span>
@@ -173,28 +175,23 @@ const INITIAL_VISIBLE = 6; // cards shown before "See all"
     </div>
   </div>
 
-  <!-- 5. Weather -->
+  <!-- ── 6. Weather ─────────────────────────────────────────────────── -->
   <div class="bento-cell cell-weather" id="weather-cell"
-       data-feels-like={t.weather.feelsLike}
-       data-loading={t.weather.loading}
-       data-unavailable={t.weather.unavailable}
-       data-clear-day={t.weather.clearDay}
-       data-clear-night={t.weather.clearNight}
-       data-partly-cloudy={t.weather.partlyCloudy}
-       data-foggy={t.weather.foggy}
-       data-drizzle={t.weather.drizzle}
-       data-rain={t.weather.rain}
-       data-snow={t.weather.snow}
-       data-rain-showers={t.weather.rainShowers}
-       data-snow-showers={t.weather.snowShowers}
-       data-thunderstorm={t.weather.thunderstorm}>
-
-    <!-- Background image -->
-    <img id="weather-bg-img" src="/weather/whether.png" alt=""
-         aria-hidden="true"
-         class="weather-bg-img" />
-
-    <!-- Top section: temp + condition + location -->
+    data-feels-like={t.weather.feelsLike}
+    data-loading={t.weather.loading}
+    data-unavailable={t.weather.unavailable}
+    data-clear-day={t.weather.clearDay}
+    data-clear-night={t.weather.clearNight}
+    data-partly-cloudy={t.weather.partlyCloudy}
+    data-foggy={t.weather.foggy}
+    data-drizzle={t.weather.drizzle}
+    data-rain={t.weather.rain}
+    data-snow={t.weather.snow}
+    data-rain-showers={t.weather.rainShowers}
+    data-snow-showers={t.weather.snowShowers}
+    data-thunderstorm={t.weather.thunderstorm}
+  >
+    <img id="weather-bg-img" src="/weather/whether.png" alt="" aria-hidden="true" class="weather-bg-img" />
     <div class="weather-top">
       <div class="weather-top-left">
         <div class="weather-temp-row">
@@ -205,40 +202,35 @@ const INITIAL_VISIBLE = 6; // cards shown before "See all"
         <span class="weather-feels" id="weather-feels"></span>
       </div>
     </div>
-
-    <!-- Hover overlay: time + date — visible only on hover -->
     <div class="weather-hover-overlay">
       <span class="weather-time" id="weather-time">--:--:--</span>
       <span class="weather-date" id="weather-date"></span>
     </div>
   </div>
 
-  <!-- 4. GitHub heatmap — full width bottom -->
+  <!-- ── 7. GitHub heatmap ──────────────────────────────────────────── -->
   <div class="bento-cell cell-github">
     <div class="flex items-center justify-between mb-3">
       <div class="flex items-center gap-2">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-gray-700 dark:text-gray-300"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-gray-700 dark:text-gray-300">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
         <span class="text-xs font-bold text-gray-700 dark:text-gray-300">GitHub</span>
       </div>
       <span class="text-[10px] text-gray-400 dark:text-gray-500">{ghTotal} contributions</span>
     </div>
 
-    {/* Build month labels for the heatmap — same approach as GitHub */}
     {(() => {
-      // Each column = 1 week (7 days). 140 days = 20 columns.
       const COLS = Math.ceil(ghContributions.length / 7);
       const monthLabels: { label: string; col: number }[] = [];
       let lastMonth = -1;
       for (let col = 0; col < COLS; col++) {
         const dayIndex = col * 7;
         if (dayIndex >= ghContributions.length) break;
-        const date = new Date(ghContributions[dayIndex].date);
+        const date  = new Date(ghContributions[dayIndex].date);
         const month = date.getMonth();
         if (month !== lastMonth) {
-          monthLabels.push({
-            label: date.toLocaleDateString(currentLocale, { month: 'short' }),
-            col,
-          });
+          monthLabels.push({ label: date.toLocaleDateString(currentLocale, { month: 'short' }), col });
           lastMonth = month;
         }
       }
@@ -251,26 +243,35 @@ const INITIAL_VISIBLE = 6; // cards shown before "See all"
       );
     })()}
 
-    <div class="gh-heatmap">{ghContributions.map((day) => {
-      const formatted = new Date(day.date).toLocaleDateString(currentLocale, { month: 'short', day: 'numeric', year: 'numeric' });
-      return (<div class={`gh-cell gh-level-${day.level}`} title={`${formatted}: ${day.count}`}></div>);
-    })}</div>
+    <div class="gh-heatmap">
+      {ghContributions.map(day => {
+        const formatted = new Date(day.date).toLocaleDateString(currentLocale, { month: 'short', day: 'numeric', year: 'numeric' });
+        return <div class={`gh-cell gh-level-${day.level}`} title={`${formatted}: ${day.count}`}></div>;
+      })}
+    </div>
   </div>
 
-  <!-- Gallery Photocard Modal -->
+  <!-- ── Gallery modal (rendered once, reused for all cards) ────────── -->
   <div id="gallery-modal-backdrop" class="hidden fixed inset-0 z-[9999] items-center justify-center bg-black/80 backdrop-blur-md">
-    <button id="gallery-modal-close" aria-label="Close" class="fixed top-5 right-5 z-[10000] p-2 rounded-full text-white/70 hover:text-white bg-white/10 hover:bg-white/20 transition"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    <!-- Nav arrows -->
-    <button id="gallery-modal-prev" aria-label="Previous" class="fixed left-4 top-1/2 -translate-y-1/2 z-[10000] p-2 rounded-full text-white/70 hover:text-white bg-white/10 hover:bg-white/20 transition"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg></button>
-    <button id="gallery-modal-next" aria-label="Next" class="fixed right-4 top-1/2 -translate-y-1/2 z-[10000] p-2 rounded-full text-white/70 hover:text-white bg-white/10 hover:bg-white/20 transition"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
+    <button id="gallery-modal-close" aria-label="Close" class="fixed top-5 right-5 z-[10000] p-2 rounded-full text-white/70 hover:text-white bg-white/10 hover:bg-white/20 transition">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <button id="gallery-modal-prev" aria-label="Previous" class="fixed left-4 top-1/2 -translate-y-1/2 z-[10000] p-2 rounded-full text-white/70 hover:text-white bg-white/10 hover:bg-white/20 transition">
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    </button>
+    <button id="gallery-modal-next" aria-label="Next" class="fixed right-4 top-1/2 -translate-y-1/2 z-[10000] p-2 rounded-full text-white/70 hover:text-white bg-white/10 hover:bg-white/20 transition">
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+    </button>
     <div id="gallery-modal-card" class="relative select-none" style="width:min(280px,80vw); perspective:900px;">
       <div id="gallery-modal-inner" style="transform-style:preserve-3d; transition:transform 0s; will-change:transform;">
         <div class="gallery-face gallery-front" style="border-radius:24px; overflow:hidden; backface-visibility:hidden;">
           <img id="gallery-modal-img" src="" alt="" style="width:100%; aspect-ratio:2/3; object-fit:cover; object-position:top; display:block;" />
           <div id="gallery-modal-glare" class="absolute inset-0 pointer-events-none" style="border-radius:24px; mix-blend-mode:overlay; opacity:0; transition:opacity 300ms;"></div>
-          <div id="gallery-modal-foil" class="absolute inset-0 pointer-events-none" style="border-radius:24px; mix-blend-mode:color-dodge; opacity:0; transition:opacity 300ms;"></div>
+          <div id="gallery-modal-foil"  class="absolute inset-0 pointer-events-none" style="border-radius:24px; mix-blend-mode:color-dodge; opacity:0; transition:opacity 300ms;"></div>
           <div id="gallery-modal-shine" class="absolute inset-0 pointer-events-none" style="border-radius:24px; mix-blend-mode:screen; opacity:0; transition:opacity 300ms;"></div>
-          <div class="absolute bottom-0 left-0 right-0 px-4 py-3" style="background:linear-gradient(to top,rgba(0,0,0,0.8),transparent); border-radius:0 0 24px 24px;"><p id="gallery-modal-label" class="text-white font-bold text-sm"></p></div>
+          <div class="absolute bottom-0 left-0 right-0 px-4 py-3" style="background:linear-gradient(to top,rgba(0,0,0,0.8),transparent); border-radius:0 0 24px 24px;">
+            <p id="gallery-modal-label" class="text-white font-bold text-sm"></p>
+          </div>
           <div class="absolute top-2 right-2 text-white/40 text-[10px]">click to flip</div>
         </div>
         <div class="gallery-face gallery-back" style="border-radius:24px; overflow:hidden; backface-visibility:hidden; transform:rotateY(180deg); position:absolute; inset:0;">
@@ -287,831 +288,18 @@ const INITIAL_VISIBLE = 6; // cards shown before "See all"
 
 </div>
 
-<style is:global>
-  .bento-about {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  /* Tablet (md) */
-  @media (min-width: 768px) {
-    .bento-about {
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: minmax(130px, auto);
-      gap: 0.875rem;
-    }
-    .cell-gallery   { grid-column: span 4; height: auto; }
-    .cell-bio       { grid-column: span 2; grid-row: span 2; }
-    .cell-map       { grid-column: span 2; grid-row: span 2; }
-    .cell-terminal  { grid-column: span 3; height: 180px; }
-    .cell-interests { grid-column: span 1; }
-    .cell-weather   { grid-column: span 1; align-self: start; }
-    .cell-github    { grid-column: span 3; }
-  }
-
-  /* Large desktop */
-  @media (min-width: 1024px) {
-    .bento-about {
-      grid-template-columns: repeat(6, 1fr);
-      grid-auto-rows: minmax(140px, auto);
-      gap: 1rem;
-    }
-    .cell-gallery   { grid-column: span 6; height: auto; }
-    .cell-bio       { grid-column: span 3; grid-row: span 2; }
-    .cell-map       { grid-column: span 3; grid-row: span 2; }
-    .cell-terminal  { grid-column: span 4; height: 200px; }
-    .cell-interests { grid-column: span 2; }
-    .cell-weather   { grid-column: span 2; align-self: start; }
-    .cell-github    { grid-column: span 4; }
-  }
-
-  /* Mobile */
-  @media (max-width: 767px) {
-    .cell-gallery, .cell-bio, .cell-map, .cell-terminal,
-    .cell-github, .cell-interests, .cell-weather { grid-column: span 2; }
-    .cell-terminal { height: 200px; }
-  }
-
-  .bento-cell {
-    border-radius: 1.25rem; padding: 1.25rem;
-    background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06);
-    position: relative; overflow: hidden;
-  }
-  .dark .bento-cell {
-    background: rgba(255,255,255,0.02);
-    border-color: rgba(255,255,255,0.06);
-  }
-
-  /* MAP - Leaflet */
-  .cell-map { padding: 0 !important; position: relative; }
-  #leaflet-map { width: 100%; height: 100%; min-height: 200px; border-radius: 1.25rem; z-index: 1; }
-  .map-overlay { position: absolute; bottom: 14px; left: 14px; z-index: 10; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); padding: 5px 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.07); box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
-  .dark .map-overlay { background: rgba(15,15,25,0.88); border-color: rgba(255,255,255,0.08); }
-  .map-overlay-link { text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-  .map-overlay-link:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
-  .map-dot-live { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e; animation: mapLivePulse 2s ease-in-out infinite; flex-shrink: 0; }
-  .map-overlay-text { display: flex; flex-direction: column; }
-  .map-overlay-text span:first-child { color: #111; font-size: 11px; font-weight: 700; }
-  .map-overlay-text span:last-child { color: #6b7280; font-size: 9px; }
-  .dark .map-overlay-text span:first-child { color: #f1f5f9; }
-  .dark .map-overlay-text span:last-child { color: #9ca3af; }
-  @keyframes mapLivePulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(0.8); } }
-  @keyframes markerPulse  { 0% { transform:scale(0.5); opacity:0.8; } 100% { transform:scale(2.2); opacity:0; } }
-  .leaflet-control-attribution, .leaflet-control-zoom { display: none !important; }
-
-  /* CLOCK inside map */
-  .map-clock-overlay { position: absolute; top: 12px; right: 12px; z-index: 10; display: flex; flex-direction: column; align-items: flex-end; background: rgba(255,255,255,0.88); backdrop-filter: blur(10px); padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.07); box-shadow: 0 2px 12px rgba(0,0,0,0.1); pointer-events: none; }
-  .dark .map-clock-overlay { background: rgba(15,15,25,0.88); border-color: rgba(255,255,255,0.08); }
-  .map-clock-time { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; color: #111; line-height: 1.2; }
-  .dark .map-clock-time { color: #f1f5f9; }
-  .map-clock-label { font-size: 8px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6b7280; margin-top: 1px; }
-  .dark .map-clock-label { color: #9ca3af; }
-
-  /* TERMINAL */
-  .cell-terminal { padding:0 !important; height: 200px; }
-  .terminal-window { width:100%; height:100%; background:#1a1b26; border-radius:1.25rem; padding:0.75rem 1rem; display:flex; flex-direction:column; overflow:hidden; cursor:text; }
-  /* Light mode terminal */
-  :root:not(.dark) .terminal-window { background:#f6f8fa; border: 1px solid #d0d7de; }
-  :root:not(.dark) .terminal-title  { color:#57606a; }
-  :root:not(.dark) .t-prompt        { color:#24292f; }
-  :root:not(.dark) .t-cmd           { color:#0550ae; }
-  :root:not(.dark) .t-out           { color:#116329; }
-  :root:not(.dark) .t-err           { color:#cf222e; }
-  :root:not(.dark) .t-info          { color:#0550ae; }
-  :root:not(.dark) .terminal-cursor { color:#0550ae; }
-  :root:not(.dark) #terminal-display { color:#24292f; }
-  .terminal-dots { display:flex; gap:5px; margin-bottom:0.6rem; align-items:center; flex-shrink:0; }
-  .dot-red   { width:8px; height:8px; border-radius:50%; background:#ff5f57; }
-  .dot-yellow{ width:8px; height:8px; border-radius:50%; background:#ffbd2e; }
-  .dot-green { width:8px; height:8px; border-radius:50%; background:#28c840; }
-  .terminal-title { margin-left:6px; font-size:0.65rem; color:#565f89; font-family:'JetBrains Mono',monospace; }
-  .terminal-body { font-family:'JetBrains Mono',monospace; font-size:0.7rem; flex:1; min-height:0; display:flex; flex-direction:column; overflow-y:auto; gap:2px; scrollbar-width:thin; scrollbar-color: #565f89 transparent; }
-  .terminal-body::-webkit-scrollbar { width: 3px; }
-  .terminal-body::-webkit-scrollbar-thumb { background: #565f89; border-radius: 2px; }
-  .terminal-body::-webkit-scrollbar-track { background: transparent; }
-  /* History lines */
-  .t-line { display:flex; gap:0.35rem; flex-wrap:wrap; line-height:1.5; }
-  .t-prompt { color:#a9b1d6; white-space:nowrap; }
-  .t-cmd    { color:#e0af68; }
-  .t-out    { color:#9ece6a; padding-left:1rem; line-height:1.5; white-space:pre-wrap; }
-  .t-err    { color:#f7768e; padding-left:1rem; line-height:1.5; }
-  .t-info   { color:#7dcfff; padding-left:0.5rem; line-height:1.6; white-space:pre; }
-  /* Active input line */
-  .terminal-input-line { display:flex; align-items:center; gap:0.35rem; position:relative; flex-shrink:0; margin-top:2px; }
-  .terminal-hidden-input { position:absolute; opacity:0; width:1px; height:1px; border:none; outline:none; padding:0; margin:0; pointer-events:none; }
-  .terminal-cursor { color:#7aa2f7; animation:termBlink 1s step-end infinite; }
-  @keyframes termBlink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
-
-  /* STATUS — removed */
-
-  /* INTERESTS */
-  .cell-interests { display:flex; flex-direction:column; justify-content:center; }
-  .hobbies-grid { display:flex; flex-wrap:wrap; gap:0.5rem; }
-  .hobby-pill { display:inline-flex; align-items:center; gap:0.35rem; padding:4px 10px; border-radius:999px; font-size:11px; font-weight:600; background:rgba(0,0,0,0.04); border:1px solid rgba(0,0,0,0.08); color:#374151; transition:transform 0.15s ease, box-shadow 0.15s ease; }
-  .hobby-pill:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-  .dark .hobby-pill { background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.1); color:#d1d5db; }
-  .hobby-icon { font-size:13px; }
-  .hobby-label { letter-spacing:0.01em; }
-  .hobby-pill-langs { gap:0.3rem; background:transparent; border:none; padding:4px 0; }
-  .hobby-pill-langs:hover { transform:none; box-shadow:none; }
-  .lang-pill { padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700; border:1px solid; }
-  .pill-en { background:rgba(59,130,246,0.1); color:#2563eb; border-color:rgba(59,130,246,0.25); }
-  .pill-fr { background:rgba(239,68,68,0.1); color:#dc2626; border-color:rgba(239,68,68,0.25); }
-  .pill-es { background:rgba(250,204,21,0.1); color:#ca8a04; border-color:rgba(250,204,21,0.25); }
-  .dark .pill-en { color:#60a5fa; } .dark .pill-fr { color:#f87171; } .dark .pill-es { color:#fbbf24; }
-
-  /* WEATHER */
-  .cell-weather {
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0 !important;
-    border-radius: 1.25rem;
-    background: #1e293b;
-    aspect-ratio: 354 / 249;
-    height: auto !important;
-    border: none !important;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06);
-    isolation: isolate;
-  }
-  .dark .cell-weather {
-    background: #0f172a;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.06);
-  }
-
-  /* Image fills the cell — border-radius clipped by parent overflow:hidden */
-  .weather-bg-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    z-index: 0;
-    /* No border-radius here — parent overflow:hidden handles clipping */
-    transition: opacity 0.4s ease;
-  }
-
-  /* NO ::after overlay — image shows at full brightness */
-
-  /* Top section — text with backdrop pill for readability without darkening image */
-  .weather-top {
-    position: relative;
-    z-index: 2;
-    padding: 0.6rem 0.75rem 0.4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  .weather-top-left {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    /* Subtle frosted pill behind the text block only */
-    background: rgba(0,0,0,0.28);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-radius: 0.6rem;
-    padding: 0.35rem 0.55rem;
-  }
-  .weather-temp-row { display: flex; align-items: baseline; gap: 0.3rem; flex-wrap: wrap; }
-  .weather-temp {
-    font-size: 1.4rem;
-    font-weight: 800;
-    line-height: 1;
-    color: #fff;
-  }
-  .weather-desc {
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: rgba(255,255,255,0.95);
-  }
-  .weather-location {
-    font-size: 0.62rem;
-    font-weight: 500;
-    color: rgba(255,255,255,0.9);
-    letter-spacing: 0.02em;
-  }
-  .weather-feels {
-    font-size: 0.58rem;
-    color: rgba(255,255,255,0.85);
-  }
-
-  /* Hover overlay: time + date — slides up from bottom on hover */
-  .weather-hover-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 3;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 0.75rem;
-    background: rgba(255,255,255,0.82);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 0 0 1.25rem 1.25rem;
-    transform: translateY(100%);
-    opacity: 0;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-    pointer-events: none;
-  }
-  .dark .weather-hover-overlay {
-    background: rgba(15,23,42,0.82);
-  }
-  .cell-weather:hover .weather-hover-overlay {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  .weather-time {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #1f2937;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.02em;
-    line-height: 1;
-  }
-  .dark .weather-time { color: #f1f5f9; }
-  .weather-date {
-    font-size: 0.62rem;
-    font-weight: 500;
-    color: #4b5563;
-    letter-spacing: 0.02em;
-  }
-  .dark .weather-date { color: #94a3b8; }
-
-  /* BIO */
-  .bio-tagline { font-size:0.85rem; font-weight:700; color:#374151; margin-bottom:0.6rem; line-height:1.4; border-left:3px solid #facc15; padding-left:0.6rem; }
-  .dark .bio-tagline { color:#e5e7eb; border-color:#facc15; }
-  .bio-text { font-size:0.78rem; color:#4b5563; line-height:1.65; }
-  .dark .bio-text { color:#9ca3af; }
-  .bio-focus { font-size:0.7rem; color:#9ca3af; font-style:italic; border-top:1px solid rgba(0,0,0,0.06); padding-top:0.5rem; }
-  .dark .bio-focus { color:#6b7280; border-color:rgba(255,255,255,0.06); }
-
-  /* GITHUB */
-  .gh-month-row {
-    display: grid;
-    grid-auto-columns: minmax(8px, 1fr);
-    grid-auto-flow: column;
-    width: 100%;
-    margin-bottom: 2px;
-  }
-  .gh-month-label {
-    font-size: 9px;
-    color: #9ca3af;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
-    line-height: 1;
-  }
-  .dark .gh-month-label { color: #6b7280; }
-  .gh-heatmap { display:grid; grid-template-rows:repeat(7,1fr); grid-auto-flow:column; grid-auto-columns:minmax(8px,1fr); gap:2px; width:100%; height:72px; }
-  .gh-cell { border-radius:2px; min-width:0; }
-  .gh-level-0 { background:rgba(0,0,0,0.05); } .gh-level-1 { background:#9be9a8; } .gh-level-2 { background:#40c463; } .gh-level-3 { background:#30a14e; } .gh-level-4 { background:#216e39; }
-  .dark .gh-level-0 { background:rgba(255,255,255,0.05); } .dark .gh-level-1 { background:#0e4429; } .dark .gh-level-2 { background:#006d32; } .dark .gh-level-3 { background:#26a641; } .dark .gh-level-4 { background:#39d353; }
-  /* GALLERY GRID */
-  .cell-gallery { padding:0.75rem !important; display:flex; flex-direction:column; gap:0.5rem; height:auto !important; }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-  }
-  @media (min-width: 640px) {
-    .gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
-  }
-  @media (min-width: 1024px) {
-    .gallery-grid { grid-template-columns: repeat(6, 1fr); gap: 0.6rem; }
-  }
-  /* Fade-in for newly revealed cards */
-  @keyframes galleryReveal {
-    from { opacity: 0; transform: scale(0.92); }
-    to   { opacity: 1; transform: scale(1); }
-  }
-  .gallery-card-reveal { animation: galleryReveal 0.3s ease both; }
-  .gallery-card { border-radius:0.75rem; overflow:hidden; position:relative; cursor:pointer; aspect-ratio:2/3; transition:transform 0.25s ease, box-shadow 0.25s ease; }
-  .gallery-card:hover { transform:translateY(-4px) scale(1.03); box-shadow:0 12px 32px rgba(0,0,0,0.22); }
-  .gallery-card img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
-  .gallery-card span { position:absolute; bottom:0; left:0; right:0; padding:6px 8px; font-size:10px; font-weight:700; color:#fff; background:linear-gradient(to top,rgba(0,0,0,0.72),transparent); text-align:center; }
-  /* Expand button */
-  .gallery-expand-btn {
-    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-    width: 100%; margin-top: 0.25rem; padding: 0.45rem 0.75rem;
-    border-radius: 0.75rem; border: 1px solid rgba(0,0,0,0.08);
-    background: rgba(0,0,0,0.03); cursor: pointer;
-    font-size: 11px; font-weight: 600; color: #6b7280;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
-  .gallery-expand-btn:hover { background: rgba(0,0,0,0.07); color: #374151; }
-  .dark .gallery-expand-btn { border-color: rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #9ca3af; }
-  .dark .gallery-expand-btn:hover { background: rgba(255,255,255,0.07); color: #e5e7eb; }
-  #gallery-expand-icon { transition: transform 0.3s ease; flex-shrink: 0; }
-  .gallery-expand-btn[data-expanded="true"] #gallery-expand-icon { transform: rotate(180deg); }
-  .gallery-card img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
-  .gallery-card span { position:absolute; bottom:0; left:0; right:0; padding:8px 12px; font-size:11px; font-weight:700; color:#fff; background:linear-gradient(to top,rgba(0,0,0,0.7),transparent); text-align:center; }
-
-  /* GALLERY MODAL */
-  .gallery-face { position:relative; width:100%; }
-  .gallery-back { position:absolute; inset:0; }
-  #gallery-modal-foil { background:repeating-linear-gradient(105deg,hsl(0,100%,60%) 0%,hsl(40,100%,60%) 10%,hsl(80,100%,60%) 20%,hsl(140,100%,60%) 30%,hsl(200,100%,60%) 40%,hsl(260,100%,60%) 50%,hsl(320,100%,60%) 60%,hsl(360,100%,60%) 70%); background-size:400% 400%; filter:brightness(1.1) saturate(1.4); }
-  #gallery-modal-shine { background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,0.08) 35%,rgba(255,255,255,0.55) 50%,rgba(255,255,255,0.08) 65%,transparent 80%); background-size:300% 300%; }
-  #gallery-modal-card.pop { animation:galleryPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
-  @keyframes galleryPop { from { transform:scale(0.82); opacity:0; } to { transform:scale(1); opacity:1; } }
-</style>
-
+<!-- ── Scripts ─────────────────────────────────────────────────────────────── -->
 <script>
-  import L from 'leaflet';
-  import 'leaflet/dist/leaflet.css';
+  import { initMap }      from '@/scripts/about-map';
+  import { initTerminal } from '@/scripts/about-terminal';
+  import { initWeather }  from '@/scripts/about-weather';
+  import { initGalleryGrid, initGalleryModal } from '@/scripts/about-gallery';
 
   document.addEventListener('astro:page-load', () => {
-    // LEAFLET MAP
-    const mapEl = document.getElementById('leaflet-map');
-    if (mapEl && !(mapEl as any)._leaflet_id) {
-      const isDark = document.documentElement.classList.contains('dark');
-      const tiles = isDark
-        ? 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
-        : 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
-
-      const map = L.map(mapEl, {
-        center: [43.6426, -79.3871],
-        zoom: 13,
-        zoomControl: false,
-        scrollWheelZoom: false,
-        dragging: false,
-        attributionControl: false,
-      });
-
-      L.tileLayer(tiles, { maxZoom: 19 }).addTo(map);
-
-      // Build marker HTML based on current theme
-      function getMarkerHtml(isDark: boolean) {
-        const color     = isDark ? '#facc15' : '#3b82f6';
-        const colorRgb  = isDark ? '250,204,21' : '59,130,246';
-        return `
-          <div style="position:relative;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">
-            <div style="
-              position:absolute;width:28px;height:28px;border-radius:50%;
-              background:rgba(${colorRgb},0.35);
-              animation:markerPulse 1.8s ease-out infinite;
-            "></div>
-            <div style="
-              position:absolute;width:18px;height:18px;border-radius:50%;
-              background:rgba(${colorRgb},0.2);
-              animation:markerPulse 1.8s ease-out infinite 0.4s;
-            "></div>
-            <div style="
-              position:relative;width:12px;height:12px;border-radius:50%;
-              background:${color};
-              box-shadow:0 0 6px rgba(${colorRgb},0.8);
-              cursor:pointer;z-index:1;
-            "></div>
-          </div>`;
-      }
-
-      // Custom pulsing marker — clickable, opens Google Maps in new tab
-      const isDarkInit = document.documentElement.classList.contains('dark');
-      const icon = L.divIcon({
-        className: '',
-        html: getMarkerHtml(isDarkInit),
-        iconSize: [28, 28],
-        iconAnchor: [14, 14],
-      });
-      const marker = L.marker([43.6426, -79.3871], { icon })
-        .addTo(map)
-        .on('click', () => {
-          window.open(
-            'https://www.google.com/maps/place/Torre+CN/@43.6425813,-79.3973351,15z/data=!3m2!4b1!5s0x882b34d819a55ff7:0xad7cf7bcaf4e239b!4m6!3m5!1s0x882b34d68bf33a9b:0x15edd8c4de1c7581!8m2!3d43.6425662!4d-79.3870568!16zL20vMDF0d3M?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
-            '_blank',
-            'noopener,noreferrer'
-          );
-        });
-
-      // Re-apply tiles AND marker color on theme change
-      const observer = new MutationObserver(() => {
-        const dark = document.documentElement.classList.contains('dark');
-        const url = dark
-          ? 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
-          : 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
-        map.eachLayer((l: L.Layer) => { if ((l as any)._url) map.removeLayer(l); });
-        L.tileLayer(url, { maxZoom: 19 }).addTo(map);
-        // Update marker color
-        marker.setIcon(L.divIcon({
-          className: '',
-          html: getMarkerHtml(dark),
-          iconSize: [28, 28],
-          iconAnchor: [14, 14],
-        }));
-      });
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    }
-
-    // CLOCK
-    const clockEl = document.getElementById('about-clock');
-    function updateClock() { if (!clockEl) return; clockEl.textContent = new Date().toLocaleTimeString('en-US', { timeZone:'America/Toronto', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false }); }
-    updateClock(); setInterval(updateClock, 1000);
-
-    // ── INTERACTIVE TERMINAL ─────────────────────────────────────────
-    const termContainer = document.getElementById('terminal-container');
-    const termBody      = document.getElementById('terminal-body');
-    const termHistory   = document.getElementById('terminal-history');
-    const termDisplay   = document.getElementById('terminal-display');
-    const termInput     = document.getElementById('terminal-input') as HTMLInputElement | null;
-
-    if (termContainer && termBody && termHistory && termDisplay && termInput) {
-
-      // ── Command registry ──────────────────────────────────────────
-      const COMMANDS: Record<string, () => string> = {
-        help: () =>
-`  <span class="text-yellow-400 font-bold">Available commands:</span>
-  <span class="text-purple-400">whoami</span>   → who I am
-  <span class="text-purple-400">role</span>     → current role & company
-  <span class="text-purple-400">stack</span>    → tech stack
-  <span class="text-purple-400">contact</span>  → how to reach me
-  <span class="text-purple-400">clear</span>    → clear the terminal`,
-
-        whoami: () =>
-          `<span class="font-bold text-gray-900 dark:text-white">Andrés Villarreal</span> — Full-Stack Developer\n  Trilingual: EN · FR · ES  |  Based in Toronto 🇨🇦`,
-
-        role: () =>
-          `<span class="text-green-400">Full-Stack Engineer</span> @ <span class="text-yellow-400">Rugged Books</span>\n  Building a custom ERP from scratch · Java · Spring Boot · React`,
-
-        stack: () =>
-          `<span class="text-cyan-400">Backend :</span>  Java · Spring Boot · .NET · C#\n  <span class="text-cyan-400">Frontend:</span>  React · TypeScript · Tailwind CSS\n  <span class="text-cyan-400">Cloud   :</span>  Azure · PostgreSQL · REST APIs\n  <span class="text-cyan-400">Other   :</span>  Linux · Git · DevOps`,
-
-        contact: () =>
-          `<span class="text-blue-400">Email  :</span>  andresvillarrealguti@gmail.com\n  <span class="text-blue-400">GitHub :</span>  github.com/AndresVGu\n  <span class="text-blue-400">LinkedIn:</span> linkedin.com/in/andres-villarreal-dev`,
-      };
-
-      const cmdHistory: string[] = [];
-      let histIdx = -1;
-
-      // ── Print help on load ────────────────────────────────────────
-      function printWelcome() {
-        appendInfo(
-`<span class="text-yellow-400 font-bold">Welcome!</span> Type a command and press <span class="font-bold text-gray-900 dark:text-white">Enter</span>.
-  Type <span class="text-purple-400">help</span> to see available commands.`
-        );
-      }
-
-      // ── DOM helpers ───────────────────────────────────────────────
-      function appendLine(prompt: string, cmd: string, output: string, isErr = false) {
-        const cmdDiv = document.createElement('div');
-        cmdDiv.className = 't-line';
-        cmdDiv.innerHTML = `<span class="t-prompt">${prompt}</span><span class="t-cmd">${escHtml(cmd)}</span>`;
-        termHistory!.appendChild(cmdDiv);
-
-        if (output) {
-          const outDiv = document.createElement('div');
-          outDiv.className = isErr ? 't-err' : 't-out';
-          outDiv.innerHTML = output;
-          termHistory!.appendChild(outDiv);
-        }
-        scrollBottom();
-      }
-
-      function appendInfo(html: string) {
-        const div = document.createElement('div');
-        div.className = 't-info';
-        div.innerHTML = html;
-        termHistory!.appendChild(div);
-        scrollBottom();
-      }
-
-      function scrollBottom() {
-        termBody!.scrollTop = termBody!.scrollHeight;
-      }
-
-      function escHtml(s: string) {
-        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      }
-
-      // ── Input sync: mirror hidden input → visible display ─────────
-      termInput.addEventListener('input', () => {
-        termDisplay!.textContent = termInput.value;
-      });
-
-      // ── Keyboard handling ─────────────────────────────────────────
-      termInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          const raw = termInput.value.trim().toLowerCase();
-          termInput.value = '';
-          termDisplay!.textContent = '';
-          histIdx = -1;
-
-          if (!raw) return;
-
-          cmdHistory.unshift(raw);
-
-          if (raw === 'clear') {
-            termHistory!.innerHTML = '';
-            return;
-          }
-
-          const fn = COMMANDS[raw];
-          if (fn) {
-            appendLine('$ ', raw, fn());
-          } else {
-            appendLine('$ ', raw,
-              `command not found: <span class="font-bold text-gray-900 dark:text-white">${escHtml(raw)}</span> — try <span class="text-purple-400">help</span>`,
-              true
-            );
-          }
-        }
-
-        // Arrow up/down history
-        if (e.key === 'ArrowUp') {
-          e.preventDefault();
-          if (histIdx < cmdHistory.length - 1) histIdx++;
-          termInput.value = cmdHistory[histIdx] ?? '';
-          termDisplay!.textContent = termInput.value;
-        }
-        if (e.key === 'ArrowDown') {
-          e.preventDefault();
-          if (histIdx > 0) histIdx--;
-          else { histIdx = -1; termInput.value = ''; }
-          termDisplay!.textContent = termInput.value;
-        }
-      });
-
-      // ── Click anywhere on terminal → focus input ──────────────────
-      termContainer.addEventListener('click', () => termInput.focus({ preventScroll: true }));
-
-      // ── Boot ──────────────────────────────────────────────────────
-      printWelcome();
-      setTimeout(() => termInput.focus({ preventScroll: true }), 100);
-    }
-
-
-
-    // ── WEATHER WIDGET ──────────────────────────────────────────────
-    const weatherTemp = document.getElementById('weather-temp');
-    const weatherDesc = document.getElementById('weather-desc');
-    const weatherFeels = document.getElementById('weather-feels');
-    const weatherCell = document.getElementById('weather-cell');
-    const weatherBgImg = document.getElementById('weather-bg-img') as HTMLImageElement | null;
-    const weatherTimeEl = document.getElementById('weather-time');
-    const weatherDateEl = document.getElementById('weather-date');
-
-    // Image map: WMO code range + isDay → public/weather filename
-    // All 20 images from public/weather/ mapped precisely by name meaning
-    const WEATHER_IMAGES: Record<string, string> = {
-      // Clear sky (code 0) — despejado = no clouds at all
-      'clear-day':              '/weather/dia_despejado.png',
-      'clear-night':            '/weather/noche_despejada.png',
-
-      // Mainly clear (code 1) — still mostly clear, use campo variant at night
-      'mainly-clear-day':       '/weather/dia_despejado.png',
-      'mainly-clear-night':     '/weather/noche_despejada_campo.png',
-
-      // Partly cloudy (code 2) — parcialmente nublado
-      'partly-cloudy-day':      '/weather/parcialmente_nublado_dia.png',
-      'partly-cloudy-night':    '/weather/parcialmente_nublado_noche.png',
-
-      // Overcast (code 3) — mayormente nublado
-      'mostly-cloudy-day':      '/weather/mayormente_nublado_dia.png',
-      'mostly-cloudy-night':    '/weather/mayormente_nublado_noche.png',
-
-      // Full overcast / cloudy (codes 4-9) — dia_nublado
-      'overcast-day':           '/weather/dia_nublado.png',
-      'overcast-night':         '/weather/mayormente_nublado_noche.png',
-
-      // Fog / mist (codes 45-49) — niebla
-      'fog-day':                '/weather/niebla_densa_dia.png',
-      'fog-night':              '/weather/niebla_nocturna.png',
-
-      // Haze / bruma costera (night only)
-      'haze-night':             '/weather/noche_brumosa_costa.png',
-
-      // Wind (codes 10-29) — ventoso
-      'wind-day':               '/weather/dia_ventoso.png',
-      'wind-night':             '/weather/noche_ventosa.png',
-
-      // Drizzle (codes 51-59) — lluvia ligera
-      'drizzle-day':            '/weather/lluvia_diurna.png',
-      'drizzle-night':          '/weather/lluvia_nocturna.png',
-
-      // Rain (codes 61-69, 80-84) — lluvia
-      'rain-day':               '/weather/lluvia_diurna.png',
-      'rain-night':             '/weather/lluvia_nocturna.png',
-
-      // Snow (codes 71-77, 85-86) — nieve
-      'snow-day':               '/weather/dia_nevado.png',
-      'snow-night':             '/weather/nieve_nocturna.png',
-
-      // Thunderstorm (codes 95-99) — tormenta eléctrica
-      'storm-day':              '/weather/tormenta_electrica_diurna.png',
-      'storm-night':            '/weather/tormenta_electrica_nocturna.png',
-
-      // Hot sunny day (temp > 28°C, code 0-1) — dia_soleado (bright sun, high temp)
-      'hot-sunny-day':          '/weather/dia_soleado.png',
-    };
-
-    function getWeatherImage(code: number, isDay: boolean, tempC: number = 0): string {
-      // Hot sunny day gets the bright soleado image
-      if (isDay && code <= 1 && tempC >= 28) return WEATHER_IMAGES['hot-sunny-day'];
-
-      if (code === 0)   return isDay ? WEATHER_IMAGES['clear-day']        : WEATHER_IMAGES['clear-night'];
-      if (code === 1)   return isDay ? WEATHER_IMAGES['mainly-clear-day'] : WEATHER_IMAGES['mainly-clear-night'];
-      if (code === 2)   return isDay ? WEATHER_IMAGES['partly-cloudy-day']: WEATHER_IMAGES['partly-cloudy-night'];
-      if (code === 3)   return isDay ? WEATHER_IMAGES['mostly-cloudy-day']: WEATHER_IMAGES['mostly-cloudy-night'];
-      if (code <= 9)    return isDay ? WEATHER_IMAGES['overcast-day']     : WEATHER_IMAGES['overcast-night'];
-      if (code <= 29)   return isDay ? WEATHER_IMAGES['wind-day']         : WEATHER_IMAGES['wind-night'];
-      if (code <= 49)   return isDay ? WEATHER_IMAGES['fog-day']          : WEATHER_IMAGES['haze-night'];
-      if (code <= 59)   return isDay ? WEATHER_IMAGES['drizzle-day']      : WEATHER_IMAGES['drizzle-night'];
-      if (code <= 69)   return isDay ? WEATHER_IMAGES['rain-day']         : WEATHER_IMAGES['rain-night'];
-      if (code <= 79)   return isDay ? WEATHER_IMAGES['snow-day']         : WEATHER_IMAGES['snow-night'];
-      if (code <= 84)   return isDay ? WEATHER_IMAGES['rain-day']         : WEATHER_IMAGES['rain-night'];
-      if (code <= 86)   return isDay ? WEATHER_IMAGES['snow-day']         : WEATHER_IMAGES['snow-night'];
-      if (code <= 99)   return isDay ? WEATHER_IMAGES['storm-day']        : WEATHER_IMAGES['storm-night'];
-      return isDay ? WEATHER_IMAGES['clear-day'] : WEATHER_IMAGES['clear-night'];
-    }
-
-    // Live clock for weather widget
-    function updateWeatherClock() {
-      if (!weatherTimeEl || !weatherDateEl) return;
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString('en-CA', {
-        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
-        timeZone: 'America/Toronto'
-      });
-      const dateStr = now.toLocaleDateString('en-CA', {
-        weekday: 'short', month: 'short', day: 'numeric',
-        timeZone: 'America/Toronto'
-      }).replace(',', '.');
-      weatherTimeEl.textContent = timeStr;
-      weatherDateEl.textContent = dateStr;
-    }
-    updateWeatherClock();
-    setInterval(updateWeatherClock, 1000);
-
-    if (weatherTemp && weatherDesc && weatherCell) {
-      const feelsLikeLabel = weatherCell.getAttribute('data-feels-like') || 'Feels like';
-      const unavailableLabel = weatherCell.getAttribute('data-unavailable') || 'Unavailable';
-
-      const weatherLabels = {
-        clearDay:     weatherCell.getAttribute('data-clear-day') || 'Clear sky',
-        clearNight:   weatherCell.getAttribute('data-clear-night') || 'Clear night',
-        partlyCloudy: weatherCell.getAttribute('data-partly-cloudy') || 'Partly cloudy',
-        foggy:        weatherCell.getAttribute('data-foggy') || 'Foggy',
-        drizzle:      weatherCell.getAttribute('data-drizzle') || 'Drizzle',
-        rain:         weatherCell.getAttribute('data-rain') || 'Rain',
-        snow:         weatherCell.getAttribute('data-snow') || 'Snow',
-        rainShowers:  weatherCell.getAttribute('data-rain-showers') || 'Rain showers',
-        snowShowers:  weatherCell.getAttribute('data-snow-showers') || 'Snow showers',
-        thunderstorm: weatherCell.getAttribute('data-thunderstorm') || 'Thunderstorm',
-      };
-
-      fetch('https://api.open-meteo.com/v1/forecast?latitude=43.65&longitude=-79.38&current=temperature_2m,apparent_temperature,weather_code,is_day&timezone=America/Toronto')
-        .then(r => r.json())
-        .then(data => {
-          const tempC  = Math.round(data.current?.temperature_2m ?? 0);
-          const tempF  = Math.round(tempC * 9 / 5 + 32);
-          const feelsC = Math.round(data.current?.apparent_temperature ?? tempC);
-          const feelsF = Math.round(feelsC * 9 / 5 + 32);
-          const code   = data.current?.weather_code ?? 0;
-          const isDay  = data.current?.is_day === 1;
-
-          weatherTemp.textContent = `${tempC}°C / ${tempF}°F`;
-          if (weatherFeels) {
-            weatherFeels.textContent = `${feelsLikeLabel} ${feelsC}°C / ${feelsF}°F`;
-          }
-
-          let desc = weatherLabels.clearDay;
-          if (code === 0)        desc = isDay ? weatherLabels.clearDay : weatherLabels.clearNight;
-          else if (code <= 3)    desc = weatherLabels.partlyCloudy;
-          else if (code <= 49)   desc = weatherLabels.foggy;
-          else if (code <= 59)   desc = weatherLabels.drizzle;
-          else if (code <= 69)   desc = weatherLabels.rain;
-          else if (code <= 79)   desc = weatherLabels.snow;
-          else if (code <= 84)   desc = weatherLabels.rainShowers;
-          else if (code <= 86)   desc = weatherLabels.snowShowers;
-          else if (code <= 99)   desc = weatherLabels.thunderstorm;
-          weatherDesc.textContent = desc;
-
-          // Set background image
-          if (weatherBgImg) {
-            weatherBgImg.src = getWeatherImage(code, isDay, tempC);
-          }
-        })
-        .catch(() => {
-          weatherDesc.textContent = unavailableLabel;
-        });
-    }
-
-
-    // GALLERY GRID — expand / collapse
-    const expandBtn   = document.getElementById('gallery-expand-btn');
-    const galleryGrid = document.getElementById('gallery-grid');
-
-    if (expandBtn && galleryGrid) {
-      const labelEl    = document.getElementById('gallery-expand-label');
-      const hiddenCards = Array.from(
-        galleryGrid.querySelectorAll<HTMLElement>('.gallery-card-hidden')
-      );
-      const total   = Number(expandBtn.dataset.total ?? 0);
-
-      expandBtn.addEventListener('click', () => {
-        const expanded = expandBtn.dataset.expanded === 'true';
-
-        if (!expanded) {
-          // Reveal hidden cards with staggered animation
-          hiddenCards.forEach((card, i) => {
-            card.style.display = '';
-            card.style.animationDelay = `${i * 40}ms`;
-            card.classList.add('gallery-card-reveal');
-          });
-          expandBtn.dataset.expanded = 'true';
-          if (labelEl) labelEl.textContent = 'Show less';
-        } else {
-          // Hide extra cards
-          hiddenCards.forEach(card => {
-            card.style.display = 'none';
-            card.classList.remove('gallery-card-reveal');
-            card.style.animationDelay = '';
-          });
-          expandBtn.dataset.expanded = 'false';
-          if (labelEl) labelEl.textContent = `See all ${total} photos`;
-        }
-      });
-    }
-
-    // GALLERY MODAL
-    const gBackdrop=document.getElementById('gallery-modal-backdrop');
-    const gCard=document.getElementById('gallery-modal-card');
-    const gInner=document.getElementById('gallery-modal-inner') as HTMLElement|null;
-    const gImg=document.getElementById('gallery-modal-img') as HTMLImageElement|null;
-    const gLabel=document.getElementById('gallery-modal-label');
-    const gGlare=document.getElementById('gallery-modal-glare') as HTMLElement|null;
-    const gFoil=document.getElementById('gallery-modal-foil') as HTMLElement|null;
-    const gShine=document.getElementById('gallery-modal-shine') as HTMLElement|null;
-    const gClose=document.getElementById('gallery-modal-close');
-
-    if(gBackdrop&&gCard&&gInner&&gGlare&&gFoil&&gShine){
-      let gFlipped=false,gFlipping=false;
-      // galleryCards is a live getter so it always includes newly revealed cards
-      function getGalleryCards() {
-        return Array.from(document.querySelectorAll<HTMLElement>('#gallery-grid .gallery-card'));
-      }
-      let gCurrentIdx = 0;
-
-      function gOpen(img:string,label:string){ if(gImg)gImg.src=img; if(gLabel)gLabel.textContent=label; gFlipped=false; gFlipping=false; gInner!.style.transform=''; gInner!.style.transition='transform 0s'; gBackdrop!.classList.remove('hidden'); gBackdrop!.classList.add('flex'); gCard!.classList.remove('pop'); void(gCard as HTMLElement).offsetWidth; gCard!.classList.add('pop'); document.body.style.overflow='hidden'; gHideLayers(); }
-      function gCloseModal(){ gBackdrop!.classList.add('hidden'); gBackdrop!.classList.remove('flex'); document.body.style.overflow=''; gInner!.style.transform=''; gHideLayers(); gFlipped=false; }
-      function gNav(dir: number){ const cards = getGalleryCards(); gCurrentIdx = ((gCurrentIdx + dir) % cards.length + cards.length) % cards.length; const card = cards[gCurrentIdx]; gOpen(card.dataset.img??'', card.dataset.label??''); }
-      function gFlip(){ if(gFlipping)return; gFlipping=true; gHideLayers(); gFlipped=!gFlipped; gInner!.style.transition='transform 600ms cubic-bezier(0.4,0,0.2,1)'; gInner!.style.transform=gFlipped?'rotateY(180deg)':'rotateY(0deg)'; setTimeout(()=>{gFlipping=false;gInner!.style.transition='transform 0s';},620); }
-      function gApplyGlare(px:number,py:number){ if(gFlipped||gFlipping)return; const dx=px-50,dy=py-50; gInner!.style.transform=`rotateY(${(dx/50)*12}deg) rotateX(${-(dy/50)*12}deg)`; gGlare!.style.background=`radial-gradient(ellipse 80% 70% at ${px}% ${py}%,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.06) 50%,transparent 75%)`; gFoil!.style.backgroundPosition=`${px}% ${py}%`; gShine!.style.backgroundPosition=`${(px*0.7+py*0.3)}% 50%`; }
-      function gShowLayers(){ if(gFlipped||gFlipping)return; gGlare!.style.opacity='0.4'; gFoil!.style.opacity='0.35'; gShine!.style.opacity='0.6'; }
-      function gHideLayers(){ if(!gFlipped&&!gFlipping)gInner!.style.transform='rotateX(0) rotateY(0)'; gGlare!.style.opacity='0'; gFoil!.style.opacity='0'; gShine!.style.opacity='0'; }
-
-      document.querySelectorAll<HTMLElement>('#gallery-grid .gallery-card').forEach((card)=>{ card.addEventListener('click',()=>{ gCurrentIdx=Number(card.dataset.index??0); gOpen(card.dataset.img??'',card.dataset.label??''); }); });
-      gCard.addEventListener('click',(e)=>{
-        // En desktop el click hace flip; en mobile lo maneja touchend
-        if(window.matchMedia('(pointer:coarse)').matches) return;
-        if((e.target as HTMLElement).closest('#gallery-modal-close')||(e.target as HTMLElement).closest('#gallery-modal-prev')||(e.target as HTMLElement).closest('#gallery-modal-next'))return;
-        gFlip();
-      });      document.getElementById('gallery-modal-prev')?.addEventListener('click',()=>gNav(-1));
-      document.getElementById('gallery-modal-next')?.addEventListener('click',()=>gNav(1));
-      // Desktop hover + tilt
-      gCard.addEventListener('pointerenter',(e)=>{ if(e.pointerType==='touch'||gFlipped)return; setTimeout(()=>{if(!gFlipped)gInner!.style.transition='transform 0s';},300); gShowLayers(); });
-      gCard.addEventListener('pointerleave',(e)=>{ if(e.pointerType==='touch')return; if(!gFlipped&&!gFlipping)gHideLayers(); });
-      gCard.addEventListener('pointermove',(e)=>{ if(e.pointerType==='touch'||gFlipped||gFlipping)return; const rect=gCard!.getBoundingClientRect(); gApplyGlare(((e.clientX-rect.left)/rect.width)*100,((e.clientY-rect.top)/rect.height)*100); });
-      // Mobile touch — paso 3: preventDefault solo en touchmove, no en touchstart
-      // paso 4: medir movimiento para distinguir tap de drag
-      let touchStartX = 0, touchStartY = 0, touchMoved = false;
-      gCard.addEventListener('touchstart',(e)=>{
-        if(gFlipped)return;
-        // Guardar posición inicial para detectar tap vs drag
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        touchMoved = false;
-        gInner!.style.transition='transform 0s';
-        gShowLayers();
-      },{passive:true}); // passive:true — no cancelamos nada aquí
-      gCard.addEventListener('touchend',()=>{
-        if(!gFlipped&&!gFlipping) gHideLayers();
-        // Si no hubo movimiento significativo → es un tap → flip
-        if(!touchMoved && !gFlipping){
-          gFlip();
-        }
-      });
-      gCard.addEventListener('touchmove',(e)=>{
-        if(gFlipped||gFlipping)return;
-        const dx = Math.abs(e.touches[0].clientX - touchStartX);
-        const dy = Math.abs(e.touches[0].clientY - touchStartY);
-        // Si se movió más de 8px es drag, no tap
-        if(dx > 8 || dy > 8) touchMoved = true;
-        e.preventDefault(); // solo aquí prevenimos el scroll
-        const t=e.touches[0]; const rect=gCard!.getBoundingClientRect();
-        gApplyGlare(Math.min(100,Math.max(0,((t.clientX-rect.left)/rect.width)*100)),Math.min(100,Math.max(0,((t.clientY-rect.top)/rect.height)*100)));
-      },{passive:false});
-      gClose?.addEventListener('click',gCloseModal);
-      gBackdrop.addEventListener('click',(e)=>{if(e.target===gBackdrop)gCloseModal();});
-      document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&!gBackdrop!.classList.contains('hidden'))gCloseModal();});
-    }
+    initMap();
+    initTerminal();
+    initWeather();
+    initGalleryGrid();
+    initGalleryModal();
   });
 </script>
