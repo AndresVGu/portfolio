@@ -26,48 +26,72 @@ try {
 } catch {}
 
 
-const cards =[
-  { src: '/photocards/cntower.webp', label: 'CN Tower'},
-  { src: '/photocards/falls.webp', label: 'Falls'},
-  {src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/640392787_18566660212048163_1613345032941834764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=MzI4MDk1ODYwMDA3MzY1NTcxMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Lal-UQkkYh4Q7kNvwGn_hxS&_nc_oc=AdrJDgQ6TWn7gtxz-79gAG3IwLm0MY7Putjs_Yzp2SChn9Amjl-QeUioLsAhr_1VFs0&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=MzwnqT2AOuZlwxtHPvyPHQ&_nc_ss=7a22e&oh=00_Af7CmKLGZK0uGyzhyQ6ClOGAFKC6nXZLgJj2jeZ-5GfrUQ&oe=6A16833C', label: 'Andres'},
-  {src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/627659863_18312797884265380_1868754315642144419_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzQ3MjQ3NjM1MjA0NzYxMzgwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3IGYSPL2Vz4Q7kNvwEjphm1&_nc_oc=AdrsN8TkYRXVp2VcDrdD95Trq6LR-Pb_zyYyRunu2WNe1LfARDWLEMbYMQ-nXKiysto&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=FyAAD4NdZXRnb2QBVDIPQQ&_nc_ss=7a22e&oh=00_Af6aH2ZzJk7XxFsIZPEAxp_sU1IeweEyXloDa-tG4cP9Vw&oe=6A168362', label: 'Star'},
-  {src: '/photocards/rack.webp', label: 'Rack'},
-  {src: '/photocards/laptops.webp', label: 'Toughbooks'},
-  {src: '/photocards/moon.webp', label: 'Full Moon'},
-  {src: '/photocards/spider.webp', label: 'Spider'},
-  {src: '/photocards/shellf.webp', label: 'Shellf'},
-  {src: '/photocards/falls2.webp', label: 'Niagara Falls'}
-  // {src: '', label: ''},
-]
+const allCards = [
+  { src: '/photocards/cntower.webp', label: 'CN Tower' },
+  { src: '/photocards/falls.webp',   label: 'Falls' },
+  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/640392787_18566660212048163_1613345032941834764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=MzI4MDk1ODYwMDA3MzY1NTcxMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Lal-UQkkYh4Q7kNvwGn_hxS&_nc_oc=AdrJDgQ6TWn7gtxz-79gAG3IwLm0MY7Putjs_Yzp2SChn9Amjl-QeUioLsAhr_1VFs0&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=MzwnqT2AOuZlwxtHPvyPHQ&_nc_ss=7a22e&oh=00_Af7CmKLGZK0uGyzhyQ6ClOGAFKC6nXZLgJj2jeZ-5GfrUQ&oe=6A16833C', label: 'Andres' },
+  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/627659863_18312797884265380_1868754315642144419_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzQ3MjQ3NjM1MjA0NzYxMzgwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3IGYSPL2Vz4Q7kNvwEjphm1&_nc_oc=AdrsN8TkYRXVp2VcDrdD95Trq6LR-Pb_zyYyRunu2WNe1LfARDWLEMbYMQ-nXKiysto&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=FyAAD4NdZXRnb2QBVDIPQQ&_nc_ss=7a22e&oh=00_Af6aH2ZzJk7XxFsIZPEAxp_sU1IeweEyXloDa-tG4cP9Vw&oe=6A168362', label: 'Star' },
+  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/628177702_18153450658444691_7454772258659146631_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=MzU2NDI0NTg1Mzg0NzM3NjUyMA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTE1Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=7lpZOWnckKQQ7kNvwEMNK-l&_nc_oc=AdpMJ-9NGC0dQtupJR7YyRTkZzBQQHAIZSVwrzADzp029cYiXLIF8Sc2qf96gRNiIbk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=_6fwkYB9zbEEV9yk-KNCCQ&_nc_ss=7a22e&oh=00_Af4ZmU0cjJ3J6pVaKkx4-Ac68mFoXPy1Ro2zjcxU7IFkbA&oe=6A166DF7', label: 'Aquarium' },
+  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/624357037_18093797608792815_2130999175439188737_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&_nc_cat=106&ig_cache_key=MzEzOTY1NDg2Mzk2ODI0NTc4Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=vrtmLFr4W9UQ7kNvwHqWoat&_nc_oc=AdrMzfNZcvnJxLEixdv2lU52fUGnWEkzR3iseRVGKlU-aVqdgvJv7X5QFpzQn8dIq6A&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=_uaMdlcM1xSZmZ4hf0UBMg&_nc_ss=7a22e&oh=00_Af7UK9Bb52OWqLgVeUTqiCBs6-qjt5hksPmTAsFqWaqFdw&oe=6A168D30', label: 'DownTown' },
+  { src: 'https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/625059144_18104634901834883_83615773189430131_n.jpg?stp=dst-jpg_e35_s1080x1080_tt6&_nc_cat=105&ig_cache_key=MzE4MDM4MTEzMjg5NjUwNjQ3MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Qw7f9XKq4AgQ7kNvwEqjydZ&_nc_oc=AdrwRjJtF1fstLyNPMeMhjtXj-rpxaxhg_lZ86abZ-2COp1VvoShgONLdWqHjXtjRuI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=_uaMdlcM1xSZmZ4hf0UBMg&_nc_ss=7a22e&oh=00_Af7qNRaJs-DBe8Q9_yqOHWpz9Am-IEfzUsyyP9hpT-UGag&oe=6A167890', label: 'Grulla' },
+  { src: '/photocards/rack.webp',   label: 'Rack' },
+  { src: '/photocards/laptops.webp', label: 'Toughbooks' },
+  { src: '/photocards/moon.webp',   label: 'Full Moon' },
+  { src: '/photocards/spider.webp', label: 'Spider' },
+  { src: '/photocards/shellf.webp', label: 'Shellf' },
+  { src: '/photocards/falls2.webp', label: 'Niagara Falls' },
+];
+
+// Shuffle server-side (Fisher-Yates) — different order on every page load
+const cards = [...allCards];
+for (let i = cards.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [cards[i], cards[j]] = [cards[j], cards[i]];
+}
+
+const INITIAL_VISIBLE = 6; // cards shown before "See all"
 ---
 
 <div class="bento-about">
 
-  <!-- 1. Photocards Gallery — hero row, full width -->
+  <!-- 1. Photocards Gallery — grid with "See all" expand -->
   <div class="bento-cell cell-gallery">
-    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2 px-1">Photocards</p>
-    <div class="gallery-scroll" id="gallery-scroll">
-      <div class="gallery-track" id="gallery-track">
-
-        <!--Mapping Photocards-->
-        {cards.map(card =>(
-          <div class="gallery-card" data-img={card.src} data-label={card.label}>
-            <img src={card.src} alt={card.label} loading="lazy" />
-            <span>{card.label}</span>
-          </div>
-        ))}
-
-        <!--Duplicate for seamless loop -->
-        {cards.map(card =>(
-          <div class="gallery-card" aria-hidden="true" data-img={card.src} data-label={card.label}>
-            <img src={card.src} alt={card.label} loading="lazy" />
-            <span>{card.label}</span>
-          </div>
-        ))}
-
-     
-      </div>
+    <div class="flex items-center justify-between mb-3 px-1">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">Photocards</p>
+      <span class="text-[10px] text-gray-400 dark:text-gray-500">{cards.length} photos</span>
     </div>
+
+    <!-- Grid -->
+    <div id="gallery-grid" class="gallery-grid">
+      {cards.map((card, i) => (
+        <div
+          class={`gallery-card${i >= INITIAL_VISIBLE ? ' gallery-card-hidden' : ''}`}
+          data-img={card.src}
+          data-label={card.label}
+          data-index={String(i)}
+          style={i >= INITIAL_VISIBLE ? 'display:none;' : ''}
+        >
+          <img src={card.src} alt={card.label} loading="lazy" />
+          <span>{card.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- See all / Collapse button -->
+    {cards.length > INITIAL_VISIBLE && (
+      <button
+        id="gallery-expand-btn"
+        class="gallery-expand-btn"
+        data-expanded="false"
+        data-total={String(cards.length)}
+        data-initial={String(INITIAL_VISIBLE)}
+      >
+        <svg id="gallery-expand-icon" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+        </svg>
+        <span id="gallery-expand-label">See all {cards.length} photos</span>
+      </button>
+    )}
   </div>
 
   <!-- 2. Bio -->
@@ -279,7 +303,7 @@ const cards =[
       grid-auto-rows: minmax(130px, auto);
       gap: 0.875rem;
     }
-    .cell-gallery   { grid-column: span 4; height: 260px; }
+    .cell-gallery   { grid-column: span 4; height: auto; }
     .cell-bio       { grid-column: span 2; grid-row: span 2; }
     .cell-map       { grid-column: span 2; grid-row: span 2; }
     .cell-terminal  { grid-column: span 3; height: 180px; }
@@ -295,7 +319,7 @@ const cards =[
       grid-auto-rows: minmax(140px, auto);
       gap: 1rem;
     }
-    .cell-gallery   { grid-column: span 6; height: 300px; }
+    .cell-gallery   { grid-column: span 6; height: auto; }
     .cell-bio       { grid-column: span 3; grid-row: span 2; }
     .cell-map       { grid-column: span 3; grid-row: span 2; }
     .cell-terminal  { grid-column: span 4; height: 200px; }
@@ -308,7 +332,6 @@ const cards =[
   @media (max-width: 767px) {
     .cell-gallery, .cell-bio, .cell-map, .cell-terminal,
     .cell-github, .cell-interests, .cell-weather { grid-column: span 2; }
-    .cell-gallery { height: 220px; }
     .cell-terminal { height: 200px; }
   }
 
@@ -553,19 +576,44 @@ const cards =[
   .gh-cell { border-radius:2px; min-width:0; }
   .gh-level-0 { background:rgba(0,0,0,0.05); } .gh-level-1 { background:#9be9a8; } .gh-level-2 { background:#40c463; } .gh-level-3 { background:#30a14e; } .gh-level-4 { background:#216e39; }
   .dark .gh-level-0 { background:rgba(255,255,255,0.05); } .dark .gh-level-1 { background:#0e4429; } .dark .gh-level-2 { background:#006d32; } .dark .gh-level-3 { background:#26a641; } .dark .gh-level-4 { background:#39d353; }
-  /* GALLERY */
-  .cell-gallery { padding:0.75rem !important; display:flex; flex-direction:column; }
-  .gallery-scroll { display:flex; gap:0.75rem; overflow:hidden; padding:0.5rem; flex:1; }
-  .gallery-track {
-    display: flex;
-    gap: 0.75rem;
-    width: max-content;
-    will-change: transform;
+  /* GALLERY GRID */
+  .cell-gallery { padding:0.75rem !important; display:flex; flex-direction:column; gap:0.5rem; height:auto !important; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
   }
-  /* Animation driven by JS — no CSS keyframes needed */
-  .gallery-card { flex-shrink:0; width:150px; height:100%; border-radius:1rem; overflow:hidden; position:relative; scroll-snap-align:center; cursor:pointer; transition:transform 0.3s ease,box-shadow 0.3s ease; }
-  .gallery-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.2); }
-  .gallery-card img { width:100%; height:100%; object-fit:cover; object-position:top; }
+  @media (min-width: 640px) {
+    .gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
+  }
+  @media (min-width: 1024px) {
+    .gallery-grid { grid-template-columns: repeat(6, 1fr); gap: 0.6rem; }
+  }
+  /* Fade-in for newly revealed cards */
+  @keyframes galleryReveal {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .gallery-card-reveal { animation: galleryReveal 0.3s ease both; }
+  .gallery-card { border-radius:0.75rem; overflow:hidden; position:relative; cursor:pointer; aspect-ratio:2/3; transition:transform 0.25s ease, box-shadow 0.25s ease; }
+  .gallery-card:hover { transform:translateY(-4px) scale(1.03); box-shadow:0 12px 32px rgba(0,0,0,0.22); }
+  .gallery-card img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+  .gallery-card span { position:absolute; bottom:0; left:0; right:0; padding:6px 8px; font-size:10px; font-weight:700; color:#fff; background:linear-gradient(to top,rgba(0,0,0,0.72),transparent); text-align:center; }
+  /* Expand button */
+  .gallery-expand-btn {
+    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    width: 100%; margin-top: 0.25rem; padding: 0.45rem 0.75rem;
+    border-radius: 0.75rem; border: 1px solid rgba(0,0,0,0.08);
+    background: rgba(0,0,0,0.03); cursor: pointer;
+    font-size: 11px; font-weight: 600; color: #6b7280;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .gallery-expand-btn:hover { background: rgba(0,0,0,0.07); color: #374151; }
+  .dark .gallery-expand-btn { border-color: rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #9ca3af; }
+  .dark .gallery-expand-btn:hover { background: rgba(255,255,255,0.07); color: #e5e7eb; }
+  #gallery-expand-icon { transition: transform 0.3s ease; flex-shrink: 0; }
+  .gallery-expand-btn[data-expanded="true"] #gallery-expand-icon { transform: rotate(180deg); }
+  .gallery-card img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
   .gallery-card span { position:absolute; bottom:0; left:0; right:0; padding:8px 12px; font-size:11px; font-weight:700; color:#fff; background:linear-gradient(to top,rgba(0,0,0,0.7),transparent); text-align:center; }
 
   /* GALLERY MODAL */
@@ -957,57 +1005,39 @@ const cards =[
     }
 
 
-    // GALLERY — smooth infinite scroll with JS (no CSS animation)
-    const galleryScroll = document.getElementById('gallery-scroll');
-    const galleryTrack  = document.getElementById('gallery-track') as HTMLElement | null;
-    if (galleryScroll && galleryTrack) {
-      const track = galleryTrack;
-      const BASE_SPEED = 0.5; // px per frame at 60fps
-      let targetSpeed = BASE_SPEED;
-      let currentSpeed = BASE_SPEED;
-      let position = 0;
-      let rafId: number | null = null;
-      let isHovered = false;
+    // GALLERY GRID — expand / collapse
+    const expandBtn   = document.getElementById('gallery-expand-btn');
+    const galleryGrid = document.getElementById('gallery-grid');
 
-      // Remove CSS animation — we drive it manually
-      track.style.animation = 'none';
-      track.style.transform = 'translateX(0)';
+    if (expandBtn && galleryGrid) {
+      const labelEl    = document.getElementById('gallery-expand-label');
+      const hiddenCards = Array.from(
+        galleryGrid.querySelectorAll<HTMLElement>('.gallery-card-hidden')
+      );
+      const total   = Number(expandBtn.dataset.total ?? 0);
 
-      function tick() {
-        // Smooth lerp — same factor both ways for consistent feel
-        currentSpeed += (targetSpeed - currentSpeed) * 0.02;
+      expandBtn.addEventListener('click', () => {
+        const expanded = expandBtn.dataset.expanded === 'true';
 
-        // Clamp to avoid floating point drift near zero
-        if (Math.abs(currentSpeed) < 0.001) currentSpeed = 0;
-
-        position -= currentSpeed;
-
-        // Reset position when we've scrolled half (the duplicate set)
-        const halfWidth = track.scrollWidth / 2;
-        if (halfWidth > 0 && Math.abs(position) >= halfWidth) {
-          position += halfWidth;
+        if (!expanded) {
+          // Reveal hidden cards with staggered animation
+          hiddenCards.forEach((card, i) => {
+            card.style.display = '';
+            card.style.animationDelay = `${i * 40}ms`;
+            card.classList.add('gallery-card-reveal');
+          });
+          expandBtn.dataset.expanded = 'true';
+          if (labelEl) labelEl.textContent = 'Show less';
+        } else {
+          // Hide extra cards
+          hiddenCards.forEach(card => {
+            card.style.display = 'none';
+            card.classList.remove('gallery-card-reveal');
+            card.style.animationDelay = '';
+          });
+          expandBtn.dataset.expanded = 'false';
+          if (labelEl) labelEl.textContent = `See all ${total} photos`;
         }
-
-        track.style.transform = `translateX(${position}px)`;
-        rafId = requestAnimationFrame(tick);
-      }
-
-      // Start
-      rafId = requestAnimationFrame(tick);
-
-      // Hover: slow down to 60% speed (subtle slow-motion, never "sticks")
-      galleryScroll.addEventListener('mouseenter', () => {
-        isHovered = true;
-        targetSpeed = BASE_SPEED * 0.6;
-      });
-      galleryScroll.addEventListener('mouseleave', () => {
-        isHovered = false;
-        targetSpeed = BASE_SPEED;
-      });
-
-      // Cleanup on page transition
-      document.addEventListener('astro:before-swap', () => {
-        if (rafId) cancelAnimationFrame(rafId);
       });
     }
 
@@ -1024,18 +1054,21 @@ const cards =[
 
     if(gBackdrop&&gCard&&gInner&&gGlare&&gFoil&&gShine){
       let gFlipped=false,gFlipping=false;
-      const galleryCards = Array.from(document.querySelectorAll<HTMLElement>('.gallery-card'));
+      // galleryCards is a live getter so it always includes newly revealed cards
+      function getGalleryCards() {
+        return Array.from(document.querySelectorAll<HTMLElement>('#gallery-grid .gallery-card'));
+      }
       let gCurrentIdx = 0;
 
       function gOpen(img:string,label:string){ if(gImg)gImg.src=img; if(gLabel)gLabel.textContent=label; gFlipped=false; gFlipping=false; gInner!.style.transform=''; gInner!.style.transition='transform 0s'; gBackdrop!.classList.remove('hidden'); gBackdrop!.classList.add('flex'); gCard!.classList.remove('pop'); void(gCard as HTMLElement).offsetWidth; gCard!.classList.add('pop'); document.body.style.overflow='hidden'; gHideLayers(); }
       function gCloseModal(){ gBackdrop!.classList.add('hidden'); gBackdrop!.classList.remove('flex'); document.body.style.overflow=''; gInner!.style.transform=''; gHideLayers(); gFlipped=false; }
-      function gNav(dir: number){ gCurrentIdx = ((gCurrentIdx + dir) % galleryCards.length + galleryCards.length) % galleryCards.length; const card = galleryCards[gCurrentIdx]; gOpen(card.dataset.img??'', card.dataset.label??''); }
+      function gNav(dir: number){ const cards = getGalleryCards(); gCurrentIdx = ((gCurrentIdx + dir) % cards.length + cards.length) % cards.length; const card = cards[gCurrentIdx]; gOpen(card.dataset.img??'', card.dataset.label??''); }
       function gFlip(){ if(gFlipping)return; gFlipping=true; gHideLayers(); gFlipped=!gFlipped; gInner!.style.transition='transform 600ms cubic-bezier(0.4,0,0.2,1)'; gInner!.style.transform=gFlipped?'rotateY(180deg)':'rotateY(0deg)'; setTimeout(()=>{gFlipping=false;gInner!.style.transition='transform 0s';},620); }
       function gApplyGlare(px:number,py:number){ if(gFlipped||gFlipping)return; const dx=px-50,dy=py-50; gInner!.style.transform=`rotateY(${(dx/50)*12}deg) rotateX(${-(dy/50)*12}deg)`; gGlare!.style.background=`radial-gradient(ellipse 80% 70% at ${px}% ${py}%,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.06) 50%,transparent 75%)`; gFoil!.style.backgroundPosition=`${px}% ${py}%`; gShine!.style.backgroundPosition=`${(px*0.7+py*0.3)}% 50%`; }
       function gShowLayers(){ if(gFlipped||gFlipping)return; gGlare!.style.opacity='0.4'; gFoil!.style.opacity='0.35'; gShine!.style.opacity='0.6'; }
       function gHideLayers(){ if(!gFlipped&&!gFlipping)gInner!.style.transform='rotateX(0) rotateY(0)'; gGlare!.style.opacity='0'; gFoil!.style.opacity='0'; gShine!.style.opacity='0'; }
 
-      document.querySelectorAll<HTMLElement>('.gallery-card').forEach((card,i)=>{ card.addEventListener('click',()=>{ gCurrentIdx=i; gOpen(card.dataset.img??'',card.dataset.label??''); }); });
+      document.querySelectorAll<HTMLElement>('#gallery-grid .gallery-card').forEach((card)=>{ card.addEventListener('click',()=>{ gCurrentIdx=Number(card.dataset.index??0); gOpen(card.dataset.img??'',card.dataset.label??''); }); });
       gCard.addEventListener('click',(e)=>{
         // En desktop el click hace flip; en mobile lo maneja touchend
         if(window.matchMedia('(pointer:coarse)').matches) return;
