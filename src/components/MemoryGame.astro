@@ -1,0 +1,450 @@
+---
+/**
+ * MemoryGame.astro
+ * Tech-themed flip card memory game.
+ * Features: 3-D flip, timer, session-only personal best (no localStorage).
+ */
+
+interface Props {
+  currentLocale?: string;
+}
+
+const { currentLocale = 'en' } = Astro.props;
+
+const labels: Record<string, Record<string, string>> = {
+  en: {
+    subtitle:  'Match all the tech pairs',
+    moves:     'Moves',
+    pairs:     'Pairs',
+    time:      'Time',
+    best:      'Best',
+    noBest:    '--',
+    restart:   'Restart',
+    win:       '🎉 You matched them all!',
+    newRecord: '🏆 New personal best!',
+    playAgain: 'Play again',
+    winTime:   'Time',
+    winMoves:  'Moves',
+    winBest:   'Best',
+  },
+  es: {
+    subtitle:  'Encuentra todos los pares de tecnologías',
+    moves:     'Movimientos',
+    pairs:     'Pares',
+    time:      'Tiempo',
+    best:      'Récord',
+    noBest:    '--',
+    restart:   'Reiniciar',
+    win:       '🎉 ¡Encontraste todos los pares!',
+    newRecord: '🏆 ¡Nuevo récord personal!',
+    playAgain: 'Jugar de nuevo',
+    winTime:   'Tiempo',
+    winMoves:  'Movimientos',
+    winBest:   'Récord',
+  },
+  fr: {
+    subtitle:  'Trouvez toutes les paires de technologies',
+    moves:     'Mouvements',
+    pairs:     'Paires',
+    time:      'Temps',
+    best:      'Record',
+    noBest:    '--',
+    restart:   'Recommencer',
+    win:       '🎉 Vous avez tout trouvé !',
+    newRecord: '🏆 Nouveau record personnel !',
+    playAgain: 'Rejouer',
+    winTime:   'Temps',
+    winMoves:  'Mouvements',
+    winBest:   'Record',
+  },
+};
+
+const t = labels[currentLocale] ?? labels.en;
+
+const techs = [
+  { id: 'html',       label: 'HTML',       color: '#e34f26', textColor: '#fff'     },
+  { id: 'css',        label: 'CSS',        color: '#0c73b8', textColor: '#fff'     },
+  { id: 'javascript', label: 'JavaScript', color: '#f0db4f', textColor: '#323330'  },
+  { id: 'typescript', label: 'TypeScript', color: '#3178c6', textColor: '#fff'     },
+  { id: 'react',      label: 'React',      color: '#20232a', textColor: '#61dafb'  },
+  { id: 'astro',      label: 'Astro',      color: '#17191e', textColor: '#ff5d01'  },
+  { id: 'svelte',     label: 'Svelte',     color: '#ff3e00', textColor: '#fff'     },
+  { id: 'sql',        label: 'SQL',        color: '#cfd8dc', textColor: '#b71c1c'  },
+];
+---
+
+<section
+  id="memory-game"
+  class="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6"
+  aria-label="Tech Memory Game"
+>
+  <!-- ── Header bar ─────────────────────────────────────────────────────────── -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+    <p class="text-sm text-gray-500 dark:text-gray-400">{t.subtitle}</p>
+
+    <div class="flex items-center gap-3 flex-wrap">
+
+      <!-- Moves -->
+      <div class="flex items-center gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+        <span class="text-xs">{t.moves}:</span>
+        <span id="mg-moves" class="tabular-nums font-bold text-gray-900 dark:text-white">0</span>
+      </div>
+
+      <!-- Pairs -->
+      <div class="flex items-center gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+        <span class="text-xs">{t.pairs}:</span>
+        <span id="mg-pairs" class="tabular-nums font-bold text-gray-900 dark:text-white">0</span>
+        <span class="text-gray-400 dark:text-gray-500 text-xs">/ {techs.length}</span>
+      </div>
+
+      <!-- Timer -->
+      <div class="flex items-center gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+        <!-- clock icon -->
+        <svg class="size-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/>
+        </svg>
+        <span id="mg-timer" class="tabular-nums font-bold text-gray-900 dark:text-white w-[4.5ch]">0:00</span>
+      </div>
+
+      <!-- Personal best -->
+      <div class="flex items-center gap-1 text-sm font-medium text-gray-600 dark:text-gray-300">
+        <!-- trophy icon -->
+        <svg class="size-3.5 shrink-0 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M8 21h8m-4-4v4M5 3H3a2 2 0 0 0-2 2v2a4 4 0 0 0 4 4h.5M19 3h2a2 2 0 0 1 2 2v2a4 4 0 0 0-4 4h-.5M5 3h14v6a7 7 0 0 1-14 0V3Z"/>
+        </svg>
+        <span class="text-xs">{t.best}:</span>
+        <span id="mg-best" class="tabular-nums font-bold text-yellow-600 dark:text-yellow-400 w-[4.5ch]">{t.noBest}</span>
+      </div>
+
+      <!-- Restart -->
+      <button
+        id="mg-restart"
+        class="px-3 py-1.5 rounded-lg text-xs font-semibold
+               bg-yellow-400/20 text-yellow-700 dark:text-yellow-300
+               hover:bg-yellow-400/40 transition-colors duration-200"
+        aria-label={t.restart}
+      >
+        {t.restart}
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Win banner ─────────────────────────────────────────────────────────── -->
+  <div
+    id="mg-win-banner"
+    class="hidden mb-5 rounded-2xl p-5
+           bg-gradient-to-r from-yellow-400/20 via-green-400/20 to-yellow-400/20
+           border border-yellow-400/30 dark:border-yellow-400/20"
+  >
+    <p class="text-lg font-bold text-gray-900 dark:text-white mb-1">{t.win}</p>
+    <!-- New record badge — hidden until a new record is set -->
+    <p id="mg-new-record" class="hidden text-sm font-semibold text-yellow-600 dark:text-yellow-400 mb-3">
+      {t.newRecord}
+    </p>
+
+    <!-- Result stats row -->
+    <div class="flex justify-center gap-6 mb-4 text-sm">
+      <div class="flex flex-col items-center gap-0.5">
+        <span class="text-xs text-gray-500 dark:text-gray-400">{t.winTime}</span>
+        <span id="mg-win-time" class="tabular-nums font-bold text-gray-900 dark:text-white text-base">--</span>
+      </div>
+      <div class="flex flex-col items-center gap-0.5">
+        <span class="text-xs text-gray-500 dark:text-gray-400">{t.winMoves}</span>
+        <span id="mg-win-moves" class="tabular-nums font-bold text-gray-900 dark:text-white text-base">--</span>
+      </div>
+      <div class="flex flex-col items-center gap-0.5">
+        <span class="text-xs text-gray-500 dark:text-gray-400">{t.winBest}</span>
+        <span id="mg-win-best" class="tabular-nums font-bold text-yellow-600 dark:text-yellow-400 text-base">--</span>
+      </div>
+    </div>
+
+    <button
+      id="mg-play-again"
+      class="px-5 py-2 rounded-xl text-sm font-semibold
+             bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition-colors duration-200"
+    >
+      {t.playAgain}
+    </button>
+  </div>
+
+  <!-- ── Card grid ──────────────────────────────────────────────────────────── -->
+  <div
+    id="mg-grid"
+    class="grid grid-cols-4 gap-3 sm:gap-4"
+    role="list"
+    aria-label="Memory cards"
+  >
+    {techs.concat(techs).map((tech, i) => (
+      <div
+        class="mg-card aspect-square cursor-pointer select-none"
+        data-tech={tech.id}
+        data-label={tech.label}
+        data-color={tech.color}
+        data-text={tech.textColor}
+        data-index={i}
+        role="listitem"
+        aria-label={`Card ${i + 1}`}
+        tabindex="0"
+      >
+        <div class="mg-card-inner w-full h-full relative">
+          <!-- Back face -->
+          <div class="mg-face mg-back absolute inset-0 rounded-2xl
+                      flex items-center justify-center
+                      bg-gradient-to-br from-gray-100 to-gray-200
+                      dark:from-gray-800 dark:to-gray-900
+                      border border-black/8 dark:border-white/8
+                      shadow-sm">
+            <span class="text-3xl font-black text-gray-300 dark:text-gray-600 select-none">?</span>
+          </div>
+          <!-- Front face -->
+          <div
+            class="mg-face mg-front absolute inset-0 rounded-2xl
+                   flex flex-col items-center justify-center gap-2 shadow-md"
+            style={`background-color: ${tech.color}; color: ${tech.textColor};`}
+          >
+            <span class="text-[10px] sm:text-xs font-bold tracking-wide uppercase opacity-90 mt-1">
+              {tech.label}
+            </span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ── Styles ────────────────────────────────────────────────────────────────── -->
+<style>
+  .mg-card-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .mg-card.flipped .mg-card-inner,
+  .mg-card.matched .mg-card-inner {
+    transform: rotateY(180deg);
+  }
+  .mg-face {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .mg-front { transform: rotateY(180deg); }
+
+  /* Matched glow */
+  .mg-card.matched .mg-front {
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.6), 0 4px 20px rgba(0,0,0,0.15);
+  }
+
+  /* Shake on mismatch */
+  .mg-card.shake { animation: mgShake 0.4s ease; }
+  @keyframes mgShake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+  }
+
+  /* Timer pulse when running */
+  #mg-timer.running { color: #16a34a; }
+  .dark #mg-timer.running { color: #4ade80; }
+
+  /* Focus ring */
+  .mg-card:focus-visible {
+    outline: 2px solid #facc15;
+    outline-offset: 3px;
+    border-radius: 1rem;
+  }
+</style>
+
+<!-- ── Script ────────────────────────────────────────────────────────────────── -->
+<script>
+  function initMemoryGame() {
+    // ── DOM refs ───────────────────────────────────────────────────────────────
+    const grid         = document.getElementById('mg-grid')!;
+    const movesEl      = document.getElementById('mg-moves')!;
+    const pairsEl      = document.getElementById('mg-pairs')!;
+    const timerEl      = document.getElementById('mg-timer')!;
+    const bestEl       = document.getElementById('mg-best')!;
+    const winBanner    = document.getElementById('mg-win-banner')!;
+    const newRecordEl  = document.getElementById('mg-new-record')!;
+    const winTimeEl    = document.getElementById('mg-win-time')!;
+    const winMovesEl   = document.getElementById('mg-win-moves')!;
+    const winBestEl    = document.getElementById('mg-win-best')!;
+    const restartBtn   = document.getElementById('mg-restart')!;
+    const playAgainBtn = document.getElementById('mg-play-again')!;
+
+    // ── State ──────────────────────────────────────────────────────────────────
+    let flipped: HTMLElement[] = [];
+    let matched   = 0;
+    let moves     = 0;
+    let locked    = false;
+
+    // Timer
+    let startTime  = 0;
+    let elapsed    = 0;   // seconds
+    let timerRAF   = 0;   // requestAnimationFrame id
+    let timerRunning = false;
+
+    // Session-only personal best (survives restarts, dies on page refresh)
+    let sessionBest: number | null = null;   // seconds
+
+    const TOTAL_PAIRS = grid.querySelectorAll('.mg-card').length / 2;
+
+    // ── Timer helpers ──────────────────────────────────────────────────────────
+    function fmt(secs: number): string {
+      const m = Math.floor(secs / 60);
+      const s = secs % 60;
+      return `${m}:${String(s).padStart(2, '0')}`;
+    }
+
+    function tickTimer() {
+      if (!timerRunning) return;
+      elapsed = Math.floor((performance.now() - startTime) / 1000);
+      timerEl.textContent = fmt(elapsed);
+      timerRAF = requestAnimationFrame(tickTimer);
+    }
+
+    function startTimer() {
+      if (timerRunning) return;
+      startTime    = performance.now() - elapsed * 1000;
+      timerRunning = true;
+      timerEl.classList.add('running');
+      timerRAF = requestAnimationFrame(tickTimer);
+    }
+
+    function stopTimer() {
+      timerRunning = false;
+      timerEl.classList.remove('running');
+      cancelAnimationFrame(timerRAF);
+    }
+
+    function resetTimer() {
+      stopTimer();
+      elapsed = 0;
+      timerEl.textContent = '0:00';
+    }
+
+    // ── Shuffle ────────────────────────────────────────────────────────────────
+    function shuffle() {
+      const cards = Array.from(grid.querySelectorAll<HTMLElement>('.mg-card'));
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        grid.appendChild(cards[j]);
+        cards.splice(j, 1, cards[i]);
+      }
+    }
+
+    // ── Reset ──────────────────────────────────────────────────────────────────
+    function reset() {
+      flipped = [];
+      matched = 0;
+      moves   = 0;
+      locked  = false;
+
+      movesEl.textContent = '0';
+      pairsEl.textContent = '0';
+      winBanner.classList.add('hidden');
+      newRecordEl.classList.add('hidden');
+
+      grid.querySelectorAll<HTMLElement>('.mg-card').forEach(c =>
+        c.classList.remove('flipped', 'matched', 'shake')
+      );
+
+      resetTimer();
+      shuffle();
+    }
+
+    // ── Flip ───────────────────────────────────────────────────────────────────
+    function flipCard(card: HTMLElement) {
+      if (locked) return;
+      if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+      // Start timer on first flip
+      if (!timerRunning && matched === 0 && flipped.length === 0) startTimer();
+
+      card.classList.add('flipped');
+      flipped.push(card);
+
+      if (flipped.length === 2) {
+        moves++;
+        movesEl.textContent = String(moves);
+        checkMatch();
+      }
+    }
+
+    // ── Match check ────────────────────────────────────────────────────────────
+    function checkMatch() {
+      const [a, b] = flipped;
+      const isMatch = a.dataset.tech === b.dataset.tech;
+
+      if (isMatch) {
+        a.classList.add('matched');
+        b.classList.add('matched');
+        matched++;
+        pairsEl.textContent = String(matched);
+        flipped = [];
+
+        if (matched === TOTAL_PAIRS) {
+          stopTimer();
+          setTimeout(showWin, 400);
+        }
+      } else {
+        locked = true;
+        setTimeout(() => {
+          a.classList.add('shake');
+          b.classList.add('shake');
+          setTimeout(() => {
+            a.classList.remove('flipped', 'shake');
+            b.classList.remove('flipped', 'shake');
+            flipped = [];
+            locked  = false;
+          }, 420);
+        }, 600);
+      }
+    }
+
+    // ── Win screen ─────────────────────────────────────────────────────────────
+    function showWin() {
+      const isNewRecord = sessionBest === null || elapsed < sessionBest;
+      if (isNewRecord) sessionBest = elapsed;
+
+      // Update header best display
+      bestEl.textContent = fmt(sessionBest!);
+
+      // Fill win banner stats
+      winTimeEl.textContent  = fmt(elapsed);
+      winMovesEl.textContent = String(moves);
+      winBestEl.textContent  = fmt(sessionBest!);
+
+      // Show/hide new record badge
+      newRecordEl.classList.toggle('hidden', !isNewRecord);
+
+      winBanner.classList.remove('hidden');
+    }
+
+    // ── Events ─────────────────────────────────────────────────────────────────
+    grid.addEventListener('click', e => {
+      const card = (e.target as HTMLElement).closest<HTMLElement>('.mg-card');
+      if (card) flipCard(card);
+    });
+
+    grid.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const card = (e.target as HTMLElement).closest<HTMLElement>('.mg-card');
+        if (card) { e.preventDefault(); flipCard(card); }
+      }
+    });
+
+    restartBtn.addEventListener('click', reset);
+    playAgainBtn.addEventListener('click', reset);
+
+    // ── Init ───────────────────────────────────────────────────────────────────
+    shuffle();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMemoryGame);
+  } else {
+    initMemoryGame();
+  }
+</script>
