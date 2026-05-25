@@ -226,10 +226,10 @@ const allCards = [...techs, ...techs];
           <!-- Front face — icon + label -->
           <div
             class="mg-face mg-front absolute inset-0 rounded-2xl
-                   flex flex-col items-center justify-center gap-2 shadow-md p-2"
+                   flex flex-col items-center justify-center gap-1 shadow-md p-1.5"
             style={`background-color: ${tech.color}; color: ${tech.textColor};`}
           >
-            <div class="mg-icon w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+            <div class="mg-icon flex items-center justify-center" style="width:55%; height:55%;">
               {tech.id === 'astro'      && <AstroIcon      class="w-full h-full" />}
               {tech.id === 'azure'      && <AzureIcon      class="w-full h-full" />}
               {tech.id === 'css'        && <CssIcon        class="w-full h-full" />}
@@ -242,7 +242,7 @@ const allCards = [...techs, ...techs];
               {tech.id === 'svelte'     && <SvelteIcon     class="w-full h-full" />}
               {tech.id === 'typescript' && <TypeScriptIcon class="w-full h-full" />}
             </div>
-            <span class="text-[9px] sm:text-[10px] font-bold tracking-wide uppercase opacity-90 leading-none">
+            <span class="mg-label font-bold tracking-wide uppercase opacity-90 leading-none text-center w-full truncate px-1">
               {tech.label}
             </span>
           </div>
@@ -286,6 +286,15 @@ const allCards = [...techs, ...techs];
   /* Timer pulse when running */
   #mg-timer.running { color: #16a34a; }
   .dark #mg-timer.running { color: #4ade80; }
+
+  /* Icon fills proportionally */
+  .mg-icon svg { width: 100%; height: 100%; display: block; }
+
+  /* Label scales with card size using container-relative font size */
+  .mg-label { font-size: clamp(7px, 2.2vw, 11px); }
+  @media (min-width: 640px) {
+    .mg-label { font-size: clamp(8px, 1.2vw, 11px); }
+  }
 
   /* Focus ring */
   .mg-card:focus-visible {
