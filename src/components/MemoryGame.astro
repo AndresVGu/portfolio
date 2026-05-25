@@ -3,7 +3,20 @@
  * MemoryGame.astro
  * Tech-themed flip card memory game.
  * Features: 3-D flip, timer, session-only personal best (no localStorage).
+ * Each game picks 8 random tech icons from the full pool (server-side shuffle).
  */
+import AstroIcon      from '@/Icons/AstroIcon.astro';
+import AzureIcon      from '@/Icons/Azure.astro';
+import CssIcon        from '@/Icons/CssIcon.astro';
+import GithubIcon     from '@/Icons/Github.astro';
+import HtmlIcon       from '@/Icons/HtmlIcon.astro';
+import JavascriptIcon from '@/Icons/JavascriptIcon.astro';
+import LinkIcon       from '@/Icons/Link.astro';
+import MicrosoftIcon  from '@/Icons/Microsoft.astro';
+import ReactIcon      from '@/Icons/ReactIcon.astro';
+import SqlIcon        from '@/Icons/SqlIcon.astro';
+import SvelteIcon     from '@/Icons/SvelteIcon.astro';
+import TypeScriptIcon from '@/Icons/TypeScriptIcon.astro';
 
 interface Props {
   currentLocale?: string;
@@ -61,16 +74,33 @@ const labels: Record<string, Record<string, string>> = {
 
 const t = labels[currentLocale] ?? labels.en;
 
-const techs = [
-  { id: 'html',       label: 'HTML',       color: '#e34f26', textColor: '#fff'     },
-  { id: 'css',        label: 'CSS',        color: '#0c73b8', textColor: '#fff'     },
-  { id: 'javascript', label: 'JavaScript', color: '#f0db4f', textColor: '#323330'  },
-  { id: 'typescript', label: 'TypeScript', color: '#3178c6', textColor: '#fff'     },
-  { id: 'react',      label: 'React',      color: '#20232a', textColor: '#61dafb'  },
-  { id: 'astro',      label: 'Astro',      color: '#17191e', textColor: '#ff5d01'  },
-  { id: 'svelte',     label: 'Svelte',     color: '#ff3e00', textColor: '#fff'     },
-  { id: 'sql',        label: 'SQL',        color: '#cfd8dc', textColor: '#b71c1c'  },
-];
+// Full pool of available tech icons (excluded: Sun, Moon, SistemIcon,
+// ProfileIcon, Mail, Briefcase, Linkedin, Code, PapersIcon, Link)
+const POOL = [
+  { id: 'astro',       label: 'Astro',       color: '#17191e', textColor: '#ff5d01' },
+  { id: 'azure',       label: 'Azure',       color: '#0078d4', textColor: '#fff'    },
+  { id: 'css',         label: 'CSS',         color: '#0c73b8', textColor: '#fff'    },
+  { id: 'github',      label: 'GitHub',      color: '#24292e', textColor: '#fff'    },
+  { id: 'html',        label: 'HTML',        color: '#e34f26', textColor: '#fff'    },
+  { id: 'javascript',  label: 'JavaScript',  color: '#f0db4f', textColor: '#323330' },
+  { id: 'link',        label: 'Link',        color: '#6366f1', textColor: '#fff'    },
+  { id: 'microsoft',   label: 'Microsoft',   color: '#f3f3f3', textColor: '#333'    },
+  { id: 'react',       label: 'React',       color: '#20232a', textColor: '#61dafb' },
+  { id: 'sql',         label: 'SQL',         color: '#cfd8dc', textColor: '#b71c1c' },
+  { id: 'svelte',      label: 'Svelte',      color: '#ff3e00', textColor: '#fff'    },
+  { id: 'typescript',  label: 'TypeScript',  color: '#3178c6', textColor: '#fff'    },
+] as const;
+
+// Fisher-Yates shuffle, then pick first 8 — different set every page load
+const shuffled = [...POOL];
+for (let i = shuffled.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+}
+const techs = shuffled.slice(0, 8);
+
+// Duplicate for pairs
+const allCards = [...techs, ...techs];
 ---
 
 <section
@@ -175,13 +205,11 @@ const techs = [
     role="list"
     aria-label="Memory cards"
   >
-    {techs.concat(techs).map((tech, i) => (
+    {allCards.map((tech, i) => (
       <div
         class="mg-card aspect-square cursor-pointer select-none"
         data-tech={tech.id}
         data-label={tech.label}
-        data-color={tech.color}
-        data-text={tech.textColor}
         data-index={i}
         role="listitem"
         aria-label={`Card ${i + 1}`}
@@ -197,13 +225,27 @@ const techs = [
                       shadow-sm">
             <span class="text-3xl font-black text-gray-300 dark:text-gray-600 select-none">?</span>
           </div>
-          <!-- Front face -->
+          <!-- Front face — icon + label -->
           <div
             class="mg-face mg-front absolute inset-0 rounded-2xl
-                   flex flex-col items-center justify-center gap-2 shadow-md"
+                   flex flex-col items-center justify-center gap-2 shadow-md p-2"
             style={`background-color: ${tech.color}; color: ${tech.textColor};`}
           >
-            <span class="text-[10px] sm:text-xs font-bold tracking-wide uppercase opacity-90 mt-1">
+            <div class="mg-icon w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+              {tech.id === 'astro'      && <AstroIcon      class="w-full h-full" />}
+              {tech.id === 'azure'      && <AzureIcon      class="w-full h-full" />}
+              {tech.id === 'css'        && <CssIcon        class="w-full h-full" />}
+              {tech.id === 'github'     && <GithubIcon     class="w-full h-full" />}
+              {tech.id === 'html'       && <HtmlIcon       class="w-full h-full" />}
+              {tech.id === 'javascript' && <JavascriptIcon class="w-full h-full" />}
+              {tech.id === 'link'       && <LinkIcon       class="w-full h-full" />}
+              {tech.id === 'microsoft'  && <MicrosoftIcon  class="w-full h-full" />}
+              {tech.id === 'react'      && <ReactIcon      class="w-full h-full" />}
+              {tech.id === 'sql'        && <SqlIcon        class="w-full h-full" />}
+              {tech.id === 'svelte'     && <SvelteIcon     class="w-full h-full" />}
+              {tech.id === 'typescript' && <TypeScriptIcon class="w-full h-full" />}
+            </div>
+            <span class="text-[9px] sm:text-[10px] font-bold tracking-wide uppercase opacity-90 leading-none">
               {tech.label}
             </span>
           </div>
