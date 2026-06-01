@@ -9,3 +9,28 @@
     Content-Type = "application/octet-stream"
     Content-Disposition = "attachment"
     X-Content-Type-Options = "nosniff"
+
+# Aggressive caching for static assets (images, fonts, JS, CSS)
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/projects/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/photocards/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/main_icons/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Enable Netlify Image CDN for automatic optimization
+[images]
+  remote_images = [".*"]
