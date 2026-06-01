@@ -163,47 +163,77 @@
   "PROJECTS": [
     {
       "title": "NBD Landscaping",
+      "slug": "nbd-landscaping",
       "subtitle": "Application métier avec ASP.NET MVC et C#",
-      "description": "Application web conçue pour une entreprise de paysagisme, permettant aux employés de gérer clients et projets selon leur niveau d'authentification. Chaque employé peut créer, mettre à jour et supprimer des fiches clients, ainsi qu'assigner des projets. Les utilisateurs peuvent aussi ajouter des devis détaillant les matériaux et la main-d'œuvre nécessaires pour calculer le coût total du projet.",
+      "description": "App web avec gestion des rôles pour une entreprise de paysagisme — gérez clients, projets et devis avec matériaux et main-d'œuvre.",
+      "detailDescription": "NBD Landscaping est une application de gestion d'entreprise complète pour une société de paysagisme. Le système implémente une authentification basée sur les rôles afin que chaque employé ne voie et ne gère que ce qu'il est autorisé à faire. Les managers supervisent tous les clients et projets, tandis que les employés de terrain gèrent leur travail assigné. Le système de devis calcule le coût total du projet en combinant les quantités de matériaux et les heures de main-d'œuvre.",
+      "stack": ["ASP.NET MVC", "C#", "Entity Framework", "SQL Server", "Bootstrap"],
       "gallery": "Galerie",
       "code": "Code",
-      "link": "Lien"
+      "link": "Lien",
+      "codeUrl": "https://github.com/andresvillarreal",
+      "liveUrl": null
     },
     {
       "title": "Cities API",
+      "slug": "cities-api",
       "subtitle": "ASP.NET Core Web API",
-      "description": "Une Web API qui affiche les villes correspondant à leurs provinces respectives. Les utilisateurs peuvent également effectuer des opérations CRUD sur chaque entité.",
+      "description": "API REST qui associe les villes à leurs provinces, avec support CRUD complet sur chaque entité.",
+      "detailDescription": "Cities API est un service web RESTful construit avec ASP.NET Core qui expose des endpoints pour interroger les villes et leurs provinces correspondantes. Il supporte les opérations CRUD complètes sur les deux entités, suit les conventions REST et inclut des codes de statut HTTP appropriés et une gestion des erreurs. Le projet démontre des modèles de conception d'API propres.",
+      "stack": ["ASP.NET Core", "C#", "Entity Framework Core", "SQL Server", "Swagger"],
       "gallery": "Galerie",
       "code": "Code",
-      "link": "Lien"
+      "link": "Lien",
+      "codeUrl": "https://github.com/andresvillarreal",
+      "liveUrl": null
     },
     {
       "title": "Spotify Clone",
+      "slug": "spotify-clone",
       "subtitle": "Construit avec Astro",
-      "description": "Un clone de Spotify où les utilisateurs peuvent écouter des chansons et naviguer dans différents types d'albums.",
+      "description": "Clone fonctionnel de Spotify — écoutez des chansons et parcourez des albums avec une UI épurée et responsive.",
+      "detailDescription": "Un lecteur de musique inspiré de Spotify construit avec Astro et JavaScript vanilla. Les utilisateurs peuvent parcourir une bibliothèque d'albums, lire des pistes avec un lecteur persistant en bas de page et naviguer entre différentes vues d'albums. Le projet se concentre sur des interactions UI fluides et la gestion de l'état audio entre les navigations.",
+      "stack": ["Astro", "JavaScript", "CSS", "HTML5 Audio API"],
       "gallery": "Galerie",
-      "code": "Code"
+      "code": "Code",
+      "codeUrl": "https://github.com/andresvillarreal",
+      "liveUrl": null
     },
     {
       "title": "Emma's Small Engines",
+      "slug": "emmas-small-engines",
       "subtitle": "Application métier avec HTML5, CSS3 et JavaScript",
-      "description": "Application web axée sur la gestion des stocks, équipements, réparations et commandes pour différents types de moteurs.",
+      "description": "Système de gestion d'inventaire et de réparations pour un atelier de moteurs — suivez équipements, commandes et fiches de service.",
+      "detailDescription": "Emma's Small Engines est un outil de gestion d'entreprise construit entièrement avec HTML, CSS et JavaScript vanilla — sans frameworks. Il gère les opérations quotidiennes d'un atelier de réparation de petits moteurs : suivi des stocks, enregistrement des équipements, gestion des ordres de réparation et historique des services.",
+      "stack": ["HTML5", "CSS3", "JavaScript", "LocalStorage"],
       "gallery": "Galerie",
-      "code": "Code"
+      "code": "Code",
+      "codeUrl": "https://github.com/andresvillarreal",
+      "liveUrl": null
     },
     {
       "title": "VitGreen",
+      "slug": "vitgreen",
       "subtitle": "Site eCommerce",
-      "description": "Site eCommerce moderne spécialisé dans les produits protéinés, offrant une expérience d'achat fluide avec paiements sécurisés, descriptions détaillées, avis clients et livraison rapide.",
+      "description": "Boutique eCommerce moderne de produits protéinés — paiement sécurisé, avis clients et livraison rapide.",
+      "detailDescription": "VitGreen est une plateforme eCommerce moderne spécialisée dans les produits protéinés et de santé. Le site propose un catalogue de produits épuré avec des descriptions détaillées, un système d'avis clients et un tunnel d'achat optimisé avec intégration de paiement sécurisé. Le design privilégie la conversion avec des CTAs clairs et une mise en page mobile-first.",
+      "stack": ["HTML5", "CSS3", "JavaScript", "PHP", "MySQL"],
       "gallery": "Galerie",
-      "link": "Lien"
+      "link": "Lien",
+      "liveUrl": "https://vitgreen.com",
+      "codeUrl": null
     },
     {
       "title": "V12 Magazine",
+      "slug": "v12-magazine",
       "subtitle": "Magazine Automobile",
-      "description": "Site web de magazine présentant des actualités et événements du monde automobile en Colombie.",
+      "description": "Magazine automobile avec actualités et événements du monde du moteur en Colombie.",
+      "detailDescription": "V12 Magazine est une publication automobile numérique couvrant la culture automobile colombienne — des événements de course locaux et salons automobiles aux actualités de l'industrie et critiques de véhicules. Le site a été conçu pour gérer une mise en page riche en contenu avec des temps de chargement rapides et une expérience de lecture épurée.",
+      "stack": ["WordPress", "PHP", "CSS", "MySQL"],
       "gallery": "Galerie",
-      "link": "Lien"
+      "link": "Lien",
+      "liveUrl": "https://v12magazine.com",
+      "codeUrl": null
     }
   ],
 
@@ -212,7 +242,12 @@
     "scrollRight": "Défiler à droite",
     "regionLabel": "Carrousel de projets",
     "hint": "Glissez ou utilisez les flèches",
-    "hintMobile": "Glissez"
+    "hintMobile": "Glissez",
+    "viewProject": "Voir le projet complet",
+    "techStack": "Technologies",
+    "liveDemo": "Website",
+    "sourceCode": "Code",
+    "backToPortfolio": "← Retour au portfolio"
   },
 
   "FOOTER": {

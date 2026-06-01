@@ -1,0 +1,42 @@
+---
+import ProjectLayout from '@/layouts/ProjectLayout.astro';
+import { getI18N } from '@/i18n';
+
+export async function getStaticPaths() {
+  const i18n = getI18N({ currentLocale: 'es' });
+  return i18n.PROJECTS.map((project) => ({
+    params: { slug: (project as any).slug },
+    props: { slug: (project as any).slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const i18n = getI18N({ currentLocale: 'es' });
+
+const PROJECT_IMAGES: Record<string, string> = {
+  'nbd-landscaping':    '/projects/bg.webp',
+  'cities-api':         '/projects/api2.webp',
+  'spotify-clone':      '/projects/spo.webp',
+  'emmas-small-engines':'/projects/emma.webp',
+  'vitgreen':           '/projects/vit.webp',
+  'v12-magazine':       '/projects/v12Magazinea.png',
+};
+
+const project = i18n.PROJECTS.find((p) => (p as any).slug === slug);
+if (!project) return Astro.redirect('/es/');
+
+const p = project as any;
+---
+
+<ProjectLayout
+  currentLocale="es"
+  title={p.title}
+  description={p.description}
+  image={PROJECT_IMAGES[slug!] ?? ''}
+  subtitle={p.subtitle}
+  stack={p.stack ?? []}
+  liveUrl={p.liveUrl}
+  codeUrl={p.codeUrl}
+>
+  <p>{p.detailDescription}</p>
+</ProjectLayout>

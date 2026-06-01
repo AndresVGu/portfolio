@@ -1,5 +1,6 @@
 ---
 import { getI18N } from '@/i18n';
+import CarouselModal from './CarouselModal.astro';
 
 interface Props {
   currentLocale?: string;
@@ -17,7 +18,7 @@ const PROJECT_IMAGES = [
   '/projects/v12Magazinea.png',
 ];
 
-const projectsWithImages = i18n.PROJECTS.map((p, i) => ({
+const projects = i18n.PROJECTS.map((p, i) => ({
   ...p,
   image: PROJECT_IMAGES[i] ?? '',
 }));
@@ -25,185 +26,118 @@ const projectsWithImages = i18n.PROJECTS.map((p, i) => ({
 
 <div class="relative w-full" data-carousel-root>
 
-  <!-- Carousel Track -->
+  <!-- Left arrow — just outside the left edge of the max-w-5xl track -->
+  <button
+    data-carousel-btn-left
+    aria-label={i18n.CAROUSEL.scrollLeft}
+    aria-disabled="true"
+    disabled
+    class="hidden sm:flex absolute z-40 top-1/2 -translate-y-1/2
+           left-[max(0.25rem,calc((100%-64rem)/2-3rem))]
+           size-9 sm:size-10 items-center justify-center rounded-full
+           bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm
+           text-gray-600 dark:text-gray-400
+           shadow-md ring-1 ring-black/5 dark:ring-white/10
+           opacity-0 pointer-events-none
+           hover:bg-white dark:hover:bg-gray-700
+           transition-all duration-200"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="size-5 sm:size-6" fill="none"
+         viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <!-- Right arrow — just outside the right edge of the max-w-5xl track -->
+  <button
+    data-carousel-btn-right
+    aria-label={i18n.CAROUSEL.scrollRight}
+    class="hidden sm:flex absolute z-40 top-1/2 -translate-y-1/2
+           right-[max(0.25rem,calc((100%-64rem)/2-3rem))]
+           size-9 sm:size-10 items-center justify-center rounded-full
+           bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm
+           text-gray-600 dark:text-gray-400
+           shadow-md ring-1 ring-black/5 dark:ring-white/10
+           hover:bg-white dark:hover:bg-gray-700
+           transition-all duration-200
+           carousel-arrow-hint"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="size-5 sm:size-6" fill="none"
+         viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+
+  <!-- Track -->
   <div
     data-carousel-track
     role="region"
     aria-label={i18n.CAROUSEL.regionLabel}
     class="mx-auto max-w-5xl overflow-x-scroll overscroll-x-auto scroll-smooth
-           snap-x snap-mandatory
-           py-6 sm:py-10 md:py-14 lg:py-16
+           snap-x snap-mandatory py-6 sm:py-10 md:py-14 lg:py-16
            carousel-hide-scrollbar"
   >
-    <!-- Cards container -->
     <div class="flex flex-row justify-start gap-4 sm:gap-5 lg:gap-6 px-4 sm:px-8 lg:px-10 py-4 w-max">
-      {projectsWithImages.map((project, i) => (
+
+      {projects.map((project, i) => (
         <div
-          class="carousel-card-animate group relative flex-shrink-0 snap-start
-                 w-[75vw] h-[60vh] max-w-[280px] max-h-[400px]
-                 sm:w-[320px] sm:h-[440px] sm:max-w-none sm:max-h-none
-                 md:w-[380px] md:h-[500px]
-                 lg:w-[460px] lg:h-[560px]
-                 rounded-3xl cursor-pointer
-                 transition-transform duration-300 ease-out
-                 hover:scale-[1.02]"
+          class="carousel-card-animate group flex-shrink-0 snap-start flex flex-col
+                 w-[75vw] max-w-[280px] sm:w-[320px] sm:max-w-none md:w-[360px] lg:w-[420px]
+                 cursor-pointer"
           data-carousel-card
           data-index={i}
           data-description={project.description}
+          data-detail-description={(project as any).detailDescription ?? project.description}
+          data-subtitle={project.subtitle}
+          data-slug={(project as any).slug ?? ''}
+          data-stack={JSON.stringify((project as any).stack ?? [])}
+          data-image={project.image}
+          data-live-url={(project as any).liveUrl ?? ''}
+          data-code-url={(project as any).codeUrl ?? ''}
           style={`--card-delay: ${0.15 * i}s`}
         >
-          {/* Inner wrapper handles overflow clipping so scale isn't clipped */}
-          <div class="absolute inset-0 rounded-3xl overflow-hidden
-                      bg-gray-100 dark:bg-neutral-900
-                      ring-1 ring-black/5 dark:ring-white/10">
-
-          {/* Top gradient overlay for text readability */}
-          <div class="pointer-events-none absolute inset-x-0 top-0 z-30 h-full
-                      bg-gradient-to-b from-black/50 via-transparent to-transparent" />
-
-          {/* Hover overlay — visible glow inside the card */}
-          <div class="pointer-events-none absolute inset-0 z-40
-                      opacity-0 group-hover:opacity-100
-                      transition-opacity duration-300
-                      bg-gradient-to-t from-white/10 via-transparent to-white/5
-                      dark:from-white/5 dark:to-white/[0.02]" />
-
-          {/* Card text content */}
-          <div class="relative z-40 p-4 sm:p-6 md:p-8">
-            <p class="text-left text-xs sm:text-sm md:text-base font-medium text-white/90
-                      transition-transform duration-300 group-hover:-translate-y-0.5">
-              {project.subtitle}
-            </p>
-            <h3 class="mt-1 sm:mt-2 max-w-xs text-left text-base sm:text-xl md:text-2xl lg:text-3xl
-                       font-semibold text-balance text-white
-                       transition-transform duration-300 group-hover:-translate-y-0.5">
-              {project.title}
-            </h3>
+          <!-- Image -->
+          <div class="relative w-full overflow-hidden rounded-2xl aspect-[3/4]
+                      bg-gray-100 dark:bg-neutral-800
+                      ring-1 ring-black/5 dark:ring-white/10
+                      transition-transform duration-300 ease-out group-hover:scale-[1.02]">
+            <div class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover:opacity-100
+                        transition-opacity duration-300 bg-black/10 dark:bg-white/5" />
+            <img
+              src={project.image}
+              alt={project.title}
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-0 z-0 h-full w-full object-cover
+                     transition-all duration-500 blur-sm group-hover:blur-0 group-hover:scale-105"
+              data-carousel-img
+            />
           </div>
 
-          {/* Background image with blur-on-load + hover brightness */}
-          <img
-            src={project.image}
-            alt={project.title}
-            loading="lazy"
-            decoding="async"
-            class="absolute inset-0 z-10 h-full w-full object-cover
-                   transition-all duration-500
-                   blur-sm group-hover:blur-0
-                   group-hover:scale-105 group-hover:brightness-110"
-            data-carousel-img
-          />
-          </div>{/* end inner overflow wrapper */}
+          <!-- Caption -->
+          <div class="pt-3 pb-1 px-1">
+            <h3 class="text-sm sm:text-base font-semibold text-neutral-900 dark:text-white leading-snug">
+              <span class="font-bold">{project.title}.</span>
+              {' '}
+              <span class="font-normal text-neutral-600 dark:text-neutral-400">{project.description}</span>
+            </h3>
+          </div>
         </div>
       ))}
 
-      {/* Spacer at the end so last card doesn't get cut off */}
       <div class="flex-shrink-0 w-4 sm:w-8 md:w-12 lg:w-16" aria-hidden="true" />
     </div>
   </div>
 
-  <!-- Navigation hint + buttons -->
-  <div class="mx-auto max-w-5xl flex items-center justify-between px-4 sm:px-8 lg:px-10 mt-4">
-    <!-- Swipe hint -->
-    <p class="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300">
-      <svg xmlns="http://www.w3.org/2000/svg" class="size-5 animate-pulse" fill="none"
-           viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round"
-              d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
-      </svg>
-      <span class="hidden sm:inline">{i18n.CAROUSEL.hint}</span>
-      <span class="sm:hidden">{i18n.CAROUSEL.hintMobile}</span>
-    </p>
-
-    <!-- Buttons -->
-    <div class="flex gap-2">
-    <button
-      data-carousel-btn-left
-      aria-label={i18n.CAROUSEL.scrollLeft}
-      aria-disabled="true"
-      disabled
-      class="relative z-40 flex size-9 sm:size-10 items-center justify-center rounded-full
-             bg-gray-200/80 dark:bg-gray-800
-             text-gray-600 dark:text-gray-400
-             disabled:opacity-40 disabled:cursor-not-allowed
-             hover:bg-gray-300 dark:hover:bg-gray-700
-             transition-all duration-200"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" class="size-5 sm:size-6" fill="none"
-           viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
-    <button
-      data-carousel-btn-right
-      aria-label={i18n.CAROUSEL.scrollRight}
-      class="relative z-40 flex size-9 sm:size-10 items-center justify-center rounded-full
-             bg-gray-200/80 dark:bg-gray-800
-             text-gray-600 dark:text-gray-400
-             disabled:opacity-40 disabled:cursor-not-allowed
-             hover:bg-gray-300 dark:hover:bg-gray-700
-             transition-all duration-200"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" class="size-5 sm:size-6" fill="none"
-           viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-      </svg>
-    </button>
-    </div>
-  </div>
-
-  <!-- Modal overlay (hidden by default) -->
-  <div
-    data-carousel-modal
-    class="fixed inset-0 z-50 hidden h-screen overflow-auto"
-  >
-    <!-- Backdrop -->
-    <div data-carousel-backdrop
-         class="fixed inset-0 size-full bg-black/80 backdrop-blur-lg
-                opacity-0 transition-opacity duration-300" />
-
-    <!-- Modal content -->
-    <div data-carousel-modal-content
-         class="relative z-[60] mx-4 sm:mx-auto my-6 sm:my-10 h-fit max-w-5xl rounded-3xl
-                bg-white dark:bg-neutral-900 p-4 sm:p-6 md:p-10 font-sans
-                shadow-2xl dark:shadow-none
-                opacity-0 translate-y-4 transition-all duration-300">
-
-      <!-- Close button -->
-      <button data-carousel-modal-close
-              class="sticky top-4 right-0 ml-auto flex size-8 items-center justify-center
-                     rounded-full bg-black dark:bg-white z-10
-                     hover:scale-110 transition-transform duration-150">
-        <svg xmlns="http://www.w3.org/2000/svg" class="size-5 text-white dark:text-neutral-900"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-
-      <!-- Dynamic content filled by JS -->
-      <p data-carousel-modal-category
-         class="text-sm sm:text-base font-medium text-gray-600 dark:text-gray-300 mt-4"></p>
-      <h2 data-carousel-modal-title
-          class="mt-3 sm:mt-4 text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold
-                 text-neutral-800 dark:text-white"></h2>
-      <div class="py-6 sm:py-10">
-        <p data-carousel-modal-description
-           class="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed"></p>
-      </div>
-    </div>
-  </div>
+  <!-- Modal (separate component) -->
+  <CarouselModal currentLocale={currentLocale} />
 
 </div>
 
 <style>
-  .carousel-hide-scrollbar {
-    scrollbar-width: none;
-  }
-  .carousel-hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
+  .carousel-hide-scrollbar { scrollbar-width: none; }
+  .carousel-hide-scrollbar::-webkit-scrollbar { display: none; }
 
-  /* Staggered entrance animation */
   .carousel-card-animate {
     opacity: 0;
     transform: translateY(20px);
@@ -211,152 +145,25 @@ const projectsWithImages = i18n.PROJECTS.map((p, i) => ({
     animation-delay: var(--card-delay, 0s);
   }
   @keyframes cardFadeIn {
-    to {
-      opacity: 1;
-      transform: translateY(0);
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Gentle pulse on the right arrow on first load — continuous until user scrolls */
+  .carousel-arrow-hint {
+    animation: arrowPulse 1.8s ease-in-out 1s infinite;
+  }
+  @keyframes arrowPulse {
+    0%, 100% {
+      transform: translateY(-50%) scale(1);
+      box-shadow: 0 0 0 0 rgba(200, 200, 200, 0.4);
+    }
+    50% {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 0 12px 4px rgba(200, 200, 200, 0.3);
     }
   }
 </style>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    document.querySelectorAll<HTMLElement>('[data-carousel-root]').forEach((root) => {
-      const track = root.querySelector<HTMLElement>('[data-carousel-track]');
-      const btnLeft = root.querySelector<HTMLButtonElement>('[data-carousel-btn-left]');
-      const btnRight = root.querySelector<HTMLButtonElement>('[data-carousel-btn-right]');
-      const modal = root.querySelector<HTMLElement>('[data-carousel-modal]');
-      const backdrop = root.querySelector<HTMLElement>('[data-carousel-backdrop]');
-      const modalContent = root.querySelector<HTMLElement>('[data-carousel-modal-content]');
-      const modalClose = root.querySelector<HTMLButtonElement>('[data-carousel-modal-close]');
-      const modalCategory = root.querySelector<HTMLElement>('[data-carousel-modal-category]');
-      const modalTitle = root.querySelector<HTMLElement>('[data-carousel-modal-title]');
-      const modalDescription = root.querySelector<HTMLElement>('[data-carousel-modal-description]');
-
-      if (!track || !btnLeft || !btnRight) return;
-
-      // --- Get card dimensions dynamically for scroll-by-card ---
-      function getCardScrollAmount(): number {
-        const firstCard = root.querySelector<HTMLElement>('[data-carousel-card]');
-        if (!firstCard) return 300;
-        const gap = parseFloat(getComputedStyle(firstCard.parentElement!).gap) || 16;
-        return firstCard.offsetWidth + gap;
-      }
-
-      // --- Scroll state ---
-      function checkScrollability() {
-        const { scrollLeft, scrollWidth, clientWidth } = track!;
-        const canLeft = scrollLeft > 0;
-        const canRight = scrollLeft + clientWidth < scrollWidth - 1;
-        setBtn(btnLeft!, !canLeft);
-        setBtn(btnRight!, !canRight);
-      }
-
-      function setBtn(btn: HTMLButtonElement, isDisabled: boolean) {
-        btn.disabled = isDisabled;
-        btn.setAttribute('aria-disabled', String(isDisabled));
-      }
-
-      btnLeft.addEventListener('click', () => {
-        if (!btnLeft.disabled) {
-          track.scrollBy({ left: -getCardScrollAmount(), behavior: 'smooth' });
-        }
-      });
-
-      btnRight.addEventListener('click', () => {
-        if (!btnRight.disabled) {
-          track.scrollBy({ left: getCardScrollAmount(), behavior: 'smooth' });
-        }
-      });
-
-      track.addEventListener('scroll', checkScrollability, { passive: true });
-      checkScrollability();
-
-      // --- Image blur-on-load ---
-      root.querySelectorAll<HTMLImageElement>('[data-carousel-img]').forEach((img) => {
-        function removeBlur() {
-          img.classList.remove('blur-sm');
-        }
-        if (img.complete) {
-          removeBlur();
-        } else {
-          img.addEventListener('load', removeBlur, { once: true });
-        }
-      });
-
-      // --- Modal logic ---
-      if (!modal || !backdrop || !modalContent || !modalClose || !modalCategory || !modalTitle || !modalDescription) return;
-
-      let currentOpenIndex = -1;
-
-      function openModal(index: number) {
-        const card = root.querySelector<HTMLElement>(`[data-carousel-card][data-index="${index}"]`);
-        if (!card) return;
-
-        const title = card.querySelector('h3')?.textContent ?? '';
-        const subtitle = card.querySelector('p')?.textContent ?? '';
-        const description = card.getAttribute('data-description') ?? '';
-
-        modalCategory!.textContent = subtitle;
-        modalTitle!.textContent = title;
-        modalDescription!.textContent = description;
-
-        modal!.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-
-        requestAnimationFrame(() => {
-          backdrop!.classList.remove('opacity-0');
-          backdrop!.classList.add('opacity-100');
-          modalContent!.classList.remove('opacity-0', 'translate-y-4');
-          modalContent!.classList.add('opacity-100', 'translate-y-0');
-        });
-
-        currentOpenIndex = index;
-      }
-
-      function closeModal() {
-        backdrop!.classList.remove('opacity-100');
-        backdrop!.classList.add('opacity-0');
-        modalContent!.classList.remove('opacity-100', 'translate-y-0');
-        modalContent!.classList.add('opacity-0', 'translate-y-4');
-
-        setTimeout(() => {
-          modal!.classList.add('hidden');
-          document.body.style.overflow = '';
-        }, 300);
-
-        // Scroll to the closed card so it's fully visible
-        if (currentOpenIndex >= 0) {
-          const card = root.querySelector<HTMLElement>(`[data-carousel-card][data-index="${currentOpenIndex}"]`);
-          if (card) {
-            const trackRect = track!.getBoundingClientRect();
-            const cardRect = card.getBoundingClientRect();
-            const scrollOffset = cardRect.left - trackRect.left + track!.scrollLeft;
-            track!.scrollTo({ left: scrollOffset, behavior: 'smooth' });
-          }
-        }
-
-        currentOpenIndex = -1;
-      }
-
-      // Card click → open modal
-      root.querySelectorAll<HTMLElement>('[data-carousel-card]').forEach((card) => {
-        card.addEventListener('click', () => {
-          const index = parseInt(card.getAttribute('data-index') ?? '0', 10);
-          openModal(index);
-        });
-      });
-
-      // Close modal
-      modalClose.addEventListener('click', closeModal);
-      backdrop.addEventListener('click', closeModal);
-
-      // Escape key
-      function handleEscape(e: KeyboardEvent) {
-        if (e.key === 'Escape' && !modal!.classList.contains('hidden')) {
-          closeModal();
-        }
-      }
-      document.addEventListener('keydown', handleEscape);
-    });
-  });
+  import '@/scripts/carousel';
 </script>

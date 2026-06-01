@@ -76,17 +76,17 @@ const t = labels[currentLocale] ?? labels.en;
 // Full pool of available tech icons (excluded: Sun, Moon, SistemIcon,
 // ProfileIcon, Mail, Briefcase, Linkedin, Code, PapersIcon, Link)
 const POOL = [
-  { id: 'astro',       label: 'Astro',       color: '#17191e', textColor: '#ff5d01' },
-  { id: 'azure',       label: 'Azure',       color: '#0078d4', textColor: '#fff'    },
-  { id: 'css',         label: 'CSS',         color: '#0c73b8', textColor: '#fff'    },
-  { id: 'github',      label: 'GitHub',      color: '#24292e', textColor: '#fff'    },
-  { id: 'html',        label: 'HTML',        color: '#e34f26', textColor: '#fff'    },
-  { id: 'javascript',  label: 'JavaScript',  color: '#f0db4f', textColor: '#323330' },
-  { id: 'microsoft',   label: 'Microsoft',   color: '#f3f3f3', textColor: '#333'    },
-  { id: 'react',       label: 'React',       color: '#20232a', textColor: '#61dafb' },
-  { id: 'sql',         label: 'SQL',         color: '#cfd8dc', textColor: '#b71c1c' },
-  { id: 'svelte',      label: 'Svelte',      color: '#ff3e00', textColor: '#fff'    },
-  { id: 'typescript',  label: 'TypeScript',  color: '#3178c6', textColor: '#fff'    },
+  { id: 'astro',       label: 'Astro',       color: '#0d0f12', textColor: '#ff5d01' },
+  { id: 'azure',       label: 'Azure',       color: '#002050', textColor: '#fff'    },
+  { id: 'css',         label: 'CSS',         color: '#05304a', textColor: '#fff'    },
+  { id: 'github',      label: 'GitHub',      color: '#161b22', textColor: '#fff'    },
+  { id: 'html',        label: 'HTML',        color: '#3d1508', textColor: '#fff'    },
+  { id: 'javascript',  label: 'JavaScript',  color: '#2b2a10', textColor: '#f0db4f' },
+  { id: 'microsoft',   label: 'Microsoft',   color: '#1a1a1a', textColor: '#fff'    },
+  { id: 'react',       label: 'React',       color: '#0f1318', textColor: '#61dafb' },
+  { id: 'sql',         label: 'SQL',         color: '#1c2830', textColor: '#e57373' },
+  { id: 'svelte',      label: 'Svelte',      color: '#2d0a00', textColor: '#ff3e00' },
+  { id: 'typescript',  label: 'TypeScript',  color: '#0f1f33', textColor: '#fff'    },
 ] as const;
 
 // Fisher-Yates shuffle, then pick first 8 — different set every page load

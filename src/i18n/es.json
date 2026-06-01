@@ -163,47 +163,77 @@
   "PROJECTS": [
     {
       "title": "NBD Landscaping",
+      "slug": "nbd-landscaping",
       "subtitle": "App de negocio con ASP.NET MVC y C#",
-      "description": "Aplicación web diseñada para una empresa de paisajismo, que permite a los empleados gestionar clientes y proyectos según su nivel de autenticación. Cada empleado puede crear, actualizar y eliminar registros de clientes, así como asignar proyectos. Los usuarios también pueden agregar registros de cotización con materiales y mano de obra para calcular el costo total del proyecto.",
+      "description": "App web con roles para una empresa de paisajismo — gestiona clientes, asigna proyectos y genera cotizaciones con materiales y mano de obra.",
+      "detailDescription": "NBD Landscaping es una aplicación de gestión empresarial completa para una empresa de paisajismo. El sistema implementa autenticación basada en roles para que cada empleado solo vea y gestione lo que está autorizado. Los gerentes supervisan todos los clientes y proyectos, mientras los empleados de campo manejan su trabajo asignado. El sistema de cotizaciones calcula el costo total del proyecto combinando cantidades de materiales y horas de mano de obra.",
+      "stack": ["ASP.NET MVC", "C#", "Entity Framework", "SQL Server", "Bootstrap"],
       "gallery": "Galería",
       "code": "Código",
-      "link": "Enlace"
+      "link": "Enlace",
+      "codeUrl": "https://github.com/andresvillarreal",
+      "liveUrl": null
     },
     {
       "title": "Cities API",
+      "slug": "cities-api",
       "subtitle": "ASP.NET Core Web API",
-      "description": "Una Web API que muestra ciudades correspondientes a sus respectivas provincias. Los usuarios también pueden realizar operaciones CRUD sobre cada entidad.",
+      "description": "API REST que mapea ciudades a sus provincias, con soporte CRUD completo en cada entidad.",
+      "detailDescription": "Cities API es un servicio web RESTful construido con ASP.NET Core que expone endpoints para consultar ciudades y sus provincias correspondientes. Soporta operaciones CRUD completas en ambas entidades, sigue convenciones REST e incluye códigos de estado HTTP y manejo de errores adecuados. El proyecto demuestra patrones de diseño de API limpios.",
+      "stack": ["ASP.NET Core", "C#", "Entity Framework Core", "SQL Server", "Swagger"],
       "gallery": "Galería",
       "code": "Código",
-      "link": "Enlace"
+      "link": "Enlace",
+      "codeUrl": "https://github.com/andresvillarreal",
+      "liveUrl": null
     },
     {
       "title": "Spotify Clone",
+      "slug": "spotify-clone",
       "subtitle": "Construido con Astro",
-      "description": "Clon de Spotify donde los usuarios pueden reproducir canciones y navegar por diferentes tipos de álbumes.",
+      "description": "Clon funcional de Spotify — reproduce canciones y navega por álbumes con una UI limpia y responsiva.",
+      "detailDescription": "Un reproductor de música inspirado en Spotify construido con Astro y JavaScript vanilla. Los usuarios pueden explorar una biblioteca de álbumes, reproducir pistas con un reproductor persistente en la parte inferior y navegar entre diferentes vistas de álbumes. El proyecto se enfoca en interacciones de UI fluidas y gestión del estado de audio entre navegaciones.",
+      "stack": ["Astro", "JavaScript", "CSS", "HTML5 Audio API"],
       "gallery": "Galería",
-      "code": "Código"
+      "code": "Código",
+      "codeUrl": "https://github.com/andresvillarreal",
+      "liveUrl": null
     },
     {
       "title": "Emma's Small Engines",
+      "slug": "emmas-small-engines",
       "subtitle": "App de negocio con HTML5, CSS3 y JavaScript",
-      "description": "Aplicación web enfocada en la gestión de inventario, equipos, reparaciones y pedidos de diferentes tipos de motores.",
+      "description": "Sistema de inventario y reparaciones para un taller de motores — controla equipos, pedidos y registros de servicio.",
+      "detailDescription": "Emma's Small Engines es una herramienta de gestión empresarial construida completamente con HTML, CSS y JavaScript vanilla — sin frameworks. Maneja las operaciones diarias de un taller de reparación de motores pequeños: seguimiento de inventario, registro de equipos, gestión de órdenes de reparación e historial de servicio.",
+      "stack": ["HTML5", "CSS3", "JavaScript", "LocalStorage"],
       "gallery": "Galería",
-      "code": "Código"
+      "code": "Código",
+      "codeUrl": "https://github.com/andresvillarreal",
+      "liveUrl": null
     },
     {
       "title": "VitGreen",
+      "slug": "vitgreen",
       "subtitle": "Sitio de eCommerce",
-      "description": "Sitio de eCommerce moderno especializado en productos proteicos, con experiencia de compra fluida, pagos seguros, descripciones detalladas, reseñas de clientes y envío rápido.",
+      "description": "Tienda eCommerce moderna de productos proteicos — pago seguro, reseñas de clientes y envío rápido.",
+      "detailDescription": "VitGreen es una plataforma de eCommerce moderna especializada en productos proteicos y de salud. El sitio cuenta con un catálogo de productos limpio con descripciones detalladas, un sistema de reseñas de clientes y un flujo de pago optimizado con integración de pagos seguros. El diseño prioriza la conversión con CTAs claros y un layout mobile-first.",
+      "stack": ["HTML5", "CSS3", "JavaScript", "PHP", "MySQL"],
       "gallery": "Galería",
-      "link": "Enlace"
+      "link": "Enlace",
+      "liveUrl": "https://vitgreen.com",
+      "codeUrl": null
     },
     {
       "title": "V12 Magazine",
+      "slug": "v12-magazine",
       "subtitle": "Revista de Autos",
-      "description": "Sitio web de revista con noticias y eventos del mundo automotriz en Colombia.",
+      "description": "Revista automotriz con noticias y eventos del mundo del motor en Colombia.",
+      "detailDescription": "V12 Magazine es una publicación automotriz digital que cubre la cultura del automóvil en Colombia — desde eventos de carreras locales y exposiciones hasta noticias de la industria y reseñas de vehículos. El sitio fue construido para manejar un diseño con mucho contenido con tiempos de carga rápidos y una experiencia de lectura limpia.",
+      "stack": ["WordPress", "PHP", "CSS", "MySQL"],
       "gallery": "Galería",
-      "link": "Enlace"
+      "link": "Enlace",
+      "liveUrl": "https://v12magazine.com",
+      "codeUrl": null
     }
   ],
 
@@ -212,7 +242,12 @@
     "scrollRight": "Desplazar a la derecha",
     "regionLabel": "Carrusel de proyectos",
     "hint": "Desliza o usa las flechas",
-    "hintMobile": "Desliza"
+    "hintMobile": "Desliza",
+    "viewProject": "Ver proyecto completo",
+    "techStack": "Tecnologías",
+    "liveDemo": "Website",
+    "sourceCode": "Código",
+    "backToPortfolio": "← Volver al portafolio"
   },
 
   "FOOTER": {

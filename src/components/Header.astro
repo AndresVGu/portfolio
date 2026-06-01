@@ -26,6 +26,17 @@ const languages = [
   { label: 'ES', locale: 'es', href: '/es/' },
   { label: 'FR', locale: 'fr', href: '/fr/' },
 ];
+
+// If we're on a project page (/projects/[slug], /es/projects/[slug], /fr/projects/[slug]),
+// build locale-aware hrefs that stay on the same project page.
+const pathname = Astro.url.pathname;
+const projectMatch = pathname.match(/(?:\/(?:es|fr))?\/projects\/([^/]+)/);
+if (projectMatch) {
+  const slug = projectMatch[1];
+  languages[0].href = `/projects/${slug}`;
+  languages[1].href = `/es/projects/${slug}`;
+  languages[2].href = `/fr/projects/${slug}`;
+}
 ---
 
 <!-- ═══════════════════════════════════════════════════════════════════════
@@ -223,10 +234,10 @@ const languages = [
     function scrollToSection(id: string) {
       const target = document.getElementById(id);
       if (!target) return;
-      const header = document.querySelector('header');
-      const headerH = header ? header.getBoundingClientRect().height + 12 : 72;
-      const top = target.getBoundingClientRect().top + window.scrollY - headerH;
-      window.scrollTo({ top, behavior: 'smooth' });
+      const header = document.querySelector<HTMLElement>('header');
+      const headerH = header ? header.offsetHeight + 16 : 80;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY - headerH;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
     }
 
     // ── Mobile drawer ─────────────────────────────────────────────────────
@@ -275,25 +286,28 @@ const languages = [
         const hashIndex = href.indexOf('#');
         if (hashIndex === -1) return;
 
-        const sectionId  = href.slice(hashIndex + 1);
-        const currentPath = window.location.pathname.replace(/\/$/, '');
-        const linkPath    = href.slice(0, hashIndex).replace(/\/$/, '') || currentPath;
+        const sectionId   = href.slice(hashIndex + 1);
+        const rawLinkPath = href.slice(0, hashIndex);                          // e.g. "/" or "/es/" or ""
+        const linkPath    = rawLinkPath.replace(/\/$/, '');                    // strip trailing slash
+        const currentPath = window.location.pathname.replace(/\/$/, '');      // strip trailing slash
 
-        if (linkPath && linkPath !== currentPath) return;
+        // If the link points to a different page, let the browser navigate normally
+        if (linkPath !== '' && linkPath !== currentPath) return;
 
+        // Same page — prevent default and smooth-scroll
         e.preventDefault();
 
         const isDrawerOpen = drawer && !drawer.classList.contains('translate-x-full');
 
         if (isDrawerOpen) {
-          // Close drawer first, then scroll after the 300ms CSS transition finishes
           closeDrawer();
-          setTimeout(() => scrollToSection(sectionId), 320);
+          // Wait for drawer CSS transition (300ms) + small buffer before scrolling
+          setTimeout(() => scrollToSection(sectionId), 350);
         } else {
           scrollToSection(sectionId);
         }
 
-        history.pushState(null, '', `#${sectionId}`);
+        history.replaceState(null, '', `${rawLinkPath || '/'}#${sectionId}`);
       });
     });
 
@@ -353,9 +367,9 @@ const languages = [
     updateHeaderBg();
     const hash = window.location.hash.slice(1);
     if (hash && hash !== 'header-menu' && hash !== 'header-nav') {
-      setTimeout(() => scrollToSection(hash), 120);
+      // Small delay to let the page fully render before scrolling
+      setTimeout(() => scrollToSection(hash), 150);
     } else if (!hash) {
-      // Ensure page starts at the top on first load (no hash)
       window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
     }
 
