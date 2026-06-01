@@ -85,7 +85,7 @@ function initCarousel(root: HTMLElement) {
 
     const title   = card.querySelector('h3 span')?.textContent?.replace('.', '').trim() ?? '';
     const subtitle= card.getAttribute('data-subtitle') ?? '';
-    const desc    = card.getAttribute('data-detail-description') ?? card.getAttribute('data-description') ?? '';
+    const desc    = card.getAttribute('data-description') ?? '';
     const image   = card.getAttribute('data-image') ?? '';
     const slug    = card.getAttribute('data-slug') ?? '';
     const liveUrl = card.getAttribute('data-live-url') ?? '';

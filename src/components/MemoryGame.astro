@@ -199,7 +199,7 @@ const allCards = [...techs, ...techs];
   <!-- ── Card grid ──────────────────────────────────────────────────────────── -->
   <div
     id="mg-grid"
-    class="grid grid-cols-4 gap-3 sm:gap-4"
+    class="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4"
     role="list"
     aria-label="Memory cards"
   >
@@ -301,6 +301,12 @@ const allCards = [...techs, ...techs];
     outline: 2px solid #facc15;
     outline-offset: 3px;
     border-radius: 1rem;
+  }
+
+  /* Mobile touch improvements */
+  .mg-card {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 </style>
 
@@ -495,4 +501,7 @@ const allCards = [...techs, ...techs];
   } else {
     initMemoryGame();
   }
+
+  // Re-init after View Transitions navigation
+  document.addEventListener('astro:page-load', initMemoryGame);
 </script>

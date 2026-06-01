@@ -76,8 +76,8 @@ const years = currentYear - graduationYear;
         <div class="halo-layer inner-glow"></div>
         <div class="halo-layer main-border"></div>
         <a
-          href="/docs/Andres_Villarreal_SDeveloper.pdf"
-          download="Andres_Villarreal_SDeveloper.pdf"
+          href={(i18n.PROFILE as any).resumeUrl ?? '/docs/Andres_Villarreal_Resume_EN.pdf'}
+          download
           target="_blank"
           rel="noopener noreferrer"
           class="relative z-10 flex items-center gap-2 px-6 py-3 rounded-xl

@@ -16,6 +16,7 @@
     "badge": "Abierto a oportunidades",
     "contact": "Contacto",
     "resume": "Currículum",
+    "resumeUrl": "/docs/Andres_Villarreal_HojaDeVida_ES.pdf",
     "role1": "Desarrollador Full-Stack",
     "role2": "Especialista en Electrónica",
     "role3": "Trilingüe · EN / FR / ES",
@@ -162,6 +163,19 @@
 
   "PROJECTS": [
     {
+      "title": "Toughbook AutoInstaller",
+      "slug": "toughbook-autoinstaller",
+      "subtitle": "Toolkit de Automatización CLI — Bash & Python",
+      "description": "Toolkit de línea de comandos que automatiza la detección de hardware, instalación de drivers y preparación OEM para reacondicionamiento de Panasonic Toughbook.",
+      "detailDescription": "<h2>Resumen</h2><p>Toughbook AutoInstaller es un toolkit modular de línea de comandos construido para técnicos que reacondicionan laptops y tablets robustas Panasonic Toughbook. Corre sobre Ubuntu LTS y provee un menú interactivo que automatiza todo el flujo de QA — desde el primer arranque hasta el estado OEM-ready.</p><img src='/projects/autoinstall/tough.webp' alt='Toughbook AutoInstaller — Menú Interactivo de Consola' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10' data-gallery-img='0' /><img src='/projects/autoinstall/option1.webp' alt='Toughbook AutoInstaller — Información del Dispositivo' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10 hidden' data-gallery-img='1' /><img src='/projects/autoinstall/option2.webp' alt='Toughbook AutoInstaller — Detección de Hardware' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10 hidden' data-gallery-img='2' /><div class='flex items-center justify-center gap-4 my-4'><button data-gallery-prev class='flex size-9 items-center justify-center rounded-full bg-gray-200/80 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors disabled:opacity-30' disabled><svg xmlns='http://www.w3.org/2000/svg' class='size-5' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.5'><path stroke-linecap='round' stroke-linejoin='round' d='M15 19l-7-7 7-7'/></svg></button><span data-gallery-counter class='text-sm font-medium text-gray-500 dark:text-gray-400 tabular-nums'>1 / 3</span><button data-gallery-next class='flex size-9 items-center justify-center rounded-full bg-gray-200/80 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors'><svg xmlns='http://www.w3.org/2000/svg' class='size-5' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.5'><path stroke-linecap='round' stroke-linejoin='round' d='M9 5l7 7-7 7'/></svg></button></div><h2>El Problema</h2><p>En un entorno de reacondicionamiento, cada unidad debe ser probada individualmente para asegurar que todos los componentes — módem 4G, GPS, lector de huellas, pantalla táctil, cámaras, lector de tarjetas inteligentes — funcionen antes del envío. Hacer esto manualmente en cada unidad toma más de 30 minutos y es altamente propenso a errores. Diferentes técnicos siguen diferentes pasos, generando configuraciones inconsistentes y defectos no detectados.</p><h2>La Solución</h2><p>Un solo script que detecta el modelo de Toughbook automáticamente y presenta un menú interactivo adaptado. El toolkit maneja escaneo de hardware, instalación de drivers, configuración de audio, calibración táctil y preparación OEM completa — todo desde una sola sesión de terminal.</p><img src='/projects/autoinstall/tough.webp' alt='Toughbook AutoInstaller — Menú Interactivo de Consola' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10' /><h2>Por Qué Importa</h2><p>Este proyecto nació de un cuello de botella real en Rugged Books. Cada día, docenas de unidades necesitaban configuración idéntica, y el proceso manual era la mayor restricción en el rendimiento de producción. Al automatizar la detección, instalación de drivers y preparación del sistema, el toolkit redujo el tiempo de configuración por unidad en más del 60% y eliminó la deriva de configuración entre técnicos.</p><h2>Impacto en la Productividad</h2><ul><li><strong>60%+ de reducción</strong> en tiempo de configuración por unidad</li><li><strong>Cero deriva de configuración</strong> — cada unidad se envía con setup idéntico sin importar qué técnico la manejó</li><li><strong>Onboarding más rápido</strong> — los nuevos empleados siguen el script en vez de memorizar un proceso manual de 30 pasos</li><li><strong>Escalable</strong> — agregar soporte para nuevos modelos solo requiere una nueva definición de menú y reglas de detección</li><li><strong>Menos devoluciones</strong> — la verificación automatizada de hardware detecta defectos antes del envío</li></ul><h2>Modelos Soportados</h2><ul><li>CF-31 MK5 — Ubuntu 22.04</li><li>CF-53 MK4 — Ubuntu 22.04</li><li>CF-54 MK2 — Ubuntu 22.04</li><li>CF-C2 MK2 — Ubuntu 22.04</li><li>FZ-G1 MK1 / MK4 — Ubuntu 20.04</li></ul><h2>Arquitectura</h2><p>El proyecto está organizado en scripts Bash modulares bajo un directorio <code>lib/</code>. Cada módulo maneja una responsabilidad específica:</p><pre><code>toughbook-autoinstall/\n├── autoinstall.sh              # Punto de entrada\n├── lib/\n│   ├── colors.sh               # Variables de color\n│   ├── utils.sh                # Spinner, banner, checks\n│   ├── sysinfo.sh              # Info del sistema (CPU, RAM, batería)\n│   ├── detection.sh            # Detección de hardware\n│   ├── drivers.sh              # Instalación de drivers\n│   ├── tools.sh                # Test teclado, audio, táctil\n│   ├── oem.sh                  # Preparación OEM (Sysprep)\n│   └── menus.sh                # Menús interactivos\n├── alsamixerconf.sh            # Config audio ALSA\n├── c2audioconf.sh              # Config audio CF-C2\n├── touch-calibrator.sh         # Calibración táctil (CF-53)\n├── touch-calibrator-cf31.sh    # Calibración táctil (CF-31)\n└── README.md</code></pre><h2>Documentación — Cómo Usar</h2><h3>Prerrequisitos</h3><ul><li>Un Panasonic Toughbook de la lista de modelos soportados</li><li>Ubuntu LTS instalado (20.04 o 22.04 según el modelo)</li><li>Conexión a internet (Wi-Fi o Ethernet)</li><li>Acceso root</li></ul><h3>Inicio Rápido</h3><div class='relative group' data-copy-block><pre><code>cd ~/Downloads\nsudo apt install git -y\ngit clone https://github.com/AndresVGu/toughbook-autoinstall\ncd toughbook-autoinstall\nchmod +x autoinstall.sh\nsudo ./autoinstall.sh</code></pre><button data-copy-btn class='absolute top-3 right-3 p-1.5 rounded-md bg-gray-700/50 hover:bg-gray-600 text-gray-300 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-200' title='Copiar'><svg xmlns='http://www.w3.org/2000/svg' class='size-4' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg></button></div><h3>Opciones del Menú</h3><ol><li><strong>Información del Dispositivo</strong> — Muestra specs del sistema (CPU, RAM, almacenamiento, batería)</li><li><strong>Detección de Hardware</strong> — Escanea periféricos conectados</li><li><strong>Actualizar Dispositivo</strong> — Instala actualizaciones y drivers para hardware detectado</li><li><strong>Test de Teclado</strong> — Lanza utilidad de prueba de teclado</li><li><strong>Activación de Sonido</strong> — Configura audio ALSA (específico por modelo)</li></ol><h3>Información del Dispositivo</h3><p>La opción 1 escanea y muestra las especificaciones completas del sistema incluyendo modelo de CPU, capacidad de RAM, unidades de almacenamiento y salud de la batería — dando al técnico una vista rápida del hardware de la unidad.</p><img src='/projects/autoinstall/first.gif' alt='Información del Dispositivo — Salida de specs del sistema' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10' /><h3>Detección de Hardware</h3><p>La opción 2 realiza un escaneo profundo de todos los periféricos conectados — dispositivos USB, puertos seriales, Bluetooth, cámaras, módulos GPS, lectores de huellas y lectores de tarjetas inteligentes. Cada componente se marca como detectado o no detectado.</p><img src='/projects/autoinstall/second.gif' alt='Detección de Hardware — Escaneo de periféricos' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10' /><h3>Test de Teclado</h3><p>La opción 4 lanza una utilidad visual de prueba de teclado que resalta cada tecla al presionarla, asegurando que todas las teclas funcionen antes del envío.</p><img src='/projects/autoinstall/option4.webp' alt='Test de Teclado — Utilidad visual de prueba' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10' /><h3>Preparación OEM</h3><p>Después de que todas las pruebas pasan, el script ejecuta <code>oem-config-prepare</code> para resetear el sistema para entrega al usuario final. La unidad se apaga lista para ser enviada o clonada.</p><h2>Potencial Futuro</h2><p>La arquitectura modular permite que el toolkit se expanda para soportar nuevos modelos de hardware, integrarse con sistemas de gestión de inventario, generar reportes de QA automatizados y potencialmente alimentar un dashboard para monitoreo de línea de producción — transformando un simple script en una plataforma completa de operaciones de reacondicionamiento.</p>",
+      "stack": ["Bash", "Python", "Linux", "Ubuntu LTS", "Hardware Detection"],
+      "gallery": "Galería",
+      "code": "Código",
+      "codeUrl": "https://github.com/AndresVGu/toughbook-autoinstall",
+      "docsUrl": "https://github.com/AndresVGu/toughbook-autoinstall/blob/main/README.md",
+      "liveUrl": null
+    },
+    {
       "title": "NBD Landscaping",
       "slug": "nbd-landscaping",
       "subtitle": "App de negocio con ASP.NET MVC y C#",
@@ -171,8 +185,8 @@
       "gallery": "Galería",
       "code": "Código",
       "link": "Enlace",
-      "codeUrl": "https://github.com/andresvillarreal",
-      "liveUrl": null
+      "codeUrl": "https://github.com/AndresVGu/NBD2024Project",
+      "liveUrl": "https://nbdlandscaping.azurewebsites.net"
     },
     {
       "title": "Cities API",
@@ -184,8 +198,8 @@
       "gallery": "Galería",
       "code": "Código",
       "link": "Enlace",
-      "codeUrl": "https://github.com/andresvillarreal",
-      "liveUrl": null
+      "codeUrl": "https://github.com/AndresVGu/Cities_Api/tree/main",
+      "liveUrl": "https://project2api20240412225720.azurewebsites.net/swagger"
     },
     {
       "title": "Spotify Clone",
@@ -196,7 +210,7 @@
       "stack": ["Astro", "JavaScript", "CSS", "HTML5 Audio API"],
       "gallery": "Galería",
       "code": "Código",
-      "codeUrl": "https://github.com/andresvillarreal",
+      "codeUrl": "https://github.com/AndresVGu/Spotify_Clone-/tree/main",
       "liveUrl": null
     },
     {
@@ -208,7 +222,7 @@
       "stack": ["HTML5", "CSS3", "JavaScript", "LocalStorage"],
       "gallery": "Galería",
       "code": "Código",
-      "codeUrl": "https://github.com/andresvillarreal",
+      "codeUrl": "https://github.com/AndresVGu/Emma-s_Small_Engines",
       "liveUrl": null
     },
     {
@@ -220,7 +234,7 @@
       "stack": ["HTML5", "CSS3", "JavaScript", "PHP", "MySQL"],
       "gallery": "Galería",
       "link": "Enlace",
-      "liveUrl": "https://vitgreen.com",
+      "liveUrl": null,
       "codeUrl": null
     },
     {
@@ -247,6 +261,7 @@
     "techStack": "Tecnologías",
     "liveDemo": "Website",
     "sourceCode": "Código",
+    "fullDocs": "Docs",
     "backToPortfolio": "← Volver al portafolio"
   },
 

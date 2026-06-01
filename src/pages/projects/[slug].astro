@@ -14,6 +14,7 @@ const { slug } = Astro.params;
 const i18n = getI18N({ currentLocale: 'en' });
 
 const PROJECT_IMAGES: Record<string, string> = {
+  'toughbook-autoinstaller': '/photocards/laptops.webp',
   'nbd-landscaping':    '/projects/bg.webp',
   'cities-api':         '/projects/api2.webp',
   'spotify-clone':      '/projects/spo.webp',
@@ -37,6 +38,7 @@ const p = project as any;
   stack={p.stack ?? []}
   liveUrl={p.liveUrl}
   codeUrl={p.codeUrl}
+  docsUrl={p.docsUrl ?? null}
 >
-  <p>{p.detailDescription}</p>
+  <Fragment set:html={p.detailDescription} />
 </ProjectLayout>

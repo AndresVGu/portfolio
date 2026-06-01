@@ -16,6 +16,7 @@
     "badge": "Open to Opportunities",
     "contact": "Contact",
     "resume": "Resume",
+    "resumeUrl": "/docs/Andres_Villarreal_Resume_EN.pdf",
     "role1": "Full-Stack Developer",
     "role2": "Electronics Specialist",
     "role3": "Trilingual · EN / FR / ES",
@@ -162,6 +163,19 @@
 
   "PROJECTS": [
     {
+      "title": "Toughbook AutoInstaller",
+      "slug": "toughbook-autoinstaller",
+      "subtitle": "CLI Automation Toolkit — Bash & Python",
+      "description": "Command-line toolkit that automates hardware detection, driver installation, and OEM preparation for Panasonic Toughbook refurbishment.",
+      "detailDescription": "<h2>Overview</h2><p>Toughbook AutoInstaller is a modular command-line toolkit built for technicians who refurbish Panasonic Toughbook rugged laptops and tablets. It runs on Ubuntu LTS and provides an interactive menu that automates the entire QA workflow — from first boot to OEM-ready state.</p><img src='/projects/autoinstall/tough.webp' alt='Toughbook AutoInstaller — Interactive Console Menu' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10' data-gallery-img='0' /><img src='/projects/autoinstall/option1.webp' alt='Toughbook AutoInstaller — Device Information' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10 hidden' data-gallery-img='1' /><img src='/projects/autoinstall/option2.webp' alt='Toughbook AutoInstaller — Hardware Detection' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10 hidden' data-gallery-img='2' /><div class='flex items-center justify-center gap-4 my-4'><button data-gallery-prev class='flex size-9 items-center justify-center rounded-full bg-gray-200/80 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors disabled:opacity-30' disabled><svg xmlns='http://www.w3.org/2000/svg' class='size-5' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.5'><path stroke-linecap='round' stroke-linejoin='round' d='M15 19l-7-7 7-7'/></svg></button><span data-gallery-counter class='text-sm font-medium text-gray-500 dark:text-gray-400 tabular-nums'>1 / 3</span><button data-gallery-next class='flex size-9 items-center justify-center rounded-full bg-gray-200/80 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors'><svg xmlns='http://www.w3.org/2000/svg' class='size-5' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.5'><path stroke-linecap='round' stroke-linejoin='round' d='M9 5l7 7-7 7'/></svg></button></div><h2>The Problem</h2><p>In a refurbishment environment, each unit must be individually tested to ensure all components — 4G modem, GPS, fingerprint reader, touch screen, cameras, smart card reader — are functional before shipping. Doing this manually on every unit takes 30+ minutes per device and is highly error-prone. Different technicians follow different steps, leading to inconsistent configurations and missed defects.</p><h2>The Solution</h2><p>A single script that detects the Toughbook model automatically and presents a tailored interactive menu. The toolkit handles hardware scanning, driver installation, audio configuration, touch calibration, and full OEM preparation — all from one terminal session.</p><h2>Why It Matters</h2><p>This project was born from a real bottleneck at Rugged Books. Every day, dozens of units needed identical configuration, and the manual process was the single biggest constraint on throughput. By automating detection, driver installation, and system preparation, the toolkit cut per-unit setup time by over 60% and eliminated configuration drift between technicians.</p><h2>Impact on Productivity</h2><ul><li><strong>60%+ reduction</strong> in per-unit configuration time</li><li><strong>Zero configuration drift</strong> — every unit ships with identical setup regardless of which technician handled it</li><li><strong>Faster onboarding</strong> — new hires follow the script instead of memorizing a 30-step manual process</li><li><strong>Scalable</strong> — adding support for new models requires only a new menu definition and detection rules</li><li><strong>Fewer returns</strong> — automated hardware verification catches defects before shipping</li></ul><h2>Supported Models</h2><ul><li>CF-31 MK5 — Ubuntu 22.04</li><li>CF-53 MK4 — Ubuntu 22.04</li><li>CF-54 MK2 — Ubuntu 22.04</li><li>CF-C2 MK2 — Ubuntu 22.04</li><li>FZ-G1 MK1 / MK4 — Ubuntu 20.04</li></ul><h2>Architecture</h2><p>The project is organized into modular Bash scripts under a <code>lib/</code> directory. Each module handles a specific responsibility:</p><pre><code>toughbook-autoinstall/\n├── autoinstall.sh              # Entry point\n├── lib/\n│   ├── colors.sh               # Terminal color variables\n│   ├── utils.sh                # Spinner, banner, checks\n│   ├── sysinfo.sh              # System info (CPU, RAM, battery)\n│   ├── detection.sh            # Hardware detection\n│   ├── drivers.sh              # Driver installation\n│   ├── tools.sh                # Keyboard test, audio, touch\n│   ├── oem.sh                  # OEM preparation (Sysprep)\n│   └── menus.sh                # Interactive menus\n├── alsamixerconf.sh            # ALSA audio config\n├── c2audioconf.sh              # CF-C2 audio config\n├── touch-calibrator.sh         # Touch calibration (CF-53)\n├── touch-calibrator-cf31.sh    # Touch calibration (CF-31)\n└── README.md</code></pre><h2>Documentation — How to Use</h2><h3>Prerequisites</h3><ul><li>A Panasonic Toughbook from the supported models list</li><li>Ubuntu LTS installed (20.04 or 22.04 depending on model)</li><li>Internet connection (Wi-Fi or Ethernet)</li><li>Root access</li></ul><h3>Quick Start</h3><div class='relative group' data-copy-block><pre><code>cd ~/Downloads\nsudo apt install git -y\ngit clone https://github.com/AndresVGu/toughbook-autoinstall\ncd toughbook-autoinstall\nchmod +x autoinstall.sh\nsudo ./autoinstall.sh</code></pre><button data-copy-btn class='absolute top-3 right-3 p-1.5 rounded-md bg-gray-700/50 hover:bg-gray-600 text-gray-300 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-200' title='Copy'><svg xmlns='http://www.w3.org/2000/svg' class='size-4' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1'/></svg></button></div><h3>Menu Options</h3><ol><li><strong>Device Information</strong> — Displays system specs (CPU, RAM, storage, battery)</li><li><strong>Hardware Detection</strong> — Scans for connected peripherals</li><li><strong>Update Device</strong> — Installs updates and drivers for detected hardware</li><li><strong>Test Keyboard</strong> — Launches a keyboard testing utility</li><li><strong>Sound Activation</strong> — Configures ALSA audio (model-specific)</li></ol><h3>Device Information</h3><p>Option 1 scans and displays full system specifications including CPU model, RAM capacity, storage drives, and battery health — giving the technician a quick overview of the unit's hardware.</p><img src='/projects/autoinstall/first.gif' alt='Device Information — System specs output' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10' /><h3>Hardware Detection</h3><p>Option 2 performs a deep scan of all connected peripherals — USB devices, serial ports, Bluetooth, cameras, GPS modules, fingerprint readers, and smart card readers. Each component is flagged as detected or not detected.</p><img src='/projects/autoinstall/second.gif' alt='Hardware Detection — Peripheral scanning' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10' /><h3>Test Keyboard</h3><p>Option 4 launches a visual keyboard testing utility that highlights each key as it's pressed, ensuring all keys are functional before shipping.</p><img src='/projects/autoinstall/option4.webp' alt='Keyboard Test — Visual key testing utility' class='rounded-xl my-6 w-full ring-1 ring-black/5 dark:ring-white/10' /><h3>OEM Preparation</h3><p>After all tests pass, the script runs <code>oem-config-prepare</code> to reset the system for end-user delivery. The unit shuts down ready to be shipped or cloned.</p><h2>Future Potential</h2><p>The modular architecture means the toolkit can expand to support new hardware models, integrate with inventory management systems, generate automated QA reports, and potentially feed data into a dashboard for production line monitoring — turning a simple script into a full refurbishment operations platform.</p>",
+      "stack": ["Bash", "Python", "Linux", "Ubuntu LTS", "Hardware Detection"],
+      "gallery": "Gallery",
+      "code": "Code",
+      "codeUrl": "https://github.com/AndresVGu/toughbook-autoinstall",
+      "docsUrl": "https://github.com/AndresVGu/toughbook-autoinstall/blob/main/README.md",
+      "liveUrl": null
+    },
+    {
       "title": "NBD Landscaping",
       "slug": "nbd-landscaping",
       "subtitle": "Business app with ASP.NET MVC and C#",
@@ -171,8 +185,8 @@
       "gallery": "Gallery",
       "code": "Code",
       "link": "Link",
-      "codeUrl": "https://github.com/andresvillarreal",
-      "liveUrl": null
+      "codeUrl": "https://github.com/AndresVGu/NBD2024Project",
+      "liveUrl": "https://nbdlandscaping.azurewebsites.net"
     },
     {
       "title": "Cities API",
@@ -184,8 +198,8 @@
       "gallery": "Gallery",
       "code": "Code",
       "link": "Link",
-      "codeUrl": "https://github.com/andresvillarreal",
-      "liveUrl": null
+      "codeUrl": "https://github.com/AndresVGu/Cities_Api/tree/main",
+      "liveUrl": "https://project2api20240412225720.azurewebsites.net/swagger"
     },
     {
       "title": "Spotify Clone",
@@ -196,7 +210,7 @@
       "stack": ["Astro", "JavaScript", "CSS", "HTML5 Audio API"],
       "gallery": "Gallery",
       "code": "Code",
-      "codeUrl": "https://github.com/andresvillarreal",
+      "codeUrl": "https://github.com/AndresVGu/Spotify_Clone-/tree/main",
       "liveUrl": null
     },
     {
@@ -208,7 +222,7 @@
       "stack": ["HTML5", "CSS3", "JavaScript", "LocalStorage"],
       "gallery": "Gallery",
       "code": "Code",
-      "codeUrl": "https://github.com/andresvillarreal",
+      "codeUrl": "https://github.com/AndresVGu/Emma-s_Small_Engines",
       "liveUrl": null
     },
     {
@@ -220,7 +234,7 @@
       "stack": ["HTML5", "CSS3", "JavaScript", "PHP", "MySQL"],
       "gallery": "Gallery",
       "link": "Link",
-      "liveUrl": "https://vitgreen.com",
+      "liveUrl": null,
       "codeUrl": null
     },
     {
@@ -247,6 +261,7 @@
     "techStack": "Tech stack",
     "liveDemo": "Website",
     "sourceCode": "Code",
+    "fullDocs": "Docs",
     "backToPortfolio": "← Back to portfolio"
   },
 

@@ -14,6 +14,7 @@ interface Props {
   stack: string[];
   liveUrl?: string | null;
   codeUrl?: string | null;
+  docsUrl?: string | null;
 }
 
 const {
@@ -25,6 +26,7 @@ const {
   stack,
   liveUrl,
   codeUrl,
+  docsUrl,
 } = Astro.props;
 
 const i18n = getI18N({ currentLocale });
@@ -73,83 +75,128 @@ const i18n = getI18N({ currentLocale });
 
     <ProjectHeader currentLocale={currentLocale} />
 
-    <main class="px-4 sm:px-6 max-w-3xl mx-auto pt-24 sm:pt-28 pb-12 sm:pb-20">
+    <main class="px-4 sm:px-6 max-w-6xl mx-auto pt-24 sm:pt-28 pb-12 sm:pb-20">
 
       <!-- Hero image -->
-      <div class="w-full aspect-[3/2] rounded-2xl overflow-hidden
+      <div class="w-full max-w-3xl mx-auto aspect-[3/2] rounded-2xl overflow-hidden
                   bg-gray-100 dark:bg-neutral-800
                   ring-1 ring-black/5 dark:ring-white/10 mb-8">
         <img src={image} alt={title} class="w-full h-full object-cover" />
       </div>
 
       <!-- Subtitle + title -->
-      <p class="text-xs sm:text-sm font-semibold uppercase tracking-widest
-                text-gray-400 dark:text-gray-500 mb-2">
-        {subtitle}
-      </p>
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold
-                 text-neutral-900 dark:text-white leading-tight mb-4">
-        {title}
-      </h1>
+      <div class="max-w-3xl mx-auto">
+        <p class="text-xs sm:text-sm font-semibold uppercase tracking-widest
+                  text-gray-400 dark:text-gray-500 mb-2">
+          {subtitle}
+        </p>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold
+                   text-neutral-900 dark:text-white leading-tight mb-4">
+          {title}
+        </h1>
 
-      <!-- Tech stack pills -->
-      <div class="flex flex-wrap gap-2 mb-8">
-        {stack.map(tech => (
-          <span class="inline-block rounded-full bg-gray-100 dark:bg-neutral-800
-                       px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
-            {tech}
-          </span>
-        ))}
-      </div>
+        <!-- Tech stack pills -->
+        <div class="flex flex-wrap gap-2 mb-8">
+          {stack.map(tech => (
+            <span class="inline-block rounded-full bg-gray-100 dark:bg-neutral-800
+                         px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+              {tech}
+            </span>
+          ))}
+        </div>
 
-      <!-- Action buttons -->
-      <div class="flex flex-wrap gap-3 mb-10">
-        {liveUrl && (
-          <a href={liveUrl} target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center gap-2 rounded-full bg-neutral-900 dark:bg-white
-                    px-5 py-2.5 text-sm font-semibold
-                    text-white dark:text-neutral-900
-                    hover:bg-neutral-700 dark:hover:bg-gray-100
-                    transition-colors duration-200">
-            {i18n.CAROUSEL.liveDemo}
-            <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </a>
-        )}
-        {codeUrl && (
-          <a href={codeUrl} target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center gap-2 rounded-full
-                    border border-gray-300 dark:border-gray-600
-                    px-5 py-2.5 text-sm font-semibold
-                    text-neutral-700 dark:text-gray-200
-                    hover:bg-gray-100 dark:hover:bg-neutral-800
-                    transition-colors duration-200">
-            {i18n.CAROUSEL.sourceCode}
-            <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-            </svg>
-          </a>
-        )}
+        <!-- Action buttons -->
+        <div class="flex flex-wrap gap-3 mb-10">
+          {liveUrl && (
+            <a href={liveUrl} target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 rounded-full bg-neutral-900 dark:bg-white
+                      px-5 py-2.5 text-sm font-semibold
+                      text-white dark:text-neutral-900
+                      hover:bg-neutral-700 dark:hover:bg-gray-100
+                      transition-colors duration-200">
+              {i18n.CAROUSEL.liveDemo}
+              <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          )}
+          {codeUrl && (
+            <a href={codeUrl} target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 rounded-full
+                      border border-gray-300 dark:border-gray-600
+                      px-5 py-2.5 text-sm font-semibold
+                      text-neutral-700 dark:text-gray-200
+                      hover:bg-gray-100 dark:hover:bg-neutral-800
+                      transition-colors duration-200">
+              {i18n.CAROUSEL.sourceCode}
+              <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </a>
+          )}
+          {docsUrl && (
+            <a href={docsUrl} target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 rounded-full
+                      border border-gray-300 dark:border-gray-600
+                      px-5 py-2.5 text-sm font-semibold
+                      text-neutral-700 dark:text-gray-200
+                      hover:bg-gray-100 dark:hover:bg-neutral-800
+                      transition-colors duration-200">
+              {i18n.CAROUSEL.fullDocs}
+              <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </a>
+          )}
+        </div>
       </div>
 
       <!-- Divider -->
-      <hr class="border-gray-200 dark:border-neutral-800 mb-10" />
+      <hr class="max-w-3xl mx-auto border-gray-200 dark:border-neutral-800 mb-10" />
 
-      <!-- Content -->
-      <div class="prose prose-neutral dark:prose-invert max-w-none
-                  prose-headings:font-semibold prose-p:leading-relaxed
-                  prose-p:text-gray-700 dark:prose-p:text-gray-300">
-        <slot />
+      <!-- Two-column layout: TOC + Content -->
+      <div class="relative lg:grid lg:grid-cols-[220px_1fr] lg:gap-10 max-w-5xl mx-auto">
+
+        <!-- TOC sidebar (desktop only, sticky) -->
+        <aside class="hidden lg:block">
+          <nav
+            id="project-toc"
+            class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto
+                   pr-4 border-r border-gray-200 dark:border-neutral-800"
+          >
+            <p class="text-xs font-semibold uppercase tracking-widest
+                      text-gray-400 dark:text-gray-500 mb-3">
+              On this page
+            </p>
+            <ul id="toc-list" class="space-y-1 text-sm">
+              <!-- Populated by JS from h2 headings -->
+            </ul>
+          </nav>
+        </aside>
+
+        <!-- Main content -->
+        <article
+          id="project-content"
+          class="project-article prose prose-neutral dark:prose-invert max-w-none"
+        >
+          <slot />
+        </article>
       </div>
 
     </main>
 
     <Footer currentLocale={currentLocale} />
+
+    <!-- Project page interactions (gallery, copy, TOC) -->
+    <script>
+      import '@/scripts/project-page';
+    </script>
 
     <style is:global>
       :root { color-scheme: light dark; }
@@ -168,6 +215,102 @@ const i18n = getI18N({ currentLocale });
         html { scroll-behavior: auto; }
       }
       .dark body { color: rgba(255, 255, 255, 0.9); }
+
+      /* Project article typography */
+      .project-article h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-top: 3.5rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        scroll-margin-top: 6rem;
+        line-height: 1.2;
+      }
+      .dark .project-article h2 {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+      }
+      @media (min-width: 640px) {
+        .project-article h2 { font-size: 2rem; }
+      }
+
+      .project-article h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        scroll-margin-top: 6rem;
+        line-height: 1.3;
+      }
+      @media (min-width: 640px) {
+        .project-article h3 { font-size: 1.5rem; }
+      }
+
+      .project-article p {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        line-height: 1.75;
+        color: rgb(55, 65, 81);
+      }
+      .dark .project-article p {
+        color: rgb(209, 213, 219);
+      }
+
+      .project-article ul,
+      .project-article ol {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+      }
+      .project-article li {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        color: rgb(55, 65, 81);
+      }
+      .dark .project-article li {
+        color: rgb(209, 213, 219);
+      }
+
+      .project-article code:not(pre code) {
+        font-size: 0.875rem;
+        background: rgb(243, 244, 246);
+        padding: 0.125rem 0.375rem;
+        border-radius: 0.25rem;
+      }
+      .dark .project-article code:not(pre code) {
+        background: rgb(38, 38, 38);
+      }
+      .project-article code::before,
+      .project-article code::after {
+        content: none !important;
+      }
+
+      .project-article pre {
+        background: rgb(243, 244, 246);
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        font-size: 0.875rem;
+        overflow-x: auto;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: rgb(31, 41, 55);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+      .dark .project-article pre {
+        background: rgb(10, 10, 10);
+        color: rgb(229, 231, 235);
+        border-color: rgba(255, 255, 255, 0.06);
+      }
+
+      .project-article img {
+        border-radius: 0.75rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+      }
+      .dark .project-article img {
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+      }
     </style>
   </body>
 </html>
