@@ -126,8 +126,10 @@ const backHref = `${base}/#projects`;
 </header>
 
 <script>
+  import { initLangDropdown, initHeaderScroll } from '@/scripts/header-shared';
+
   document.addEventListener('astro:page-load', () => {
-    // ── Update back-link hrefs at runtime to match current document lang ──
+    // Update back-link hrefs at runtime to match current document lang
     const lang   = document.documentElement.lang ?? 'en';
     const prefix = lang === 'es' ? '/es' : lang === 'fr' ? '/fr' : '';
 
@@ -135,71 +137,11 @@ const backHref = `${base}/#projects`;
       link.href = `${prefix}/#projects`;
     });
 
-    // ── Desktop language dropdown ────────────────────────────────────────
-    const langMenu = document.getElementById('language-menu');
-    const langBtn  = document.getElementById('dropdown-language');
-
-    if (langBtn && langMenu) {
-      const newBtn = langBtn.cloneNode(true) as HTMLElement;
-      langBtn.parentNode?.replaceChild(newBtn, langBtn);
-
-      document.addEventListener('click', () => langMenu.classList.remove('open'));
-      newBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        langMenu.classList.toggle('open');
-      });
-
-      langMenu.querySelectorAll('a').forEach((a) => {
-        a.addEventListener('click', () => localStorage.setItem('lang-redirected', '1'));
-      });
-    }
-
-    // ── Header scroll effect (same as main page) ─────────────────────────
-    const desktopNav = document.getElementById('desktop-nav');
-    const siteHeader = document.getElementById('site-header');
-
-    const SCROLLED_DESKTOP_CLASSES = [
-      'bg-white/80', 'dark:bg-gray-900/80',
-      'border', 'border-gray-200', 'dark:border-gray-700',
-      'backdrop-blur-md', 'shadow-sm'
-    ];
-    const SCROLLED_MOBILE_CLASSES = [
-      'bg-white/60', 'dark:bg-gray-950/60',
-      'backdrop-blur-md', 'shadow-sm'
-    ];
-
-    function updateHeaderBg() {
-      const scrolled = window.scrollY > 10;
-      const isMobile = window.innerWidth < 768;
-
-      if (desktopNav) {
-        if (scrolled) {
-          desktopNav.classList.add('transition-all', 'duration-300');
-          SCROLLED_DESKTOP_CLASSES.forEach(cls => desktopNav.classList.add(cls));
-        } else {
-          desktopNav.classList.remove('transition-all', 'duration-300');
-          SCROLLED_DESKTOP_CLASSES.forEach(cls => desktopNav.classList.remove(cls));
-        }
-      }
-
-      if (siteHeader && isMobile) {
-        SCROLLED_MOBILE_CLASSES.forEach(cls => siteHeader.classList.toggle(cls, scrolled));
-      }
-    }
-
-    window.addEventListener('scroll', updateHeaderBg, { passive: true });
-    window.addEventListener('resize', updateHeaderBg, { passive: true });
-    updateHeaderBg();
+    initLangDropdown();
+    initHeaderScroll();
   });
 </script>
 
 <style>
-  #language-menu.open {
-    display: block;
-    animation: dropdown-in 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  }
-  @keyframes dropdown-in {
-    from { transform: scale(0.95) translateY(-4px); opacity: 0; }
-    to   { transform: scale(1)    translateY(0);    opacity: 1; }
-  }
+  @import '@/styles/dropdown.css';
 </style>
