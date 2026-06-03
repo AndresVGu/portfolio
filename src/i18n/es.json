@@ -158,6 +158,118 @@
       "rainShowers": "Chubascos",
       "snowShowers": "Nevadas",
       "thunderstorm": "Tormenta eléctrica"
+    },
+    "photocards": [
+       
+      {
+        "src": "/photocards/cntower.webp",
+        "label": "Torre CN",
+        "description": "La icónica Torre CN atravesando el horizonte de Toronto en una tarde despejada."
+      },
+      {
+        "src": "/photocards/me3.webp",
+        "label": "Boyaca",
+        "description": "Ruana, fogata y el silencio mágico del campo boyacense."
+      },
+      {
+        "src": "/photocards/falls.webp",
+        "label": "Cascada",
+        "description": "Una cascada de agua blanca rugiendo sobre roca antigua en el corazón de Ontario."
+      },
+        {
+        "src": "/photocards/m2.webp",
+        "label": "Niagara College Canada",
+        "description": "Diseñándolo todo desde cero: mi carrera despega bajo el cielo de Canadá."
+      },
+      {
+        "src": "/photocards/1.webp",
+        "label": "Calabazas",
+        "description": "Calabazas anaranjadas alineadas en una granja local, anunciando la llegada del otoño."
+      },
+      {
+        "src": "/photocards/2.webp",
+        "label": "Grulla",
+        "description": "Una grulla elegante inmóvil al borde del agua durante la hora dorada."
+      },
+      {
+        "src": "/photocards/3.webp",
+        "label": "Sendero",
+        "description": "Un sendero tranquilo en el bosque serpenteando entre árboles envueltos en neblina matutina."
+      },
+      {
+        "src": "/photocards/4.webp",
+        "label": "Patos",
+        "description": "Una familia de patos deslizándose pacíficamente sobre un estanque calmo al atardecer."
+      },
+       {
+        "src": "/photocards/me1.webp",
+        "label": "Tarde de Café",
+        "description": "Combustible para la mente, calma para el alma: la receta de una buena tarde."
+      },
+      {
+        "src": "/photocards/5.webp",
+        "label": "St. Catharines",
+        "description": "Las encantadoras calles de St. Catharines bañadas en cálida luz de la tarde."
+      },
+      {
+        "src": "/photocards/6.webp",
+        "label": "Welland",
+        "description": "Una vista serena del Canal Welland con barcos pasando por las esclusas."
+      },
+      {
+        "src": "/photocards/8.webp",
+        "label": "Dipper",
+        "description": "No habla, pero con sus ojos me lo dice todo. Mi amor peludo."
+      },
+      {
+        "src": "/photocards/9.webp",
+        "label": "Guatavita",
+        "description": "La legendaria Laguna de Guatavita anidada en las tierras altas colombianas."
+      },
+      {
+        "src": "/photocards/10.webp",
+        "label": "Sacramento",
+        "description": "Calles de Downtown Sacramento bañadas por el sol, enmarcadas por cielos azules."
+      },
+      {
+        "src": "/photocards/11.webp",
+        "label": "Bucaramanga",
+        "description": "El vibrante paisaje urbano de Bucaramanga rodeado de exuberantes montañas verdes."
+      },
+      {
+        "src": "/photocards/rack.webp",
+        "label": "Rack",
+        "description": "Un rack de servidores organizado zumbando silenciosamente en el taller."
+      },
+      {
+        "src": "/photocards/laptops.webp",
+        "label": "Toughbooks",
+        "description": "Una fila de Panasonic Toughbooks robustos alineados y listos para despliegue."
+      },
+      {
+        "src": "/photocards/moon.webp",
+        "label": "Luna Llena",
+        "description": "Una luna llena luminosa elevándose sobre la línea de árboles en una noche sin nubes."
+      },
+      {
+        "src": "/photocards/spider.webp",
+        "label": "Araña",
+        "description": "Una intrincada telaraña brillando con rocío matutino bajo la luz temprana."
+      },
+      {
+        "src": "/photocards/shellf.webp",
+        "label": "Shellf",
+        "description": "El arsenal digital: resistencia pura dispuesta a conquistar cualquier entorno."
+      },
+      {
+        "src": "/photocards/falls2.webp",
+        "label": "Cataratas del Niágara",
+        "description": "Las majestuosas Cataratas del Niágara vistas desde el lado canadiense, con neblina elevándose al cielo."
+      }
+    ],
+    "photocardNav": {
+      "prev": "Foto anterior",
+      "next": "Foto siguiente"
     }
   },
 

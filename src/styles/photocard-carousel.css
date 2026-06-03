@@ -1,0 +1,162 @@
+/* ── Photocard Carousel ─────────────────────────────────────────────── */
+
+/* Standalone section wrapper (not inside bento) */
+.photocard-carousel {
+  max-width: 1000px;
+  margin: 0 auto 2rem;
+  padding: 2rem 1rem;
+}
+
+/* Layout: 2-column on desktop, single on mobile */
+.photocard-carousel__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .photocard-carousel__layout {
+    grid-template-columns: auto 1fr;
+    gap: 3rem;
+  }
+}
+
+/* Deck wrapper — centers deck + nav */
+.photocard-carousel__deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Deck container — holds the stacked cards */
+.photocard-carousel__deck-container {
+  position: relative;
+  width: 280px;
+  aspect-ratio: 3/4;
+  margin: 12px;
+}
+
+/* Individual card positioning */
+.photocard-carousel__card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 1rem;
+  transition: opacity 0.5s ease-in-out,
+              transform 0.5s ease-in-out,
+              filter 0.5s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  /* z-index changes are instant, no transition */
+}
+
+/* Active card state — front and center */
+.photocard-carousel__card--active {
+  opacity: 1;
+  transform: scale(1) rotate(0deg) translateZ(0);
+  z-index: 10;
+  filter: none;
+}
+
+/* Inactive cards — visible "behind" the active card, fan-spread style */
+.photocard-carousel__card--inactive {
+  opacity: 0.7;
+  transform: scale(0.97) rotate(var(--rotate-y, -4deg)) translate(var(--offset-x, 6px), var(--offset-y, 2px));
+  pointer-events: none;
+  filter: brightness(0.75);
+}
+
+/* Show 4 "ghost" cards behind (hide the rest) */
+.photocard-carousel__card--inactive:nth-child(n+6) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Text panel */
+.photocard-carousel__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .photocard-carousel__text {
+    text-align: left;
+  }
+}
+
+.photocard-carousel__label {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+}
+.dark .photocard-carousel__label {
+  color: #f9fafb;
+}
+
+.photocard-carousel__description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #6b7280;
+  margin: 0;
+}
+.dark .photocard-carousel__description {
+  color: #9ca3af;
+}
+
+/* Blur-in word animation */
+@keyframes blurIn {
+  from {
+    filter: blur(10px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+.blur-word {
+  display: inline-block;
+  animation: blurIn 0.4s ease forwards;
+  opacity: 0;
+  filter: blur(10px);
+}
+
+/* Navigation arrows — centered below deck */
+.photocard-carousel__nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  position: relative;
+  z-index: 20;
+}
+
+.photocard-carousel__nav button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+}
+.photocard-carousel__nav button:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: scale(1.05);
+}
+.dark .photocard-carousel__nav button {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+}
+.dark .photocard-carousel__nav button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}

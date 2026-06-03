@@ -158,6 +158,117 @@
       "rainShowers": "Averses",
       "snowShowers": "Averses de neige",
       "thunderstorm": "Orage"
+    },
+    "photocards": [
+      {
+        "src": "/photocards/cntower.webp",
+        "label": "Tour CN",
+        "description": "L'emblématique Tour CN perçant l'horizon de Toronto par un après-midi dégagé."
+      },
+      {
+        "src": "/photocards/me3.webp",
+        "label": "Boyaca",
+        "description": "Poncho, feu de camp et le silence magique de la campagne de Boyacá."
+      },
+      {
+        "src": "/photocards/falls.webp",
+        "label": "Chute d'eau",
+        "description": "Une cascade d'eau blanche grondant sur la roche ancienne au cœur de l'Ontario."
+      },
+      {
+        "src": "/photocards/m2.webp",
+        "label": "Niagara College Canada",
+        "description": "Tout concevoir à partir de zéro, ma carrière décolle sous le ciel canadien."
+      },
+      {
+        "src": "/photocards/1.webp",
+        "label": "Citrouilles",
+        "description": "Des citrouilles orange vif alignées dans une ferme locale, annonçant l'arrivée de l'automne."
+      },
+      {
+        "src": "/photocards/2.webp",
+        "label": "Grue",
+        "description": "Une grue gracieuse immobile au bord de l'eau pendant l'heure dorée."
+      },
+      {
+        "src": "/photocards/3.webp",
+        "label": "Sentier",
+        "description": "Un sentier forestier paisible serpentant entre des arbres drapés de brume matinale."
+      },
+      {
+        "src": "/photocards/4.webp",
+        "label": "Canards",
+        "description": "Une famille de canards glissant paisiblement sur un étang calme au crépuscule."
+      },
+      {
+        "src": "/photocards/me1.webp",
+        "label": "Pause Café",
+        "description": "Carburant pour l'esprit, calme pour l'âme, la recette d'un bon après-midi."
+      },
+      {
+        "src": "/photocards/5.webp",
+        "label": "St. Catharines",
+        "description": "Les rues charmantes de St. Catharines baignées dans la lumière chaude de l'après-midi."
+      },
+      {
+        "src": "/photocards/6.webp",
+        "label": "Welland",
+        "description": "Une vue sereine du Canal Welland avec des navires traversant les écluses."
+      },
+      {
+        "src": "/photocards/8.webp",
+        "label": "Dipper",
+        "description": "Il ne parle pas, mais ses yeux me disent tout. Mon amour à fourrure."
+      },
+      {
+        "src": "/photocards/9.webp",
+        "label": "Guatavita",
+        "description": "La légendaire Laguna de Guatavita nichée dans les hauts plateaux colombiens."
+      },
+      {
+        "src": "/photocards/10.webp",
+        "label": "Sacramento",
+        "description": "Les rues ensoleillées du centre-ville de Sacramento encadrées par un ciel bleu."
+      },
+      {
+        "src": "/photocards/11.webp",
+        "label": "Bucaramanga",
+        "description": "Le paysage urbain vibrant de Bucaramanga entouré de montagnes verdoyantes."
+      },
+      {
+        "src": "/photocards/rack.webp",
+        "label": "Rack",
+        "description": "Un rack de serveurs bien organisé bourdonnant silencieusement dans l'atelier."
+      },
+      {
+        "src": "/photocards/laptops.webp",
+        "label": "Toughbooks",
+        "description": "Une rangée de Panasonic Toughbooks robustes alignés et prêts au déploiement."
+      },
+      {
+        "src": "/photocards/moon.webp",
+        "label": "Pleine Lune",
+        "description": "Une pleine lune lumineuse s'élevant au-dessus de la cime des arbres par une nuit sans nuages."
+      },
+      {
+        "src": "/photocards/spider.webp",
+        "label": "Araignée",
+        "description": "Une toile d'araignée complexe scintillant de rosée matinale dans la lumière naissante."
+      },
+      {
+        "src": "/photocards/shellf.webp",
+        "label": "Shellf",
+        "description": "L'arsenal numérique : résilience pure prête à conquérir n'importe quel environnement."
+      },
+      {
+        "src": "/photocards/falls2.webp",
+        "label": "Chutes du Niagara",
+        "description": "Les majestueuses Chutes du Niagara vues du côté canadien, la brume s'élevant vers le ciel."
+      }
+    ],
+    "photocardNav": {
+      "prev": "Photo précédente",
+      "next": "Photo suivante"
     }
   },
 

@@ -158,6 +158,117 @@
       "rainShowers": "Rain showers",
       "snowShowers": "Snow showers",
       "thunderstorm": "Thunderstorm"
+    },
+    "photocards": [
+      {
+        "src": "/photocards/cntower.webp",
+        "label": "CN Tower",
+        "description": "The iconic CN Tower piercing through the Toronto skyline on a clear afternoon."
+      },
+      {
+        "src": "/photocards/me3.webp",
+        "label": "Boyaca",
+        "description": "Poncho, bonfire, and the magical silence of the Boyacá countryside."
+      },
+      {
+        "src": "/photocards/falls.webp",
+        "label": "Falls",
+        "description": "A cascade of white water thundering over ancient rock in the heart of Ontario."
+      },
+      {
+        "src": "/photocards/m2.webp",
+        "label": "Niagara College Canada",
+        "description": "Designing it all from scratch, my career takes off under Canadian skies."
+      },
+      {
+        "src": "/photocards/1.webp",
+        "label": "Pumpkins",
+        "description": "Bright orange pumpkins lined up at a local farm, signaling the arrival of autumn."
+      },
+      {
+        "src": "/photocards/2.webp",
+        "label": "Grulla",
+        "description": "A graceful crane standing still at the water's edge during golden hour."
+      },
+      {
+        "src": "/photocards/3.webp",
+        "label": "Trail",
+        "description": "A quiet forest trail winding through towering trees draped in morning mist."
+      },
+      {
+        "src": "/photocards/4.webp",
+        "label": "Ducks",
+        "description": "A family of ducks gliding peacefully across a calm pond at dusk."
+      },
+      {
+        "src": "/photocards/me1.webp",
+        "label": "Coffee Time",
+        "description": "Fuel for the mind, calm for the soul, the recipe for a good afternoon."
+      },
+      {
+        "src": "/photocards/5.webp",
+        "label": "St. Catharines",
+        "description": "The charming streets of St. Catharines bathed in warm afternoon light."
+      },
+      {
+        "src": "/photocards/6.webp",
+        "label": "Welland",
+        "description": "A serene view of the Welland Canal with ships passing through the locks."
+      },
+      {
+        "src": "/photocards/8.webp",
+        "label": "Dipper",
+        "description": "She doesn't speak, but her eyes tell me everything. My furry love."
+      },
+      {
+        "src": "/photocards/9.webp",
+        "label": "Guatavita",
+        "description": "The legendary Laguna de Guatavita nestled in the Colombian highlands."
+      },
+      {
+        "src": "/photocards/10.webp",
+        "label": "Sacramento",
+        "description": "Sun-drenched Downtown Sacramento streets framed by blue skies."
+      },
+      {
+        "src": "/photocards/11.webp",
+        "label": "Bucaramanga",
+        "description": "The vibrant cityscape of Bucaramanga surrounded by lush green mountains."
+      },
+      {
+        "src": "/photocards/rack.webp",
+        "label": "Rack",
+        "description": "A neatly organized server rack humming quietly in the workshop."
+      },
+      {
+        "src": "/photocards/laptops.webp",
+        "label": "Toughbooks",
+        "description": "A row of rugged Panasonic Toughbooks lined up and ready for deployment."
+      },
+      {
+        "src": "/photocards/moon.webp",
+        "label": "Full Moon",
+        "description": "A luminous full moon rising above the treeline on a cloudless night."
+      },
+      {
+        "src": "/photocards/spider.webp",
+        "label": "Spider",
+        "description": "An intricate spider web glistening with morning dew in the early light."
+      },
+      {
+        "src": "/photocards/shellf.webp",
+        "label": "Shellf",
+        "description": "The digital arsenal: pure resilience ready to conquer any environment."
+      },
+      {
+        "src": "/photocards/falls2.webp",
+        "label": "Niagara Falls",
+        "description": "The majestic Niagara Falls viewed from the Canadian side, mist rising into the sky."
+      }
+    ],
+    "photocardNav": {
+      "prev": "Previous photo",
+      "next": "Next photo"
     }
   },
 

@@ -1,39 +1,39 @@
 /**
  * about-gallery.ts
- * Photo grid expand/collapse + modal with glare, foil, shine and 3-D flip.
+ * Modal with glare, foil, shine and 3-D flip.
+ * The old grid logic has been removed — the PhotocardCarousel now handles navigation.
  */
 
-// ── Grid expand / collapse ────────────────────────────────────────────────────
-export function initGalleryGrid(): void {
-  const expandBtn   = document.getElementById('gallery-expand-btn');
-  const galleryGrid = document.getElementById('gallery-grid');
-  if (!expandBtn || !galleryGrid) return;
+// ── Shared state for external access ──────────────────────────────────────────
+let gCurrentIdx = 0;
 
-  const labelEl    = document.getElementById('gallery-expand-label');
-  const hiddenCards = Array.from(galleryGrid.querySelectorAll<HTMLElement>('.gallery-card-hidden'));
-  const total      = Number(expandBtn.dataset.total ?? 0);
+export function setGCurrentIdx(idx: number): void {
+  gCurrentIdx = idx;
+}
 
-  expandBtn.addEventListener('click', () => {
-    const expanded = expandBtn.dataset.expanded === 'true';
+export function getGCurrentIdx(): number {
+  return gCurrentIdx;
+}
 
-    if (!expanded) {
-      hiddenCards.forEach((card, i) => {
-        card.style.display = '';
-        card.style.animationDelay = `${i * 40}ms`;
-        card.classList.add('gallery-card-reveal');
-      });
-      expandBtn.dataset.expanded = 'true';
-      if (labelEl) labelEl.textContent = 'Show less';
-    } else {
-      hiddenCards.forEach(card => {
-        card.style.display = 'none';
-        card.classList.remove('gallery-card-reveal');
-        card.style.animationDelay = '';
-      });
-      expandBtn.dataset.expanded = 'false';
-      if (labelEl) labelEl.textContent = `See all ${total} photos`;
-    }
-  });
+// ── Exported modal functions ──────────────────────────────────────────────────
+
+let gOpenFn: ((img: string, label: string) => void) | null = null;
+let gNavFn: ((dir: number) => void) | null = null;
+
+/**
+ * Open the gallery modal with a specific image and label.
+ * Can be called externally by the carousel.
+ */
+export function gOpen(img: string, label: string): void {
+  if (gOpenFn) gOpenFn(img, label);
+}
+
+/**
+ * Navigate within the modal (prev/next).
+ * dir: -1 for previous, 1 for next.
+ */
+export function gNav(dir: number): void {
+  if (gNavFn) gNavFn(dir);
 }
 
 // ── Modal with glare / foil / shine / flip ────────────────────────────────────
@@ -52,11 +52,6 @@ export function initGalleryModal(): void {
 
   let gFlipped  = false;
   let gFlipping = false;
-  let gCurrentIdx = 0;
-
-  function getCards() {
-    return Array.from(document.querySelectorAll<HTMLElement>('#gallery-grid .gallery-card'));
-  }
 
   function gHideLayers() {
     if (!gFlipped && !gFlipping) gInner!.style.transform = 'rotateX(0) rotateY(0)';
@@ -91,7 +86,7 @@ export function initGalleryModal(): void {
     setTimeout(() => { gFlipping = false; gInner!.style.transition = 'transform 0s'; }, 620);
   }
 
-  function gOpen(img: string, label: string) {
+  function openModal(img: string, label: string) {
     if (gImg)   gImg.src = img;
     if (gLabel) gLabel.textContent = label;
     gFlipped  = false;
@@ -116,20 +111,24 @@ export function initGalleryModal(): void {
     gFlipped = false;
   }
 
-  function gNav(dir: number) {
-    const cards = getCards();
-    gCurrentIdx = ((gCurrentIdx + dir) % cards.length + cards.length) % cards.length;
-    const card  = cards[gCurrentIdx];
-    gOpen(card.dataset.img ?? '', card.dataset.label ?? '');
+  function navInModal(dir: number) {
+    // Get the carousel cards to navigate within the modal
+    const carouselCards = Array.from(
+      document.querySelectorAll<HTMLElement>('.photocard-carousel__card')
+    );
+    if (!carouselCards.length) return;
+    const total = carouselCards.length;
+    gCurrentIdx = ((gCurrentIdx + dir) % total + total) % total;
+    const card = carouselCards[gCurrentIdx];
+    openModal(
+      (card as HTMLImageElement).src || card.dataset.src || '',
+      card.dataset.label ?? ''
+    );
   }
 
-  // Attach click to all cards (including hidden ones revealed later)
-  document.querySelectorAll<HTMLElement>('#gallery-grid .gallery-card').forEach(card => {
-    card.addEventListener('click', () => {
-      gCurrentIdx = Number(card.dataset.index ?? 0);
-      gOpen(card.dataset.img ?? '', card.dataset.label ?? '');
-    });
-  });
+  // Wire up module-level functions
+  gOpenFn = openModal;
+  gNavFn = navInModal;
 
   // Desktop flip on click
   gCard.addEventListener('click', e => {
@@ -139,8 +138,8 @@ export function initGalleryModal(): void {
     gFlip();
   });
 
-  document.getElementById('gallery-modal-prev')?.addEventListener('click', () => gNav(-1));
-  document.getElementById('gallery-modal-next')?.addEventListener('click', () => gNav(1));
+  document.getElementById('gallery-modal-prev')?.addEventListener('click', () => navInModal(-1));
+  document.getElementById('gallery-modal-next')?.addEventListener('click', () => navInModal(1));
 
   // Desktop hover tilt
   gCard.addEventListener('pointerenter', e => {
