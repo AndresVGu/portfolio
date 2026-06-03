@@ -1,0 +1,69 @@
+---
+/**
+ * TechIcon.astro
+ * Renders a tech icon based on the stack string name.
+ * Uses a priority-based mapping — first match wins.
+ */
+import AstroIcon from '@/Icons/AstroIcon.astro';
+import Azure from '@/Icons/Azure.astro';
+import CssIcon from '@/Icons/CssIcon.astro';
+import HtmlIcon from '@/Icons/HtmlIcon.astro';
+import JavascriptIcon from '@/Icons/JavascriptIcon.astro';
+import ReactIcon from '@/Icons/ReactIcon.astro';
+import SqlIcon from '@/Icons/SqlIcon.astro';
+import SvelteIcon from '@/Icons/SvelteIcon.astro';
+import TypeScriptIcon from '@/Icons/TypeScriptIcon.astro';
+import Microsoft from '@/Icons/Microsoft.astro';
+import SistemIcon from '@/Icons/SistemIcon.astro';
+import PapersIcon from '@/Icons/PapersIcon.astro';
+import Github from '@/Icons/Github.astro';
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className = 'size-5' } = Astro.props;
+const key = name.toLowerCase();
+
+// Priority-ordered mapping: first match wins
+type IconId = 'astro' | 'azure' | 'react' | 'svelte' | 'typescript' | 'javascript'
+  | 'html' | 'css' | 'sql' | 'dotnet' | 'linux' | 'github' | 'fallback';
+
+const rules: [string[], IconId][] = [
+  [['astro'], 'astro'],
+  [['azure'], 'azure'],
+  [['react'], 'react'],
+  [['svelte'], 'svelte'],
+  [['typescript'], 'typescript'],
+  [['javascript', 'js'], 'javascript'],
+  [['html'], 'html'],
+  [['css', 'tailwind', 'bootstrap'], 'css'],
+  [['sql', 'sqlite', 'entity framework', 'swagger'], 'sql'],
+  [['.net', 'asp.net', 'c#', 'microsoft'], 'dotnet'],
+  [['bash', 'python', 'linux', 'ubuntu', 'hardware', 'shell', 'localstorage'], 'linux'],
+  [['github'], 'github'],
+];
+
+let icon: IconId = 'fallback';
+for (const [keywords, id] of rules) {
+  if (keywords.some(kw => key.includes(kw))) {
+    icon = id;
+    break;
+  }
+}
+---
+
+{icon === 'astro' && <AstroIcon class={className} />}
+{icon === 'azure' && <Azure class={className} />}
+{icon === 'react' && <ReactIcon class={className} />}
+{icon === 'svelte' && <SvelteIcon class={className} />}
+{icon === 'typescript' && <TypeScriptIcon class={className} />}
+{icon === 'javascript' && <JavascriptIcon class={className} />}
+{icon === 'html' && <HtmlIcon class={className} />}
+{icon === 'css' && <CssIcon class={className} />}
+{icon === 'sql' && <SqlIcon class={className} />}
+{icon === 'dotnet' && <Microsoft class={className} />}
+{icon === 'linux' && <SistemIcon class={className} />}
+{icon === 'github' && <Github class={className} />}
+{icon === 'fallback' && <PapersIcon class={className} />}

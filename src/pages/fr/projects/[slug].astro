@@ -39,6 +39,7 @@ const p = project as any;
   liveUrl={p.liveUrl}
   codeUrl={p.codeUrl}
   docsUrl={p.docsUrl ?? null}
+  languages={p.languages ?? []}
 >
   <Fragment set:html={p.detailDescription} />
 </ProjectLayout>

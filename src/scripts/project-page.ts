@@ -1,86 +1,16 @@
 /**
  * Project detail page interactions:
- * - Image gallery with fade transitions + swipe
  * - Copy-to-clipboard button for code blocks
  * - Table of contents generation + active section highlight
  */
+
 document.addEventListener('astro:page-load', () => {
   const content = document.getElementById('project-content');
   const tocList = document.getElementById('toc-list');
 
-  initGallery();
   initCopyButtons();
   initTOC(content, tocList);
 });
-
-// ── Gallery ────────────────────────────────────────────────────────────────────
-
-function initGallery() {
-  const galleryImgs = document.querySelectorAll<HTMLImageElement>('[data-gallery-img]');
-  const prevBtn = document.querySelector<HTMLButtonElement>('[data-gallery-prev]');
-  const nextBtn = document.querySelector<HTMLButtonElement>('[data-gallery-next]');
-  const counter = document.querySelector<HTMLElement>('[data-gallery-counter]');
-
-  if (galleryImgs.length <= 1 || !prevBtn || !nextBtn || !counter) return;
-
-  let current = 0;
-  const total = galleryImgs.length;
-
-  // Style images for stacking
-  galleryImgs.forEach((img) => {
-    img.style.transition = 'opacity 0.3s ease-in-out';
-    img.style.position = 'absolute';
-    img.style.top = '0';
-    img.style.left = '0';
-    img.style.width = '100%';
-    img.style.height = 'auto';
-    img.style.opacity = '0';
-    img.classList.remove('hidden');
-  });
-
-  // Create wrapper
-  const firstImg = galleryImgs[0];
-  const parent = firstImg.parentElement!;
-  const wrapper = document.createElement('div');
-  wrapper.className = 'relative w-full rounded-xl ring-1 ring-black/5 dark:ring-white/10 my-6 bg-gray-100 dark:bg-neutral-900 overflow-hidden';
-
-  galleryImgs.forEach((img) => {
-    img.style.borderRadius = '0';
-    img.className = '';
-    wrapper.appendChild(img);
-  });
-
-  galleryImgs[0].style.position = 'relative';
-  parent.insertBefore(wrapper, parent.querySelector('[data-gallery-prev]')?.parentElement ?? null);
-
-  function showSlide(i: number) {
-    galleryImgs.forEach((img, idx) => {
-      const isActive = idx === i;
-      img.style.opacity = isActive ? '1' : '0';
-      img.style.position = isActive ? 'relative' : 'absolute';
-      img.style.zIndex = isActive ? '1' : '0';
-    });
-    counter!.textContent = `${i + 1} / ${total}`;
-    prevBtn!.disabled = i === 0;
-    prevBtn!.classList.toggle('opacity-30', i === 0);
-    nextBtn!.disabled = i === total - 1;
-    nextBtn!.classList.toggle('opacity-30', i === total - 1);
-  }
-
-  prevBtn.addEventListener('click', () => { if (current > 0) showSlide(--current); });
-  nextBtn.addEventListener('click', () => { if (current < total - 1) showSlide(++current); });
-
-  // Swipe support for mobile
-  let touchStartX = 0;
-  wrapper.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-  wrapper.addEventListener('touchend', (e) => {
-    const diff = touchStartX - e.changedTouches[0].screenX;
-    if (diff > 50 && current < total - 1) showSlide(++current);
-    else if (diff < -50 && current > 0) showSlide(--current);
-  });
-
-  showSlide(0);
-}
 
 // ── Copy buttons ───────────────────────────────────────────────────────────────
 

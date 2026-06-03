@@ -95,6 +95,7 @@ const projects = i18n.PROJECTS.map((p, i) => ({
           data-image={project.image}
           data-live-url={(project as any).liveUrl ?? ''}
           data-code-url={(project as any).codeUrl ?? ''}
+          data-languages={JSON.stringify((project as any).languages ?? [])}
           style={`--card-delay: ${0.15 * i}s`}
         >
           <!-- Image -->

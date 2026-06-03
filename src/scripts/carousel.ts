@@ -2,6 +2,27 @@
  * Carousel + modal interaction logic.
  * Runs on every Astro page load (including View Transitions navigations).
  */
+
+const TECH_COLORS: Record<string, string> = {
+  'astro': '#ff5a03', 'azure': '#0078d4', 'react': '#61dafb',
+  'svelte': '#ff3e00', 'typescript': '#3178c6', 'javascript': '#f1e05a',
+  'html': '#e34c26', 'css': '#563d7c', 'tailwind': '#38bdf8',
+  'sql': '#e57373', 'sqlite': '#003b57', 'bootstrap': '#7952b3',
+  'c#': '#178600', '.net': '#512bd4', 'asp.net': '#512bd4',
+  'entity framework': '#512bd4', 'swagger': '#85ea2d',
+  'python': '#3572A5', 'bash': '#89e051', 'linux': '#fcc624',
+  'ubuntu': '#e95420', 'php': '#4F5D95', 'wordpress': '#21759b',
+  'mysql': '#4479a1', 'github': '#fff', 'localstorage': '#f1e05a',
+};
+
+function getTechColor(name: string): string {
+  const key = name.toLowerCase();
+  for (const [k, v] of Object.entries(TECH_COLORS)) {
+    if (key.includes(k)) return v;
+  }
+  return '#9ca3af';
+}
+
 document.addEventListener('astro:page-load', () => {
   document.querySelectorAll<HTMLElement>('[data-carousel-root]').forEach(initCarousel);
 });
@@ -100,7 +121,10 @@ function initCarousel(root: HTMLElement) {
 
     if (modalStack) {
       modalStack.innerHTML = stack
-        .map(t => `<span class="inline-block rounded-full bg-gray-100 dark:bg-neutral-800 px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">${t}</span>`)
+        .map(t => {
+          const color = getTechColor(t);
+          return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gray-100 dark:bg-neutral-800 text-xs font-semibold text-gray-700 dark:text-gray-300"><span class="size-2 rounded-full" style="background-color:${color}"></span>${t}</span>`;
+        })
         .join('');
     }
 

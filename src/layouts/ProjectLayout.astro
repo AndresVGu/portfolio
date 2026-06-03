@@ -13,6 +13,7 @@ interface Props {
   image: string;
   subtitle: string;
   stack: string[];
+  languages?: { name: string; percent: number; color: string }[];
   liveUrl?: string | null;
   codeUrl?: string | null;
   docsUrl?: string | null;
@@ -25,6 +26,7 @@ const {
   image,
   subtitle,
   stack,
+  languages = [],
   liveUrl,
   codeUrl,
   docsUrl,
@@ -97,7 +99,7 @@ const i18n = getI18N({ currentLocale });
         </h1>
 
         <!-- Tech stack pills -->
-        <div class="flex flex-wrap gap-2 mb-8">
+        <div class="flex flex-wrap gap-2 mb-4">
           {stack.map(tech => (
             <span class="inline-block rounded-full bg-gray-100 dark:bg-neutral-800
                          px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
@@ -105,6 +107,25 @@ const i18n = getI18N({ currentLocale });
             </span>
           ))}
         </div>
+
+        <!-- Languages bar -->
+        {languages.length > 0 && (
+          <div class="mb-8">
+            <div class="w-full h-2.5 rounded-full overflow-hidden flex">
+              {languages.map(l => (
+                <div style={`width:${l.percent}%; background-color:${l.color};`} title={`${l.name} ${l.percent}%`}></div>
+              ))}
+            </div>
+            <div class="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+              {languages.map(l => (
+                <span class="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
+                  <span class="size-2.5 rounded-full" style={`background-color:${l.color};`}></span>
+                  <strong>{l.name}</strong> {l.percent}%
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         <!-- Action buttons -->
         <div class="flex flex-wrap gap-3 mb-10">
@@ -194,9 +215,128 @@ const i18n = getI18N({ currentLocale });
 
     <Footer currentLocale={currentLocale} />
 
-    <!-- Project page interactions (gallery, copy, TOC) -->
+    <!-- Project page interactions + Image lightbox -->
     <script>
       import '@/scripts/project-page';
+
+      document.addEventListener('astro:page-load', () => {
+        const content = document.getElementById('project-content');
+        if (!content) return;
+
+        // Collect all zoomable images (skip GIFs)
+        const allImages: string[] = [];
+        content.querySelectorAll<HTMLImageElement>('img').forEach((img) => {
+          const src = img.getAttribute('src') ?? '';
+          if (src.toLowerCase().endsWith('.gif')) return;
+          allImages.push(src);
+
+          img.style.cursor = 'zoom-in';
+          img.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openLightbox(allImages.indexOf(src));
+          });
+        });
+
+        // ── Overview gallery slider ────────────────────────────────────────
+        const galleryContainer = content.querySelector('.project-overview-gallery');
+        if (galleryContainer) {
+          const imgs = galleryContainer.querySelectorAll<HTMLImageElement>('img');
+          const prevBtn = galleryContainer.querySelector<HTMLButtonElement>('[data-gal-prev]');
+          const nextBtn = galleryContainer.querySelector<HTMLButtonElement>('[data-gal-next]');
+          const counter = galleryContainer.querySelector<HTMLElement>('[data-gal-counter]');
+          if (imgs.length > 1 && prevBtn && nextBtn && counter) {
+            let idx = 0;
+            const total = imgs.length;
+            imgs.forEach((img, i) => { if (i !== 0) img.style.display = 'none'; });
+
+            function show(i: number) {
+              imgs.forEach((img, j) => { img.style.display = j === i ? 'block' : 'none'; });
+              counter!.textContent = `${i + 1} / ${total}`;
+              prevBtn!.disabled = i === 0;
+              prevBtn!.style.opacity = i === 0 ? '0.3' : '1';
+              nextBtn!.disabled = i === total - 1;
+              nextBtn!.style.opacity = i === total - 1 ? '0.3' : '1';
+            }
+            prevBtn.addEventListener('click', (e) => { e.stopPropagation(); if (idx > 0) show(--idx); });
+            nextBtn.addEventListener('click', (e) => { e.stopPropagation(); if (idx < total - 1) show(++idx); });
+            show(0);
+          }
+        }
+
+        // ── Lightbox with navigation ───────────────────────────────────────
+        let overlay = document.getElementById('img-lightbox') as HTMLDivElement | null;
+        let currentIdx = 0;
+
+        if (!overlay) {
+          overlay = document.createElement('div');
+          overlay.id = 'img-lightbox';
+          overlay.className = 'fixed inset-0 z-[9999] hidden items-center justify-center bg-black/90 backdrop-blur-sm';
+          overlay.innerHTML = `
+            <button data-lb-prev class="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex size-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition">
+              <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <img class="max-w-[90vw] max-h-[85vh] object-contain rounded-lg shadow-2xl cursor-default" />
+            <button data-lb-next class="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex size-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition">
+              <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button data-lb-close class="absolute top-4 right-4 z-10 flex size-8 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition">
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <span data-lb-counter class="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/70 tabular-nums"></span>
+          `;
+          document.body.appendChild(overlay);
+
+          // Close
+          overlay.addEventListener('click', (e) => {
+            if ((e.target as HTMLElement).tagName === 'IMG') return;
+            if ((e.target as HTMLElement).closest('button')) return;
+            closeLightbox();
+          });
+          overlay.querySelector('[data-lb-close]')!.addEventListener('click', closeLightbox);
+          overlay.querySelector('[data-lb-prev]')!.addEventListener('click', () => navigate(-1));
+          overlay.querySelector('[data-lb-next]')!.addEventListener('click', () => navigate(1));
+
+          document.addEventListener('keydown', (e) => {
+            if (overlay!.classList.contains('hidden')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigate(-1);
+            if (e.key === 'ArrowRight') navigate(1);
+          });
+        }
+
+        function openLightbox(idx: number) {
+          currentIdx = idx;
+          showImage();
+          overlay!.classList.remove('hidden');
+          overlay!.classList.add('flex');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+          overlay!.classList.add('hidden');
+          overlay!.classList.remove('flex');
+          document.body.style.overflow = '';
+        }
+
+        function navigate(dir: number) {
+          const newIdx = currentIdx + dir;
+          if (newIdx < 0 || newIdx >= allImages.length) return;
+          currentIdx = newIdx;
+          showImage();
+        }
+
+        function showImage() {
+          const img = overlay!.querySelector('img')!;
+          img.src = allImages[currentIdx];
+          const counterEl = overlay!.querySelector('[data-lb-counter]')!;
+          counterEl.textContent = `${currentIdx + 1} / ${allImages.length}`;
+          const prevBtn = overlay!.querySelector('[data-lb-prev]') as HTMLElement;
+          const nextBtn = overlay!.querySelector('[data-lb-next]') as HTMLElement;
+          prevBtn.style.opacity = currentIdx === 0 ? '0.3' : '1';
+          nextBtn.style.opacity = currentIdx === allImages.length - 1 ? '0.3' : '1';
+        }
+      });
     </script>
 
     <style is:global>
@@ -279,6 +419,8 @@ const i18n = getI18N({ currentLocale });
         margin-bottom: 1.5rem;
         color: rgb(31, 41, 55);
         border: 1px solid rgba(0, 0, 0, 0.06);
+        max-width: 100%;
+        word-wrap: break-word;
       }
       .dark .project-article pre {
         background: rgb(10, 10, 10);
@@ -291,9 +433,73 @@ const i18n = getI18N({ currentLocale });
         margin-top: 1.5rem;
         margin-bottom: 1.5rem;
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+        max-width: 100%;
+        height: auto;
       }
       .dark .project-article img {
         box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+      }
+
+      /* Prevent overflow on mobile */
+      .project-article {
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+      .project-article * {
+        max-width: 100%;
+      }
+      .project-article pre code {
+        font-size: 0.75rem;
+      }
+      @media (min-width: 640px) {
+        .project-article pre code {
+          font-size: 0.875rem;
+        }
+      }
+      /* Safari-style browser mockup for GIFs */
+      .project-article .browser-mockup {
+        position: relative;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        margin: 1.5rem 0;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+        background: #e5e5e5;
+      }
+      .dark .project-article .browser-mockup {
+        background: #404040;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+      }
+      .project-article .browser-mockup::before {
+        content: '';
+        display: block;
+        height: 2.5rem;
+        background: #f5f5f5;
+        border-bottom: 1px solid #e0e0e0;
+        position: relative;
+      }
+      .dark .project-article .browser-mockup::before {
+        background: #262626;
+        border-bottom-color: #404040;
+      }
+      .project-article .browser-mockup::after {
+        content: '● ● ●';
+        position: absolute;
+        top: 0.6rem;
+        left: 0.875rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.25rem;
+        color: #d4d4d4;
+      }
+      .dark .project-article .browser-mockup::after {
+        color: #525252;
+      }
+      .project-article .browser-mockup img {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
       }
     </style>
   </body>
