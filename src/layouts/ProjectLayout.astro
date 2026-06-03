@@ -223,19 +223,46 @@ const i18n = getI18N({ currentLocale });
         const content = document.getElementById('project-content');
         if (!content) return;
 
-        // Collect all zoomable images (skip GIFs)
+        // Collect all zoomable images (skip GIFs and data-no-zoom)
         const allImages: string[] = [];
         content.querySelectorAll<HTMLImageElement>('img').forEach((img) => {
           const src = img.getAttribute('src') ?? '';
           if (src.toLowerCase().endsWith('.gif')) return;
+          if (img.hasAttribute('data-no-zoom')) return;
           allImages.push(src);
 
           img.style.cursor = 'zoom-in';
+          img.setAttribute('role', 'button');
+          img.setAttribute('tabindex', '0');
+
+          // Track pointer to distinguish tap from scroll
+          let pointerStart = { x: 0, y: 0 };
+          img.addEventListener('pointerdown', (e) => {
+            pointerStart = { x: e.clientX, y: e.clientY };
+          });
+
           img.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             openLightbox(allImages.indexOf(src));
           });
+
+          // Touch-specific: use touchend to detect taps that don't fire click
+          img.addEventListener('touchend', (e) => {
+            const touch = e.changedTouches[0];
+            const dx = Math.abs(touch.clientX - pointerStart.x);
+            const dy = Math.abs(touch.clientY - pointerStart.y);
+            // Only treat as tap if finger didn't move much (not a scroll)
+            if (dx < 10 && dy < 10) {
+              e.preventDefault();
+              openLightbox(allImages.indexOf(src));
+            }
+          });
+
+          img.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            pointerStart = { x: touch.clientX, y: touch.clientY };
+          }, { passive: true });
         });
 
         // ── Overview gallery slider ────────────────────────────────────────
@@ -302,6 +329,23 @@ const i18n = getI18N({ currentLocale });
             if (e.key === 'Escape') closeLightbox();
             if (e.key === 'ArrowLeft') navigate(-1);
             if (e.key === 'ArrowRight') navigate(1);
+          });
+
+          // Swipe support for mobile navigation in lightbox
+          let touchStartX = 0;
+          let touchStartY = 0;
+          overlay.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+          }, { passive: true });
+          overlay.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            const dy = e.changedTouches[0].clientY - touchStartY;
+            // Only swipe if horizontal movement > vertical and > 50px threshold
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+              if (dx < 0) navigate(1);  // swipe left = next
+              else navigate(-1);         // swipe right = prev
+            }
           });
         }
 
