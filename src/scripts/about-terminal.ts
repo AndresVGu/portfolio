@@ -23,6 +23,28 @@ const COMMANDS: Record<string, () => string> = {
 
   contact: () =>
     `<span class="text-blue-400">Email  :</span>  andresvillarrealguti@gmail.com\n  <span class="text-blue-400">GitHub :</span>  github.com/AndresVGu\n  <span class="text-blue-400">LinkedIn:</span> linkedin.com/in/andres-villarreal-dev`,
+
+  // ── Easter eggs (not listed in help) ────────────────────────────────────
+  'te amo': () =>
+    `<span class="text-pink-400">💕❤️</span> te amo mucho más`,
+
+  'conpejcaito': () =>
+    `<span class="text-pink-400">💕❤️🐟</span> te amo mucho más y punto cariño con pejcaito mi pichoncita`,
+
+  'con pejcaito': () =>
+    `<span class="text-pink-400">💕❤️🐟</span> te amo mucho más y punto cariño con pejcaito mi pichoncita`,
+
+  'con pescadito': () =>
+    `<span class="text-pink-400">💕❤️🐟</span> te amo mucho más y punto cariño con pejcaito mi pichoncita`,
+
+  'teamo con pescaito': () =>
+    `<span class="text-pink-400">💕❤️🐟</span> te amo mucho más y punto cariño con pejcaito mi pichoncita`,
+
+  'con pecaito': () =>
+    `<span class="text-pink-400">💕❤️🐟</span> te amo mucho más y punto cariño con pejcaito mi pichoncita`,
+
+  'conpecaito': () =>
+    `<span class="text-pink-400">💕❤️🐟</span> te amo mucho más y punto cariño con pejcaito mi pichoncita`,
 };
 
 function escHtml(s: string): string {
