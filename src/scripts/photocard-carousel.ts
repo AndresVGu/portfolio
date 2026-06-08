@@ -147,6 +147,19 @@ export function initPhotocardCarousel(): void {
         card.classList.remove('photocard-carousel__card--inactive');
       } else {
         const layer = layerMap.get(i) ?? 1;
+
+        // Hide cards that are far from active (beyond 4 layers)
+        if (layer > 4) {
+          card.style.opacity = '0';
+          card.style.transform = '';
+          card.style.zIndex = '0';
+          card.style.pointerEvents = 'none';
+          card.style.filter = '';
+          card.classList.remove('photocard-carousel__card--active');
+          card.classList.add('photocard-carousel__card--inactive');
+          return;
+        }
+
         // Alternate sides: odd layers go right, even go left
         const side = layer % 2 === 0 ? -1 : 1;
         // Progressive rotation — cap at ±8° so cards don't spread too far
@@ -189,13 +202,10 @@ export function initPhotocardCarousel(): void {
 
   // ── Helper: Navigate to a specific index ─────────────────────────────────
   function navigateTo(newIndex: number) {
+    const prevIndex = state.activeIndex;
     state.activeIndex = newIndex;
-    // Regenerate rotation for the card that was just active
-    rotations.forEach((_, i) => {
-      if (i !== state.activeIndex) {
-        rotations[i] = generateInactiveRotateY();
-      }
-    });
+    // Only regenerate rotation for the card that was just active (not all)
+    rotations[prevIndex] = generateInactiveRotateY();
     applyCardStyles();
     updateTextPanel();
   }

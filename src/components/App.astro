@@ -9,7 +9,7 @@ import Education from '../components/Education.astro';
 import SectionContainer from '../components/SectionContainer.astro';
 import Profile from '../components/Profile.astro';
 import About from '../components/About.astro';
-import Certificates from '@/components/Certificates.astro';
+import CertificateParallax from '@/components/CertificateParallax.astro';
 import AppleCarousel from '@/components/AppleCarousel.astro';
 import ContactForm from '@/components/ContactForm.astro';
 import SendModal from '@/components/SendModal.astro';
@@ -66,8 +66,10 @@ const i18n = getI18N({ currentLocale });
         <h3 class="flex items-center mb-6 text-xl sm:text-2xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">
           {i18n.TITLES.certificates}
         </h3>
-        <Certificates />
       </SectionContainer>
+
+      <!-- Certificate Parallax needs full width, placed outside SectionContainer -->
+      <CertificateParallax currentLocale={currentLocale} />
 
       <SectionContainer id="about">
         <h2 class="flex items-center mb-6 text-2xl sm:text-3xl font-semibold gap-x-3 text-black/80 dark:text-yellow-300">

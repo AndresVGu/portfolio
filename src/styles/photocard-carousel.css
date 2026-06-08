@@ -47,10 +47,10 @@
   border-radius: 1rem;
   transition: opacity 0.5s ease-in-out,
               transform 0.5s ease-in-out,
-              filter 0.5s ease-in-out;
+              filter 0.5s ease-in-out,
+              z-index 0s;
   cursor: pointer;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-  /* z-index changes are instant, no transition */
 }
 
 /* Active card state — front and center */
@@ -69,11 +69,7 @@
   filter: brightness(0.75);
 }
 
-/* Show 4 "ghost" cards behind (hide the rest) */
-.photocard-carousel__card--inactive:nth-child(n+6) {
-  opacity: 0;
-  pointer-events: none;
-}
+/* Show only nearby cards behind (distant ones are hidden via JS) */
 
 /* Text panel */
 .photocard-carousel__text {

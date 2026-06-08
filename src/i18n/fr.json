@@ -258,7 +258,7 @@
       {
         "src": "/photocards/shellf.webp",
         "label": "Shellf",
-        "description": "L'arsenal numérique : résilience pure prête à conquérir n'importe quel environnement."
+        "description": "L'arsenal numérique, résilience pure prête à conquérir n'importe quel environnement."
       },
       {
         "src": "/photocards/falls2.webp",
@@ -382,6 +382,49 @@
     "projects": "Projets",
     "about": "À propos",
     "contact": "Contact"
+  },
+
+  "CERTIFICATES": [
+    {
+      "title": "Offensive Python",
+      "issuer": "Hack4you Academy",
+      "description": "Python pour la sécurité offensive, des tests de pénétration et du web scraping à la création d'outils personnalisés comme des scanners réseau, empoisonneurs ARP, sniffers, intercepteurs, keyloggers, malware et plus.",
+      "link": "https://hack4u.io/check-certificate/",
+      "credential": "6958-9039-8096-2005"
+    },
+    {
+      "title": "UX Design",
+      "issuer": "Google Career Certificates",
+      "description": "Centre en les compétences pour créer des produits numériques et physiques conviviaux en concevant des wireframes, construisant des prototypes et menant des recherches pour affiner les designs UX.",
+      "link": "https://www.coursera.org/account/accomplishments/verify/CS69Z96732HK",
+      "credential": "CS69Z96732HK"
+    },
+    {
+      "title": "Linux",
+      "issuer": "Hack4you Academy",
+      "description": "Maîtriser le système d'exploitation Linux en apprenant à naviguer dans le terminal, exécuter des commandes de manière fluide et personnaliser l'environnement de travail selon des exigences spécifiques.",
+      "link": "https://hack4u.io/check-certificate/",
+      "credential": "1649-9804-2387-8339"
+    },
+    {
+      "title": "Linux Customization",
+      "issuer": "Hack4you Academy",
+      "description": "Personnalisation avancée du système d'exploitation Linux pour optimiser les performances, la sécurité et les flux de travail dans les environnements d'entreprise et de production.",
+      "link": "https://hack4u.io/check-certificate/",
+      "credential": "1302-0552-6657-5555"
+    }
+  ],
+
+  "CERT_SECTION": {
+    "modalLabel": "Détails du certificat",
+    "close": "Fermer",
+    "verify": "Vérifier le certificat",
+    "copyId": "Copier l'ID",
+    "copied": "Copié !",
+    "copyError": "Échec de la copie",
+    "scrollHint": "Défilez pour voir les certificats",
+    "toastCopied": "Identifiant copié dans le presse-papiers",
+    "toastError": "Impossible de copier dans le presse-papiers"
   },
 
   "CONTACT": {

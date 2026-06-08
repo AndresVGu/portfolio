@@ -244,5 +244,34 @@ try {
     initWeather();
     initGalleryModal();
     initPhotocardCarousel();
+    initBentoParallax();
   });
+
+  function initBentoParallax() {
+    const cells = document.querySelectorAll<HTMLElement>('.bento-cell');
+    if (!cells.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Scroll-reveal: fade in + slide up when entering viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    cells.forEach((cell, i) => {
+      cell.style.opacity = '0';
+      cell.style.transform = 'translateY(30px)';
+      cell.style.transition = `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.08}s, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.08}s`;
+      observer.observe(cell);
+    });
+  }
 </script>

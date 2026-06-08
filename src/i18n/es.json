@@ -403,5 +403,46 @@
     "errorTitle": "Algo salió mal.",
     "errorText": "Por favor intenta de nuevo o escríbeme directamente a andresvillarrealguti@gmail.com",
     "orEmail": "O escríbeme directamente a"
+  },
+  "CERTIFICATES": [
+    {
+      "title": "Offensive Python",
+      "issuer": "Hack4you Academy",
+      "description": "Python para seguridad ofensiva, desde pruebas de penetración y web scraping hasta crear herramientas personalizadas como escáneres de red, envenenadores ARP, sniffers, interceptores, keyloggers, malware y más.",
+      "link": "https://hack4u.io/check-certificate/",
+      "credential": "6958-9039-8096-2005"
+    },
+    {
+      "title": "UX Design",
+      "issuer": "Google Career Certificates",
+      "description": "Centrado en habilidades para crear productos digitales y físicos amigables diseñando wireframes, construyendo prototipos y realizando investigación para refinar diseños UX.",
+      "link": "https://www.coursera.org/account/accomplishments/verify/CS69Z96732HK",
+      "credential": "CS69Z96732HK"
+    },
+    {
+      "title": "Linux",
+      "issuer": "Hack4you Academy",
+      "description": "Dominio en el sistema operativo Linux aprendiendo a navegar la terminal, ejecutar comandos de forma fluida y personalizar el entorno de trabajo según requisitos específicos.",
+      "link": "https://hack4u.io/check-certificate/",
+      "credential": "1649-9804-2387-8339"
+    },
+    {
+      "title": "Linux Customization",
+      "issuer": "Hack4you Academy",
+      "description": "Personalización avanzada del sistema operativo Linux para optimizar rendimiento, seguridad y flujos de trabajo en entornos empresariales y de producción.",
+      "link": "https://hack4u.io/check-certificate/",
+      "credential": "1302-0552-6657-5555"
+    }
+  ],
+  "CERT_SECTION": {
+    "modalLabel": "Detalles del certificado",
+    "close": "Cerrar",
+    "verify": "Verificar certificado",
+    "copyId": "Copiar ID",
+    "copied": "¡Copiado!",
+    "copyError": "Error al copiar",
+    "scrollHint": "Desplaza para ver los certificados",
+    "toastCopied": "Credencial copiada al portapapeles",
+    "toastError": "No se pudo copiar al portapapeles"
   }
 }

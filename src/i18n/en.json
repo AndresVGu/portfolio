@@ -218,7 +218,7 @@
       {
         "src": "/photocards/8.webp",
         "label": "Dipper",
-        "description": "She doesn't speak, but her eyes tell me everything. My furry love."
+        "description": "He doesn't speak, but her eyes tell me everything. My furry love."
       },
       {
         "src": "/photocards/9.webp",
@@ -258,7 +258,7 @@
       {
         "src": "/photocards/shellf.webp",
         "label": "Shellf",
-        "description": "The digital arsenal: pure resilience ready to conquer any environment."
+        "description": "The digital arsenal, pure resilience ready to conquer any environment."
       },
       {
         "src": "/photocards/falls2.webp",
@@ -420,6 +420,49 @@
     "projects": "Projects",
     "about": "About Me",
     "contact": "Contact"
+  },
+
+  "CERTIFICATES": [
+    {
+      "title": "Offensive Python",
+      "issuer": "Hack4you Academy",
+      "description": "Python for offensive security, from penetration testing and web scraping to creating custom tools like network scanners, ARP poisoners, sniffers, interceptors, keyloggers, malware, and more.",
+      "link": "https://hack4u.io/check-certificate/",
+      "credential": "6958-9039-8096-2005"
+    },
+    {
+      "title": "UX Design",
+      "issuer": "Google Career Certificates",
+      "description": "Focus on the skills to create user-friendly digital and physical products by designing wireframes, building prototypes, and conducting research to refine UX designs.",
+      "link": "https://www.coursera.org/account/accomplishments/verify/CS69Z96732HK",
+      "credential": "CS69Z96732HK"
+    },
+    {
+      "title": "Linux",
+      "issuer": "Hack4you Academy",
+      "description": "Mastering the Linux operating system by learning to navigate the terminal, execute commands seamlessly, and customize the work environment to meet specific requirements.",
+      "link": "https://hack4u.io/check-certificate/",
+      "credential": "1649-9804-2387-8339"
+    },
+    {
+      "title": "Linux Customization",
+      "issuer": "Hack4you Academy",
+      "description": "Advanced Linux OS customization to optimize performance, security, and workflows in enterprise and production environments.",
+      "link": "https://hack4u.io/check-certificate/",
+      "credential": "1302-0552-6657-5555"
+    }
+  ],
+
+  "CERT_SECTION": {
+    "modalLabel": "Certificate details",
+    "close": "Close",
+    "verify": "Verify certificate",
+    "copyId": "Copy ID",
+    "copied": "Copied!",
+    "copyError": "Copy failed",
+    "scrollHint": "Scroll to see certificates",
+    "toastCopied": "Credential copied to clipboard",
+    "toastError": "Could not copy to clipboard"
   },
 
   "CONTACT": {

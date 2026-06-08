@@ -1,0 +1,254 @@
+---
+import { getI18N } from '@/i18n';
+
+interface Props {
+  currentLocale?: string;
+}
+
+const { currentLocale = 'en' } = Astro.props;
+const i18n = getI18N({ currentLocale });
+const certs = i18n.CERTIFICATES;
+const certSection = i18n.CERT_SECTION;
+---
+
+<section
+  class="relative w-full py-12"
+  data-cert-parallax
+  data-locale={currentLocale}
+>
+  <!-- Laptop — hidden on mobile, visible on sm+ -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 dark:opacity-50 hidden sm:block">
+    <img
+      src="/laptop_sin_fondo.png"
+      alt=""
+      class="sm:w-[500px] md:w-[620px] lg:w-[720px] h-auto select-none"
+      loading="lazy"
+      draggable="false"
+    />
+  </div>
+
+  <!-- MOBILE: Simple vertical column (visible only on < sm) -->
+  <div class="sm:hidden px-4 space-y-4">
+    {certs.map((cert, i) => (
+      <div
+        class="cert-mobile-card cursor-pointer group"
+        data-cert-card={i}
+        data-cert-title={cert.title}
+        data-cert-issuer={cert.issuer}
+        data-cert-description={cert.description}
+        data-cert-link={cert.link}
+        data-cert-credential={cert.credential}
+      >
+        <div class="relative rounded-xl overflow-hidden shadow-lg border border-white/10
+                    transition-all duration-300 active:scale-[0.98]">
+          <img
+            src={`/projects/Certificates/image-${i + 1}.webp`}
+            alt={cert.title}
+            loading="lazy"
+            class="w-full h-auto"
+          />
+          <div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+            <p class="text-white text-sm font-semibold">{cert.title}</p>
+            <p class="text-white/60 text-xs">{cert.issuer}</p>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- DESKTOP: Floating scattered with parallax (visible on sm+) -->
+  <div class="relative max-w-5xl mx-auto px-4 sm:px-6 min-h-[600px] md:min-h-[650px] hidden sm:block">
+
+    <!-- Card 0 (Offensive Python): Top-left -->
+    <div
+      class="cert-float-card absolute top-[3%] left-[5%] md:left-[8%]
+             sm:w-[240px] md:w-[280px]
+             opacity-0 cursor-pointer group z-10"
+      data-cert-card="0"
+      data-cert-title={certs[0].title}
+      data-cert-issuer={certs[0].issuer}
+      data-cert-description={certs[0].description}
+      data-cert-link={certs[0].link}
+      data-cert-credential={certs[0].credential}
+      data-parallax-speed="0.2"
+      data-parallax-direction="up"
+      style="transform: rotate(-3deg) translateY(30px);"
+    >
+      <div class="relative rounded-xl overflow-hidden shadow-2xl border border-white/10
+                  transition-all duration-300 group-hover:scale-105 group-hover:shadow-blue-500/20 group-hover:rotate-0">
+        <img src="/projects/Certificates/image-1.webp" alt={certs[0].title} loading="lazy" class="w-full h-auto" />
+      </div>
+      <p class="mt-2 text-xs text-gray-700 dark:text-white/50 font-medium text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">{certs[0].title}</p>
+    </div>
+
+    <!-- Card 1 (UX Design / Google): Top-right -->
+    <div
+      class="cert-float-card absolute top-[2%] right-[8%] md:right-[10%]
+             sm:w-[240px] md:w-[280px]
+             opacity-0 cursor-pointer group z-10"
+      data-cert-card="1"
+      data-cert-title={certs[1].title}
+      data-cert-issuer={certs[1].issuer}
+      data-cert-description={certs[1].description}
+      data-cert-link={certs[1].link}
+      data-cert-credential={certs[1].credential}
+      data-parallax-speed="0.15"
+      data-parallax-direction="down"
+      style="transform: rotate(4deg) translateY(-20px);"
+    >
+      <div class="relative rounded-xl overflow-hidden shadow-2xl border border-white/10
+                  transition-all duration-300 group-hover:scale-105 group-hover:shadow-cyan-500/20 group-hover:rotate-0">
+        <img src="/projects/Certificates/image-2.webp" alt={certs[1].title} loading="lazy" class="w-full h-auto" />
+      </div>
+      <p class="mt-2 text-xs text-gray-700 dark:text-white/50 font-medium text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">{certs[1].title}</p>
+    </div>
+
+    <!-- Card 2 (Linux): Bottom-right -->
+    <div
+      class="cert-float-card absolute bottom-[5%] right-[10%] md:right-[12%]
+             sm:w-[240px] md:w-[280px]
+             opacity-0 cursor-pointer group z-20"
+      data-cert-card="2"
+      data-cert-title={certs[2].title}
+      data-cert-issuer={certs[2].issuer}
+      data-cert-description={certs[2].description}
+      data-cert-link={certs[2].link}
+      data-cert-credential={certs[2].credential}
+      data-parallax-speed="0.3"
+      data-parallax-direction="up"
+      style="transform: rotate(-2deg) translateY(40px);"
+    >
+      <div class="relative rounded-xl overflow-hidden shadow-2xl border border-white/10
+                  transition-all duration-300 group-hover:scale-105 group-hover:shadow-green-500/20 group-hover:rotate-0">
+        <img src="/projects/Certificates/image-3.webp" alt={certs[2].title} loading="lazy" class="w-full h-auto" />
+      </div>
+      <p class="mt-2 text-xs text-gray-700 dark:text-white/50 font-medium text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">{certs[2].title}</p>
+    </div>
+
+    <!-- Card 3 (Azure): Bottom-left -->
+    <div
+      class="cert-float-card absolute bottom-[5%] left-[10%] md:left-[12%]
+             sm:w-[240px] md:w-[280px]
+             opacity-0 cursor-pointer group z-[15]"
+      data-cert-card="3"
+      data-cert-title={certs[3].title}
+      data-cert-issuer={certs[3].issuer}
+      data-cert-description={certs[3].description}
+      data-cert-link={certs[3].link}
+      data-cert-credential={certs[3].credential}
+      data-parallax-speed="0.22"
+      data-parallax-direction="up"
+      style="transform: rotate(3deg) translateY(35px);"
+    >
+      <div class="relative rounded-xl overflow-hidden shadow-2xl border border-white/10
+                  transition-all duration-300 group-hover:scale-105 group-hover:shadow-violet-500/20 group-hover:rotate-0">
+        <img src="/projects/Certificates/image-4.webp" alt={certs[3].title} loading="lazy" class="w-full h-auto" />
+      </div>
+      <p class="mt-2 text-xs text-gray-700 dark:text-white/50 font-medium text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">{certs[3].title}</p>
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="fixed inset-0 z-[9999] flex items-center justify-center opacity-0 pointer-events-none"
+    data-cert-modal
+    role="dialog"
+    aria-modal="true"
+    aria-label={certSection.modalLabel}
+  >
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-md" data-cert-modal-backdrop></div>
+    <div
+      class="relative z-10 w-[90vw] max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl p-6"
+      data-cert-modal-content
+      style="transform-origin: center center;"
+    >
+      <button
+        class="absolute top-4 right-4 p-2 rounded-full text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        data-cert-modal-close
+        aria-label={certSection.close}
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <!-- Certificate image with magnifier lens -->
+      <div class="relative rounded-xl mb-4 overflow-hidden cursor-zoom-in" data-cert-magnifier>
+        <img data-cert-modal-img src="" alt="" class="w-full rounded-xl" />
+        <!-- Magnifier lens — square, larger -->
+        <div
+          class="absolute w-[180px] h-[180px] rounded-lg border-2 border-white/60 shadow-lg pointer-events-none opacity-0 overflow-hidden"
+          data-cert-magnifier-lens
+          style="background-repeat: no-repeat; background-size: 300%;"
+        >
+        </div>
+      </div>
+      <h3 data-cert-modal-title class="text-xl font-bold text-gray-900 dark:text-white mb-1"></h3>
+      <p data-cert-modal-issuer class="text-sm text-gray-500 dark:text-gray-400 mb-3"></p>
+      <p data-cert-modal-desc class="text-sm text-gray-700 dark:text-gray-300 mb-4 leading-relaxed"></p>
+      <div class="flex items-center gap-2 mb-4 p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
+        <code data-cert-modal-credential class="text-xs text-gray-600 dark:text-gray-300 flex-1 font-mono"></code>
+        <button
+          data-cert-modal-copy
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+          aria-label={certSection.copyId}
+        >
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" />
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+          </svg>
+          <span data-cert-modal-copy-text>{certSection.copyId}</span>
+        </button>
+      </div>
+      <a
+        data-cert-modal-verify
+        href=""
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        {certSection.verify}
+      </a>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="fixed top-6 left-1/2 -translate-x-1/2 z-[10000] pointer-events-none" data-cert-toast-container></div>
+  <script type="application/json" data-cert-i18n set:html={JSON.stringify(certSection)} />
+</section>
+
+<style>
+  .cert-float-card {
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cert-float-card.visible {
+    opacity: 1;
+  }
+  .cert-mobile-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+  .cert-mobile-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cert-float-card {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  import { initCertificateParallax } from '@/scripts/certificate-parallax';
+  document.addEventListener('astro:page-load', () => {
+    initCertificateParallax();
+  });
+</script>
