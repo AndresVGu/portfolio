@@ -51,7 +51,15 @@
       "description": "Promoted to lead end-to-end development of a custom enterprise ERP system built from scratch.",
       "list": "Java · Spring Boot · React · TypeScript · Tailwind CSS",
       "modalDescription": "Promoted from <strong>IT Electronic Specialist</strong> to focus on the <strong>full-cycle development of a proprietary ERP platform</strong> built from the ground up to streamline and centralize core business operations. The system covers <strong>inventory management, employee management, order processing, returns handling, purchase orders, and warehouse operations</strong>. This role involves <strong>end-to-end ownership</strong> — from system architecture and database design to UI/UX implementation and business logic — working closely with stakeholders across departments.",
-      "stack": ["Java", "Spring Boot", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "REST APIs"],
+      "stack": [
+        "Java",
+        "Spring Boot",
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "PostgreSQL",
+        "REST APIs"
+      ],
       "highlights": [
         "Promoted from Electronic Specialist after demonstrating strong technical ownership",
         "Architecting a full ERP platform covering inventory, orders, returns and warehouse ops",
@@ -68,7 +76,14 @@
       "description": "Diagnostics, repair and hardware-software integration for mission-critical rugged devices.",
       "list": "Panasonic · Dell · Getac · Linux",
       "modalDescription": "Specialized in keeping <strong>mission-critical rugged hardware</strong> running at peak performance. Handled <strong>end-to-end diagnostics, repair, and hardware-software integration</strong> — including embedded applications and external device compatibility for <strong>Panasonic Toughbooks, Dell, and Getac</strong> platforms. Leveraged <strong>DevOps principles in Linux environments</strong> to streamline deployments, enforce configuration consistency, and build more resilient systems.",
-      "stack": ["Linux", "Hardware Diagnostics", "DevOps", "Panasonic Toughbook", "Dell", "Getac"],
+      "stack": [
+        "Linux",
+        "Hardware Diagnostics",
+        "DevOps",
+        "Panasonic Toughbook",
+        "Dell",
+        "Getac"
+      ],
       "highlights": [
         "End-to-end diagnostics and repair for Panasonic, Dell and Getac rugged platforms",
         "Hardware-software integration including embedded apps and external device compatibility",
@@ -85,7 +100,15 @@
       "description": "Full-Stack web development for startups to enterprises based in Colombia.",
       "list": "Custom apps · eCommerce · APIs · Cloud",
       "modalDescription": "<strong>Full-Stack web development</strong> for startups and enterprises based in Colombia. Focused on <strong>custom applications, eCommerce platforms, REST APIs</strong> and <strong>cloud solutions</strong> — working across the full stack from frontend to deployment.",
-      "stack": ["HTML", "CSS", "JavaScript", "PHP", "WordPress", "MySQL", "AWS"],
+      "stack": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "PHP",
+        "WordPress",
+        "MySQL",
+        "AWS"
+      ],
       "highlights": [
         "Delivered custom apps and eCommerce sites for Colombian startups and enterprises",
         "Built and maintained REST APIs and cloud-hosted solutions",
@@ -218,7 +241,7 @@
       {
         "src": "/photocards/8.webp",
         "label": "Dipper",
-        "description": "He doesn't speak, but her eyes tell me everything. My furry love."
+        "description": "He doesn't speak, but his eyes tell me everything. My furry love."
       },
       {
         "src": "/photocards/9.webp",
@@ -315,7 +338,13 @@
       "subtitle": "ASP.NET Core Web API",
       "description": "REST API that maps cities to their provinces, with full CRUD support on every entity.",
       "detailDescription": "Cities API is a RESTful web service built with ASP.NET Core that exposes endpoints for querying cities and their corresponding provinces. It supports full CRUD operations on both entities, follows REST conventions, and includes proper HTTP status codes and error handling. The project demonstrates clean API design patterns and serves as a practical example of building data-driven services with .NET.",
-      "stack": ["ASP.NET Core", "C#", "Entity Framework Core", "SQL Server", "Swagger"],
+      "stack": [
+        "ASP.NET Core",
+        "C#",
+        "Entity Framework Core",
+        "SQL Server",
+        "Swagger"
+      ],
       "languages": [
         { "name": "LLVM", "percent": 65.1, "color": "#185619" },
         { "name": "Java", "percent": 33.9, "color": "#b07219" },
