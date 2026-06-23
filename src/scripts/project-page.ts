@@ -42,6 +42,9 @@ function initCopyButtons() {
 function initTOC(content: HTMLElement | null, tocList: HTMLElement | null) {
   if (!content || !tocList) return;
 
+  // Clear any existing TOC items (prevents duplication on View Transitions)
+  tocList.innerHTML = '';
+
   const headings = content.querySelectorAll<HTMLHeadingElement>('h2');
   if (headings.length === 0) return;
 
