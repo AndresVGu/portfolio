@@ -40,10 +40,10 @@ I also hold a diploma in **Computer Programming & Analysis** from Niagara Colleg
 
 | Layer | Technology |
 |---|---|
-| Framework | [Astro](https://astro.build) 5.x |
-| Styling | [Tailwind CSS](https://tailwindcss.com) 3.x |
+| Framework | [Astro](https://astro.build) 7.x |
+| Styling | [Tailwind CSS](https://tailwindcss.com) 4.x |
 | Language | TypeScript |
-| Map | [Leaflet](https://leafletjs.com) + CartoDB tiles |
+| Map | [Leaflet](https://leafletjs.com) + Esri gray basemap tiles (no API key required) |
 | Fonts | Onest Variable |
 | Deployment | [Netlify](https://netlify.com) |
 
@@ -54,24 +54,18 @@ I also hold a diploma in **Computer Programming & Analysis** from Niagara Colleg
 ```
 /
 ├── public/
-│   ├── docs/          # CV / Resume PDF
-│   ├── photocards/    # Gallery photos
-│   └── projects/      # Project screenshots
+│   ├── docs/          # Resumes
+│   ├── photocards/    # Gallery images
+│   └── projects/      # Project images
 ├── src/
-│   ├── components/    # Astro components
-│   │   ├── About.astro
-│   │   ├── Header.astro
-│   │   ├── Profile.astro
-│   │   ├── TimeLine.astro
-│   │   ├── TimeLineGroup.astro
-│   │   ├── TimeLineItem.astro
-│   │   ├── ExperienceModal.astro
-│   │   ├── PhotoCardModal.astro
-│   │   └── ...
-│   ├── i18n/          # Translation files (en, es, fr)
-│   ├── layouts/       # Page layout
-│   ├── pages/         # Routes (/, /es/, /fr/)
-│   └── scripts/       # Vanilla JS (timeline, about)
+│   ├── components/    # Astro UI, page sections, and modals
+│   ├── Icons/         # Technology and interface icons
+│   ├── i18n/          # English, Spanish, and French translations
+│   ├── layouts/       # Shared page layouts and metadata
+│   ├── pages/         # Static routes and localized project pages
+│   ├── scripts/       # Client-side TypeScript and JavaScript
+│   ├── styles/        # Global and component styles
+│   └── tests/         # Unit and DOM tests
 └── package.json
 ```
 
@@ -81,17 +75,24 @@ I also hold a diploma in **Computer Programming & Analysis** from Niagara Colleg
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Start dev server
-npm run dev
+pnpm dev
 
 # Build for production
-npm run build
+pnpm build
 
 # Preview production build
-npm run preview
+pnpm preview
+
+# Run tests
+pnpm test
 ```
+
+## Deployment
+
+The site is deployed to Netlify. Use `pnpm run build` as the build command and `dist/` as the publish directory. GitHub Pages publishing is disabled; do not use its default Jekyll build for this Astro project.
 
 ---
 
