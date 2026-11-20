@@ -20,7 +20,7 @@ I also hold a diploma in **Computer Programming & Analysis** from Niagara Colleg
 
 ## Features
 
-- **Multilingual** — Full EN / ES / FR support via a custom i18n system
+- **Multilingual** — EN / ES / FR / JA / KO navigation, portfolio content, and project summaries
 - **Dark / Light mode** — System preference detection + manual toggle
 - **Interactive Experience Timeline** — Scroll-reveal parallax with grouped company entries, role cards, and a detail modal
 - **About Bento Grid** — Interactive cells including:
@@ -60,7 +60,7 @@ I also hold a diploma in **Computer Programming & Analysis** from Niagara Colleg
 ├── src/
 │   ├── components/    # Astro UI, page sections, and modals
 │   ├── Icons/         # Technology and interface icons
-│   ├── i18n/          # English, Spanish, and French translations
+│   ├── i18n/          # English, Spanish, French, Japanese, and Korean translations
 │   ├── layouts/       # Shared page layouts and metadata
 │   ├── pages/         # Static routes and localized project pages
 │   ├── scripts/       # Client-side TypeScript and JavaScript
@@ -105,10 +105,13 @@ src/i18n/
 ├── en.json   # English
 ├── es.json   # Spanish
 ├── fr.json   # French
+├── ja.json   # Japanese
+├── ko.json   # Korean
 └── index.ts  # getI18N helper
 ```
 
-Routes are automatically generated for each locale: `/` (EN), `/es/` (ES), `/fr/` (FR).
+Routes are generated for `/` (EN), `/es/` (ES), `/fr/` (FR), `/ja/` (JA), and `/ko/` (KO), including localized project routes.
+Long-form technical case-study descriptions currently fall back to English in Japanese and Korean.
 
 ---
 

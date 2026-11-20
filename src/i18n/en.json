@@ -8,7 +8,12 @@
     "projects": "Projects",
     "education": "Education",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "primaryNavigation": "Primary navigation",
+    "selectLanguage": "Select language",
+    "language": "Language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
 
   "PROFILE": {
@@ -32,6 +37,7 @@
     "education": "Education",
     "certificates": "Certificates",
     "about": "About Me",
+    "memoryGame": "Tech Memory",
     "techStack": "Tech Stack",
     "highlights": "Highlights",
     "careerProgression": "Career progression",
@@ -440,7 +446,8 @@
     "liveDemo": "Website",
     "sourceCode": "Code",
     "fullDocs": "Docs",
-    "backToPortfolio": "← Back to portfolio"
+    "backToPortfolio": "← Back to portfolio",
+    "onThisPage": "On this page"
   },
 
   "FOOTER": {

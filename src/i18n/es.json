@@ -8,7 +8,12 @@
     "projects": "Proyectos",
     "education": "Educación",
     "about": "Sobre mí",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "primaryNavigation": "Navegación principal",
+    "selectLanguage": "Seleccionar idioma",
+    "language": "Idioma",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
   },
 
   "PROFILE": {
@@ -32,6 +37,7 @@
     "education": "Educación",
     "certificates": "Certificados",
     "about": "Sobre mí",
+    "memoryGame": "Memoria Tech",
     "techStack": "Tecnologías",
     "highlights": "Logros",
     "careerProgression": "Progresión profesional",
@@ -374,7 +380,8 @@
     "liveDemo": "Website",
     "sourceCode": "Código",
     "fullDocs": "Docs",
-    "backToPortfolio": "← Volver al portafolio"
+    "backToPortfolio": "← Volver al portafolio",
+    "onThisPage": "En esta página"
   },
 
   "FOOTER": {

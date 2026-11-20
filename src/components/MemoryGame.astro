@@ -69,9 +69,48 @@ const labels: Record<string, Record<string, string>> = {
     winMoves:  'Mouvements',
     winBest:   'Record',
   },
+  ja: {
+    subtitle:  'テクノロジーのペアをすべて見つけましょう',
+    moves:     '手数',
+    pairs:     'ペア',
+    time:      '時間',
+    best:      'ベスト',
+    noBest:    '--',
+    restart:   'やり直す',
+    win:       '🎉 すべてのペアがそろいました！',
+    newRecord: '🏆 自己ベスト更新！',
+    playAgain: 'もう一度プレイ',
+    winTime:   '時間',
+    winMoves:  '手数',
+    winBest:   'ベスト',
+    gameLabel: 'テック記憶ゲーム',
+    cardsLabel:'記憶カード',
+    cardLabel: 'カード {number}',
+  },
+  ko: {
+    subtitle:  '기술 카드의 모든 짝을 맞춰 보세요',
+    moves:     '이동',
+    pairs:     '쌍',
+    time:      '시간',
+    best:      '최고 기록',
+    noBest:    '--',
+    restart:   '다시 시작',
+    win:       '🎉 모든 짝을 맞췄어요!',
+    newRecord: '🏆 개인 최고 기록!',
+    playAgain: '다시 플레이',
+    winTime:   '시간',
+    winMoves:  '이동',
+    winBest:   '최고 기록',
+    gameLabel: '테크 메모리 게임',
+    cardsLabel:'메모리 카드',
+    cardLabel: '카드 {number}',
+  },
 };
 
 const t = labels[currentLocale] ?? labels.en;
+const gameLabel = t.gameLabel ?? 'Tech Memory Game';
+const cardsLabel = t.cardsLabel ?? 'Memory cards';
+const cardLabel = t.cardLabel ?? 'Card {number}';
 
 // Full pool of available tech icons (excluded: Sun, Moon, SistemIcon,
 // ProfileIcon, Mail, Briefcase, Linkedin, Code, PapersIcon, Link)
@@ -104,7 +143,7 @@ const allCards = [...techs, ...techs];
 <section
   id="memory-game"
   class="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6"
-  aria-label="Tech Memory Game"
+  aria-label={gameLabel}
 >
   <!-- ── Header bar ─────────────────────────────────────────────────────────── -->
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
@@ -201,7 +240,7 @@ const allCards = [...techs, ...techs];
     id="mg-grid"
     class="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4"
     role="list"
-    aria-label="Memory cards"
+    aria-label={cardsLabel}
   >
     {allCards.map((tech, i) => (
       <div
@@ -210,7 +249,7 @@ const allCards = [...techs, ...techs];
         data-label={tech.label}
         data-index={i}
         role="listitem"
-        aria-label={`Card ${i + 1}`}
+        aria-label={cardLabel.replace('{number}', String(i + 1))}
         tabindex="0"
       >
         <div class="mg-card-inner w-full h-full relative">

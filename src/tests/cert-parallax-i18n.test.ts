@@ -7,7 +7,7 @@ describe('Certificate Parallax — Property 4: i18n Completeness', () => {
   it('every locale and certificate index has all required non-empty fields', () => {
     fc.assert(
       fc.property(
-        fc.constantFrom('en', 'es', 'fr'),
+        fc.constantFrom('en', 'es', 'fr', 'ja', 'ko'),
         fc.integer({ min: 0, max: 3 }),
         (locale, certIndex) => {
           const i18n = getI18N({ currentLocale: locale });

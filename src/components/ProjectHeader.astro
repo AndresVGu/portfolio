@@ -12,13 +12,15 @@ const base = getLocalePath(currentLocale);
 
 // Build locale-aware language hrefs for the current project page
 const pathname = Astro.url.pathname;
-const projectMatch = pathname.match(/(?:\/(?:es|fr))?\/projects\/([^/]+)/);
+const projectMatch = pathname.match(/(?:\/(?:es|fr|ja|ko))?\/projects\/([^/]+)/);
 const slug = projectMatch?.[1] ?? '';
 
 const languages = [
   { label: 'EN', locale: 'en', href: slug ? `/projects/${slug}`    : '/'    },
   { label: 'ES', locale: 'es', href: slug ? `/es/projects/${slug}` : '/es/' },
   { label: 'FR', locale: 'fr', href: slug ? `/fr/projects/${slug}` : '/fr/' },
+  { label: 'JA', locale: 'ja', href: slug ? `/ja/projects/${slug}` : '/ja/' },
+  { label: 'KO', locale: 'ko', href: slug ? `/ko/projects/${slug}` : '/ko/' },
 ];
 
 const backHref = `${base}/#projects`;
@@ -48,6 +50,7 @@ const backHref = `${base}/#projects`;
   <!-- ── Desktop pill nav (centered, same style as main) ─────────────── -->
   <nav
     id="desktop-nav"
+    aria-label={i18n.NAV.primaryNavigation}
     class="hidden md:flex items-center gap-1 lg:gap-2
            mx-auto
            px-3 py-1.5 rounded-full
@@ -81,7 +84,7 @@ const backHref = `${base}/#projects`;
                text-gray-600 dark:text-gray-300
                hover:text-gray-900 dark:hover:text-white
                hover:bg-gray-100 dark:hover:bg-gray-800"
-        aria-label="Select language"
+        aria-label={i18n.NAV.selectLanguage}
         aria-haspopup="true"
         aria-expanded="false"
         aria-controls="language-menu"
@@ -105,6 +108,7 @@ const backHref = `${base}/#projects`;
               <a
                 href={lang.href}
                 aria-current={currentLocale === lang.locale ? 'page' : undefined}
+                onclick="localStorage.setItem('lang-redirected','1')"
                 class={`block px-3 py-2 rounded-lg cursor-pointer transition-colors
                         text-gray-700 dark:text-gray-200
                         hover:bg-gray-100 dark:hover:bg-gray-800
@@ -137,7 +141,7 @@ const backHref = `${base}/#projects`;
   document.addEventListener('astro:page-load', () => {
     // Update back-link hrefs at runtime to match current document lang
     const lang   = document.documentElement.lang ?? 'en';
-    const prefix = lang === 'es' ? '/es' : lang === 'fr' ? '/fr' : '';
+    const prefix = ['es', 'fr', 'ja', 'ko'].includes(lang) ? `/${lang}` : '';
 
     document.querySelectorAll<HTMLAnchorElement>('[data-back-to-portfolio], [data-back-to-portfolio-desktop]').forEach(link => {
       link.href = `${prefix}/#projects`;

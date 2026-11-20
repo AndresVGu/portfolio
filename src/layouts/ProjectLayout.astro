@@ -36,7 +36,7 @@ const i18n = getI18N({ currentLocale });
 const pageUrl = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
 const projectSlug = Astro.params.slug;
-const localePaths = ['en', 'es', 'fr'].map((locale) => ({
+const localePaths = ['en', 'es', 'fr', 'ja', 'ko'].map((locale) => ({
   locale,
   path: `${locale === 'en' ? '' : `/${locale}`}/projects/${projectSlug}/`,
 }));
@@ -65,7 +65,7 @@ const localePaths = ['en', 'es', 'fr'].map((locale) => ({
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImage.href} />
     <meta property="og:image:alt" content={title} />
-    <meta property="og:locale" content={currentLocale === 'es' ? 'es_CO' : currentLocale === 'fr' ? 'fr_CA' : 'en_CA'} />
+    <meta property="og:locale" content={currentLocale === 'es' ? 'es_CO' : currentLocale === 'fr' ? 'fr_CA' : currentLocale === 'ja' ? 'ja_JP' : currentLocale === 'ko' ? 'ko_KR' : 'en_CA'} />
     <meta property="og:site_name" content="Andrés Villarreal — Portfolio" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={pageUrl.href} />
@@ -227,7 +227,7 @@ const localePaths = ['en', 'es', 'fr'].map((locale) => ({
           >
             <p class="text-xs font-semibold uppercase tracking-widest
                       text-gray-400 dark:text-gray-500 mb-3">
-              On this page
+              {i18n.CAROUSEL.onThisPage}
             </p>
             <ul id="toc-list" class="space-y-1 text-sm">
               <!-- Populated by JS from h2 headings -->

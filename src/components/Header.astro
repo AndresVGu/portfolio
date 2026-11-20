@@ -25,17 +25,20 @@ const languages = [
   { label: 'EN', locale: 'en', href: '/' },
   { label: 'ES', locale: 'es', href: '/es/' },
   { label: 'FR', locale: 'fr', href: '/fr/' },
+  { label: 'JA', locale: 'ja', href: '/ja/' },
+  { label: 'KO', locale: 'ko', href: '/ko/' },
 ];
 
-// If we're on a project page (/projects/[slug], /es/projects/[slug], /fr/projects/[slug]),
-// build locale-aware hrefs that stay on the same project page.
+// Keep the current project page when changing languages.
 const pathname = Astro.url.pathname;
-const projectMatch = pathname.match(/(?:\/(?:es|fr))?\/projects\/([^/]+)/);
+const projectMatch = pathname.match(/(?:\/(?:es|fr|ja|ko))?\/projects\/([^/]+)/);
 if (projectMatch) {
   const slug = projectMatch[1];
   languages[0].href = `/projects/${slug}`;
   languages[1].href = `/es/projects/${slug}`;
   languages[2].href = `/fr/projects/${slug}`;
+  languages[3].href = `/ja/projects/${slug}`;
+  languages[4].href = `/ko/projects/${slug}`;
 }
 ---
 
@@ -58,7 +61,7 @@ if (projectMatch) {
 
   <!-- ── Desktop pill nav ─────────────────────────────────────────────── -->
   <nav id="desktop-nav"
-       aria-label="Primary navigation"
+       aria-label={i18n.NAV.primaryNavigation}
        class="hidden md:flex items-center gap-1 lg:gap-2
               mx-auto
               px-3 py-1.5 rounded-full
@@ -87,7 +90,7 @@ if (projectMatch) {
                text-gray-600 dark:text-gray-300
                hover:text-gray-900 dark:hover:text-white
                hover:bg-gray-100 dark:hover:bg-gray-800"
-        aria-label="Select language"
+        aria-label={i18n.NAV.selectLanguage}
         aria-haspopup="true"
         aria-expanded="false"
         aria-controls="language-menu"
@@ -111,6 +114,7 @@ if (projectMatch) {
               <a
                 href={lang.href}
                 aria-current={currentLocale === lang.locale ? 'page' : undefined}
+                onclick="localStorage.setItem('lang-redirected','1')"
                 class={`block px-3 py-2 rounded-lg cursor-pointer transition-colors
                         text-gray-700 dark:text-gray-200
                         hover:bg-gray-100 dark:hover:bg-gray-800
@@ -135,7 +139,7 @@ if (projectMatch) {
     <!-- Hamburger -->
     <button
       id="mobile-menu-btn"
-      aria-label="Open menu"
+      aria-label={i18n.NAV.openMenu}
       aria-expanded="false"
       aria-controls="mobile-drawer"
       class="p-2 rounded-xl
@@ -161,7 +165,7 @@ if (projectMatch) {
   aria-hidden="true"
   aria-modal="true"
   role="dialog"
-  aria-label="Navigation menu"
+  aria-label={i18n.NAV.primaryNavigation}
   inert
 >
   <!-- Drawer header -->
@@ -171,7 +175,7 @@ if (projectMatch) {
     </span>
     <button
       id="mobile-menu-close"
-      aria-label="Close menu"
+      aria-label={i18n.NAV.closeMenu}
       class="p-2 rounded-xl text-gray-600 dark:text-gray-300
              hover:bg-gray-100 dark:hover:bg-gray-800 transition"
     >
@@ -180,7 +184,7 @@ if (projectMatch) {
   </div>
 
   <!-- Nav links -->
-  <nav aria-label="Primary navigation" class="flex flex-col flex-1 px-4 py-6 gap-1 overflow-y-auto">
+  <nav aria-label={i18n.NAV.primaryNavigation} class="flex flex-col flex-1 px-4 py-6 gap-1 overflow-y-auto">
     {navItems.map((link) => (
       <a
         class="mobile-nav-link flex items-center gap-3 px-4 py-3.5 rounded-xl
@@ -200,7 +204,7 @@ if (projectMatch) {
     <!-- Language switcher mobile -->
     <div class="px-4 py-2">
       <p class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
-        Language
+        {i18n.NAV.language}
       </p>
       <div class="flex gap-2">
         {languages.map((lang) => (

@@ -1,0 +1,297 @@
+{
+  "SEO_TITLE": "Andrés Villarreal — 풀스택 엔지니어",
+  "SEO_DESCRIPTION": ".NET, ASP.NET MVC, Web API, React 및 클라우드 솔루션을 전문으로 하는 풀스택 엔지니어.",
+  "NAV": {
+    "home": "홈",
+    "experience": "경력",
+    "projects": "프로젝트",
+    "education": "학력",
+    "about": "소개",
+    "contact": "문의",
+    "primaryNavigation": "주요 탐색 메뉴",
+    "selectLanguage": "언어 선택",
+    "language": "언어",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기"
+  },
+  "PROFILE": {
+    "greeting": "안녕하세요, Andrés입니다",
+    "badge": "새로운 기회를 찾고 있습니다",
+    "contact": "문의하기",
+    "resume": "이력서",
+    "role1": "풀스택 엔지니어",
+    "role2": "전자기기 전문가",
+    "role3": "3개 언어 사용 · EN / FR / ES",
+    "tooltipBadge": "새로운 직무 기회를 찾고 있습니다",
+    "tooltipResume": "이력서 다운로드 (PDF)",
+    "tooltipPhoto": "사진을 보려면 클릭하세요",
+    "description": "<strong>{years}년 이상</strong> <strong>.NET</strong>, <strong>Java Spring Boot</strong>, <strong>React</strong>를 활용해 확장 가능한 풀스택 앱을 개발해 왔습니다. 실제 트래픽을 견디는 코드를 지향합니다. <strong>전자기기</strong> 실무 경험도 있어 터미널 작업과 납땜 모두 익숙합니다. <strong>영어</strong>, <strong>프랑스어</strong>, <strong>스페인어</strong>를 구사합니다."
+  },
+  "TITLES": {
+    "experience": "경력",
+    "projects": "프로젝트",
+    "education": "학력",
+    "certificates": "자격증",
+    "about": "소개",
+    "memoryGame": "테크 메모리",
+    "techStack": "기술 스택",
+    "highlights": "주요 성과",
+    "careerProgression": "커리어 성장",
+    "viewDetails": "자세히 보기",
+    "current": "현재",
+    "promoted": "승진",
+    "permanent": "정규직 · 풀타임"
+  },
+  "EXPERIENCE": [
+    {
+      "startDate": "2026년 3월",
+      "endDate": "현재",
+      "title": "풀스택 엔지니어",
+      "location": "캐나다 온타리오 · 사무실 근무",
+      "description": "처음부터 구축하는 사내 ERP 시스템의 전체 개발을 이끄는 역할로 승진했습니다.",
+      "modalDescription": "<strong>전자기기 전문가</strong>에서 승진해 핵심 업무를 통합하는 자체 ERP 플랫폼의 <strong>전체 개발</strong>을 맡고 있습니다. 시스템은 <strong>재고, 직원, 주문 처리, 반품, 구매 주문, 창고 운영</strong>을 관리합니다. 시스템 아키텍처와 데이터베이스 설계부터 UI/UX와 비즈니스 로직까지 전 과정을 책임지고 여러 부서의 담당자와 협업합니다.",
+      "highlights": [
+        "기술적 주도성을 인정받아 전자기기 전문가에서 승진",
+        "재고, 주문, 반품, 창고 운영을 아우르는 ERP 플랫폼 설계",
+        "시스템 설계, DB 스키마, 백엔드 API, React 프런트엔드까지 전 과정 담당",
+        "이해관계자와 직접 협력해 운영 환경에 적합한 확장형 솔루션 제공"
+      ]
+    },
+    {
+      "startDate": "2024년 9월",
+      "endDate": "2026년 2월",
+      "title": "전자기기 전문가",
+      "location": "캐나다 온타리오 · 사무실 근무",
+      "description": "업무용 러기드 기기의 진단, 수리 및 하드웨어·소프트웨어 통합을 담당했습니다.",
+      "modalDescription": "<strong>업무에 필수적인 러기드 하드웨어</strong>가 최상의 상태로 작동하도록 관리했습니다. <strong>Panasonic Toughbook, Dell, Getac</strong> 제품의 진단과 수리, 임베디드 앱 및 외부 기기 호환을 포함한 하드웨어·소프트웨어 통합을 수행했습니다. Linux 환경에서 <strong>DevOps 원칙</strong>을 적용해 배포를 효율화하고 구성의 일관성을 높였습니다.",
+      "highlights": [
+        "Panasonic, Dell, Getac 러기드 기기의 진단과 수리 전 과정 담당",
+        "임베디드 앱과 외부 기기 호환을 포함한 하드웨어·소프트웨어 통합",
+        "Linux 환경의 DevOps 방식으로 배포 효율 개선",
+        "성과를 인정받아 풀스택 엔지니어로 승진"
+      ]
+    },
+    {
+      "startDate": "2018년 6월",
+      "endDate": "2021년 12월",
+      "title": "주니어 웹 개발자",
+      "location": "콜롬비아 보고타 · 사무실 근무",
+      "description": "콜롬비아 스타트업부터 기업 고객까지 다양한 풀스택 웹 개발을 담당했습니다.",
+      "modalDescription": "콜롬비아의 스타트업과 기업을 위한 <strong>풀스택 웹 개발</strong>을 수행했습니다. <strong>맞춤형 애플리케이션, 전자상거래 플랫폼, REST API</strong>와 클라우드 솔루션을 중심으로 프런트엔드부터 배포까지 전반을 담당했습니다.",
+      "highlights": [
+        "콜롬비아 스타트업과 기업을 위한 맞춤형 앱 및 전자상거래 사이트 개발",
+        "REST API와 클라우드 호스팅 솔루션 구축 및 유지보수",
+        "UI부터 서버와 배포까지 풀스택 업무 수행"
+      ]
+    }
+  ],
+  "EDUCATION": [
+    {
+      "endDate": "2024년 10월",
+      "title": "컴퓨터 프로그래밍 및 분석",
+      "description": "모바일 앱 개발, 빅데이터 분석, 인터랙티브 멀티미디어 솔루션 설계 역량을 키웠습니다."
+    }
+  ],
+  "ABOUT": {
+    "tagline": "아이디어를 깔끔하고 유용하며 매력적인 디지털 경험으로 만듭니다.",
+    "p1": "<strong>작동하는 것</strong>을 넘어 <strong>직관적이고 즐겁게 사용할 수 있는 것</strong>을 만드는 개발자입니다. <strong>{years}년 이상의 경험</strong>을 바탕으로 비즈니스 플랫폼부터 인터랙티브 웹 앱까지 실제 환경에서 쓰이는 프로젝트를 만들어 왔습니다.",
+    "p2": "사람들이 제품과 서비스를 더 잘 경험하도록 돕는 솔루션을 만들며 커리어를 시작했습니다. 특히 <strong>깔끔한 인터페이스, 탄탄한 백엔드</strong>, 세심한 주의가 중요한 작업에 관심이 많습니다.",
+    "p3": "코딩 외에도 작동 원리를 알아보고, 업무 흐름을 개선하고, 오래된 노트북을 되살리는 일을 좋아합니다. 요리 경험을 통해 결과만큼 표현과 정확성도 중요하다는 점을 배웠습니다.",
+    "techStack": "⚙️ 기술 스택",
+    "strengths": {
+      "backend": "🚀 백엔드 및 API",
+      "cloud": "☁️ 클라우드 및 DevOps",
+      "data": "📊 데이터 워크플로",
+      "linux": "🛠 Linux 및 하드웨어"
+    },
+    "focus": "계속 성장하고 의미 있는 프로젝트를 만들며 품질을 중요하게 생각하는 사람들과 협업하고 싶습니다.",
+    "hobbiesTitle": "취미와 관심사",
+    "hobbies": [
+      { "icon": "🚴", "label": "자전거 타기" },
+      { "icon": "📚", "label": "독서" },
+      { "icon": "🧙‍♂️", "label": "반지의 제왕" },
+      { "icon": "🍳", "label": "요리" },
+      { "icon": "💻", "label": "컴퓨터 리퍼비시" }
+    ],
+    "cards": {
+      "focused": "🎯 집중 분야",
+      "focusedItems": ["Linux", "리퍼비시", "Java"],
+      "location": "🌍 위치",
+      "locationValue": "📍 토론토, 🇨🇦",
+      "interests": "개인 관심사",
+      "interestItems": ["🚴 도시 자전거 타기", "📚 틈날 때 독서", "🧙‍♂️ 중세 영화 (반지의 제왕 팬)"]
+    },
+    "bento": {
+      "buildingErp": "ERP 개발 중",
+      "coffee": "커피",
+      "cycling": "자전거",
+      "reading": "독서",
+      "lotr": "반지의 제왕 팬",
+      "basedHere": "이곳을 기반으로 활동"
+    },
+    "weather": {
+      "feelsLike": "체감 온도",
+      "loading": "불러오는 중...",
+      "unavailable": "정보 없음",
+      "clearDay": "맑음",
+      "clearNight": "맑은 밤",
+      "partlyCloudy": "구름 조금",
+      "foggy": "안개",
+      "drizzle": "이슬비",
+      "rain": "비",
+      "snow": "눈",
+      "rainShowers": "소나기",
+      "snowShowers": "눈 소나기",
+      "thunderstorm": "뇌우"
+    },
+    "photocards": [
+      { "label": "CN 타워", "description": "맑은 오후, 토론토 스카이라인을 가로지르는 상징적인 CN 타워." },
+      { "label": "보야카", "description": "판초와 모닥불, 보야카 시골에 흐르는 신비로운 고요함." },
+      { "label": "폭포", "description": "온타리오의 오래된 바위 위로 굉음을 내며 쏟아지는 흰 물줄기." },
+      { "label": "나이아가라 칼리지", "description": "캐나다의 하늘 아래 모든 것을 처음부터 만들며 시작된 커리어." },
+      { "label": "호박", "description": "가을의 시작을 알리며 지역 농장에 줄지어 놓인 선명한 주황빛 호박." },
+      { "label": "두루미", "description": "황금빛 시간, 물가에 고요히 서 있는 우아한 두루미." },
+      { "label": "숲길", "description": "아침 안개에 둘러싸인 키 큰 나무 사이로 이어지는 조용한 길." },
+      { "label": "오리", "description": "해 질 무렵 잔잔한 연못을 평화롭게 헤엄치는 오리 가족." },
+      { "label": "커피 타임", "description": "정신을 깨우고 마음을 편안하게 하는 좋은 오후의 한 잔." },
+      { "label": "세인트캐서린스", "description": "따뜻한 오후 햇살을 머금은 매력적인 거리." },
+      { "label": "웰랜드", "description": "배가 갑문을 통과하는 웰랜드 운하의 고요한 풍경." },
+      { "label": "디퍼", "description": "말은 없어도 눈빛으로 모든 걸 전하는 소중한 가족." },
+      { "label": "과타비타", "description": "콜롬비아 고원에 자리한 전설적인 과타비타 호수." },
+      { "label": "새크라멘토", "description": "푸른 하늘 아래 햇살이 쏟아지는 새크라멘토 도심 거리." },
+      { "label": "부카라망가", "description": "푸른 산으로 둘러싸인 활기찬 도시 풍경." },
+      { "label": "서버 랙", "description": "작업실에서 조용히 돌아가는 깔끔하게 정리된 서버 랙." },
+      { "label": "Toughbook", "description": "배포 준비를 마친 Panasonic Toughbook 러기드 노트북." },
+      { "label": "보름달", "description": "구름 한 점 없는 밤, 나무 위로 떠오르는 밝은 보름달." },
+      { "label": "거미", "description": "이른 아침 빛 속에서 이슬로 반짝이는 섬세한 거미줄." },
+      { "label": "장비", "description": "어떤 환경도 견딜 준비가 된 튼튼한 디지털 장비." },
+      { "label": "나이아가라 폭포", "description": "캐나다 쪽에서 바라본 웅장한 나이아가라 폭포와 하늘로 오르는 물안개." }
+    ],
+    "photocardNav": {
+      "prev": "이전 사진",
+      "next": "다음 사진"
+    }
+  },
+  "PROJECTS": [
+    {
+      "title": "Toughbook AutoInstaller",
+      "subtitle": "Bash·Python CLI 자동화 도구",
+      "description": "Panasonic Toughbook 리퍼비시를 위한 하드웨어 감지, 드라이버 설치, 출고 준비를 자동화하는 명령줄 도구입니다.",
+      "gallery": "갤러리",
+      "code": "코드"
+    },
+    {
+      "title": "NBD Landscaping",
+      "subtitle": "ASP.NET MVC와 C# 기반 비즈니스 앱",
+      "description": "조경 업체를 위한 역할 기반 웹 앱으로 고객 관리, 프로젝트 배정, 자재비와 인건비를 포함한 견적 작성을 지원합니다.",
+      "gallery": "갤러리",
+      "code": "코드",
+      "link": "링크"
+    },
+    {
+      "title": "Cities API",
+      "subtitle": "ASP.NET Core Web API",
+      "description": "도시와 주·도 정보를 연결하고 각 엔터티의 전체 CRUD 작업을 지원하는 REST API입니다.",
+      "gallery": "갤러리",
+      "code": "코드",
+      "link": "링크"
+    },
+    {
+      "title": "Spotify Clone",
+      "subtitle": "Astro로 제작",
+      "description": "깔끔하고 반응형인 UI에서 음악을 재생하고 앨범을 둘러볼 수 있는 Spotify 스타일 플레이어입니다.",
+      "gallery": "갤러리",
+      "code": "코드"
+    },
+    {
+      "title": "Emma's Small Engines",
+      "subtitle": "순수 HTML5·CSS3·JavaScript 비즈니스 앱",
+      "description": "소형 엔진 수리점을 위한 재고 및 수리 관리 시스템으로 장비, 주문, 정비 기록을 관리합니다.",
+      "gallery": "갤러리",
+      "code": "코드"
+    },
+    {
+      "title": "VitGreen",
+      "subtitle": "전자상거래 웹사이트",
+      "description": "안전한 결제, 상품 리뷰, 빠른 배송을 제공하는 단백질 제품 전문 온라인 스토어입니다.",
+      "gallery": "갤러리",
+      "link": "링크"
+    },
+    {
+      "title": "V12 Magazine",
+      "subtitle": "자동차 매거진",
+      "description": "콜롬비아 자동차 문화의 뉴스와 행사를 다루는 자동차 매거진 사이트입니다.",
+      "gallery": "갤러리",
+      "code": "코드"
+    }
+  ],
+  "CAROUSEL": {
+    "scrollLeft": "왼쪽으로 스크롤",
+    "scrollRight": "오른쪽으로 스크롤",
+    "regionLabel": "프로젝트 캐러셀",
+    "hint": "스와이프하거나 화살표 키를 사용하세요",
+    "hintMobile": "스와이프",
+    "viewProject": "프로젝트 자세히 보기",
+    "techStack": "기술 스택",
+    "liveDemo": "웹사이트",
+    "sourceCode": "소스 코드",
+    "fullDocs": "문서",
+    "backToPortfolio": "← 포트폴리오로 돌아가기",
+    "onThisPage": "이 페이지의 목차"
+  },
+  "FOOTER": {
+    "education": "학력",
+    "experience": "경력",
+    "projects": "프로젝트",
+    "about": "소개",
+    "contact": "문의"
+  },
+  "CERTIFICATES": [
+    {
+      "title": "Python 보안",
+      "description": "침투 테스트, 웹 스크래핑, 네트워크 진단 도구 제작 등을 통해 보안 분야에서 Python을 활용하는 방법을 배웁니다."
+    },
+    {
+      "title": "UX 디자인",
+      "description": "와이어프레임과 프로토타입을 만들고 사용자 조사를 수행해 사용하기 편한 디지털·물리 제품을 설계하는 역량을 기릅니다."
+    },
+    {
+      "title": "Linux",
+      "description": "터미널 탐색, 명령 실행, 요구사항에 맞춘 작업 환경 설정을 통해 Linux 운영체제를 익힙니다."
+    },
+    {
+      "title": "Linux 사용자화",
+      "description": "기업 및 운영 환경에서 성능, 보안, 워크플로를 최적화하는 고급 Linux OS 사용자화."
+    }
+  ],
+  "CERT_SECTION": {
+    "modalLabel": "자격증 상세 정보",
+    "close": "닫기",
+    "verify": "자격증 확인",
+    "copyId": "ID 복사",
+    "copied": "복사했습니다!",
+    "copyError": "복사에 실패했습니다",
+    "scrollHint": "스크롤하여 자격증 보기",
+    "toastCopied": "자격 증명을 클립보드에 복사했습니다",
+    "toastError": "클립보드에 복사할 수 없습니다"
+  },
+  "CONTACT": {
+    "title": "문의하기",
+    "subtitle": "프로젝트를 논의하거나 인사를 나누고 싶으신가요? 양식을 보내 주시면 가능한 한 빨리 답변드리겠습니다.",
+    "name": "이름",
+    "namePlaceholder": "이름",
+    "email": "이메일",
+    "emailPlaceholder": "your@email.com",
+    "subject": "제목",
+    "subjectPlaceholder": "어떤 내용인가요?",
+    "message": "메시지",
+    "messagePlaceholder": "프로젝트나 아이디어를 알려 주세요...",
+    "send": "메시지 보내기",
+    "sending": "보내는 중...",
+    "successTitle": "메시지를 보냈습니다!",
+    "successText": "연락해 주셔서 감사합니다. 확인 후 답변드리겠습니다.",
+    "errorTitle": "문제가 발생했습니다.",
+    "errorText": "다시 시도하거나 andresvillarrealg@gmail.com 으로 직접 이메일을 보내 주세요.",
+    "orEmail": "또는 이메일로 연락해 주세요"
+  }
+}

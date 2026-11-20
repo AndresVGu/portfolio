@@ -1,0 +1,297 @@
+{
+  "SEO_TITLE": "Andrés Villarreal — フルスタックエンジニア",
+  "SEO_DESCRIPTION": ".NET、ASP.NET MVC、Web API、React、クラウドソリューションを専門とするフルスタックエンジニア。",
+  "NAV": {
+    "home": "ホーム",
+    "experience": "職務経歴",
+    "projects": "プロジェクト",
+    "education": "学歴",
+    "about": "プロフィール",
+    "contact": "お問い合わせ",
+    "primaryNavigation": "メインナビゲーション",
+    "selectLanguage": "言語を選択",
+    "language": "言語",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる"
+  },
+  "PROFILE": {
+    "greeting": "こんにちは、Andrésです",
+    "badge": "新しい機会を探しています",
+    "contact": "お問い合わせ",
+    "resume": "履歴書",
+    "role1": "フルスタックエンジニア",
+    "role2": "電子機器スペシャリスト",
+    "role3": "3か国語対応 · EN / FR / ES",
+    "tooltipBadge": "新しい仕事の機会を探しています",
+    "tooltipResume": "履歴書をダウンロード（PDF）",
+    "tooltipPhoto": "クリックして写真を表示",
+    "description": "<strong>{years}年以上</strong>にわたり、<strong>.NET</strong>、<strong>Java Spring Boot</strong>、<strong>React</strong>を使った拡張性の高いフルスタックアプリを開発してきました。実際のアクセスにも耐えるコードを大切にしています。<strong>電子機器</strong>の実務経験もあり、ターミナル操作もはんだ付けも得意です。<strong>英語</strong>、<strong>フランス語</strong>、<strong>スペイン語</strong>を話します。"
+  },
+  "TITLES": {
+    "experience": "職務経歴",
+    "projects": "プロジェクト",
+    "education": "学歴",
+    "certificates": "資格・認定",
+    "about": "プロフィール",
+    "memoryGame": "テック・メモリー",
+    "techStack": "技術スタック",
+    "highlights": "主な実績",
+    "careerProgression": "キャリアの歩み",
+    "viewDetails": "詳細を見る",
+    "current": "現在",
+    "promoted": "昇進",
+    "permanent": "正社員 · フルタイム"
+  },
+  "EXPERIENCE": [
+    {
+      "startDate": "2026年3月",
+      "endDate": "現在",
+      "title": "フルスタックエンジニア",
+      "location": "カナダ・オンタリオ州 · オンサイト",
+      "description": "ゼロから構築する社内ERPシステムの開発全体を主導する役割に昇進。",
+      "modalDescription": "<strong>電子機器スペシャリスト</strong>から昇進し、業務の中核を一元化する独自ERPプラットフォームの<strong>開発全体</strong>を担当しています。システムは<strong>在庫、従業員、注文、返品、発注、倉庫業務</strong>を管理します。システム設計、データベース、UI/UX、業務ロジックまで一貫して担い、各部門の関係者と連携しています。",
+      "highlights": [
+        "技術面での主体的な貢献が評価され、電子機器スペシャリストから昇進",
+        "在庫、注文、返品、倉庫業務をカバーするERPプラットフォームを設計",
+        "システム設計、DBスキーマ、バックエンドAPI、Reactフロントエンドを一貫して担当",
+        "関係者と直接連携し、本番運用に耐える拡張可能なソリューションを開発"
+      ]
+    },
+    {
+      "startDate": "2024年9月",
+      "endDate": "2026年2月",
+      "title": "電子機器スペシャリスト",
+      "location": "カナダ・オンタリオ州 · オンサイト",
+      "description": "業務用堅牢端末の診断、修理、ハードウェアとソフトウェアの統合。",
+      "modalDescription": "<strong>ミッションクリティカルな堅牢端末</strong>を最適な状態に保つ業務を担当しました。<strong>Panasonic Toughbook、Dell、Getac</strong>製品を対象に、診断、修理、組み込みアプリや外部機器との連携を含むハードウェア・ソフトウェア統合を一貫して実施。Linux環境で<strong>DevOpsの考え方</strong>を活用し、展開の効率化と構成の一貫性向上に取り組みました。",
+      "highlights": [
+        "Panasonic、Dell、Getacの堅牢端末を一貫して診断・修理",
+        "組み込みアプリや外部機器を含むハードウェアとソフトウェアの統合",
+        "Linux環境でDevOpsの実践を取り入れ、展開を効率化",
+        "実績が評価され、フルスタックエンジニアに昇進"
+      ]
+    },
+    {
+      "startDate": "2018年6月",
+      "endDate": "2021年12月",
+      "title": "ジュニアWeb開発者",
+      "location": "コロンビア・ボゴタ · オンサイト",
+      "description": "コロンビアのスタートアップから大企業まで、フルスタックWeb開発を担当。",
+      "modalDescription": "コロンビアのスタートアップや企業向けに<strong>フルスタックWeb開発</strong>を行いました。<strong>カスタムアプリ、eコマース、REST API</strong>、クラウドソリューションを中心に、フロントエンドからデプロイまで幅広く担当しました。",
+      "highlights": [
+        "コロンビアのスタートアップや企業向けにカスタムアプリとECサイトを開発",
+        "REST APIとクラウドソリューションを構築・保守",
+        "UIからサーバー、デプロイまでフルスタックで対応"
+      ]
+    }
+  ],
+  "EDUCATION": [
+    {
+      "endDate": "2024年10月",
+      "title": "コンピュータープログラミング・分析",
+      "description": "モバイルアプリ開発、ビッグデータ分析、インタラクティブなマルチメディアソリューションの設計を学びました。"
+    }
+  ],
+  "ABOUT": {
+    "tagline": "アイデアを、使いやすく魅力的なデジタル体験に変えます。",
+    "p1": "<strong>動くだけ</strong>でなく、<strong>直感的で使うのが楽しい</strong>ものづくりが好きな開発者です。<strong>{years}年以上の経験</strong>を通じて、業務プラットフォームからインタラクティブなWebアプリまで、実際の利用に耐えるプロジェクトを開発してきました。",
+    "p2": "人と製品・サービスとのつながりをより良くする解決策を作ることから、私のキャリアは始まりました。特に<strong>使いやすいインターフェース、堅牢なバックエンド</strong>、細部への配慮が重要な仕事に惹かれます。",
+    "p3": "コード以外では、仕組みを理解したり、作業の流れを改善したり、古いノートPCをよみがえらせたりするのが好きです。料理の経験から、見せ方と正確さも大切にしています。",
+    "techStack": "⚙️ 技術スタック",
+    "strengths": {
+      "backend": "🚀 バックエンド・API",
+      "cloud": "☁️ クラウド・DevOps",
+      "data": "📊 データワークフロー",
+      "linux": "🛠 Linux・ハードウェア"
+    },
+    "focus": "成長を続け、価値あるプロジェクトを作り、品質を大切にする人たちと協働したいと考えています。",
+    "hobbiesTitle": "趣味・関心",
+    "hobbies": [
+      { "icon": "🚴", "label": "サイクリング" },
+      { "icon": "📚", "label": "読書" },
+      { "icon": "🧙‍♂️", "label": "ロード・オブ・ザ・リング" },
+      { "icon": "🍳", "label": "料理" },
+      { "icon": "💻", "label": "PCの再生" }
+    ],
+    "cards": {
+      "focused": "🎯 注力分野",
+      "focusedItems": ["Linux", "リファービッシュ", "Java"],
+      "location": "🌍 所在地",
+      "locationValue": "📍 トロント、🇨🇦",
+      "interests": "個人的な関心",
+      "interestItems": ["🚴 街でサイクリング", "📚 時間を見つけて読書", "🧙‍♂️ 中世映画（LOTRファン）"]
+    },
+    "bento": {
+      "buildingErp": "ERPを開発中",
+      "coffee": "コーヒー",
+      "cycling": "サイクリング",
+      "reading": "読書",
+      "lotr": "LOTRファン",
+      "basedHere": "ここを拠点に活動"
+    },
+    "weather": {
+      "feelsLike": "体感温度",
+      "loading": "読み込み中...",
+      "unavailable": "取得できません",
+      "clearDay": "晴れ",
+      "clearNight": "晴れ（夜）",
+      "partlyCloudy": "晴れ時々くもり",
+      "foggy": "霧",
+      "drizzle": "霧雨",
+      "rain": "雨",
+      "snow": "雪",
+      "rainShowers": "にわか雨",
+      "snowShowers": "にわか雪",
+      "thunderstorm": "雷雨"
+    },
+    "photocards": [
+      { "label": "CNタワー", "description": "晴れた午後、トロントの街並みを見下ろす象徴的なCNタワー。" },
+      { "label": "ボヤカ", "description": "ポンチョと焚き火、ボヤカの田園に流れる魔法のような静けさ。" },
+      { "label": "滝", "description": "オンタリオの大地で、白い水が古い岩を越えて流れ落ちる。" },
+      { "label": "ナイアガラ・カレッジ", "description": "カナダの空の下、すべてを一から築きながらキャリアが始まりました。" },
+      { "label": "かぼちゃ", "description": "地元の農場に並ぶ鮮やかなオレンジ色のかぼちゃが秋の訪れを告げます。" },
+      { "label": "ツル", "description": "夕暮れの水辺に静かに立つ、優雅なツル。" },
+      { "label": "森の小道", "description": "朝霧に包まれた高い木々の間を抜ける静かな森の道。" },
+      { "label": "カモ", "description": "夕暮れの穏やかな池を、カモの親子が静かに泳いでいます。" },
+      { "label": "コーヒータイム", "description": "心に活力を、魂に安らぎを。午後を楽しむための一杯。" },
+      { "label": "セントキャサリンズ", "description": "暖かな午後の光に包まれた、魅力あふれる街並み。" },
+      { "label": "ウェランド", "description": "船が閘門を通過するウェランド運河の穏やかな風景。" },
+      { "label": "ディッパー", "description": "言葉はなくても、その瞳がすべてを語る大切な家族。" },
+      { "label": "グアタビタ", "description": "コロンビア高地に抱かれた伝説のグアタビタ湖。" },
+      { "label": "サクラメント", "description": "青空の下に広がる、陽光あふれるサクラメント中心街。" },
+      { "label": "ブカラマンガ", "description": "緑豊かな山々に囲まれた活気ある街、ブカラマンガ。" },
+      { "label": "サーバーラック", "description": "作業場で静かに稼働する、整然と並んだサーバーラック。" },
+      { "label": "Toughbook", "description": "出荷準備が整ったPanasonic Toughbookの堅牢ノートPC。" },
+      { "label": "満月", "description": "雲ひとつない夜、木々の向こうから昇る明るい満月。" },
+      { "label": "クモ", "description": "朝の光の中、露に輝く精巧なクモの巣。" },
+      { "label": "機材", "description": "どんな環境にも対応できる、堅牢なデジタル機材。" },
+      { "label": "ナイアガラの滝", "description": "カナダ側から望む壮大なナイアガラの滝。水しぶきが空へ舞い上がります。" }
+    ],
+    "photocardNav": {
+      "prev": "前の写真",
+      "next": "次の写真"
+    }
+  },
+  "PROJECTS": [
+    {
+      "title": "Toughbook AutoInstaller",
+      "subtitle": "CLI自動化ツールキット — Bash・Python",
+      "description": "Panasonic Toughbookの再生作業におけるハードウェア検出、ドライバー導入、出荷準備を自動化するコマンドラインツール。",
+      "gallery": "ギャラリー",
+      "code": "コード"
+    },
+    {
+      "title": "NBD Landscaping",
+      "subtitle": "ASP.NET MVC・C#による業務アプリ",
+      "description": "造園業向けのロールベースWebアプリ。顧客管理、案件割り当て、材料費・人件費を含む見積もり作成に対応。",
+      "gallery": "ギャラリー",
+      "code": "コード",
+      "link": "リンク"
+    },
+    {
+      "title": "Cities API",
+      "subtitle": "ASP.NET Core Web API",
+      "description": "都市と州・県を関連付け、各エンティティのCRUD操作に対応するREST API。",
+      "gallery": "ギャラリー",
+      "code": "コード",
+      "link": "リンク"
+    },
+    {
+      "title": "Spotify Clone",
+      "subtitle": "Astroで構築",
+      "description": "曲の再生やアルバムの閲覧ができる、シンプルでレスポンシブなSpotify風プレーヤー。",
+      "gallery": "ギャラリー",
+      "code": "コード"
+    },
+    {
+      "title": "Emma's Small Engines",
+      "subtitle": "HTML5・CSS3・JavaScriptによる業務アプリ",
+      "description": "小型エンジン修理店向けの在庫・修理管理システム。機器、注文、整備記録を管理します。",
+      "gallery": "ギャラリー",
+      "code": "コード"
+    },
+    {
+      "title": "VitGreen",
+      "subtitle": "ECサイト",
+      "description": "プロテイン製品を扱うECストア。安全な決済、商品レビュー、迅速な配送に対応。",
+      "gallery": "ギャラリー",
+      "link": "リンク"
+    },
+    {
+      "title": "V12 Magazine",
+      "subtitle": "自動車マガジン",
+      "description": "コロンビアの自動車文化に関するニュースやイベントを紹介する自動車メディア。",
+      "gallery": "ギャラリー",
+      "code": "コード"
+    }
+  ],
+  "CAROUSEL": {
+    "scrollLeft": "左にスクロール",
+    "scrollRight": "右にスクロール",
+    "regionLabel": "プロジェクト一覧",
+    "hint": "スワイプまたは矢印キーを使用",
+    "hintMobile": "スワイプ",
+    "viewProject": "プロジェクトの詳細を見る",
+    "techStack": "技術スタック",
+    "liveDemo": "ウェブサイト",
+    "sourceCode": "ソースコード",
+    "fullDocs": "ドキュメント",
+    "backToPortfolio": "← ポートフォリオに戻る",
+    "onThisPage": "このページの内容"
+  },
+  "FOOTER": {
+    "education": "学歴",
+    "experience": "職務経歴",
+    "projects": "プロジェクト",
+    "about": "プロフィール",
+    "contact": "お問い合わせ"
+  },
+  "CERTIFICATES": [
+    {
+      "title": "Pythonセキュリティ",
+      "description": "ペネトレーションテスト、Webスクレイピング、ネットワーク診断ツールの作成などを通じて、セキュリティ分野でのPython活用を学ぶコース。"
+    },
+    {
+      "title": "UXデザイン",
+      "description": "ワイヤーフレームやプロトタイプの作成、調査を通じて、使いやすいデジタル・物理製品を設計するスキルを学びます。"
+    },
+    {
+      "title": "Linux",
+      "description": "ターミナル操作、コマンド実行、用途に応じた作業環境のカスタマイズを通じてLinuxを習得します。"
+    },
+    {
+      "title": "Linuxカスタマイズ",
+      "description": "企業や本番環境での性能、セキュリティ、ワークフローを改善する高度なLinuxカスタマイズ。"
+    }
+  ],
+  "CERT_SECTION": {
+    "modalLabel": "資格の詳細",
+    "close": "閉じる",
+    "verify": "資格を確認",
+    "copyId": "IDをコピー",
+    "copied": "コピーしました！",
+    "copyError": "コピーできませんでした",
+    "scrollHint": "スクロールして資格を見る",
+    "toastCopied": "認定IDをクリップボードにコピーしました",
+    "toastError": "クリップボードにコピーできませんでした"
+  },
+  "CONTACT": {
+    "title": "お問い合わせ",
+    "subtitle": "プロジェクトの相談でも、ちょっとしたご挨拶でもお気軽にどうぞ。できるだけ早く返信します。",
+    "name": "お名前",
+    "namePlaceholder": "お名前",
+    "email": "メールアドレス",
+    "emailPlaceholder": "your@email.com",
+    "subject": "件名",
+    "subjectPlaceholder": "お問い合わせ内容",
+    "message": "メッセージ",
+    "messagePlaceholder": "プロジェクトやアイデアについてお聞かせください...",
+    "send": "メッセージを送信",
+    "sending": "送信中...",
+    "successTitle": "送信しました！",
+    "successText": "お問い合わせありがとうございます。確認後、返信いたします。",
+    "errorTitle": "エラーが発生しました。",
+    "errorText": "もう一度お試しいただくか、andresvillarrealg@gmail.com までご連絡ください。",
+    "orEmail": "メールでのご連絡はこちら"
+  }
+}

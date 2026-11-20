@@ -1,0 +1,44 @@
+---
+import ProjectLayout from '@/layouts/ProjectLayout.astro';
+import { getI18N } from '@/i18n';
+
+export function getStaticPaths() {
+  const i18n = getI18N({ currentLocale: 'ja' });
+  return i18n.PROJECTS.map((project) => ({
+    params: { slug: project.slug },
+    props: { slug: project.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const currentLocale = 'ja';
+const i18n = getI18N({ currentLocale });
+
+const PROJECT_IMAGES: Record<string, string> = {
+  'toughbook-autoinstaller': '/photocards/laptops.webp',
+  'nbd-landscaping': '/projects/bg.webp',
+  'cities-api': '/projects/api2.webp',
+  'spotify-clone': '/projects/spo.webp',
+  'emmas-small-engines': '/projects/emma.webp',
+  'vitgreen': '/projects/vit.webp',
+  'v12-magazine': '/projects/v12Magazinea.webp',
+};
+
+const project = i18n.PROJECTS.find((item) => item.slug === slug);
+if (!project) return Astro.redirect('/ja/');
+---
+
+<ProjectLayout
+  currentLocale={currentLocale}
+  title={project.title}
+  description={project.description}
+  image={PROJECT_IMAGES[slug!] ?? ''}
+  subtitle={project.subtitle}
+  stack={project.stack ?? []}
+  liveUrl={project.liveUrl}
+  codeUrl={project.codeUrl}
+  docsUrl={project.docsUrl ?? null}
+  languages={project.languages ?? []}
+>
+  <Fragment set:html={project.detailDescription} />
+</ProjectLayout>
