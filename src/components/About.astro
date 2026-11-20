@@ -35,7 +35,9 @@ try {
     ghTotal        = data.total?.lastYear ?? 0;
     ghContributions = (data.contributions ?? []).slice(-140);
   }
-} catch {}
+} catch (error) {
+  console.warn('Unable to load GitHub contributions at build time.', error);
+}
 ---
 
 <!-- ── Photocards carousel (outside bento) ──────────────────────────── -->
@@ -151,7 +153,7 @@ try {
   </div>
 
   <!-- ── 7. GitHub heatmap ──────────────────────────────────────────── -->
-  <div class="bento-cell cell-github">
+  <div class="bento-cell cell-github" data-github-contributions data-locale={currentLocale}>
     <div class="flex items-center justify-between mb-3">
       <div class="flex items-center gap-2">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-gray-700 dark:text-gray-300">
@@ -159,7 +161,7 @@ try {
         </svg>
         <span class="text-xs font-bold text-gray-700 dark:text-gray-300">GitHub</span>
       </div>
-      <span class="text-[10px] text-gray-400 dark:text-gray-500">{ghTotal} contributions</span>
+      <span class="text-[10px] text-gray-400 dark:text-gray-500" data-github-total>{ghTotal} contributions</span>
     </div>
 
     {(() => {
@@ -177,7 +179,7 @@ try {
         }
       }
       return (
-        <div class="gh-month-row" style={`grid-template-columns: repeat(${COLS}, minmax(8px, 1fr))`}>
+        <div class="gh-month-row" data-github-months style={`grid-template-columns: repeat(${COLS}, minmax(8px, 1fr))`}>
           {monthLabels.map(({ label, col }) => (
             <span class="gh-month-label" style={`grid-column: ${col + 1}`}>{label}</span>
           ))}
@@ -185,7 +187,7 @@ try {
       );
     })()}
 
-    <div class="gh-heatmap">
+    <div class="gh-heatmap" data-github-heatmap>
       {ghContributions.map(day => {
         const formatted = new Date(day.date).toLocaleDateString(currentLocale, { month: 'short', day: 'numeric', year: 'numeric' });
         return <div class={`gh-cell gh-level-${day.level}`} title={`${formatted}: ${day.count}`}></div>;
@@ -256,12 +258,16 @@ try {
         import('@/scripts/about-weather'),
         import('@/scripts/about-gallery'),
         import('@/scripts/photocard-carousel'),
-      ]).then(([map, terminal, weather, gallery, photocardCarousel]) => {
+        import('@/scripts/github-contributions'),
+      ]).then(([map, terminal, weather, gallery, photocardCarousel, githubContributions]) => {
         map.initMap();
         terminal.initTerminal();
         weather.initWeather();
         gallery.initGalleryModal();
         photocardCarousel.initPhotocardCarousel();
+        void githubContributions.refreshGitHubContributions().catch((error: unknown) => {
+          console.error('Unable to refresh GitHub contributions.', error);
+        });
         initBentoParallax();
       });
     }, { rootMargin: '400px 0px' });
