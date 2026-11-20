@@ -81,8 +81,8 @@ function initCarousel(root: HTMLElement) {
 
   // Remove the pulse hint from the right arrow once the user scrolls
   function removeHint() {
-    btnRight.classList.remove('carousel-arrow-hint');
-    track.removeEventListener('scroll', removeHint);
+    btnRight!.classList.remove('carousel-arrow-hint');
+    track!.removeEventListener('scroll', removeHint);
   }
   track.addEventListener('scroll', removeHint, { passive: true });
 
@@ -132,8 +132,9 @@ function initCarousel(root: HTMLElement) {
     toggleOptionalBtn(modalLiveBtn, liveUrl);
     toggleOptionalBtn(modalCodeBtn, codeUrl);
 
-    modal.classList.remove('hidden');
+    modal?.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    modalClose?.focus();
     requestAnimationFrame(() => {
       backdrop!.classList.replace('opacity-0', 'opacity-100');
       modalContent!.classList.remove('opacity-0', 'translate-y-4');
@@ -144,13 +145,15 @@ function initCarousel(root: HTMLElement) {
   }
 
   function closeModal() {
+    const returnIndex = activeIndex;
     backdrop!.classList.replace('opacity-100', 'opacity-0');
     modalContent!.classList.remove('opacity-100', 'translate-y-0');
     modalContent!.classList.add('opacity-0', 'translate-y-4');
 
     setTimeout(() => {
-      modal.classList.add('hidden');
+      modal?.classList.add('hidden');
       document.body.style.overflow = '';
+      root.querySelector<HTMLElement>(`[data-carousel-card][data-index="${returnIndex}"]`)?.focus();
     }, 300);
 
     if (activeIndex >= 0) {
@@ -176,12 +179,36 @@ function initCarousel(root: HTMLElement) {
   }
 
   root.querySelectorAll<HTMLElement>('[data-carousel-card]').forEach((card) => {
-    card.addEventListener('click', () => openModal(parseInt(card.getAttribute('data-index') ?? '0', 10)));
+    const index = parseInt(card.getAttribute('data-index') ?? '0', 10);
+    card.addEventListener('click', () => openModal(index));
+    card.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      openModal(index);
+    });
   });
 
   modalClose.addEventListener('click', closeModal);
   backdrop.addEventListener('click', closeModal);
   document.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+    if (modal.classList.contains('hidden')) return;
+    if (e.key === 'Escape') {
+      closeModal();
+      return;
+    }
+    if (e.key !== 'Tab') return;
+
+    const focusable = [...modal.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), a[href]'
+    )].filter((element) => !element.classList.contains('hidden'));
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last?.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first?.focus();
+    }
   });
 }

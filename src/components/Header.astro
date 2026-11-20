@@ -13,12 +13,12 @@ const i18n = getI18N({ currentLocale });
 const base = getLocalePath(currentLocale);
 
 const navItems = [
-  { title: i18n.NAV.home,       label: 'home',       url: `${base}/#home` },
-  { title: i18n.NAV.experience, label: 'experience', url: `${base}/#experience` },
-  { title: i18n.NAV.projects,   label: 'projects',   url: `${base}/#projects` },
-  { title: i18n.NAV.education,  label: 'education',  url: `${base}/#education` },
-  { title: i18n.NAV.about,      label: 'about',      url: `${base}/#about` },
-  { title: i18n.NAV.contact,    label: 'contact',    url: `${base}/#contact` },
+  { title: i18n.NAV.home,       url: `${base}/#home` },
+  { title: i18n.NAV.experience, url: `${base}/#experience` },
+  { title: i18n.NAV.projects,   url: `${base}/#projects` },
+  { title: i18n.NAV.education,  url: `${base}/#education` },
+  { title: i18n.NAV.about,      url: `${base}/#about` },
+  { title: i18n.NAV.contact,    url: `${base}/#contact` },
 ];
 
 const languages = [
@@ -58,6 +58,7 @@ if (projectMatch) {
 
   <!-- ── Desktop pill nav ─────────────────────────────────────────────── -->
   <nav id="desktop-nav"
+       aria-label="Primary navigation"
        class="hidden md:flex items-center gap-1 lg:gap-2
               mx-auto
               px-3 py-1.5 rounded-full
@@ -69,7 +70,6 @@ if (projectMatch) {
                text-gray-600 dark:text-gray-300
                hover:text-gray-900 dark:hover:text-white
                hover:bg-gray-100 dark:hover:bg-gray-800"
-        aria-label={link.label}
         href={link.url}
       >
         {link.title}
@@ -88,6 +88,9 @@ if (projectMatch) {
                hover:text-gray-900 dark:hover:text-white
                hover:bg-gray-100 dark:hover:bg-gray-800"
         aria-label="Select language"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls="language-menu"
       >
         {currentLocale.toUpperCase()}
         <svg class="w-3 h-3" fill="none" viewBox="0 0 10 6">
@@ -107,6 +110,7 @@ if (projectMatch) {
             <li>
               <a
                 href={lang.href}
+                aria-current={currentLocale === lang.locale ? 'page' : undefined}
                 class={`block px-3 py-2 rounded-lg cursor-pointer transition-colors
                         text-gray-700 dark:text-gray-200
                         hover:bg-gray-100 dark:hover:bg-gray-800
@@ -133,6 +137,7 @@ if (projectMatch) {
       id="mobile-menu-btn"
       aria-label="Open menu"
       aria-expanded="false"
+      aria-controls="mobile-drawer"
       class="p-2 rounded-xl
              text-gray-700 dark:text-gray-200
              transition"
@@ -154,6 +159,10 @@ if (projectMatch) {
          translate-x-full transition-transform duration-300 ease-in-out
          md:hidden"
   aria-hidden="true"
+  aria-modal="true"
+  role="dialog"
+  aria-label="Navigation menu"
+  inert
 >
   <!-- Drawer header -->
   <div class="flex items-center justify-between px-6 h-16 border-b border-gray-100 dark:border-gray-800">
@@ -171,7 +180,7 @@ if (projectMatch) {
   </div>
 
   <!-- Nav links -->
-  <nav class="flex flex-col flex-1 px-4 py-6 gap-1 overflow-y-auto">
+  <nav aria-label="Primary navigation" class="flex flex-col flex-1 px-4 py-6 gap-1 overflow-y-auto">
     {navItems.map((link) => (
       <a
         class="mobile-nav-link flex items-center gap-3 px-4 py-3.5 rounded-xl
@@ -179,7 +188,6 @@ if (projectMatch) {
                text-gray-700 dark:text-gray-200
                hover:bg-gray-100 dark:hover:bg-gray-800
                hover:text-gray-900 dark:hover:text-white"
-        aria-label={link.label}
         href={link.url}
       >
         {link.title}
@@ -198,6 +206,7 @@ if (projectMatch) {
         {languages.map((lang) => (
           <a
             href={lang.href}
+            aria-current={currentLocale === lang.locale ? 'page' : undefined}
             onclick="localStorage.setItem('lang-redirected','1')"
             class={`flex-1 text-center py-2 rounded-xl text-sm font-semibold transition-colors
                     ${currentLocale === lang.locale
@@ -228,9 +237,18 @@ if (projectMatch) {
 ></div>
 
 <script>
-  import { initLangDropdown, initHeaderScroll } from '@/scripts/header-shared';
+  import { cleanupHeaderListeners, initLangDropdown, initHeaderScroll } from '@/scripts/header-shared';
+
+  let headerPageCleanup: (() => void) | null = null;
+
+  document.addEventListener('astro:before-swap', () => {
+    headerPageCleanup?.();
+    cleanupHeaderListeners();
+  });
 
   document.addEventListener('astro:page-load', () => {
+    headerPageCleanup?.();
+    const controller = new AbortController();
 
     // ── Smooth scroll compensating for fixed header ───────────────────────
     function scrollToSection(id: string) {
@@ -251,35 +269,59 @@ if (projectMatch) {
     function openDrawer() {
       drawer?.classList.remove('translate-x-full');
       drawer?.classList.add('translate-x-0');
+      drawer?.removeAttribute('inert');
       drawer?.setAttribute('aria-hidden', 'false');
       backdrop?.classList.remove('opacity-0', 'pointer-events-none');
       backdrop?.classList.add('opacity-100');
       openBtn?.setAttribute('aria-expanded', 'true');
+      openBtn?.setAttribute('aria-label', 'Close menu');
       document.body.style.overflow = 'hidden';
+      closeBtn?.focus();
     }
 
-    function closeDrawer() {
+    function closeDrawer(restoreFocus = true) {
       drawer?.classList.add('translate-x-full');
       drawer?.classList.remove('translate-x-0');
+      drawer?.setAttribute('inert', '');
       drawer?.setAttribute('aria-hidden', 'true');
       backdrop?.classList.add('opacity-0', 'pointer-events-none');
       backdrop?.classList.remove('opacity-100');
       openBtn?.setAttribute('aria-expanded', 'false');
+      openBtn?.setAttribute('aria-label', 'Open menu');
       document.body.style.overflow = '';
+      if (restoreFocus) openBtn?.focus();
     }
 
-    openBtn?.addEventListener('click', openDrawer);
-    closeBtn?.addEventListener('click', closeDrawer);
-    backdrop?.addEventListener('click', closeDrawer);
+    openBtn?.addEventListener('click', openDrawer, { signal: controller.signal });
+    closeBtn?.addEventListener('click', () => closeDrawer(), { signal: controller.signal });
+    backdrop?.addEventListener('click', () => closeDrawer(), { signal: controller.signal });
 
     // Close on Escape
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeDrawer();
-    });
+      const isDrawerOpen = drawer && !drawer.classList.contains('translate-x-full');
+      if (e.key === 'Escape' && isDrawerOpen) {
+        closeDrawer();
+        return;
+      }
+
+      if (e.key !== 'Tab' || !isDrawerOpen || !drawer) return;
+      const focusable = drawer.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first?.focus();
+      }
+    }, { signal: controller.signal });
 
     // ── Nav link clicks (both desktop and mobile) ─────────────────────────
     const allNavLinks = document.querySelectorAll<HTMLAnchorElement>(
-      'header nav a[aria-label], #mobile-drawer a[aria-label]'
+      'header nav a[href*="#"], #mobile-drawer a[href*="#"]'
     );
 
     allNavLinks.forEach((link) => {
@@ -310,7 +352,7 @@ if (projectMatch) {
         }
 
         history.replaceState(null, '', `${rawLinkPath || '/'}#${sectionId}`);
-      });
+      }, { signal: controller.signal });
     });
 
     // ── Header background on scroll ─────────────────────────────────────
@@ -326,8 +368,8 @@ if (projectMatch) {
 
     // ── Active section highlight ──────────────────────────────────────────
     const sections = document.querySelectorAll<HTMLElement>('section[id]');
-    const desktopLinks = document.querySelectorAll<HTMLElement>('header nav a[aria-label]');
-    const mobileLinks  = document.querySelectorAll<HTMLElement>('#mobile-drawer a[aria-label]');
+    const desktopLinks = document.querySelectorAll<HTMLElement>('header nav a[href*="#"]');
+    const mobileLinks  = document.querySelectorAll<HTMLElement>('#mobile-drawer a[href*="#"]');
 
     const sectionObserver = new IntersectionObserver(
       (entries) => {
@@ -336,11 +378,13 @@ if (projectMatch) {
           const id = entry.target.id;
 
           [...desktopLinks, ...mobileLinks].forEach((item) => {
-            const isActive = item.getAttribute('aria-label') === id;
+            const isActive = item.getAttribute('href')?.split('#')[1] === id;
             item.classList.toggle('text-yellow-500', isActive);
             item.classList.toggle('dark:text-yellow-400', isActive);
             item.classList.toggle('bg-yellow-50', isActive);
             item.classList.toggle('dark:bg-yellow-900/20', isActive);
+            if (isActive) item.setAttribute('aria-current', 'location');
+            else item.removeAttribute('aria-current');
           });
         });
       },
@@ -355,15 +399,21 @@ if (projectMatch) {
       } else {
         sections.forEach((s) => sectionObserver.observe(s));
       }
-    });
+    }, { signal: controller.signal });
 
     // ── Desktop language dropdown ─────────────────────────────────────────
     initLangDropdown();
+
+    headerPageCleanup = () => {
+      controller.abort();
+      sectionObserver.disconnect();
+      closeDrawer(false);
+    };
   });
 </script>
 
 <style>
-  @import '@/styles/dropdown.css';
+  @import '../styles/dropdown.css';
 
   /* Desktop nav scroll animation handled via JS */
 

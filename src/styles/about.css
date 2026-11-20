@@ -75,7 +75,7 @@
 .dark .map-overlay-text span:last-child  { color: #9ca3af; }
 @keyframes mapLivePulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(0.8); } }
 @keyframes markerPulse  { 0% { transform:scale(0.5); opacity:0.8; } 100% { transform:scale(2.2); opacity:0; } }
-.leaflet-control-attribution, .leaflet-control-zoom { display: none !important; }
+.leaflet-control-zoom { display: none !important; }
 
 /* Clock inside map */
 .map-clock-overlay { position: absolute; top: 12px; right: 12px; z-index: 10; display: flex; flex-direction: column; align-items: flex-end; background: rgba(255,255,255,0.88); backdrop-filter: blur(10px); padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.07); box-shadow: 0 2px 12px rgba(0,0,0,0.1); pointer-events: none; }

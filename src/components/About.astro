@@ -232,19 +232,41 @@ try {
 
 <!-- ── Scripts ─────────────────────────────────────────────────────────────── -->
 <script>
-  import { initMap }      from '@/scripts/about-map';
-  import { initTerminal } from '@/scripts/about-terminal';
-  import { initWeather }  from '@/scripts/about-weather';
-  import { initGalleryModal } from '@/scripts/about-gallery';
-  import { initPhotocardCarousel } from '@/scripts/photocard-carousel';
+  let aboutObserver: IntersectionObserver | null = null;
+
+  function stopAboutObserver() {
+    aboutObserver?.disconnect();
+    aboutObserver = null;
+  }
+
+  document.addEventListener('astro:before-swap', stopAboutObserver);
 
   document.addEventListener('astro:page-load', () => {
-    initMap();
-    initTerminal();
-    initWeather();
-    initGalleryModal();
-    initPhotocardCarousel();
-    initBentoParallax();
+    stopAboutObserver();
+    const aboutSection = document.getElementById('about');
+    if (!aboutSection) return;
+
+    aboutObserver = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      stopAboutObserver();
+
+      void Promise.all([
+        import('@/scripts/about-map'),
+        import('@/scripts/about-terminal'),
+        import('@/scripts/about-weather'),
+        import('@/scripts/about-gallery'),
+        import('@/scripts/photocard-carousel'),
+      ]).then(([map, terminal, weather, gallery, photocardCarousel]) => {
+        map.initMap();
+        terminal.initTerminal();
+        weather.initWeather();
+        gallery.initGalleryModal();
+        photocardCarousel.initPhotocardCarousel();
+        initBentoParallax();
+      });
+    }, { rootMargin: '400px 0px' });
+
+    aboutObserver.observe(aboutSection);
   });
 
   function initBentoParallax() {

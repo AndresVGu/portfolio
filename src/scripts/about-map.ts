@@ -24,8 +24,10 @@ export function initMap(): void {
   const isDark = document.documentElement.classList.contains('dark');
   const tileUrl = (dark: boolean) =>
     dark
-      ? 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png'
-      : 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
+      ? 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+      : 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+  const tileAttribution =
+    'Tiles &copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, and the GIS user community';
 
   const map = L.map(mapEl, {
     center: [43.6426, -79.3871],
@@ -33,10 +35,10 @@ export function initMap(): void {
     zoomControl: false,
     scrollWheelZoom: false,
     dragging: false,
-    attributionControl: false,
+    attributionControl: true,
   });
 
-  L.tileLayer(tileUrl(isDark), { maxZoom: 19 }).addTo(map);
+  L.tileLayer(tileUrl(isDark), { maxZoom: 19, attribution: tileAttribution }).addTo(map);
 
   const marker = L.marker([43.6426, -79.3871], {
     icon: L.divIcon({
@@ -59,7 +61,7 @@ export function initMap(): void {
   const observer = new MutationObserver(() => {
     const dark = document.documentElement.classList.contains('dark');
     map.eachLayer((l: L.Layer) => { if ((l as any)._url) map.removeLayer(l); });
-    L.tileLayer(tileUrl(dark), { maxZoom: 19 }).addTo(map);
+    L.tileLayer(tileUrl(dark), { maxZoom: 19, attribution: tileAttribution }).addTo(map);
     marker.setIcon(
       L.divIcon({
         className: '',

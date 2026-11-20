@@ -35,6 +35,11 @@
   aspect-ratio: 3/4;
   margin: 12px;
 }
+@media (max-width: 360px) {
+  .photocard-carousel__deck-container {
+    width: 240px;
+  }
+}
 
 /* Individual card positioning */
 .photocard-carousel__card {

@@ -4,32 +4,59 @@
  * - Scroll-based header background effect
  */
 
+let langCleanup: (() => void) | null = null;
+let headerCleanup: (() => void) | null = null;
+
+export function cleanupHeaderListeners() {
+  langCleanup?.();
+  headerCleanup?.();
+  langCleanup = null;
+  headerCleanup = null;
+}
+
 /** Initialize the desktop language dropdown toggle */
 export function initLangDropdown() {
+  langCleanup?.();
   const langMenu = document.getElementById('language-menu');
-  const langBtn  = document.getElementById('dropdown-language');
+  const langBtn = document.getElementById('dropdown-language');
 
   if (!langBtn || !langMenu) return;
 
-  const newBtn = langBtn.cloneNode(true) as HTMLElement;
-  langBtn.parentNode?.replaceChild(newBtn, langBtn);
+  const controller = new AbortController();
+  const closeMenu = () => {
+    langMenu.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  };
 
-  document.addEventListener('click', () => langMenu.classList.remove('open'));
-  newBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    langMenu.classList.toggle('open');
+  document.addEventListener('click', closeMenu, { signal: controller.signal });
+  langBtn.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const isOpen = langMenu.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', String(isOpen));
+  }, { signal: controller.signal });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && langMenu.classList.contains('open')) {
+      closeMenu();
+      langBtn.focus();
+    }
+  }, { signal: controller.signal });
+  langMenu.querySelectorAll('a').forEach((anchor) => {
+    anchor.addEventListener('click', () => {
+      localStorage.setItem('lang-redirected', '1');
+    }, { signal: controller.signal });
   });
 
-  langMenu.querySelectorAll('a').forEach((a) => {
-    a.addEventListener('click', () => localStorage.setItem('lang-redirected', '1'));
-  });
+  langCleanup = () => controller.abort();
+  return langCleanup;
 }
 
 /** Initialize scroll-based header background effect */
 export function initHeaderScroll() {
+  headerCleanup?.();
   const desktopNav = document.getElementById('desktop-nav');
   const siteHeader = document.getElementById('site-header');
   const openBtn    = document.getElementById('mobile-menu-btn');
+  const controller = new AbortController();
 
   const SCROLLED_DESKTOP = [
     'bg-white/80', 'dark:bg-gray-900/80',
@@ -69,7 +96,9 @@ export function initHeaderScroll() {
     }
   }
 
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
+  window.addEventListener('scroll', update, { passive: true, signal: controller.signal });
+  window.addEventListener('resize', update, { passive: true, signal: controller.signal });
   update();
+  headerCleanup = () => controller.abort();
+  return headerCleanup;
 }

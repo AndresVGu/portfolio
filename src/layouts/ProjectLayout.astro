@@ -3,7 +3,7 @@ import '@fontsource-variable/onest';
 import '@/styles/base.css';
 import ProjectHeader from '@/components/ProjectHeader.astro';
 import Footer from '@/components/Footer.astro';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import { getI18N } from '@/i18n';
 
 interface Props {
@@ -33,6 +33,13 @@ const {
 } = Astro.props;
 
 const i18n = getI18N({ currentLocale });
+const pageUrl = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image, Astro.site);
+const projectSlug = Astro.params.slug;
+const localePaths = ['en', 'es', 'fr'].map((locale) => ({
+  locale,
+  path: `${locale === 'en' ? '' : `/${locale}`}/projects/${projectSlug}/`,
+}));
 ---
 
 <!doctype html>
@@ -47,8 +54,27 @@ const i18n = getI18N({ currentLocale });
     <meta name="theme-color" content="#030712" />
     <meta name="generator" content={Astro.generator} />
     <title>{title} — Andrés Villarreal</title>
-    <link rel="canonical" href={`https://andresvillarreal.netlify.app${Astro.url.pathname}`} />
-    <ViewTransitions />
+    <link rel="canonical" href={pageUrl.href} />
+    {localePaths.map(({ locale, path }) => (
+      <link rel="alternate" hreflang={locale} href={new URL(path, Astro.site).href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(localePaths[0].path, Astro.site).href} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={pageUrl.href} />
+    <meta property="og:title" content={`${title} — Andrés Villarreal`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage.href} />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content={currentLocale === 'es' ? 'es_CO' : currentLocale === 'fr' ? 'fr_CA' : 'en_CA'} />
+    <meta property="og:site_name" content="Andrés Villarreal — Portfolio" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={pageUrl.href} />
+    <meta name="twitter:title" content={`${title} — Andrés Villarreal`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage.href} />
+    <meta name="twitter:image:alt" content={title} />
+    <link rel="preload" as="image" href={image} fetchpriority="high" />
+    <ClientRouter />
 
     <!-- Apply dark/light theme before paint -->
     <script is:inline>
@@ -84,7 +110,14 @@ const i18n = getI18N({ currentLocale });
       <div class="w-full max-w-3xl mx-auto aspect-[3/2] rounded-2xl overflow-hidden
                   bg-gray-100 dark:bg-neutral-800
                   ring-1 ring-black/5 dark:ring-white/10 mb-8">
-        <img src={image} alt={title} class="w-full h-full object-cover" />
+        <img
+          src={image}
+          alt={title}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="w-full h-full object-cover"
+        />
       </div>
 
       <!-- Subtitle + title -->

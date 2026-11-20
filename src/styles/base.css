@@ -1,3 +1,8 @@
+@import "tailwindcss";
+@import "tailwindcss-animated";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Base styles shared across all layouts */
 :root {
   color-scheme: light dark;

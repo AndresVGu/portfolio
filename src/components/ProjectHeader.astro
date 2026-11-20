@@ -82,6 +82,9 @@ const backHref = `${base}/#projects`;
                hover:text-gray-900 dark:hover:text-white
                hover:bg-gray-100 dark:hover:bg-gray-800"
         aria-label="Select language"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls="language-menu"
       >
         {currentLocale.toUpperCase()}
         <svg class="w-3 h-3" fill="none" viewBox="0 0 10 6">
@@ -101,6 +104,7 @@ const backHref = `${base}/#projects`;
             <li>
               <a
                 href={lang.href}
+                aria-current={currentLocale === lang.locale ? 'page' : undefined}
                 class={`block px-3 py-2 rounded-lg cursor-pointer transition-colors
                         text-gray-700 dark:text-gray-200
                         hover:bg-gray-100 dark:hover:bg-gray-800
@@ -126,7 +130,9 @@ const backHref = `${base}/#projects`;
 </header>
 
 <script>
-  import { initLangDropdown, initHeaderScroll } from '@/scripts/header-shared';
+  import { cleanupHeaderListeners, initLangDropdown, initHeaderScroll } from '@/scripts/header-shared';
+
+  document.addEventListener('astro:before-swap', cleanupHeaderListeners);
 
   document.addEventListener('astro:page-load', () => {
     // Update back-link hrefs at runtime to match current document lang
@@ -143,5 +149,5 @@ const backHref = `${base}/#projects`;
 </script>
 
 <style>
-  @import '@/styles/dropdown.css';
+  @import '../styles/dropdown.css';
 </style>

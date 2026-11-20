@@ -1,5 +1,5 @@
 // Feature: certificate-parallax-section — DOM interaction unit tests
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 /**
  * Helper to create a minimal DOM structure matching CertificateParallax.astro

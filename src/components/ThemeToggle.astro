@@ -8,9 +8,13 @@ const THEMES = ["Light", "Dark", "System"]
 
 <div class="theme-toggle-wrapper relative ml-1 mr-1">
   <button
+    type="button"
     class="theme-toggle-btn appearance-none border-none flex hover:scale-125
            transition text-gray-700 dark:text-gray-200
-           hover:text-yellow-500 dark:hover:text-yellow-400">
+           hover:text-yellow-500 dark:hover:text-yellow-400"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
     <span class="sr-only">Choose theme</span>
     <Sun  data-theme-icon="light"  class="theme-toggle-icon size-5 transition-all"/>
     <Moon data-theme-icon="dark"   class="theme-toggle-icon absolute size-5 transition-all"/>
@@ -23,12 +27,22 @@ const THEMES = ["Light", "Dark", "System"]
            border border-gray-200 dark:border-gray-600
            bg-white dark:bg-gray-900
            text-gray-700 dark:text-gray-200
-           shadow-lg backdrop-blur-md z-50">
+           shadow-lg backdrop-blur-md z-50"
+    role="group"
+    aria-label="Color theme options"
+  >
     <ul>
       {THEMES.map((theme) => (
-        <li class="themes-menu-option px-3 py-2 cursor-default rounded-lg
-                   hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-          {theme}
+        <li>
+          <button
+            type="button"
+            class="themes-menu-option block w-full text-left px-3 py-2 cursor-default rounded-lg
+                   hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            data-theme={theme.toLowerCase()}
+            aria-pressed="false"
+          >
+            {theme}
+          </button>
         </li>
       ))}
     </ul>
@@ -47,9 +61,13 @@ const THEMES = ["Light", "Dark", "System"]
 </style>
 
 <script>
+  let themeCleanup: (() => void) | null = null;
+
   function initThemeToggles() {
+    themeCleanup?.();
     const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
     let removeOsListener: (() => void) | null = null;
+    const controller = new AbortController();
 
     const getThemePreference = (): string =>
       (typeof localStorage !== "undefined" && localStorage.getItem("theme")) || "system";
@@ -57,6 +75,9 @@ const THEMES = ["Light", "Dark", "System"]
     const updateAllIcons = (pref: string) => {
       document.querySelectorAll<HTMLElement>(".theme-toggle-icon").forEach((el) => {
         el.style.scale = el.dataset.themeIcon === pref ? "1" : "0";
+      });
+      document.querySelectorAll<HTMLButtonElement>(".themes-menu-option").forEach((option) => {
+        option.setAttribute("aria-pressed", String(option.dataset.theme === pref));
       });
     };
 
@@ -81,27 +102,43 @@ const THEMES = ["Light", "Dark", "System"]
       if (!btn || !menu) return;
 
       // Close this menu on outside click
-      document.addEventListener("click", () => menu.classList.remove("open"));
+      const closeMenu = () => {
+        menu.classList.remove("open");
+        btn.setAttribute("aria-expanded", "false");
+      };
+
+      document.addEventListener("click", closeMenu, { signal: controller.signal });
 
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
         // Close all other menus first
         document.querySelectorAll(".themes-menu.open").forEach((m) => {
-          if (m !== menu) m.classList.remove("open");
+          if (m !== menu) {
+            m.classList.remove("open");
+            m.closest(".theme-toggle-wrapper")
+              ?.querySelector(".theme-toggle-btn")
+              ?.setAttribute("aria-expanded", "false");
+          }
         });
-        menu.classList.toggle("open");
-      });
+        const isOpen = menu.classList.toggle("open");
+        btn.setAttribute("aria-expanded", String(isOpen));
+      }, { signal: controller.signal });
 
-      menu.querySelectorAll<HTMLElement>(".themes-menu-option").forEach((opt) => {
-        opt.addEventListener("click", (e) => {
-          const target = e.target as HTMLElement;
-          localStorage.setItem("theme", target.innerText.toLowerCase().trim());
+      menu.querySelectorAll<HTMLButtonElement>(".themes-menu-option").forEach((opt) => {
+        opt.addEventListener("click", () => {
+          localStorage.setItem("theme", opt.dataset.theme ?? "system");
           applyTheme();
-          menu.classList.remove("open");
-        });
+          closeMenu();
+        }, { signal: controller.signal });
       });
     });
+
+    themeCleanup = () => {
+      removeOsListener?.();
+      controller.abort();
+    };
   }
 
+  document.addEventListener("astro:before-swap", () => themeCleanup?.());
   document.addEventListener("astro:page-load", initThemeToggles);
 </script>

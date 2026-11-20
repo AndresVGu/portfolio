@@ -85,6 +85,9 @@ const projects = i18n.PROJECTS.map((p, i) => ({
           class="carousel-card-animate group flex-shrink-0 snap-start flex flex-col
                  w-[75vw] max-w-[280px] sm:w-[320px] sm:max-w-none md:w-[360px] lg:w-[420px]
                  cursor-pointer"
+          role="button"
+          tabindex="0"
+          aria-label={project.title}
           data-carousel-card
           data-index={i}
           data-description={project.description}
